@@ -37,10 +37,10 @@ export const authOptions: NextAuthOptions = {
       return token
     },
     session: async ({ session, token }) => {
-      session.user.id = token.id
-      session.user.isAdmin = token.isAdmin
-      session.user.email = token.email
-      session.user.name = token.name
+      session.user.id = session.user.id || token.id
+      session.user.isAdmin = session.user.isAdmin || token.isAdmin
+      session.user.email = session.user.email || token.email
+      session.user.name = session.user.name || token.name
       await prisma.user.upsert({
         where: {
           id: session.user.id
