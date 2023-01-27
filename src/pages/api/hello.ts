@@ -1,11 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-type Data = {
-  name: string
-}
-
-const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  res.status(200).json({ name: 'John Doe' })
+const handler = (req: NextApiRequest, res: NextApiResponse<string>) => {
+  res.status(200).json('Hello, World!')
 }
 
 export default handler
