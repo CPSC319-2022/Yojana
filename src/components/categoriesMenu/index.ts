@@ -1,1 +1,1 @@
-export { CategoriesMenu } from './CategoriesMenu';
+export { CategoriesMenu } from './CategoriesMenu'

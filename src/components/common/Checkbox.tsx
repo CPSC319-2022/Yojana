@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement } from 'react'
 
 interface CheckboxProps {
-  color: string;
-  label: string;
-  id: string;
-  className?: string;
+  color: string
+  label: string
+  id: string
+  className?: string
 }
 
 export const Checkbox = (props: CheckboxProps): ReactElement => {
@@ -15,5 +15,5 @@ export const Checkbox = (props: CheckboxProps): ReactElement => {
         {props.label}
       </label>
     </div>
-  );
-};
+  )
+}

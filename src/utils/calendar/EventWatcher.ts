@@ -1,4 +1,4 @@
-import { Category } from './Category';
+import { Category } from './Category'
 
 export class EventWatcher {
   // TODO this is mock
@@ -15,13 +15,13 @@ export class EventWatcher {
       color: 'pale-silver',
       timeObjects: ['pretend theres stuff here', 'more stuff']
     }
-  ];
-  private watchers: (() => void)[] = [];
+  ]
+  private watchers: (() => void)[] = []
 
   // TODO this is a mock function
 
   // do we even need this
   public subscribeToEventChanges(newWatcher: () => void) {
-    this.watchers.push(newWatcher);
+    this.watchers.push(newWatcher)
   }
 }

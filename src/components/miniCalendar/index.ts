@@ -1,1 +1,1 @@
-export { MiniCalendar } from './MiniCalendar';
+export { MiniCalendar } from './MiniCalendar'
