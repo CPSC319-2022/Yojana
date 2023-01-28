@@ -98,6 +98,19 @@ yarn prisma:studio
 yarn prisma:format
 ```
 
+### Code Style
+
+We use the Prettier with [prettier-plugin-tailwindcss](https://github.com/tailwindlabs/prettier-plugin-tailwindcss) to format our code. Please ensure that you have the following configuration in your settings:
+
+![](https://user-images.githubusercontent.com/39626451/215233714-16225c53-9012-4e5e-a8ed-ea4016cd0e24.png)
+
+Alternatively, you can use to following scripts to format your code before making PRs:
+
+```bash
+yarn format # to format your code
+yarn format:check # to check if your code is formatted correctly
+```
+
 ## Contributing
 
 - When you make a PR, please make sure that the branch name is in the format `your-name/feature-name`. For
