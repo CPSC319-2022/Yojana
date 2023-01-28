@@ -1,4 +1,5 @@
 // noinspection ES6UnusedImports
+// This file is required to make NextAuth work with TypeScript by extending the NextAuth types with our own custom types
 
 import NextAuth from 'next-auth'
 import { JWT } from 'next-auth/jwt'
