@@ -37,26 +37,33 @@ export const authOptions: NextAuthOptions = {
       return token
     },
     session: async ({ session, token }) => {
+      if (!token.id) {
+        return session
+      }
       session.user.id = session.user.id || token.id
       session.user.isAdmin = session.user.isAdmin || token.isAdmin
       session.user.email = session.user.email || token.email
       session.user.name = session.user.name || token.name
-      await prisma.user.upsert({
-        where: {
-          id: session.user.id
-        },
-        update: {
-          name: session.user.name,
-          email: session.user.email,
-          isAdmin: session.user.isAdmin
-        },
-        create: {
-          id: session.user.id,
-          email: session.user.email,
-          name: session.user.name,
-          isAdmin: session.user.isAdmin
-        }
-      })
+      try {
+        await prisma.user.upsert({
+          where: {
+            id: session.user.id
+          },
+          update: {
+            name: session.user.name,
+            email: session.user.email,
+            isAdmin: session.user.isAdmin
+          },
+          create: {
+            id: session.user.id,
+            email: session.user.email,
+            name: session.user.name,
+            isAdmin: session.user.isAdmin
+          }
+        })
+      } catch (error) {
+        console.error(error)
+      }
       return session
     }
   },
