@@ -16,7 +16,7 @@ export const Login = ({ providers, callbackUrl }: LoginProps) => {
           provider.id === 'azure-ad' && (
             <div key={provider.name}>
               <button
-                className='flex items-center rounded-lg bg-blue-800 py-2 px-4 font-medium text-white hover:bg-blue-900'
+                className='flex items-center rounded-lg bg-gradient-to-r from-azure-300  to-azure-400 py-2 px-4 font-medium text-white hover:from-azure-400 hover:to-azure-500'
                 onClick={() => signIn(provider.id, { callbackUrl: callbackUrl })}
               >
                 Sign in with {provider.name}
