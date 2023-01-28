@@ -1,6 +1,29 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+import '@/styles/globals.scss'
+import React from 'react'
+import Head from 'next/head'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { store } from '@/store'
+import { Provider } from 'react-redux'
+import { SSRProvider } from 'react-bootstrap'
+import { SessionProvider } from 'next-auth/react'
+import { AppProps } from 'next/app'
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+const App = ({ Component, pageProps: { session, ...pageProps } }: AppProps) => {
+  return (
+    <SessionProvider session={session}>
+      <SSRProvider>
+        <Head>
+          <title>Yojana</title>
+          <meta name='description' content='Yojana is a calendar app built with Next.js' />
+          <meta name='viewport' content='width=device-width, initial-scale=1' />
+          <link rel='icon' href='/favicon.ico' />
+        </Head>
+        <Provider store={store}>
+          <Component {...pageProps} />
+        </Provider>
+      </SSRProvider>
+    </SessionProvider>
+  )
 }
+
+export default App
