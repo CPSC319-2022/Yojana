@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'azure': {
+        azure: {
           DEFAULT: '#0078D4',
           50: '#8DCDFF',
           100: '#78C5FF',
