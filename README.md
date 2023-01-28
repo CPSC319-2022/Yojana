@@ -98,6 +98,14 @@ yarn prisma:studio
 yarn prisma:format
 ```
 
+### GitHub Actions
+
+We use the following GitHub Actions to automate our workflow:
+
+- [Format Code](https://github.com/CPSC319-2022/Yojana/actions/workflows/format-code.yml) - formats code using Prettier
+  and commits the changes to the PR branch. This is triggered when a PR is opened or updated. Remember to pull the
+  latest changes from the PR branch before making any changes to your local branch.
+
 ### Code Style
 
 We use the Prettier with [prettier-plugin-tailwindcss](https://github.com/tailwindlabs/prettier-plugin-tailwindcss) to format our code. Please ensure that you have the following configuration in your settings:
