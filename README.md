@@ -4,16 +4,18 @@ Yojana is a calendar app made using Next.js.
 
 ## Getting Started
 
-### Installation
+### Prerequisites
 
 - [MySQL 8](https://dev.mysql.com/downloads/mysql/)
 - [MySQL Shell](https://dev.mysql.com/downloads/shell/)
 - [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
-- [install Node](https://nodejs.org/) - the current version of Node used is in [`.nvmrc`](.nvmrc).
-- [install Yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
-- [install nvm](https://github.com/nvm-sh/nvm) (optional) - to ensure the correct version of Node is used. Take a look
+- [Node](https://nodejs.org/) - the current version of Node used is in [`.nvmrc`](.nvmrc).
+- [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
+- [nvm](https://github.com/nvm-sh/nvm) (optional) - to ensure the correct version of Node is used. Take a look
   at [this](https://stackoverflow.com/a/57839539/8488681) to see how to use [`.nvmrc`](.nvmrc) to automatically switch
   to the correct version of Node.
+
+### Installation
 
 ```bash
 # clone the repository
@@ -108,7 +110,8 @@ We use the following GitHub Actions to automate our workflow:
 
 ### Code Style
 
-We use the Prettier with [prettier-plugin-tailwindcss](https://github.com/tailwindlabs/prettier-plugin-tailwindcss) to format our code. Please ensure that you have the following configuration in your settings:
+We use the Prettier with [prettier-plugin-tailwindcss](https://github.com/tailwindlabs/prettier-plugin-tailwindcss) to
+format our code. Please ensure that you have the following configuration in your settings:
 
 ![](https://user-images.githubusercontent.com/39626451/215233714-16225c53-9012-4e5e-a8ed-ea4016cd0e24.png)
 
@@ -119,7 +122,7 @@ yarn format # to format your code
 yarn format:check # to check if your code is formatted correctly
 ```
 
-## Contributing
+### Contributing
 
 - When you make a PR, please make sure that the branch name is in the format `your-name/feature-name`. For
   example, `john/update-readme`.
