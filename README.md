@@ -19,7 +19,7 @@ Yojana is a calendar app made using Next.js.
 
 ```bash
 # clone the repository
-git clone https://github.com/Team-Yojana/client.git
+git clone https://github.com/CPSC319-2022/Yojana.git
 
 # ensure that the correct version of Node is used (optional)
 nvm use
