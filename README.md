@@ -101,6 +101,10 @@ yarn prisma:format
 
 # run tests
 yarn test
+
+# generate coverage report for tests
+yarn test:coverage
+
 ```
 
 ### Testing
@@ -113,6 +117,15 @@ We use [Jest](https://jestjs.io/) and [React Testing Library](https://testing-li
 # run tests
 yarn test
 ```
+
+You can generate a coverage report by running the following command:
+
+```bash
+# generate coverage report
+yarn test:coverage
+```
+
+This will generate a coverage report in the `coverage` directory.
 
 ### GitHub Actions
 

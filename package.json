@@ -17,7 +17,8 @@
     "prisma:reset": "prisma migrate reset",
     "prisma:studio": "prisma studio",
     "prisma:format": "prisma format",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@microsoft/microsoft-graph-client": "^3.0.5",
