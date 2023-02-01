@@ -98,6 +98,20 @@ yarn prisma:studio
 
 # format prisma schema
 yarn prisma:format
+
+# run tests
+yarn test
+```
+
+### Testing
+
+#### Unit Tests
+
+We use [Jest](https://jestjs.io/) and [React Testing Library](https://testing-library.com) to write Unit tests.
+
+```bash
+# run tests
+yarn test
 ```
 
 ### GitHub Actions

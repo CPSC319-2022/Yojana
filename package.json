@@ -16,7 +16,8 @@
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:reset": "prisma migrate reset",
     "prisma:studio": "prisma studio",
-    "prisma:format": "prisma format"
+    "prisma:format": "prisma format",
+    "test": "jest --watch"
   },
   "dependencies": {
     "@microsoft/microsoft-graph-client": "^3.0.5",
@@ -36,6 +37,8 @@
   },
   "devDependencies": {
     "@microsoft/microsoft-graph-types": "^2.25.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
@@ -43,6 +46,9 @@
     "eslint": "^8.33.0",
     "eslint-config-next": "^13.1.6",
     "eslint-config-prettier": "^8.6.0",
+    "jest": "^29.4.1",
+    "jest-environment-jsdom": "^29.4.1",
+    "node-mocks-http": "^1.12.1",
     "postcss": "^8.4.21",
     "prettier": "^2.8.3",
     "prettier-plugin-tailwindcss": "^0.2.2",
