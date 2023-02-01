@@ -7,7 +7,7 @@ describe('/api/hello', () => {
     // create a mock request and response
     const req = createRequest({
       method: 'GET',
-      url: '/hello'
+      url: "/hello"
     })
     const res = createResponse()
 
