@@ -7,7 +7,7 @@ describe('/api/hello', () => {
     // create a mock request and response
     const req = createRequest({
       method: 'GET',
-      url: '/hello'
+      url: "/hello"
     })
     const res = createResponse()
 
@@ -17,6 +17,6 @@ describe('/api/hello', () => {
     // check the status code and data
     expect(res._getStatusCode()).toBe(200)
     expect(res._getData()).toBe('"Hello, World!"')
-    expect(1).toBe(1)
+    expect(1).toBe(2)
   })
 })
