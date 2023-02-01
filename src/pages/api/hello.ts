@@ -1,7 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = (req: NextApiRequest, res: NextApiResponse<string>) => {
-  res.status(200).json('Hello, World!')
+  if (req.method !== 'GET') {
+    res.status(405).send('Method Not Allowed')
+  } else {
+    res.status(200).json('Hello, World!')
+  }
 }
 
 export default handler
