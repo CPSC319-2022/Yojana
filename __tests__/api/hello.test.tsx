@@ -7,9 +7,9 @@ describe('/api/hello', () => {
     // create a mock request and response
     const req = createRequest({
       method: 'GET',
-      url: '/hello',
-    });
-    const res = createResponse();
+      url: '/hello'
+    })
+    const res = createResponse()
 
     // call the hello API route
     await hello(req, res)
