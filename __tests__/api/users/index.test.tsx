@@ -53,7 +53,7 @@ describe('/api/users', () => {
     expect(res._getData()).toBe('Method Not Allowed')
   })
 
-  it('should return a 401 status code when user is not authenticated', async () => {
+  it('should return a 401 status code when user is not an admin', async () => {
     // create a mock request and response
     const req = createRequest({
       method: 'GET',

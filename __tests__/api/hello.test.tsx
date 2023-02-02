@@ -16,7 +16,7 @@ describe('/api/hello', () => {
 
     // check the status code and data
     expect(res._getStatusCode()).toBe(200)
-    expect(res._getData()).toBe('"Hello, World!"')
+    expect(res._getData()).toBe('Hello, World!')
   })
 
   it('should return a 405 status code when method is not GET', async () => {
