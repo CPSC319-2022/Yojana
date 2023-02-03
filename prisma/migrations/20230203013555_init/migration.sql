@@ -27,6 +27,7 @@ CREATE TABLE `Date` (
     `date` DATE NOT NULL,
     `categoryId` INTEGER NOT NULL,
 
+    UNIQUE INDEX `Date_date_categoryId_key`(`date`, `categoryId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

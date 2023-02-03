@@ -93,7 +93,7 @@ yarn format:check
 # push database
 yarn prisma:push
 
-# migrate database
+# migrate database (automatically seeds database if there are new migrations)
 yarn prisma:migrate
 
 # reset database (automatically seeds database)

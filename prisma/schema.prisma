@@ -31,4 +31,6 @@ model Date {
   date       DateTime @db.Date()
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId Int
+
+  @@unique([date, categoryId])
 }
