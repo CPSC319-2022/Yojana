@@ -28,7 +28,7 @@ model Category {
 
 model Date {
   id         Int      @id @default(autoincrement())
-  date       DateTime @default(now())
+  date       DateTime @db.Date()
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId Int
 }
