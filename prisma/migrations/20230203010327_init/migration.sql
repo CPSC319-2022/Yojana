@@ -13,7 +13,7 @@ CREATE TABLE `Category` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NOT NULL DEFAULT '',
-    `color` VARCHAR(6) NOT NULL,
+    `color` VARCHAR(7) NOT NULL,
     `isMaster` BOOLEAN NOT NULL DEFAULT false,
     `creatorId` VARCHAR(191) NOT NULL,
 

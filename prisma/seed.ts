@@ -11,10 +11,10 @@ export const data = [
     name: 'Admin',
     isAdmin: true,
     categories: [
-      { name: 'PayDay', description: 'This is the day you get paid', color: '000000', isMaster: true },
-      { name: 'Holiday', description: 'Statuary holidays', color: 'ff0000', isMaster: true },
-      { name: 'Work from home', description: 'Work from home', color: '0000ff', isMaster: true },
-      { name: 'Shareholder meeting', description: 'Shareholder meeting', color: '00ff00', isMaster: true }
+      { name: 'PayDay', description: 'This is the day you get paid', color: '#ef4444', isMaster: true },
+      { name: 'Holiday', description: 'Statuary holidays', color: '#10b981', isMaster: true },
+      { name: 'Work from home', description: 'Work from home', color: '#0ea5e9', isMaster: true },
+      { name: 'Shareholder meeting', description: 'Shareholder meeting', color: '#8b5cf6', isMaster: true }
     ]
   }
 ]

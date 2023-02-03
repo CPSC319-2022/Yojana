@@ -19,7 +19,7 @@ model Category {
   id          Int     @id @default(autoincrement())
   name        String  @unique
   description String  @default("")
-  color       String  @db.VarChar(6)
+  color       String  @db.VarChar(7)
   isMaster    Boolean @default(false)
   creator     User    @relation(fields: [creatorId], references: [id])
   creatorId   String
