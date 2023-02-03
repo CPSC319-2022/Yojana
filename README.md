@@ -75,6 +75,12 @@ yarn build
 # start the app in production mode (after building)
 yarn start
 
+# run tests
+yarn test
+
+# generate coverage report for tests
+yarn test:coverage
+
 # run linter
 yarn lint
 
@@ -87,10 +93,10 @@ yarn format:check
 # push database
 yarn prisma:push
 
-# migrate database
+# migrate database (automatically seeds database if there are new migrations)
 yarn prisma:migrate
 
-# reset database
+# reset database (automatically seeds database)
 yarn prisma:reset
 
 # run prisma studio (database GUI)
@@ -99,12 +105,8 @@ yarn prisma:studio
 # format prisma schema
 yarn prisma:format
 
-# run tests
-yarn test
-
-# generate coverage report for tests
-yarn test:coverage
-
+# manually seed database
+yarn prisma:seed
 ```
 
 ### Testing
