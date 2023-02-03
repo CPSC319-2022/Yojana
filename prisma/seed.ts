@@ -21,7 +21,7 @@ export const data = [
   }
 ]
 
-// generate n random dates between start and end dates
+// generate around n random dates between start and end dates
 const generateRandomDates = (start: Date, end: Date, n: number, category: string) => {
   const set = new Set<string>()
   for (let i = 0; i < n; i++) {
@@ -68,7 +68,7 @@ const seed = async () => {
             creatorId: user.id,
             dates: {
               createMany: {
-                // create about 25 random dates for each category in 2023
+                // create around 25 random dates for each category in 2023
                 data: generateRandomDates(new Date(2023, 0, 1), new Date(2023, 11, 31), 25, category.name)
               }
             }
@@ -77,6 +77,7 @@ const seed = async () => {
       )
     })
   })
+
   await Promise.all(promises)
 }
 
