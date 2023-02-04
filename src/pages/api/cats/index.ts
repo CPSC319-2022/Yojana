@@ -15,7 +15,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
       })
       return res.status(200).json(categories)
-
     case 'PUT':
       const nameExists = await prisma.category.findFirst({
         where: { name: req.body.name }
@@ -39,7 +38,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(200).json(edited_category)
       } catch (error) {}
       return res.status(404).send('category does not exist')
-
     case 'POST':
       const categoryExists = await prisma.category.findFirst({
         where: { name: req.body.name }
@@ -60,7 +58,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       } else {
         return res.status(409).send('category name must be unique')
       }
-
     default:
       return res.status(405).send('Method Not Allowed')
   }
