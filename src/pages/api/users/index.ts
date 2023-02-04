@@ -3,13 +3,12 @@ import { getToken } from 'next-auth/jwt'
 import prisma from '@/lib/prismadb'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method !== 'GET') {
-    res.status(405).send('Method Not Allowed')
-  } else {
-    const token = await getToken({ req })
-    if (!token?.isAdmin) {
-      res.status(401).send('Unauthorized')
-    } else {
+  switch (req.method) {
+    case 'GET':
+      const token = await getToken({ req })
+      if (!token?.isAdmin) {
+        return res.status(401).send('Unauthorized')
+      }
       const users = await prisma.user.findMany({
         select: {
           id: true,
@@ -18,8 +17,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           isAdmin: true
         }
       })
-      res.status(200).json(users)
-    }
+      return res.status(200).json(users)
+    default:
+      return res.status(405).send('Method Not Allowed')
   }
 }
 
