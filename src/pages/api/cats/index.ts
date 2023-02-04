@@ -4,30 +4,31 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (req.method == 'POST') {
-    // const body = JSON.parse(req.body)
     const body = req.body
-
-    const new_category = await prisma.category.create({
-      data: {
-        id: body.id,
-        name: body.name,
-        description: body.description,
-        color: body.color,
-        isMaster: body.isMaster,
-        creatorId: body.creatorId,
-        dates: body.dates,
-      }
+    
+    const categoryExists = await prisma.category.findFirst({
+      where: { name: body.name },
     })
-
-    return res.status(201).json({
-      _links: {
-        self: {
-          href: "http://localhost:3000/api/cats/" + body.id
+    // categoryExists ? console.log("HI") : console.log(body.name)
+    if (!categoryExists) {
+      const new_category = await prisma.category.create({
+        data: {
+          // id: body.id,
+          name: body.name,
+          description: body.description,
+          color: body.color,
+          isMaster: body.isMaster,
+          creatorId: body.creatorId,
+          dates: body.dates,
         }
-      },
-      id: body.id,
-      Message: "The category was created successfully"
-    })
+      })
+      return res.status(201).json(new_category)
+    } else {
+      return res.status(409).json({
+        message: "category name must be unique"
+      })
+    }
+
   }
 
   if (req.method !== 'GET') {
