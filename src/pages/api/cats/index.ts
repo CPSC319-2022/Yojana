@@ -3,65 +3,68 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
-  if (req.method == 'POST') {
-    const body = req.body
-
-    const categoryExists = await prisma.category.findFirst({
-      where: { name: body.name },
-    })
-
-    if (!categoryExists) {
-      const new_category = await prisma.category.create({
-        data: {
-          // id: body.id,
-          name: body.name,
-          description: body.description,
-          color: body.color,
-          isMaster: body.isMaster,
-          creatorId: body.creatorId,
-          dates: body.dates,
+  switch (req.method) {
+    case "GET":
+      const categories = await prisma.category.findMany({
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          color: true,
+          isMaster: true,
+          creator: true
         }
       })
-      return res.status(201).json(new_category)
-    } else {
-      return res.status(409).send("category name must be unique")
-    }
-  }
+      return res.status(200).json(categories)
 
-  if (req.method == 'PUT') {
-    const body = req.body
-    try {
-      const edited_category = await prisma.category.update({
-        where: { name: body.name },
-        data: {
-          name: body.name,
-          description: body.description,
-          color: body.color,
-          isMaster: body.isMaster,
-          creatorId: body.creatorId,
-          dates: body.dates,
-        }
+    case "PUT":
+      const nameExists = await prisma.category.findFirst({
+        where: { name: req.body.name },
       })
-      return res.status(200).json(edited_category)
-    } catch (error) {
-    }
-    return res.status(404).json("category does not exist")
-  }
-
-  if (req.method !== 'GET') {
-    res.status(405).send('Method Not Allowed')
-  } else {
-    const categories = await prisma.category.findMany({
-      select: {
-        id: true,
-        name: true,
-        description: true,
-        color: true,
-        isMaster: true,
-        creator: true
+      if (nameExists) {
+        return res.status(409).send("category name conflicting other category")
       }
-    })
-    res.status(200).json(categories)
+      try {
+        const edited_category = await prisma.category.update({
+          where: { id: req.body.id },
+          data: {
+            // id: req.body.id,
+            name: req.body.name,
+            description: req.body.description,
+            color: req.body.color,
+            isMaster: req.body.isMaster,
+            // creatorId: req.body.creatorId,
+            dates: req.body.dates,
+          }
+        })
+        return res.status(200).json(edited_category)
+      } catch (error) {
+      }
+      return res.status(404).send("category does not exist")
+
+    case "POST":
+      const categoryExists = await prisma.category.findFirst({
+        where: { name: req.body.name },
+      })
+      if (!categoryExists) {
+        const new_category = await prisma.category.create({
+          data: {
+            // id: req.body.id,
+            name: req.body.name,
+            description: req.body.description,
+            color: req.body.color,
+            isMaster: req.body.isMaster,
+            creatorId: req.body.creatorId,
+            dates: req.body.dates,
+          }
+        })
+        return res.status(201).json(new_category)
+      } else {
+        return res.status(409).send("category name must be unique")
+      }
+
+    default:
+      return res.status(405).send('Method Not Allowed')
   }
 }
 
