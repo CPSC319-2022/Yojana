@@ -2,9 +2,8 @@ import prisma from '@/lib/prismadb'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-
   switch (req.method) {
-    case "GET":
+    case 'GET':
       const categories = await prisma.category.findMany({
         select: {
           id: true,
@@ -17,12 +16,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       })
       return res.status(200).json(categories)
 
-    case "PUT":
+    case 'PUT':
       const nameExists = await prisma.category.findFirst({
-        where: { name: req.body.name },
+        where: { name: req.body.name }
       })
       if (nameExists) {
-        return res.status(409).send("category name conflicting other category")
+        return res.status(409).send('category name conflicting other category')
       }
       try {
         const edited_category = await prisma.category.update({
@@ -34,17 +33,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             color: req.body.color,
             isMaster: req.body.isMaster,
             // creatorId: req.body.creatorId,
-            dates: req.body.dates,
+            dates: req.body.dates
           }
         })
         return res.status(200).json(edited_category)
-      } catch (error) {
-      }
-      return res.status(404).send("category does not exist")
+      } catch (error) {}
+      return res.status(404).send('category does not exist')
 
-    case "POST":
+    case 'POST':
       const categoryExists = await prisma.category.findFirst({
-        where: { name: req.body.name },
+        where: { name: req.body.name }
       })
       if (!categoryExists) {
         const new_category = await prisma.category.create({
@@ -55,12 +53,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             color: req.body.color,
             isMaster: req.body.isMaster,
             creatorId: req.body.creatorId,
-            dates: req.body.dates,
+            dates: req.body.dates
           }
         })
         return res.status(201).json(new_category)
       } else {
-        return res.status(409).send("category name must be unique")
+        return res.status(409).send('category name must be unique')
       }
 
     default:

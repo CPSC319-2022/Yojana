@@ -59,13 +59,13 @@ put:
     200:
       description: update existing category by its id (unchangeable creatorId)
       object:
-          id: string
-          name: string
-          description: string
-          color: string
-          isMaster: boolean
-          creatorId: User
-          dates: Date
+        id: string
+        name: string
+        description: string
+        color: string
+        isMaster: boolean
+        creatorId: User
+        dates: Date
     404:
       description: category does not exist
       text: category does not exist
@@ -77,13 +77,13 @@ post:
     201:
       description: create a new category
       object:
-          id: string
-          name: string
-          description: string
-          color: string
-          isMaster: boolean
-          creatorId: User
-          dates: Date
+        id: string
+        name: string
+        description: string
+        color: string
+        isMaster: boolean
+        creatorId: User
+        dates: Date
     409:
       description: creating a new category with a non-unique name
       text: category name must be unique
