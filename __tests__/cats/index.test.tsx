@@ -47,7 +47,7 @@ describe('/api/cats', () => {
         description: 'abc',
         color: '',
         isMaster: false,
-        creatorId: 'f0b54ab0-366f-45b1-b750-1d5b79f3603c'
+        creatorId: 'id0'
       }
       const req = createRequest({
         method: 'POST',

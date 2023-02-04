@@ -17,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return res.status(200).json(categories)
     case 'PUT':
       const nameExists = await prisma.category.findFirst({
-        where: { name: req.body.name }
+        where: { name: req.body.name, NOT: { id: req.body.id } }
       })
       if (nameExists) {
         return res.status(409).send('category name conflicting other category')
