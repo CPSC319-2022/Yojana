@@ -36,8 +36,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           }
         })
         return res.status(200).json(edited_category)
-      } catch (error) {}
-      return res.status(404).send('category does not exist')
+      } catch (error) {
+        return res.status(404).send('category does not exist')
+      }
     case 'POST':
       const categoryExists = await prisma.category.findFirst({
         where: { name: req.body.name }
