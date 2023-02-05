@@ -140,8 +140,7 @@ We use the following GitHub Actions to automate our workflow:
     local branch.
 
 We also use Vercel to create a preview deployments of the app for every PR and branch. This is triggered when a PR is
-opened or
-updated.
+opened or updated.
 
 ### Code Style
 
