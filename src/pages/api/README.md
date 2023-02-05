@@ -44,10 +44,10 @@ other:
 get:
   responses:
     200:
-      description: list of categories
+      description: list of categories, their dates, and their creator
       array:
         object:
-          id: string
+          id: int
           name: string
           description: string
           color: string
@@ -58,6 +58,12 @@ get:
               name: string
               email: string
               isAdmin: boolean
+          dates:
+            array:
+              object:
+                id: string
+                date: ISOString
+                categoryId: int
 put:
   body:
     id: int
@@ -67,9 +73,9 @@ put:
     isMaster: boolean
   responses:
     200:
-      description: update existing category by its id
+      description: update existing category details by its id
       object:
-        id: string
+        id: int
         name: string
         description: string
         color: string
@@ -91,9 +97,9 @@ post:
     dates: ISOString[]
   responses:
     201:
-      description: create a new category
+      description: create a new category and possibly add dates to it
       object:
-        id: string
+        id: int
         name: string
         description: string
         color: string

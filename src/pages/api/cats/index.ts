@@ -11,7 +11,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           description: true,
           color: true,
           isMaster: true,
-          creator: true
+          creator: true,
+          dates: true
         }
       })
       return res.status(200).json(categories)
