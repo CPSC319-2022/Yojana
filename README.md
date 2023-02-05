@@ -139,7 +139,8 @@ We use the following GitHub Actions to automate our workflow:
     is opened or updated. Remember to pull the latest changes from the PR branch before making any changes to your
     local branch.
 
-We also use Vercel to create a preview deployments of the app for every PR. This is triggered when a PR is opened or
+We also use Vercel to create a preview deployments of the app for every PR and branch. This is triggered when a PR is
+opened or
 updated.
 
 ### Code Style
