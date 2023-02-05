@@ -11,7 +11,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           description: true,
           color: true,
           isMaster: true,
-          creator: true
+          creator: true,
+          dates: true
         }
       })
       return res.status(200).json(categories)
@@ -26,13 +27,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         const edited_category = await prisma.category.update({
           where: { id: req.body.id },
           data: {
-            // id: req.body.id,
             name: req.body.name,
             description: req.body.description,
             color: req.body.color,
-            isMaster: req.body.isMaster,
-            // creatorId: req.body.creatorId,
-            dates: req.body.dates
+            isMaster: req.body.isMaster
           }
         })
         return res.status(200).json(edited_category)
@@ -46,13 +44,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       if (!categoryExists) {
         const new_category = await prisma.category.create({
           data: {
-            // id: req.body.id,
             name: req.body.name,
             description: req.body.description,
             color: req.body.color,
             isMaster: req.body.isMaster,
             creatorId: req.body.creatorId,
-            dates: req.body.dates
+            dates: {
+              createMany: {
+                data: req.body.dates.map((date: string) => ({ date }))
+              }
+            }
           }
         })
         return res.status(201).json(new_category)

@@ -3,6 +3,10 @@ import cats from '@/pages/api/cats'
 import '@testing-library/jest-dom'
 import { createRequest, createResponse } from 'node-mocks-http'
 
+const generateISODates = () => {
+  return Array.from({ length: 5 }, (_, i) => new Date(`2023-01-0${i + 1}`).toISOString())
+}
+
 describe('/api/cats', () => {
   describe('GET', () => {
     it('should return a 200 status code', async () => {
@@ -17,20 +21,26 @@ describe('/api/cats', () => {
           id: 0,
           name: 'cat1',
           description: 'abc',
-          color: '',
+          color: '#000000',
           isMaster: false,
-          creatorId: '1'
-        },
-        {
-          id: 1,
-          name: 'cat2',
-          description: 'def',
-          color: '',
-          isMaster: false,
-          creatorId: '1'
+          creator: {
+            id: '1',
+            name: 'test',
+            email: '',
+            isAdmin: false
+          },
+          dates: [
+            {
+              id: 0,
+              date: new Date('2023-01-01').toISOString(),
+              categoryId: 0
+            }
+          ]
         }
       ]
-      prismaMock.category.findMany.mockResolvedValue(mock_cats)
+      prismaMock.category.findMany.mockImplementation((): any => {
+        return Promise.resolve(mock_cats)
+      })
 
       await cats(req, res)
 
@@ -45,9 +55,10 @@ describe('/api/cats', () => {
         id: 0,
         name: 'def',
         description: 'abc',
-        color: '',
+        color: '#000000',
         isMaster: false,
-        creatorId: 'id0'
+        creatorId: 'id0',
+        dates: generateISODates()
       }
       const req = createRequest({
         method: 'POST',
@@ -69,10 +80,10 @@ describe('/api/cats', () => {
         id: 1,
         name: 'test',
         description: 'test category',
-        color: 'red',
+        color: '#000000',
         isMaster: false,
         creatorId: 'abc123',
-        dates: []
+        dates: generateISODates()
       }
 
       const req = createRequest({
@@ -97,10 +108,9 @@ describe('/api/cats', () => {
         id: 0,
         name: 'new name',
         description: 'new desc',
-        color: 'blue',
+        color: '#000000',
         isMaster: false,
-        creatorId: 'cba123',
-        dates: []
+        creatorId: 'cba123'
       }
       const req = createRequest({
         method: 'PUT',
@@ -122,7 +132,7 @@ describe('/api/cats', () => {
         id: 999999,
         name: 'not_existing',
         description: 'abc',
-        color: '',
+        color: '#000000',
         isMaster: false,
         creatorId: '1'
       }
@@ -146,10 +156,9 @@ describe('/api/cats', () => {
         id: 1,
         name: 'dupe',
         description: 'something',
-        color: 'red',
+        color: '#000000',
         isMaster: false,
-        creatorId: 'abc123',
-        dates: []
+        creatorId: 'abc123'
       }
 
       const req = createRequest({
