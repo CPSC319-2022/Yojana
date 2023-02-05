@@ -52,20 +52,29 @@ get:
           description: string
           color: string
           isMaster: boolean
-          creatorId: User
-          dates: Date
+          creator:
+            object:
+              id: string
+              name: string
+              email: string
+              isAdmin: boolean
 put:
+  body:
+    id: int
+    name: string
+    description: string
+    color: string
+    isMaster: boolean
   responses:
     200:
-      description: update existing category by its id (unchangeable creatorId)
+      description: update existing category by its id
       object:
         id: string
         name: string
         description: string
         color: string
         isMaster: boolean
-        creatorId: User
-        dates: Date
+        creatorId: string
     404:
       description: category does not exist
       text: category does not exist
@@ -73,6 +82,13 @@ put:
       description: updating an existing category with a name that already exists
       text: category name conflicting other category
 post:
+  body:
+    name: string
+    description: string
+    color: string
+    isMaster: boolean,
+    creatorId: string
+    dates: ISOString[]
   responses:
     201:
       description: create a new category
@@ -82,8 +98,7 @@ post:
         description: string
         color: string
         isMaster: boolean
-        creatorId: User
-        dates: Date
+        creatorId: string
     409:
       description: creating a new category with a non-unique name
       text: category name must be unique
