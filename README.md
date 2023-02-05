@@ -1,4 +1,4 @@
-# Yojana
+# Test
 
 Yojana is a calendar app made using Next.js.
 
