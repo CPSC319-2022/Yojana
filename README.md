@@ -133,9 +133,14 @@ This will generate a coverage report in the `coverage` directory.
 
 We use the following GitHub Actions to automate our workflow:
 
-- [Format Code](https://github.com/CPSC319-2022/Yojana/actions/workflows/format-code.yml) - formats code using Prettier
-  and commits the changes to the PR branch. This is triggered when a PR is opened or updated. Remember to pull the
-  latest changes from the PR branch before making any changes to your local branch.
+- [CI](https://github.com/CPSC319-2022/Yojana/actions/workflows/CI.yml)
+  - **Test:** runs unit tests and generates a coverage report.
+  - **Format:** formats code using Prettier and commits the changes to the PR branch. This is triggered when a PR
+    is opened or updated. Remember to pull the latest changes from the PR branch before making any changes to your
+    local branch.
+
+We also use Vercel to create a preview deployments of the app for every PR and branch. This is triggered when a PR is
+opened or updated.
 
 ### Code Style
 
@@ -160,7 +165,13 @@ yarn format:check # to check if your code is formatted correctly
 
 ## Deployment
 
-Work in progress... :construction:
+We use [Azure](https://azure.microsoft.com/) to deploy
+our [MySQL database](https://azure.microsoft.com/en-us/products/mysql) and to authenticate users
+using [Azure Active Directory](https://azure.microsoft.com/en-us/products/active-directory).
+
+We use [Vercel](https://vercel.com/) to deploy our [Next.js app](https://vercel.com/solutions/nextjs).
+
+Visit [this](https://yojana-main.vercel.app/) link to see the latest deployed version of the app.
 
 ## Links
 
@@ -173,6 +184,8 @@ Work in progress... :construction:
 - [Redux Toolkit](https://redux-toolkit.js.org/)
 - [NextAuth.js](https://next-auth.js.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
+- [Jest](https://jestjs.io/)
+- [React Testing Library](https://testing-library.com)
 
 ## Credits
 
