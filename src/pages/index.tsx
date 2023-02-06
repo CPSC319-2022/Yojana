@@ -1,7 +1,6 @@
 import { NavBar } from '@/components/navBar'
-import { CategoriesMenu } from '@/components/categoriesMenu'
 import { MainCalendar } from '@/components/mainCalendar'
-import { SideBar } from '@/components/sideBar/SideBar'
+import { SideBar } from '@/components/sideBar/'
 
 const Calendar = () => {
   return (

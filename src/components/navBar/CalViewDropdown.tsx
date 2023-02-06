@@ -1,5 +1,5 @@
 import React, { ReactElement, useMemo } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getInterval, setInterval } from '@/reducers/MainCalendarReducer'
 import { CalendarInterval } from '@/constants/enums'
 
