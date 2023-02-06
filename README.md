@@ -90,6 +90,9 @@ yarn format
 # check for formatting errors
 yarn format:check
 
+# format staged files
+yarn format:staged
+
 # push database
 yarn prisma:push
 
