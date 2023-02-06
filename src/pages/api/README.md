@@ -38,6 +38,44 @@ other:
       text: Method Not Allowed
 ```
 
+## /api/dates
+
+```yaml
+get:
+  responses:
+    200:
+      description: list of date entries
+      array:
+        object:
+          categoryId: string
+          date: string
+          dateId: String
+    500:
+      text: Internal Server Error
+post: 
+  responses:
+    200: 
+      description: dates inserted successfully
+    401:
+      description: user is not an admin
+    
+delete:
+  responses:
+    200:
+      description: date deletion is successful
+    401: 
+      description: user is not an admin
+    404: 
+      description: date ID does not exist
+    500:
+      description: undefined date ID
+other:
+  responses:
+    405:
+      description: invalid method
+      text: Method Not Allowed
+```
+
 ## /api/cats
 
 ```yaml

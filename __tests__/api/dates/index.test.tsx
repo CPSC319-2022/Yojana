@@ -3,7 +3,7 @@ import { prismaMock } from '@/lib/singleton'
 import { createRequest, createResponse } from 'node-mocks-http'
 import * as jwt from 'next-auth/jwt'
 import dates from "@/pages/api/dates";
-import { Entry, PrismaPromise } from '@prisma/client'
+import { Entry, PrismaPromise } from '@prisma/client';
 
 describe('/api/dates', () => {
   it('GET should return a 200 status code', async () => {
@@ -23,12 +23,12 @@ describe('/api/dates', () => {
     // mock getToken from next-auth/jwt
     jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
     let currDate = new Date();
-    const mock_dates: Entry[] | PrismaPromise<Entry[]> =
-      [{
-        categoryId:1,
-        date: currDate,
-        id:1
-    }]
+    const mock_dates =
+        [{
+          categoryId: 1,
+          date: currDate,
+          id: 1
+        }]
 
     //mock prisma.user.findMany()
     prismaMock.entry.findMany.mockResolvedValue(mock_dates)
@@ -40,8 +40,6 @@ describe('/api/dates', () => {
     // check the status code and data
     expect(res._getStatusCode()).toBe(200)
     expect(res._getData()).toBe(JSON.stringify(mock_dates));
-
-
 
 
   })
@@ -71,11 +69,11 @@ describe('/api/dates', () => {
 
 
     let currDate = new Date();
-    const mock_dates: Entry[] | PrismaPromise<Entry[]> =
+    const mock_dates =
         [{
-          categoryId:1,
+          categoryId: 1,
           date: currDate,
-          id:1
+          id: 1
         }]
 
     //mock prisma.user.findMany()
@@ -144,11 +142,11 @@ describe('/api/dates', () => {
 
 
     let currDate = new Date();
-    const mock_dates: Entry[] | PrismaPromise<Entry[]> =
+    const mock_dates =
         [{
-          categoryId:1,
+          categoryId: 1,
           date: currDate,
-          id:1
+          id: 1
         }]
 
     //mock prisma.user.findMany()

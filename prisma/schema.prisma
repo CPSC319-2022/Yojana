@@ -27,7 +27,7 @@ model Category {
   isMaster    Boolean @default(false)
   creator     User    @relation(fields: [creatorId], references: [id])
   creatorId   String
-  dates       Entry[]
+  entries     Entry[]
 }
 
 model Entry {
