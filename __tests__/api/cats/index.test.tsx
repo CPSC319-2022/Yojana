@@ -2,7 +2,7 @@ import { prismaMock } from '@/lib/singleton'
 import cats from '@/pages/api/cats'
 import '@testing-library/jest-dom'
 import { createRequest, createResponse } from 'node-mocks-http'
-import * as jwt from "next-auth/jwt";
+import * as jwt from 'next-auth/jwt'
 
 const generateISODates = () => {
   return Array.from({ length: 5 }, (_, i) => new Date(`2023-01-0${i + 1}`).toISOString())
@@ -111,7 +111,7 @@ describe('/api/cats', () => {
       await cats(req, res)
 
       expect(res._getStatusCode()).toBe(401)
-      expect(res._getData()).toBe("Unauthorized")
+      expect(res._getData()).toBe('Unauthorized')
     })
 
     it('should return a 409 status code when category name is not unique', async () => {
@@ -193,7 +193,7 @@ describe('/api/cats', () => {
       await cats(req, res)
 
       expect(res._getStatusCode()).toBe(401)
-      expect(res._getData()).toBe("Unauthorized")
+      expect(res._getData()).toBe('Unauthorized')
     })
 
     it('should return a 404 status code when category does not exist', async () => {
@@ -296,7 +296,7 @@ describe('/api/cats', () => {
       await cats(req, res)
 
       expect(res._getStatusCode()).toBe(401)
-      expect(res._getData()).toBe("Unauthorized")
+      expect(res._getData()).toBe('Unauthorized')
     })
 
     it('should return a 404 status code when category does not exist', async () => {
