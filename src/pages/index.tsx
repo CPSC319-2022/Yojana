@@ -1,22 +1,17 @@
-import styles from './index.module.scss'
 import { NavBar } from '@/components/navBar'
-import { Button } from 'react-bootstrap'
-import { CategoriesMenu } from '@/components/categoriesMenu'
-import { MiniCalendar } from '@/components/miniCalendar'
 import { MainCalendar } from '@/components/mainCalendar'
+import { SideBar } from '@/components/sideBar/'
 
 const Calendar = () => {
   return (
     <main>
-      <div className={styles.home}>
-        <NavBar />
-        <div className='row g-0'>
-          <div className='col-md-3'>
-            <Button>Create</Button>
-            <MiniCalendar />
-            <CategoriesMenu />
+      <div className='flex h-screen w-full flex-col bg-white text-black'>
+        <NavBar className='flex h-12 w-full flex-row' />
+        <div className='flex w-full grow flex-row'>
+          <div className='w-1/5'>
+            <SideBar className='pl-2 pr-2' />
           </div>
-          <div className='col-md-9'>
+          <div className='flex w-4/5 flex-col'>
             <MainCalendar />
           </div>
         </div>

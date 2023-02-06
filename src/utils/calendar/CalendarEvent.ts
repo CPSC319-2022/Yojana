@@ -20,7 +20,7 @@ export interface CalendarEvent {
 export const getEventsForDate = (date: Dayjs): CalendarEvent[] => {
   const mondayEvent = {
     categoryName: 'test',
-    color: 'ice-blue',
+    color: 'F04DEA',
     endDate: 'temp',
     startDate: 'temp',
     title: 'My Monday Event'
@@ -28,7 +28,7 @@ export const getEventsForDate = (date: Dayjs): CalendarEvent[] => {
 
   const firstEvent = {
     categoryName: 'test',
-    color: 'ice-blue',
+    color: 'F04DEA',
     endDate: 'temp',
     startDate: 'temp',
     title: 'My First Day of Month Event'
@@ -36,7 +36,7 @@ export const getEventsForDate = (date: Dayjs): CalendarEvent[] => {
 
   const monWedEvent = {
     categoryName: '319 Course',
-    color: 'pale-silver',
+    color: '4DF07B',
     endDate: '2023-04-13',
     startDate: '2023-01-09',
     title: '319 Day'

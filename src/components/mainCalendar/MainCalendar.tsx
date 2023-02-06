@@ -1,6 +1,4 @@
 import React, { ReactElement, useMemo } from 'react'
-
-import styles from './MainCalendar.module.scss'
 import { Month } from './Month'
 import { Day } from './Day'
 import { Week } from './Week'
@@ -22,5 +20,5 @@ export const MainCalendar = (): ReactElement => {
         return <Month targetDate={targetDate} />
     }
   }, [activeCalView, targetDate])
-  return <div className={styles.mainCalendar}>{calView}</div>
+  return <div className='flex grow flex-col bg-black'>{calView}</div>
 }

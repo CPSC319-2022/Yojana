@@ -2,7 +2,6 @@ import React, { ReactElement, useEffect, useMemo, useState } from 'react'
 import { CalendarEvent, getEventsForDate } from '@/utils/calendar'
 import { EventBlock } from './EventBlock'
 import { Dayjs } from 'dayjs'
-import styles from './MainCalendar.module.scss'
 
 interface DayProps {
   date: Dayjs
@@ -23,8 +22,8 @@ export const Day = (props: DayProps): ReactElement => {
   }, [events])
 
   return (
-    <div className='day'>
-      <span className={styles.date}>{props.date.date()}</span>
+    <div className='tile overflow-y-auto bg-white'>
+      <span>{props.date.date()}</span>
       {dayEvents}
     </div>
   )

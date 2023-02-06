@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react'
-import styles from './MainCalendar.module.scss'
 
 interface EventBlockProps {
   color: string
@@ -7,5 +6,5 @@ interface EventBlockProps {
 }
 
 export const EventBlock = (props: EventBlockProps): ReactElement => {
-  return <div className={`${styles.eventBlock} ${props.color}`}>{props.label}</div>
+  return <div className={`bg-[#${props.color}] mt-1`}>{props.label}</div>
 }
