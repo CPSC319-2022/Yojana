@@ -23,10 +23,10 @@ model Category {
   isMaster    Boolean @default(false)
   creator     User    @relation(fields: [creatorId], references: [id])
   creatorId   String
-  dates       Date[]
+  dates       Entry[]
 }
 
-model Date {
+model Entry {
   id         Int      @id @default(autoincrement())
   date       DateTime @default(now())
   category   Category @relation(fields: [categoryId], references: [id])
