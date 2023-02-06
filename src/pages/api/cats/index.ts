@@ -3,6 +3,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import {getToken} from "next-auth/jwt";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  const token = await getToken({ req })
+  const { id } = req.query
   switch (req.method) {
     case 'GET':
       const categories = await prisma.category.findMany({
@@ -18,6 +20,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       })
       return res.status(200).json(categories)
     case 'PUT':
+      if (!token?.isAdmin && token?.id !== id) {
+        return res.status(401).send('Unauthorized')
+      }
       const nameExists = await prisma.category.findFirst({
         where: { name: req.body.name, NOT: { id: req.body.id } }
       })
@@ -39,6 +44,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(404).send('category does not exist')
       }
     case 'POST':
+      if (!token?.isAdmin && token?.id !== id) {
+        return res.status(401).send('Unauthorized')
+      }
       const categoryExists = await prisma.category.findFirst({
         where: { name: req.body.name }
       })
@@ -62,9 +70,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(409).send('category name must be unique')
       }
     case 'DELETE':
-      const token = await getToken({ req })
-      const { id } = req.query
-
       if (!token?.isAdmin && token?.id !== id) {
         return res.status(401).send('Unauthorized')
       }

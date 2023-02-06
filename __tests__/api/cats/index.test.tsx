@@ -90,6 +90,30 @@ describe('/api/cats', () => {
       expect(res._getData()).toBe(JSON.stringify(mock_body))
     })
 
+    it('should return a 401 status code when not Authorized to post', async () => {
+      const mock_body = {
+        id: 0,
+        name: 'category to post',
+        description: 'new desc',
+        color: '#000000',
+        isMaster: false,
+        creatorId: 'unauthorized user'
+      }
+      const req = createRequest({
+        method: 'POST',
+        url: '/cats',
+        body: mock_body
+      })
+      const res = createResponse()
+
+      jest.spyOn(jwt, 'getToken').mockResolvedValue(mockUser)
+
+      await cats(req, res)
+
+      expect(res._getStatusCode()).toBe(401)
+      expect(res._getData()).toBe("Unauthorized")
+    })
+
     it('should return a 409 status code when category name is not unique', async () => {
       const mock_body = {
         id: 1,
@@ -107,6 +131,8 @@ describe('/api/cats', () => {
         body: mock_body
       })
       const res = createResponse()
+
+      jest.spyOn(jwt, 'getToken').mockResolvedValue(mockAdmin)
 
       prismaMock.category.findFirst.mockResolvedValue(mock_body)
 
@@ -249,6 +275,30 @@ describe('/api/cats', () => {
       expect(res._getData()).toBe(JSON.stringify(mock_body))
     })
 
+    it('should return a 401 status code when not Authorized to put', async () => {
+      const mock_body = {
+        id: 0,
+        name: 'category to update',
+        description: 'new desc',
+        color: '#000000',
+        isMaster: false,
+        creatorId: 'unauthorized user'
+      }
+      const req = createRequest({
+        method: 'PUT',
+        url: '/cats',
+        body: mock_body
+      })
+      const res = createResponse()
+
+      jest.spyOn(jwt, 'getToken').mockResolvedValue(mockUser)
+
+      await cats(req, res)
+
+      expect(res._getStatusCode()).toBe(401)
+      expect(res._getData()).toBe("Unauthorized")
+    })
+
     it('should return a 404 status code when category does not exist', async () => {
       const mock_body = {
         id: 999999,
@@ -264,6 +314,8 @@ describe('/api/cats', () => {
         body: mock_body
       })
       const res = createResponse()
+
+      jest.spyOn(jwt, 'getToken').mockResolvedValue(mockAdmin)
 
       prismaMock.category.update.mockRejectedValue(new Error('category does not exist'))
 
@@ -289,6 +341,8 @@ describe('/api/cats', () => {
         body: mock_body
       })
       const res = createResponse()
+
+      jest.spyOn(jwt, 'getToken').mockResolvedValue(mockAdmin)
 
       prismaMock.category.findFirst.mockResolvedValue(mock_body)
 
