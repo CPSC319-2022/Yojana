@@ -135,12 +135,14 @@ We use the following GitHub Actions to automate our workflow:
 
 - [CI](https://github.com/CPSC319-2022/Yojana/actions/workflows/CI.yml)
   - **Test:** runs unit tests and generates a coverage report.
-  - **Format:** formats code using Prettier and commits the changes to the PR branch. This is triggered when a PR
-    is opened or updated. Remember to pull the latest changes from the PR branch before making any changes to your
-    local branch.
 
-We also use Vercel to create a preview deployments of the app for every PR and branch. This is triggered when a PR is
+We also use Vercel to create preview deployments of the app for every PR and branch. This is triggered when a PR is
 opened or updated.
+
+### Pre-commit Hooks
+
+We use [Husky](https://typicode.github.io/husky/) and [lint-staged](https://github.com/okonet/lint-staged) to run
+pre-commit hooks. This ensures that our code is formatted correctly before we commit our code.
 
 ### Code Style
 
@@ -149,7 +151,7 @@ format our code. Please ensure that you have the following configuration in your
 
 ![](https://user-images.githubusercontent.com/39626451/215233714-16225c53-9012-4e5e-a8ed-ea4016cd0e24.png)
 
-Alternatively, you can use to following scripts to format your code before making PRs:
+Alternatively, you can use to following scripts to manually format your code:
 
 ```bash
 yarn format # to format your code
