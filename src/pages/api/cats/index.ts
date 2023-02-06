@@ -1,5 +1,6 @@
 import prisma from '@/lib/prismadb'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import {getToken} from "next-auth/jwt";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
@@ -59,6 +60,28 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(201).json(new_category)
       } else {
         return res.status(409).send('category name must be unique')
+      }
+    case 'DELETE':
+      const token = await getToken({ req })
+      const { id } = req.query
+
+      if (!token?.isAdmin && token?.id !== id) {
+        return res.status(401).send('Unauthorized')
+      }
+      const getCategoryToDelete = await prisma.category.findFirst({
+        where: { id: req.body.id }
+      })
+      if (getCategoryToDelete) {
+        try {
+          const deletedCategory = await prisma.category.delete({
+            where: { id: req.body.id }
+          })
+          return res.status(200).json(deletedCategory)
+        } catch (e) {
+          return res.status(409).send('There was an error deleting the category')
+        }
+      } else {
+        return res.status(404).send('category does not exist')
       }
     default:
       return res.status(405).send('Method Not Allowed')
