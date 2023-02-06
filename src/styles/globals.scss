@@ -1,5 +1,4 @@
-@import 'bootstrap/scss/bootstrap-grid';
-@import 'colors';
+@import 'variables';
 
 @tailwind base;
 @tailwind components;
@@ -13,42 +12,12 @@ body {
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-  'Droid Sans', 'Helvetica Neue', sans-serif;
+    'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
-  background-color: $independence-5;
+  background-color: white;
   height: 100%;
-}
-
-.ice-blue {
-  background-color: aliceblue;
-}
-
-.pale-silver {
-  background-color: #dfcfcd;
-}
-
-.week {
-  @extend .row;
-  height: 100%;
-  margin: 0;
-
-  /* a scuffed way to undo the changes from above */
-  :not(:first-child) {
-    border-top: 0;
-  }
-}
-
-.day {
-  @extend .col;
-  border-left: $border-width solid $independence-4;
-
-  .date {
-    margin-top: 4px;
-    display: flex;
-    justify-content: center;
-  }
 }

@@ -1,25 +1,37 @@
 import React, { ReactElement } from 'react'
-import styles from './NavBar.module.scss'
-import { Button } from 'react-bootstrap'
-import { CalendarViewMenu } from './CalendarViewMenu'
+import { CalViewDropdown } from './CalViewDropdown'
 import { useDispatch, useSelector } from 'react-redux'
 import { decrementDate, getDate, incrementDate } from '@/reducers/MainCalendarReducer'
 import { signOut, useSession } from 'next-auth/react'
 
-export const NavBar = (): ReactElement => {
+interface NavBarProps {
+  className: string
+}
+
+export const NavBar = (props: NavBarProps): ReactElement => {
   const dispatch = useDispatch()
   const targetDate = useSelector(getDate)
   const { data: session } = useSession()
 
   return (
-    <div className={styles.navBar}>
-      <h1>Calendar</h1>
-      <Button onClick={() => dispatch(decrementDate())}>&lt;</Button>
-      <h4>{targetDate.format('MMMM')}</h4>
-      <Button onClick={() => dispatch(incrementDate())}>&gt;</Button>
-      <CalendarViewMenu />
+    <div className={props.className + ' ' + 'navbar justify-between'}>
+      <h1 className='text-2xl font-medium'>Calendar</h1>
+      <div className='flex flex-row'>
+        <button className='btn mr-2' onClick={() => dispatch(decrementDate())}>
+          &lt;
+        </button>
+        <h4>{targetDate.format('MMMM')}</h4>
+        <button className='btn ml-2' onClick={() => dispatch(incrementDate())}>
+          &gt;
+        </button>
+      </div>
+      <CalViewDropdown />
       {session?.user.isAdmin ? 'Admin' : 'User'}
-      {session && <Button onClick={() => signOut()}>Logout</Button>}
+      {session && (
+        <button className='btn' onClick={() => signOut()}>
+          Logout
+        </button>
+      )}
     </div>
   )
 }

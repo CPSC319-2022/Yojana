@@ -1,15 +1,13 @@
 import React, { ReactElement, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import Dropdown from 'react-bootstrap/Dropdown'
-import DropdownButton from 'react-bootstrap/DropdownButton'
 import { getInterval, setInterval } from '@/reducers/MainCalendarReducer'
 import { CalendarInterval } from '@/constants/enums'
 
-export const CalendarViewMenu = (): ReactElement => {
+export const CalViewDropdown = (): ReactElement => {
   const dispatch = useDispatch()
   const activeCalView = useSelector(getInterval)
 
-  const onSelect = (selectedKey: string | null) => {
+  const onSelect = (selectedKey: string) => {
     if (selectedKey !== activeCalView && selectedKey !== null) {
       dispatch(setInterval(selectedKey as CalendarInterval))
     }
@@ -18,16 +16,21 @@ export const CalendarViewMenu = (): ReactElement => {
   const renderItems = useMemo(() => {
     return Object.values(CalendarInterval).map((view) => {
       return (
-        <Dropdown.Item className={`${activeCalView === view && 'active'}`} eventKey={view} key={view}>
+        <li key={view} onClick={() => onSelect(view)}>
           {view}
-        </Dropdown.Item>
+        </li>
       )
     })
   }, [activeCalView])
 
   return (
-    <DropdownButton id='calendar-view-menu' title={activeCalView} onSelect={onSelect}>
-      {renderItems}
-    </DropdownButton>
+    <div id='calendar-view-menu' className='dropdown' title={activeCalView}>
+      <label tabIndex={0} className='btn'>
+        {activeCalView}
+      </label>
+      <ul tabIndex={0} className='dropdown-content menu rounded-box w-52 bg-base-100 p-2 shadow'>
+        {renderItems}
+      </ul>
+    </div>
   )
 }

@@ -6,13 +6,13 @@ export class EventWatcher {
     {
       categoryId: 'test',
       categoryName: 'test',
-      color: 'ice-blue',
+      color: 'F04DEA',
       timeObjects: ['pretend theres stuff here', 'more stuff']
     },
     {
       categoryId: '319 Course',
       categoryName: '319 Course',
-      color: 'pale-silver',
+      color: '4DF07B',
       timeObjects: ['pretend theres stuff here', 'more stuff']
     }
   ]

@@ -4,6 +4,7 @@ import { Dayjs } from 'dayjs'
 
 interface WeekProps {
   firstDate: Dayjs
+  className?: string
 }
 
 export const Week = (props: WeekProps): ReactElement => {
@@ -12,5 +13,5 @@ export const Week = (props: WeekProps): ReactElement => {
       return <Day date={props.firstDate.add(dayNum, 'days')} key={dayNum} />
     })
   }, [props.firstDate])
-  return <div className='week'>{generateDays}</div>
+  return <div className={props.className + ' ' + 'grid grid-cols-7 gap-0.5'}>{generateDays}</div>
 }
