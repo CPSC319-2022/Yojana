@@ -3,6 +3,8 @@ name: CI
 on:
   pull_request:
     branches: [main]
+  repository_dispatch:
+    types: [ci]
 
 jobs:
   test:
@@ -51,3 +53,11 @@ jobs:
         with:
           commit_message: Format code
           branch: ${{ github.head_ref }}
+
+      - name: Trigger CI
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          event-type: ci
