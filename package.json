@@ -17,7 +17,6 @@
     "lint": "next lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "format:changed": "prettier --write $(git diff --name-only --diff-filter d | grep '\\.js$' | xargs)",
     "prisma:push": "prisma db push",
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:reset": "prisma migrate reset",
