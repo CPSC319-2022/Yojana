@@ -20,7 +20,7 @@ jobs:
           node-version: 18
 
       - name: Install Dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Run Tests
         run: yarn test:coverage
@@ -41,10 +41,10 @@ jobs:
           node-version: 18
 
       - name: Install Dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
-      - name: Check formatting
-        run: yarn format:staged
+      - name: Format files that have changed
+        run: yarn format:changed
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
