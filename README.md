@@ -135,8 +135,8 @@ We use the following GitHub Actions to automate our workflow:
 
 - [CI](https://github.com/CPSC319-2022/Yojana/actions/workflows/CI.yml)
   - **Test:** runs unit tests and generates a coverage report.
-  - **Format:** formats changed files using Prettier. Make sure to pull the latest changes before making changes to
-    your local branch to avoid merge conflicts.
+  - **Format:** formats files using Prettier. Make sure to pull the latest changes before making changes to your local
+    branch to avoid merge conflicts.
 
 We also use Vercel to create preview deployments of the app for every PR and branch. This is triggered when a PR is
 opened or updated.
