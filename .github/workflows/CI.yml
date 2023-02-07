@@ -55,7 +55,7 @@ jobs:
           branch: ${{ github.head_ref }}
 
       - name: Trigger CI
-        if: steps.auto-commit-action.outputs.changes_detected == "true"
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
