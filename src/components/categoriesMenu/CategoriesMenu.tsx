@@ -4,6 +4,7 @@ import { BsPencilSquare } from 'react-icons/bs'
 import { getCategories } from '@/redux/reducers/AppDataReducer'
 import { useSelector } from 'react-redux'
 import { Category } from '@prisma/client'
+import { getTextColor } from '@/utils/color'
 
 export const CategoriesMenu = (): ReactElement => {
   const categories: Category[] = useSelector(getCategories)
@@ -11,7 +12,9 @@ export const CategoriesMenu = (): ReactElement => {
   const eventList = useMemo(() => {
     return categories.map((calEvent, key) => (
       <div
-        className={`flex flex-row justify-between bg-[${calEvent.color}] mt-1 pr-2 pl-2`}
+        className={`flex flex-row justify-between bg-[${calEvent.color}] mt-1 pr-2 pl-2 ${getTextColor(
+          calEvent.color
+        )}`}
         key={`category-item-${key}`}
       >
         <Checkbox label={calEvent.name} id={`checkbox-${key}`} key={`checkbox-${key}`} />
