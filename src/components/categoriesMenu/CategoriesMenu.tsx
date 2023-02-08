@@ -1,26 +1,26 @@
 import { Checkbox } from '@/components/common'
-import React, { ReactElement, useEffect, useMemo, useState } from 'react'
-import { Category, EventWatcher } from '@/utils/calendar'
+import React, { ReactElement, useMemo } from 'react'
+import { Category } from '@/utils/types'
 import { BsPencilSquare } from 'react-icons/bs'
 
-export const CategoriesMenu = (): ReactElement => {
-  const [events, setEvents] = useState<Category[]>([])
+interface CategoriesMenuProps {
+  categories: Category[]
+}
 
-  // TODO this is a stub
-  useEffect(() => {
-    setEvents(EventWatcher.events)
-  }, [])
-
+export const CategoriesMenu = (props: CategoriesMenuProps): ReactElement => {
   const eventList = useMemo(() => {
-    return events.map((calEvent, key) => (
-      <div className={`flex flex-row justify-between bg-[#${calEvent.color}] mt-1`} key={`category-item-${key}`}>
-        <Checkbox color={calEvent.color} label={calEvent.categoryName} id={`checkbox-${key}`} key={`checkbox-${key}`} />
-        <span className='mr-2 cursor-pointer'>
+    return props.categories?.map((calEvent, key) => (
+      <div
+        className={`flex flex-row justify-between bg-[${calEvent.color}] mt-1 pr-2 pl-2`}
+        key={`category-item-${key}`}
+      >
+        <Checkbox label={calEvent.name} id={`checkbox-${key}`} key={`checkbox-${key}`} />
+        <span className='mt-1 cursor-pointer'>
           <BsPencilSquare />
         </span>
       </div>
     ))
-  }, [events])
+  }, [props.categories])
 
   return (
     <div>

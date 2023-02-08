@@ -20,7 +20,7 @@ export const NavBar = (props: NavBarProps): ReactElement => {
         <button className='btn mr-2' onClick={() => dispatch(decrementDate())}>
           &lt;
         </button>
-        <h4>{targetDate.format('MMMM')}</h4>
+        <h4 className='w-20 text-center'>{targetDate.format('MMMM')}</h4>
         <button className='btn ml-2' onClick={() => dispatch(incrementDate())}>
           &gt;
         </button>

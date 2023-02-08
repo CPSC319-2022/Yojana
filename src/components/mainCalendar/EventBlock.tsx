@@ -6,5 +6,5 @@ interface EventBlockProps {
 }
 
 export const EventBlock = (props: EventBlockProps): ReactElement => {
-  return <div className={`bg-[#${props.color}] mt-1`}>{props.label}</div>
+  return <div className={`bg-[${props.color}] mt-1`}>{props.label}</div>
 }
