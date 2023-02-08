@@ -2,12 +2,12 @@ import { Checkbox } from '@/components/common'
 import React, { ReactElement, useMemo } from 'react'
 import { BsPencilSquare } from 'react-icons/bs'
 import { getCategories } from '@/redux/reducers/AppDataReducer'
-import { useSelector } from 'react-redux'
 import { Category } from '@prisma/client'
 import { getTextColor } from '@/utils/color'
+import { useAppSelector } from '@/redux/hooks'
 
 export const CategoriesMenu = (): ReactElement => {
-  const categories: Category[] = useSelector(getCategories)
+  const categories: Category[] = useAppSelector(getCategories)
 
   const eventList = useMemo(() => {
     return categories.map((calEvent, key) => (

@@ -1,11 +1,11 @@
 import React, { ReactElement, useMemo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { getInterval, setInterval } from '@/redux/reducers/MainCalendarReducer'
 import { CalendarInterval } from '@/constants/enums'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 
 export const CalViewDropdown = (): ReactElement => {
-  const dispatch = useDispatch()
-  const activeCalView = useSelector(getInterval)
+  const dispatch = useAppDispatch()
+  const activeCalView = useAppSelector(getInterval)
 
   const renderItems = useMemo(() => {
     const onSelect = (selectedKey: string) => {

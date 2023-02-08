@@ -1,8 +1,8 @@
 import React, { ReactElement, useMemo } from 'react'
 import { EventBlock } from './EventBlock'
 import { Dayjs } from 'dayjs'
-import { useSelector } from 'react-redux'
 import { getCategoriesOnDate } from '@/redux/reducers/AppDataReducer'
+import { useAppSelector } from '@/redux/hooks'
 
 interface DayProps {
   date: Dayjs
@@ -12,7 +12,7 @@ interface DayProps {
  * A day in month view.
  */
 export const Day = (props: DayProps): ReactElement => {
-  const categories = useSelector((state: any) => getCategoriesOnDate(state, props.date))
+  const categories = useAppSelector((state) => getCategoriesOnDate(state, props.date))
 
   const dayEvents = useMemo(() => {
     return categories.map((calEvent, key) => (

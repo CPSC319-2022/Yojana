@@ -1,16 +1,16 @@
 import React, { ReactElement } from 'react'
 import { CalViewDropdown } from './CalViewDropdown'
-import { useDispatch, useSelector } from 'react-redux'
 import { decrementDate, getDate, incrementDate } from '@/redux/reducers/MainCalendarReducer'
 import { signOut, useSession } from 'next-auth/react'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 
 interface NavBarProps {
   className: string
 }
 
 export const NavBar = (props: NavBarProps): ReactElement => {
-  const dispatch = useDispatch()
-  const targetDate = useSelector(getDate)
+  const dispatch = useAppDispatch()
+  const targetDate = useAppSelector(getDate)
   const { data: session } = useSession()
 
   return (

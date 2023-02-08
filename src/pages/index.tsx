@@ -3,11 +3,11 @@ import { MainCalendar } from '@/components/mainCalendar'
 import { SideBar } from '@/components/sideBar/'
 import { AppData } from '@/types/AppData'
 import { getCategories } from '@/prisma/queries'
-import { useDispatch } from 'react-redux'
 import { setAppData } from '@/redux/reducers/AppDataReducer'
+import { useAppDispatch } from '@/redux/hooks'
 
 const Calendar = ({ data }: { data: AppData[] }) => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   dispatch(setAppData(data))
 
   return (

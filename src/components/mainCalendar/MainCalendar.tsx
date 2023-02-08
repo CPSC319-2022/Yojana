@@ -2,13 +2,13 @@ import React, { ReactElement, useMemo } from 'react'
 import { Month } from './Month'
 import { Day } from './Day'
 import { Week } from './Week'
-import { useSelector } from 'react-redux'
 import { getDate, getInterval } from '@/redux/reducers/MainCalendarReducer'
 import { CalendarInterval } from '@/constants/enums'
+import { useAppSelector } from '@/redux/hooks'
 
 export const MainCalendar = (): ReactElement => {
-  const activeCalView = useSelector(getInterval)
-  const targetDate = useSelector(getDate)
+  const activeCalView = useAppSelector(getInterval)
+  const targetDate = useAppSelector(getDate)
 
   const calView = useMemo(() => {
     switch (activeCalView) {
