@@ -38,6 +38,65 @@ other:
       text: Method Not Allowed
 ```
 
+## /api/dates
+
+```yaml
+get:
+  responses:
+    200:
+      description: list of date entries
+      array:
+        object:
+          categoryId: string
+          date: string
+          dateId: String
+post:
+  body:
+    categoryId: int
+    dates: ISOString[]
+  responses:
+    200:
+      description: entries inserted successfully
+      int: number of entries inserted
+    401:
+      description: user is not an admin
+      text: Unauthorized
+other:
+  responses:
+    405:
+      description: invalid method
+      text: Method Not Allowed
+```
+
+## /api/dates/:id
+
+```yaml
+delete:
+  path:
+    id: int
+  responses:
+    200:
+      description: entry deletion is successful
+      object:
+        id: int
+        date: ISOString
+        categoryId: int
+    400:
+      description: invalid date id
+      text: Bad Request
+    401:
+      description: user is not an admin
+      text: Unauthorized
+    404:
+      description: entry with provided id does not exist
+      text: Not Found
+other:
+  responses:
+    405:
+      description: invalid method
+      text: Method Not Allowed
+```
+
 ## /api/cats
 
 ```yaml

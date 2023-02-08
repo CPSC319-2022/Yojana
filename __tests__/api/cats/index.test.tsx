@@ -83,7 +83,7 @@ describe('/api/cats', () => {
         color: '#000000',
         isMaster: false,
         creatorId: 'abc123',
-        dates: generateISODates()
+        entries: generateISODates()
       }
 
       const req = createRequest({
@@ -120,7 +120,6 @@ describe('/api/cats', () => {
       const res = createResponse()
 
       prismaMock.category.update.mockResolvedValue(mock_body)
-
       await cats(req, res)
 
       expect(res._getStatusCode()).toBe(200)
