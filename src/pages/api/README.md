@@ -51,6 +51,9 @@ get:
           date: string
           dateId: String
 post:
+  body:
+    categoryId: int
+    dates: ISOString[]
   responses:
     200:
       description: entries inserted successfully
@@ -69,6 +72,8 @@ other:
 
 ```yaml
 delete:
+  path:
+    id: int
   responses:
     200:
       description: entry deletion is successful

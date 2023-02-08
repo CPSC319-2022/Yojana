@@ -24,7 +24,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const numEntries = await prisma.entry.createMany({
         data: dates.map((date: string) => ({
-          date,
+          date: new Date(date),
           categoryId: parseInt(categoryId.toString())
         }))
       })
