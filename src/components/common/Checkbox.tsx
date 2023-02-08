@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react'
 
 interface CheckboxProps {
-  color: string
   label: string
   id: string
   className?: string

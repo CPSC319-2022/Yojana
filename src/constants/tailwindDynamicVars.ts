@@ -9,8 +9,12 @@
 
 /**
  * Colors
- * Pink: bg-[#F04DEA]
- * Green: bg-[#4DF07B]
+ * Red: bg-[#10b981]
+ * Green: bg-[#f59e0b]
+ * Blue: bg-[#0ea5e9]
+ * Purple: bg-[#ef4444]
+ * Black: bg-[#1c1917]
+ * Orange: bg-[#8b5cf6]
  */
 
 export {}

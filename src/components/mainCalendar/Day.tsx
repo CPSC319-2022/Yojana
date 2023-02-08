@@ -1,9 +1,11 @@
 import React, { ReactElement, useEffect, useMemo, useState } from 'react'
-import { CalendarEvent, getEventsForDate } from '@/utils/calendar'
+import { Category } from '@/utils/types'
 import { EventBlock } from './EventBlock'
-import { Dayjs } from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
+import { Entry } from '@/utils/types/Category'
 
 interface DayProps {
+  categories: Category[]
   date: Dayjs
 }
 
@@ -11,15 +13,23 @@ interface DayProps {
  * A day in month view.
  */
 export const Day = (props: DayProps): ReactElement => {
-  const [events, setEvents] = useState<CalendarEvent[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
 
+  const filterCategoriesForDate = useMemo((): Category[] => {
+    const dateString = `${props.date.format('YYYY-MM-DD')}T00:00:00.000Z`
+    return props.categories
+      .slice()
+      .filter((cat) => cat.entries.find((entry: Entry) => dayjs(entry.date).toISOString() === dateString))
+  }, [props.categories, props.date])
   useEffect(() => {
-    setEvents(getEventsForDate(props.date))
-  }, [props.date])
+    setCategories(filterCategoriesForDate)
+  }, [filterCategoriesForDate])
 
   const dayEvents = useMemo(() => {
-    return events.map((calEvent, key) => <EventBlock color={calEvent.color} label={calEvent.title || ''} key={key} />)
-  }, [events])
+    return categories.map((calEvent, key) => (
+      <EventBlock color={calEvent.color} label={calEvent.name || ''} key={key} />
+    ))
+  }, [categories])
 
   return (
     <div className='tile overflow-y-auto bg-white'>

@@ -1,15 +1,16 @@
 import React, { ReactElement } from 'react'
 import { CategoriesMenu } from '@/components/categoriesMenu'
+import { Category } from '@/utils/types'
 
 interface NavBarProps {
-  className: string
+  categories: Category[]
 }
 
 export const SideBar = (props: NavBarProps): ReactElement => {
   return (
-    <div className={props.className}>
+    <div>
       <button className='btn'>Create</button>
-      <CategoriesMenu />
+      <CategoriesMenu categories={props.categories} />
     </div>
   )
 }
