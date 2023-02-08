@@ -1,7 +1,7 @@
 import '@/styles/globals.css'
 import React from 'react'
 import Head from 'next/head'
-import { store } from '@/store'
+import { store } from '@/redux/store'
 import { Provider } from 'react-redux'
 import { SessionProvider } from 'next-auth/react'
 import { AppProps } from 'next/app'

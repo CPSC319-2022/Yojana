@@ -2,28 +2,23 @@ import React, { ReactElement, useMemo } from 'react'
 import { Month } from './Month'
 import { Day } from './Day'
 import { Week } from './Week'
-import { useSelector } from 'react-redux'
-import { getDate, getInterval } from '@/reducers/MainCalendarReducer'
+import { getDate, getInterval } from '@/redux/reducers/MainCalendarReducer'
 import { CalendarInterval } from '@/constants/enums'
-import { Category } from '@/utils/types'
+import { useAppSelector } from '@/redux/hooks'
 
-interface MainCalendarProps {
-  categories: Category[]
-}
-
-export const MainCalendar = (props: MainCalendarProps): ReactElement => {
-  const activeCalView = useSelector(getInterval)
-  const targetDate = useSelector(getDate)
+export const MainCalendar = (): ReactElement => {
+  const activeCalView = useAppSelector(getInterval)
+  const targetDate = useAppSelector(getDate)
 
   const calView = useMemo(() => {
     switch (activeCalView) {
       case CalendarInterval.DAY:
-        return <Day date={targetDate} categories={props.categories} />
+        return <Day date={targetDate} />
       case CalendarInterval.WEEK:
-        return <Week firstDate={targetDate.startOf('week')} categories={props.categories} />
+        return <Week firstDate={targetDate.startOf('week')} />
       default:
-        return <Month targetDate={targetDate} categories={props.categories} />
+        return <Month targetDate={targetDate} />
     }
-  }, [activeCalView, targetDate, props.categories])
+  }, [activeCalView, targetDate])
   return <div className='flex grow flex-col bg-black'>{calView}</div>
 }

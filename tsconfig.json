@@ -16,6 +16,9 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
+      "@/redux/*": ["./src/lib/redux/*"],
+      "@/prisma/*": ["./src/lib/prisma/*"],
+      "@/types/*": ["./src/lib/types/*"],
       "@/*": ["./src/*"]
     }
   },

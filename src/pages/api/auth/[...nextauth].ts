@@ -1,9 +1,9 @@
 import NextAuth, { type NextAuthOptions } from 'next-auth'
 import AzureADProvider from 'next-auth/providers/azure-ad'
-import { MicrosoftAuthProvider } from '@/utils/msGraph/MicrosoftAuthProvider'
+import { MicrosoftAuthProvider } from '@/lib/msGraph/MicrosoftAuthProvider'
 import { Client, ClientOptions } from '@microsoft/microsoft-graph-client'
 import * as MicrosoftGraph from '@microsoft/microsoft-graph-types'
-import prisma from '@/lib/prismadb'
+import prisma from '@/prisma/prismadb'
 
 export const authOptions: NextAuthOptions = {
   pages: {

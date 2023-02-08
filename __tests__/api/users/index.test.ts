@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
 import users from '@/pages/api/users'
-import { prismaMock } from '@/lib/singleton'
+import { prismaMock } from '@/prisma/singleton'
 import { createRequest, createResponse } from 'node-mocks-http'
 import * as jwt from 'next-auth/jwt'
 
