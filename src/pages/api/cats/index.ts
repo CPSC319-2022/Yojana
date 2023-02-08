@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           color: true,
           isMaster: true,
           creator: true,
-          entries : true,
+          entries: true
         }
       })
       return res.status(200).json(categories)
@@ -50,7 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             isMaster: req.body.isMaster,
             creatorId: req.body.creatorId,
             entries: {
-             createMany: {
+              createMany: {
                 data: req.body.dates.map((entry: string) => ({ entry }))
               }
             }

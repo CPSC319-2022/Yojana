@@ -52,20 +52,20 @@ get:
           dateId: String
     500:
       text: Internal Server Error
-post: 
+post:
   responses:
-    200: 
+    200:
       description: dates inserted successfully
     401:
       description: user is not an admin
-    
+
 delete:
   responses:
     200:
       description: date deletion is successful
-    401: 
+    401:
       description: user is not an admin
-    404: 
+    404:
       description: date ID does not exist
     500:
       description: undefined date ID
