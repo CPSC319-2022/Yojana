@@ -20,11 +20,14 @@ const customJestConfig = {
   // For example:
 
   moduleNameMapper: {
+    '@/redux/(.*)$': '<rootDir>/src/lib/redux/$1',
+    '@/prisma/(.*)$': '<rootDir>/src/lib/prisma/$1',
+    '@/types/(.*)$': '<rootDir>/src/lib/types/$1',
     '@/(.*)$': '<rootDir>/src/$1'
   },
   testEnvironment: 'node',
   clearMocks: true,
-  setupFilesAfterEnv: ['<rootDir>/src/lib/singleton.ts']
+  setupFilesAfterEnv: ['<rootDir>/src/lib/prisma/singleton.ts']
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

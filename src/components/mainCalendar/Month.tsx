@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useMemo, useState } from 'react'
 
 import { Week } from './Week'
 import { Dayjs } from 'dayjs'
-import { Category } from '@/utils/types'
+import { Category } from '@/types/Category'
 
 /**
  * month - number from 1 to 12... denoting month of the year...

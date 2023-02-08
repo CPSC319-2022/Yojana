@@ -1,8 +1,7 @@
 import React, { ReactElement, useEffect, useMemo, useState } from 'react'
-import { Category } from '@/utils/types'
+import { Category, Entry } from '@/types/Category'
 import { EventBlock } from './EventBlock'
 import dayjs, { Dayjs } from 'dayjs'
-import { Entry } from '@/utils/types/Category'
 
 interface DayProps {
   categories: Category[]

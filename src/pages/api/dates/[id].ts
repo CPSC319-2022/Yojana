@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getToken } from 'next-auth/jwt'
-import prisma from '@/lib/prismadb'
+import prisma from '@/prisma/prismadb'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {

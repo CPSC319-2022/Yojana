@@ -1,4 +1,4 @@
-import { prismaMock } from '@/lib/singleton'
+import { prismaMock } from '@/prisma/singleton'
 import cats from '@/pages/api/cats'
 import '@testing-library/jest-dom'
 import { createRequest, createResponse } from 'node-mocks-http'

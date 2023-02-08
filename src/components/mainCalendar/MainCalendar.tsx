@@ -3,9 +3,9 @@ import { Month } from './Month'
 import { Day } from './Day'
 import { Week } from './Week'
 import { useSelector } from 'react-redux'
-import { getDate, getInterval } from '@/reducers/MainCalendarReducer'
+import { getDate, getInterval } from '@/redux/reducers/MainCalendarReducer'
 import { CalendarInterval } from '@/constants/enums'
-import { Category } from '@/utils/types'
+import { Category } from '@/types/Category'
 
 interface MainCalendarProps {
   categories: Category[]

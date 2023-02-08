@@ -1,7 +1,7 @@
 import React, { ReactElement, useMemo } from 'react'
 import { Day } from './Day'
 import { Dayjs } from 'dayjs'
-import { Category } from '@/utils/types'
+import { Category } from '@/types/Category'
 
 interface WeekProps {
   firstDate: Dayjs

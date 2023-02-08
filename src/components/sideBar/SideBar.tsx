@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import { CategoriesMenu } from '@/components/categoriesMenu'
-import { Category } from '@/utils/types'
+import { Category } from '@/types/Category'
 
 interface NavBarProps {
   categories: Category[]

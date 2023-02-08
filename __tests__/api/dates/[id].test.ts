@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import { createRequest, createResponse } from 'node-mocks-http'
 import dates from '@/pages/api/dates/[id]'
-import { prismaMock } from '@/lib/singleton'
+import { prismaMock } from '@/prisma/singleton'
 import * as jwt from 'next-auth/jwt'
 
 describe('/api/dates/[id]', () => {

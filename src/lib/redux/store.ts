@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { mainCalendarReducer } from '@/reducers/MainCalendarReducer'
+import { mainCalendarReducer } from './reducers/MainCalendarReducer'
 
 const rootReducer = combineReducers({
   mainCalendar: mainCalendarReducer

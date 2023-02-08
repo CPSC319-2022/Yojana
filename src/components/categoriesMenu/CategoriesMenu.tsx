@@ -1,6 +1,6 @@
 import { Checkbox } from '@/components/common'
 import React, { ReactElement, useMemo } from 'react'
-import { Category } from '@/utils/types'
+import { Category } from '@/types/Category'
 import { BsPencilSquare } from 'react-icons/bs'
 
 interface CategoriesMenuProps {

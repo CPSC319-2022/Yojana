@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import { CalViewDropdown } from './CalViewDropdown'
 import { useDispatch, useSelector } from 'react-redux'
-import { decrementDate, getDate, incrementDate } from '@/reducers/MainCalendarReducer'
+import { decrementDate, getDate, incrementDate } from '@/redux/reducers/MainCalendarReducer'
 import { signOut, useSession } from 'next-auth/react'
 
 interface NavBarProps {

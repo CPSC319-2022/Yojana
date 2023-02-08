@@ -1,4 +1,4 @@
-import prisma from '@/lib/prismadb'
+import prisma from '@/prisma/prismadb'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

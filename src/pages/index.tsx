@@ -2,7 +2,7 @@ import { NavBar } from '@/components/navBar'
 import { MainCalendar } from '@/components/mainCalendar'
 import { SideBar } from '@/components/sideBar/'
 import { useEffect, useState } from 'react'
-import { Category } from '@/utils/types'
+import { Category } from '@/types/Category'
 
 const Calendar = () => {
   const [categories, setCategories] = useState<Category[]>([])
