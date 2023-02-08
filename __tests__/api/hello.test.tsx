@@ -12,7 +12,6 @@ describe('/api/hello', () => {
     const res = createResponse()
 
     // call the /api/hello endpoint
-    // @ts-ignore
     await hello(req, res)
 
     // check the status code and data
@@ -29,7 +28,6 @@ describe('/api/hello', () => {
     const res = createResponse()
 
     // call the /api/hello endpoint
-    // @ts-ignore
     await hello(req, res)
 
     // check the status code and data

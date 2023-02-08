@@ -3,7 +3,7 @@ import { prismaMock } from '@/lib/singleton'
 import { createRequest, createResponse } from 'node-mocks-http'
 import * as jwt from 'next-auth/jwt'
 import dates from '@/pages/api/dates'
-import { Entry, PrismaPromise } from '@prisma/client'
+import { Entry } from '@prisma/client'
 
 describe('/api/dates', () => {
   it('GET should return a 200 status code', async () => {
@@ -23,7 +23,7 @@ describe('/api/dates', () => {
     // mock getToken from next-auth/jwt
     jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
     let currDate = new Date()
-    const mock_dates: Entry[] | PrismaPromise<Entry[]> = [
+    const mock_dates: Entry[] = [
       {
         categoryId: 1,
         date: currDate,
@@ -35,7 +35,6 @@ describe('/api/dates', () => {
     prismaMock.entry.findMany.mockResolvedValue(mock_dates)
 
     // call the /api/dates endpoint
-    // @ts-ignore
     await dates(req, res)
 
     // check the status code and data
@@ -66,7 +65,7 @@ describe('/api/dates', () => {
     jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
 
     let currDate = new Date()
-    const mock_dates: Entry[] | PrismaPromise<Entry[]> = [
+    const mock_dates = [
       {
         categoryId: 1,
         date: currDate,
@@ -78,7 +77,6 @@ describe('/api/dates', () => {
     prismaMock.entry.findMany.mockResolvedValue(mock_dates)
 
     // call the /api/users endpoint
-    // @ts-ignore
     await dates(req, res)
 
     // check the status code and data
@@ -109,7 +107,6 @@ describe('/api/dates', () => {
     jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
 
     // call the /api/users endpoint
-    // @ts-ignore
     await dates(req, res)
 
     // check the status code and data
@@ -139,7 +136,7 @@ describe('/api/dates', () => {
     jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
 
     let currDate = new Date()
-    const mock_dates: Entry[] | PrismaPromise<Entry[]> = [
+    const mock_dates = [
       {
         categoryId: 1,
         date: currDate,
@@ -151,7 +148,6 @@ describe('/api/dates', () => {
     prismaMock.entry.findUnique.mockResolvedValue(mock_dates[0])
 
     // call the /api/users endpoint
-    // @ts-ignore
     await dates(req, res)
 
     // check the status code and data
@@ -178,7 +174,6 @@ describe('/api/dates', () => {
     jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
 
     // call the /api/users endpoint
-    // @ts-ignore
     await dates(req, res)
 
     // check the status code and data
@@ -207,13 +202,12 @@ describe('/api/dates', () => {
     // mock getToken from next-auth/jwt
     jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
 
-    const mock_dates: Entry[] | PrismaPromise<Entry[]> = []
+    const mock_dates: Entry[] = []
 
     //mock prisma.user.findMany()
     prismaMock.entry.findMany.mockResolvedValue(mock_dates)
 
     // call the /api/users endpoint
-    // @ts-ignore
     await dates(req, res)
 
     // check the status code and data
@@ -239,13 +233,12 @@ describe('/api/dates', () => {
     // mock getToken from next-auth/jwt
     jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
 
-    const mock_dates: Entry[] | PrismaPromise<Entry[]> = []
+    const mock_dates: Entry[] = []
 
     //mock prisma.user.findMany()
     prismaMock.entry.findMany.mockResolvedValue(mock_dates)
 
     // call the /api/users endpoint
-    // @ts-ignore
     await dates(req, res)
 
     // check the status code and data

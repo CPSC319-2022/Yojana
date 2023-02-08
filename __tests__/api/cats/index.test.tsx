@@ -42,7 +42,6 @@ describe('/api/cats', () => {
         return Promise.resolve(mock_cats)
       })
 
-      // @ts-ignore
       await cats(req, res)
 
       expect(res._getStatusCode()).toBe(200)
@@ -70,7 +69,6 @@ describe('/api/cats', () => {
 
       prismaMock.category.create.mockResolvedValue(mock_body)
 
-      // @ts-ignore
       await cats(req, res)
 
       expect(res._getStatusCode()).toBe(201)
@@ -97,7 +95,6 @@ describe('/api/cats', () => {
 
       prismaMock.category.findFirst.mockResolvedValue(mock_body)
 
-      // @ts-ignore
       await cats(req, res)
 
       expect(res._getStatusCode()).toBe(409)
@@ -123,7 +120,6 @@ describe('/api/cats', () => {
       const res = createResponse()
 
       prismaMock.category.update.mockResolvedValue(mock_body)
-      // @ts-ignore
       await cats(req, res)
 
       expect(res._getStatusCode()).toBe(200)
@@ -148,7 +144,6 @@ describe('/api/cats', () => {
 
       prismaMock.category.update.mockRejectedValue(new Error('category does not exist'))
 
-      // @ts-ignore
       await cats(req, res)
 
       expect(res._getStatusCode()).toBe(404)
@@ -174,7 +169,6 @@ describe('/api/cats', () => {
 
       prismaMock.category.findFirst.mockResolvedValue(mock_body)
 
-      // @ts-ignore
       await cats(req, res)
 
       expect(res._getStatusCode()).toBe(409)
@@ -189,7 +183,6 @@ describe('/api/cats', () => {
     })
     const res = createResponse()
 
-    // @ts-ignore
     await cats(req, res)
 
     expect(res._getStatusCode()).toBe(405)

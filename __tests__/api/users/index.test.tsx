@@ -30,7 +30,6 @@ describe('/api/users', () => {
     prismaMock.user.findMany.mockResolvedValue(mock_users)
 
     // call the /api/users endpoint
-    // @ts-ignore
     await users(req, res)
 
     // check the status code and data
@@ -47,7 +46,6 @@ describe('/api/users', () => {
     const res = createResponse()
 
     // call the /api/users endpoint
-    // @ts-ignore
     await users(req, res)
 
     // check the status code and data
@@ -67,7 +65,6 @@ describe('/api/users', () => {
     jest.spyOn(jwt, 'getToken').mockResolvedValue(null)
 
     // call the /api/users endpoint
-    // @ts-ignore
     await users(req, res)
 
     // check the status code and data
