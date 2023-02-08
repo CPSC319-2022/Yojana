@@ -1,15 +1,15 @@
 import { Checkbox } from '@/components/common'
 import React, { ReactElement, useMemo } from 'react'
-import { Category } from '@/types/Category'
 import { BsPencilSquare } from 'react-icons/bs'
+import { getCategories } from '@/redux/reducers/AppDataReducer'
+import { useSelector } from 'react-redux'
+import { Category } from '@prisma/client'
 
-interface CategoriesMenuProps {
-  categories: Category[]
-}
+export const CategoriesMenu = (): ReactElement => {
+  const categories: Category[] = useSelector(getCategories)
 
-export const CategoriesMenu = (props: CategoriesMenuProps): ReactElement => {
   const eventList = useMemo(() => {
-    return props.categories?.map((calEvent, key) => (
+    return categories.map((calEvent, key) => (
       <div
         className={`flex flex-row justify-between bg-[${calEvent.color}] mt-1 pr-2 pl-2`}
         key={`category-item-${key}`}
@@ -20,7 +20,7 @@ export const CategoriesMenu = (props: CategoriesMenuProps): ReactElement => {
         </span>
       </div>
     ))
-  }, [props.categories])
+  }, [categories])
 
   return (
     <div>

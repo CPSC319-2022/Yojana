@@ -1,12 +1,14 @@
 import { NavBar } from '@/components/navBar'
 import { MainCalendar } from '@/components/mainCalendar'
 import { SideBar } from '@/components/sideBar/'
-import { useState } from 'react'
-import { Category } from '@/types/Category'
+import { AppData } from '@/types/AppData'
 import { getCategories } from '@/prisma/queries'
+import { useDispatch } from 'react-redux'
+import { setAppData } from '@/redux/reducers/AppDataReducer'
 
-const Calendar = ({ data }: { data: Category[] }) => {
-  const [categories, setCategories] = useState<Category[]>(data)
+const Calendar = ({ data }: { data: AppData[] }) => {
+  const dispatch = useDispatch()
+  dispatch(setAppData(data))
 
   return (
     <main>
@@ -14,10 +16,10 @@ const Calendar = ({ data }: { data: Category[] }) => {
         <NavBar className='flex h-12 w-full flex-row' />
         <div className='flex w-full grow flex-row'>
           <div className='w-1/5 pl-2 pr-2'>
-            <SideBar categories={categories} />
+            <SideBar />
           </div>
           <div className='flex w-4/5 flex-col'>
-            <MainCalendar categories={categories} />
+            <MainCalendar />
           </div>
         </div>
       </div>

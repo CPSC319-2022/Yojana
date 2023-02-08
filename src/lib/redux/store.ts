@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { mainCalendarReducer } from './reducers/MainCalendarReducer'
+import { appDataReducer } from './reducers/AppDataReducer'
 
 const rootReducer = combineReducers({
-  mainCalendar: mainCalendarReducer
+  mainCalendar: mainCalendarReducer,
+  appData: appDataReducer
 })
 
 export const store = configureStore({
