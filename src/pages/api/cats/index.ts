@@ -1,20 +1,11 @@
 import prisma from '@/prisma/prismadb'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { getCategories } from '@/prisma/queries'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case 'GET':
-      const categories = await prisma.category.findMany({
-        select: {
-          id: true,
-          name: true,
-          description: true,
-          color: true,
-          isMaster: true,
-          creator: true,
-          entries: true
-        }
-      })
+      const categories = await getCategories()
       return res.status(200).json(categories)
     case 'PUT':
       const nameExists = await prisma.category.findFirst({
