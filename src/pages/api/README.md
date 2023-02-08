@@ -50,25 +50,41 @@ get:
           categoryId: string
           date: string
           dateId: String
-    500:
-      text: Internal Server Error
 post:
   responses:
     200:
-      description: dates inserted successfully
+      description: entries inserted successfully
+      int: number of entries inserted
     401:
       description: user is not an admin
+      text: Unauthorized
+other:
+  responses:
+    405:
+      description: invalid method
+      text: Method Not Allowed
+```
 
+## /api/dates/:id
+
+```yaml
 delete:
   responses:
     200:
-      description: date deletion is successful
+      description: entry deletion is successful
+      object:
+        id: int
+        date: ISOString
+        categoryId: int
+    400:
+      description: invalid date id
+      text: Bad Request
     401:
       description: user is not an admin
+      text: Unauthorized
     404:
-      description: date ID does not exist
-    500:
-      description: undefined date ID
+      description: entry with provided id does not exist
+      text: Not Found
 other:
   responses:
     405:

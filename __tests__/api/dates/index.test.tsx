@@ -6,243 +6,156 @@ import dates from '@/pages/api/dates'
 import { Entry } from '@prisma/client'
 
 describe('/api/dates', () => {
-  it('GET should return a 200 status code', async () => {
-    // create a mock request and response
+  describe('GET', () => {
+    it('GET should return a 200 status code', async () => {
+      // create a mock request and response
+      const req = createRequest({
+        method: 'GET',
+        url: '/dates'
+      })
+      const res = createResponse()
+
+      const mock_token = {
+        id: '1',
+        name: 'John Doe',
+        email: 'john.doe@ad.com',
+        isAdmin: true
+      }
+
+      // mock getToken from next-auth/jwt
+      jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
+
+      const mock_dates: Entry[] = [
+        {
+          id: 1,
+          date: new Date(),
+          categoryId: 1
+        },
+        {
+          id: 2,
+          date: new Date(),
+          categoryId: 2
+        }
+      ]
+
+      //mock prisma.user.findMany()
+      prismaMock.entry.findMany.mockResolvedValue(mock_dates)
+
+      // call the /api/dates endpoint
+      await dates(req, res)
+
+      // check the status code and data
+      expect(res._getStatusCode()).toBe(200)
+      expect(res._getData()).toBe(JSON.stringify(mock_dates))
+    })
+  })
+
+  describe('POST', () => {
+    it('should return 200 status code when dates are created', async () => {
+      // create a mock request and response
+      const req = createRequest({
+        method: 'POST',
+        url: '/dates',
+        body: {
+          categoryId: 1,
+          dates: [Date.now()]
+        }
+      })
+      const res = createResponse()
+
+      const mock_token = {
+        id: '1',
+        name: 'John Doe',
+        email: 'john.doe@ad.com',
+        isAdmin: true
+      }
+
+      // mock getToken from next-auth/jwt
+      jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
+
+      // mock BatchPayload
+      const mock_batchPayload = {
+        count: 1
+      }
+
+      //mock prisma.user.findMany()
+      prismaMock.entry.createMany.mockResolvedValue(mock_batchPayload)
+
+      // call the /api/users endpoint
+      await dates(req, res)
+
+      // check the status code and data
+      expect(res._getStatusCode()).toBe(200)
+      expect(res._getData()).toBe(JSON.stringify(mock_batchPayload.count))
+    })
+
+    it('should return a 401 status code when user is not an admin', async () => {
+      // create a mock request and response
+      const req = createRequest({
+        method: 'POST',
+        url: '/dates',
+        body: {
+          categoryId: 1,
+          dates: [Date.now()]
+        }
+      })
+      const res = createResponse()
+
+      const mock_token = {
+        id: '1',
+        name: 'John Doe',
+        email: 'john.doe@ad.com',
+        isAdmin: false
+      }
+
+      // mock getToken from next-auth/jwt
+      jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
+
+      // call the /api/users endpoint
+      await dates(req, res)
+
+      // check the status code and data
+      expect(res._getStatusCode()).toBe(401)
+      expect(res._getData()).toBe(JSON.stringify('Unauthorized'))
+    })
+
+    it('should return a 400 status code when missing body', async () => {
+      // create a mock request and response
+      const req = createRequest({
+        method: 'POST',
+        url: '/dates'
+      })
+      const res = createResponse()
+
+      const mock_token = {
+        id: '1',
+        name: 'John Doe',
+        email: 'john@doe.com',
+        isAdmin: true
+      }
+
+      // mock getToken from next-auth/jwt
+      jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
+
+      // call the /api/users endpoint
+      await dates(req, res)
+
+      // check the status code and data
+      expect(res._getStatusCode()).toBe(400)
+      expect(res._getData()).toBe('Bad Request')
+    })
+  })
+
+  it('should return a 405 status code when invalid method', async () => {
     const req = createRequest({
-      method: 'GET',
+      method: 'PATCH',
       url: '/dates'
     })
     const res = createResponse()
 
-    const mock_token = {
-      id: '1',
-      name: 'John Doe',
-      email: 'john.doe@ad.com',
-      isAdmin: true
-    }
-    // mock getToken from next-auth/jwt
-    jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
-    let currDate = new Date()
-    const mock_dates: Entry[] = [
-      {
-        categoryId: 1,
-        date: currDate,
-        id: 1
-      }
-    ]
-
-    //mock prisma.user.findMany()
-    prismaMock.entry.findMany.mockResolvedValue(mock_dates)
-
-    // call the /api/dates endpoint
     await dates(req, res)
 
-    // check the status code and data
-    expect(res._getStatusCode()).toBe(200)
-    expect(res._getData()).toBe(JSON.stringify(mock_dates))
-  })
-
-  it('POST should return 200 status', async () => {
-    // create a mock request and response
-    const req = createRequest({
-      method: 'POST',
-      url: '/dates',
-      body: {
-        categoryId: 1,
-        dates: [Date.now()]
-      }
-    })
-    const res = createResponse()
-
-    const mock_token = {
-      id: '1',
-      name: 'John Doe',
-      email: 'john.doe@ad.com',
-      isAdmin: true
-    }
-
-    // mock getToken from next-auth/jwt
-    jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
-
-    let currDate = new Date()
-    const mock_dates = [
-      {
-        categoryId: 1,
-        date: currDate,
-        id: 1
-      }
-    ]
-
-    //mock prisma.user.findMany()
-    prismaMock.entry.findMany.mockResolvedValue(mock_dates)
-
-    // call the /api/users endpoint
-    await dates(req, res)
-
-    // check the status code and data
-    expect(res._getStatusCode()).toBe(200)
-    expect(res._getData()).toBe(JSON.stringify('Success'))
-  })
-
-  it('POST should return a 401 status code when user is not an admin', async () => {
-    // create a mock request and response
-    const req = createRequest({
-      method: 'POST',
-      url: '/dates',
-      body: {
-        categoryId: 1,
-        dates: [Date.now()]
-      }
-    })
-    const res = createResponse()
-
-    const mock_token = {
-      id: '1',
-      name: 'John Doe',
-      email: 'john.doe@ad.com',
-      isAdmin: false
-    }
-
-    // mock getToken from next-auth/jwt
-    jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
-
-    // call the /api/users endpoint
-    await dates(req, res)
-
-    // check the status code and data
-    expect(res._getStatusCode()).toBe(401)
-    expect(res._getData()).toBe(JSON.stringify('Unauthorized'))
-  })
-
-  it('DELETE should return 200 status', async () => {
-    // create a mock request and response
-    const req = createRequest({
-      method: 'DELETE',
-      url: '/dates',
-      query: {
-        id: 1
-      }
-    })
-    const res = createResponse()
-
-    const mock_token = {
-      id: '1',
-      name: 'John Doe',
-      email: 'john.doe@ad.com',
-      isAdmin: true
-    }
-
-    // mock getToken from next-auth/jwt
-    jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
-
-    let currDate = new Date()
-    const mock_dates = [
-      {
-        categoryId: 1,
-        date: currDate,
-        id: 1
-      }
-    ]
-
-    //mock prisma.user.findMany()
-    prismaMock.entry.findUnique.mockResolvedValue(mock_dates[0])
-
-    // call the /api/users endpoint
-    await dates(req, res)
-
-    // check the status code and data
-    expect(res._getStatusCode()).toBe(200)
-    expect(res._getData()).toBe(JSON.stringify('Success'))
-  })
-
-  it('DELETE should return a 401 status code when user is not an admin', async () => {
-    // create a mock request and response
-    const req = createRequest({
-      method: 'DELETE',
-      url: '/dates/1'
-    })
-    const res = createResponse()
-
-    const mock_token = {
-      id: '1',
-      name: 'John Doe',
-      email: 'john.doe@ad.com',
-      isAdmin: false
-    }
-
-    // mock getToken from next-auth/jwt
-    jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
-
-    // call the /api/users endpoint
-    await dates(req, res)
-
-    // check the status code and data
-    expect(res._getStatusCode()).toBe(401)
-    expect(res._getData()).toBe(JSON.stringify('Unauthorized'))
-  })
-
-  it('DELETE should return a 404 status code when date does not exist', async () => {
-    // create a mock request and response
-    const req = createRequest({
-      method: 'DELETE',
-      url: '/dates',
-      query: {
-        id: 5
-      }
-    })
-    const res = createResponse()
-
-    const mock_token = {
-      id: '1',
-      name: 'John Doe',
-      email: 'john.doe@ad.com',
-      isAdmin: true
-    }
-
-    // mock getToken from next-auth/jwt
-    jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
-
-    const mock_dates: Entry[] = []
-
-    //mock prisma.user.findMany()
-    prismaMock.entry.findMany.mockResolvedValue(mock_dates)
-
-    // call the /api/users endpoint
-    await dates(req, res)
-
-    // check the status code and data
-    expect(res._getStatusCode()).toBe(404)
-    expect(res._getData()).toBe(JSON.stringify('NOT FOUND'))
-  })
-
-  it('DELETE should return a 500 status code when id is undefined', async () => {
-    // create a mock request and response
-    const req = createRequest({
-      method: 'DELETE',
-      url: '/dates'
-    })
-    const res = createResponse()
-
-    const mock_token = {
-      id: '1',
-      name: 'John Doe',
-      email: 'john.doe@ad.com',
-      isAdmin: true
-    }
-
-    // mock getToken from next-auth/jwt
-    jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
-
-    const mock_dates: Entry[] = []
-
-    //mock prisma.user.findMany()
-    prismaMock.entry.findMany.mockResolvedValue(mock_dates)
-
-    // call the /api/users endpoint
-    await dates(req, res)
-
-    // check the status code and data
-    expect(res._getStatusCode()).toBe(500)
-    expect(res._getData()).toBe(JSON.stringify('UNDEFINED ID'))
+    expect(res._getStatusCode()).toBe(405)
+    expect(res._getData()).toBe('Method Not Allowed')
   })
 })
