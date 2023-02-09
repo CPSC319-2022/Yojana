@@ -13,12 +13,12 @@ const Calendar = ({ data }: { data: AppData[] }) => {
   return (
     <main>
       <div className='flex h-screen w-full flex-col bg-white text-black'>
-        <NavBar className='flex h-12 w-full flex-row' />
-        <div className='flex w-full grow flex-row'>
+        <NavBar className='navbar box-border flex h-[12vh] w-full flex-row' />
+        <div className='border-box flex h-[88vh] w-full flex-row'>
           <div className='w-1/5 pl-2 pr-2'>
             <SideBar />
           </div>
-          <div className='flex w-4/5 flex-col'>
+          <div className='flex w-4/5 flex-col overflow-y-auto'>
             <MainCalendar />
           </div>
         </div>

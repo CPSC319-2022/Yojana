@@ -14,16 +14,16 @@ export const NavBar = (props: NavBarProps): ReactElement => {
   const { data: session } = useSession()
 
   return (
-    <div className={props.className + ' ' + 'navbar justify-between'}>
+    <div className={props.className + ' ' + 'justify-between'}>
       <h1 className='text-2xl font-medium'>Calendar</h1>
       <div className='flex flex-row'>
-        <button className='btn mr-2' onClick={() => dispatch(decrementDate())}>
+        <button className='btn mr-1' onClick={() => dispatch(decrementDate())}>
           &lt;
         </button>
-        <h4 className='w-20 text-center'>{targetDate.format('MMMM')}</h4>
-        <button className='btn ml-2' onClick={() => dispatch(incrementDate())}>
+        <button className='btn ml-1' onClick={() => dispatch(incrementDate())}>
           &gt;
         </button>
+        <h4 className='ml-3 text-center text-xl'>{targetDate.format('MMMM YYYY')}</h4>
       </div>
       <CalViewDropdown />
       {session?.user.isAdmin ? 'Admin' : 'User'}

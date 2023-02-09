@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { CalendarInterval } from '@/constants/enums'
 import dayjs, { Dayjs } from 'dayjs'
+import { convertToDurationKey } from '@/utils/month'
 
 interface State {
   mainCalendar: {
@@ -14,17 +15,6 @@ const initialState = {
   date: dayjs()
 }
 
-const convertToDurationKey = (interval: CalendarInterval) => {
-  switch (interval) {
-    case CalendarInterval.MONTH:
-      return 'M'
-    case CalendarInterval.WEEK:
-      return 'w'
-    case CalendarInterval.DAY:
-      return 'd'
-  }
-}
-
 const mainCalendarSlice = createSlice({
   name: 'mainCalendar',
   initialState,
@@ -36,10 +26,10 @@ const mainCalendarSlice = createSlice({
       state.date = action.payload
     },
     incrementDate: (state) => {
-      state.date = state.date.add(1, convertToDurationKey(state.interval))
+      state.date = state.date.add(convertToDurationKey(state.interval), 'M')
     },
     decrementDate: (state) => {
-      state.date = state.date.subtract(1, convertToDurationKey(state.interval))
+      state.date = state.date.subtract(convertToDurationKey(state.interval), 'M')
     }
   }
 })
