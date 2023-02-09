@@ -1,4 +1,4 @@
-import React, { ReactElement, useMemo } from 'react'
+import React, { ReactElement, useCallback, useEffect, useMemo } from 'react'
 import { getInterval, setInterval } from '@/redux/reducers/MainCalendarReducer'
 import { CalendarInterval } from '@/constants/enums'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
@@ -7,13 +7,23 @@ export const CalViewDropdown = (): ReactElement => {
   const dispatch = useAppDispatch()
   const activeCalView = useAppSelector(getInterval)
 
-  const renderItems = useMemo(() => {
-    const onSelect = (selectedKey: string) => {
-      if (selectedKey !== activeCalView && selectedKey !== null) {
+  const onSelect = useCallback(
+    (selectedKey: string) => {
+      if (selectedKey !== activeCalView && Object.values(CalendarInterval).includes(selectedKey as any)) {
         dispatch(setInterval(selectedKey as CalendarInterval))
       }
-    }
+    },
+    [activeCalView, dispatch]
+  )
 
+  useEffect(() => {
+    const localStorageValue = localStorage.getItem('CalendarInterval')
+    if (localStorageValue) {
+      onSelect(localStorageValue)
+    }
+  }, []) // deliberately empty, is initialization code
+
+  const renderItems = useMemo(() => {
     return Object.values(CalendarInterval).map((view) => {
       return (
         <li key={view} onClick={() => onSelect(view)} className='p-2 hover:bg-gray-500'>
@@ -21,7 +31,7 @@ export const CalViewDropdown = (): ReactElement => {
         </li>
       )
     })
-  }, [dispatch, activeCalView])
+  }, [onSelect])
 
   return (
     <div id='calendar-view-menu' className='dropdown' title={activeCalView}>

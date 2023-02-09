@@ -21,6 +21,7 @@ const mainCalendarSlice = createSlice({
   reducers: {
     setInterval: (state, action: PayloadAction<CalendarInterval>) => {
       state.interval = action.payload
+      localStorage.setItem('CalendarInterval', action.payload)
     },
     setDate: (state, action: PayloadAction<Dayjs>) => {
       state.date = action.payload
