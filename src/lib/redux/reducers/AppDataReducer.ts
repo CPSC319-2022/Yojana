@@ -43,4 +43,16 @@ export const getCategoriesOnDate = (state: State, date: Dayjs) =>
     })
   })
 
+export const getCategoriesOfMonth = (state: State, dateInMonth: Dayjs) => {
+  const monthStart = dateInMonth.startOf('month')
+  const dates = Array.from(Array(dateInMonth.daysInMonth()).keys()).map((num: number) => monthStart.add(num, 'days'))
+  return dates.map((day: Dayjs) =>
+    state.appData.data.filter((cat) => {
+      return cat.entries.some((entry) => {
+        return dayjs(entry.date).isSame(day, 'day')
+      })
+    })
+  )
+}
+
 export const appDataReducer = appDataSlice.reducer

@@ -14,7 +14,7 @@ export const NavBar = (props: NavBarProps): ReactElement => {
   const { data: session } = useSession()
 
   return (
-    <div className={props.className + ' ' + 'navbar justify-between'}>
+    <div className={props.className + ' ' + 'justify-between'}>
       <h1 className='text-2xl font-medium'>Calendar</h1>
       <div className='flex flex-row'>
         <button className='btn mr-2' onClick={() => dispatch(decrementDate())}>
