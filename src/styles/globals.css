@@ -19,3 +19,9 @@ body {
   background-color: white;
   height: 100%;
 }
+
+/* ColorPicker swatch size */
+.compact-picker > div > span > div {
+  width: 20px !important;
+  height: 20px !important;
+}

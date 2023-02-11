@@ -17,6 +17,9 @@ module.exports = {
           800: '#00192C',
           900: '#000000'
         }
+      },
+      boxShadow: {
+        modal: '0 0 50px 1px rgba(0, 0, 0, 0.3)'
       }
     }
   },
