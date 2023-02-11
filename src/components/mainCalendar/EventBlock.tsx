@@ -1,20 +1,18 @@
 import React, { ReactElement } from 'react'
 import { getTextColor } from '@/utils/color'
-import { CalendarInterval } from '@/constants/enums'
 import { useAppSelector } from '@/redux/hooks'
-import { getInterval } from '@/redux/reducers/MainCalendarReducer'
+import { isMonthInterval } from '@/redux/reducers/MainCalendarReducer'
 
 interface EventBlockProps {
-  icon?: string
   color: string
   label: string
 }
 
-export const EventBlock = ({ color, label, icon = '' }: EventBlockProps): ReactElement => {
-  const activeCalView = useAppSelector(getInterval)
+export const EventBlock = (props: EventBlockProps): ReactElement => {
+  const monthView = useAppSelector(isMonthInterval)
   return (
-    <div className={`bg-[${color}] mt-1 ${getTextColor(color)} min-h-[1vh]`}>
-      <span className='ml-1'>{activeCalView === CalendarInterval.MONTH ? `${icon} ${label}` : ''}</span>
+    <div aria-label={props.label} className={`bg-[${props.color}] mt-1 ${getTextColor(props.color)} min-h-[1vh]`}>
+      {monthView ? props.label : ''}
     </div>
   )
 }
