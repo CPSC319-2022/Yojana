@@ -2,7 +2,7 @@ import { useSession } from 'next-auth/react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { ColorPicker } from '@/components/ColorPicker'
 import { useState } from 'react'
-import { Button, Modal } from '@/components/common'
+import { Alert, Button, Modal } from '@/components/common'
 import { useAppDispatch } from '@/redux/hooks'
 import { Category } from '@prisma/client'
 import { addCategory } from '@/redux/reducers/AppDataReducer'
@@ -25,7 +25,9 @@ export const CreateCategoryModal = () => {
     reset
   } = useForm<FormValues>()
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
 
   const onSubmit: SubmitHandler<FormValues> = async ({ name, color, description }) => {
     if (!session) {
@@ -69,36 +71,45 @@ export const CreateCategoryModal = () => {
         description: '',
         color: randomColor()
       }))
-      setIsOpen(false)
+      setIsModalOpen(false)
+    } else {
+      const text = await response.text()
+      setAlertMessage(text)
+      setShowAlert(true)
     }
   }
 
   return (
-    <Modal title='Create Category' isOpen={isOpen} setIsOpen={setIsOpen} maxWidth={'40vw'} draggable={true}>
-      <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
-        <div className='mb-4'>
-          <label className='mb-2 block font-medium text-gray-700'>Name</label>
-          <input
-            placeholder={errors.name ? 'Name is required' : ''}
-            className={`focus:shadow-outline w-full appearance-none rounded-none border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none ${
-              errors.name && 'border border-red-500'
-            }`}
-            {...register('name', { required: true })}
-          />
-        </div>
-        <div className='mb-4'>
-          <label className='mb-2 block font-medium text-gray-700'>Description</label>
-          <textarea
-            className='focus:shadow-outline w-full appearance-none rounded-none border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
-            {...register('description')}
-          />
-        </div>
-        <div className='mb-6'>
-          <label className='mb-2 block font-medium text-gray-700'>Color</label>
-          <ColorPicker control={control} name='color' rules={{ required: true }} />
-        </div>
-        <Button type='submit' disabled={isSubmitting} text='Create' onClick={handleSubmit(onSubmit)} />
-      </form>
-    </Modal>
+    <>
+      <Modal title='Create Category' isOpen={isModalOpen} setIsOpen={setIsModalOpen} maxWidth={'40vw'} draggable={true}>
+        <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
+          <div className='mb-4'>
+            <label className='mb-2 block font-medium text-gray-700'>Name</label>
+            <input
+              placeholder={errors.name ? 'Name is required' : ''}
+              className={`focus:shadow-outline w-full appearance-none rounded-md border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none ${
+                errors.name && 'border border-red-500'
+              }`}
+              {...register('name', { required: true })}
+            />
+          </div>
+          <div className='mb-4'>
+            <label className='mb-2 block font-medium text-gray-700'>Description</label>
+            <textarea
+              className='focus:shadow-outline w-full appearance-none rounded-md border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
+              {...register('description')}
+            />
+          </div>
+          <div className='mb-6'>
+            <label className='mb-2 block font-medium text-gray-700'>Color</label>
+            <ColorPicker control={control} name='color' rules={{ required: true }} />
+          </div>
+          <Button type='submit' disabled={isSubmitting} text='Create' onClick={handleSubmit(onSubmit)} />
+        </form>
+      </Modal>
+      <Alert type='error' setShow={setShowAlert} show={showAlert}>
+        <strong className='font-bold'>Error:</strong> <span className='block sm:inline'>{alertMessage}</span>
+      </Alert>
+    </>
   )
 }

@@ -1,13 +1,13 @@
 // Adapted from: https://headlessui.com/react/dialog
 
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
+import { Fragment, ReactNode } from 'react'
 import { Button } from '@/components/common'
 import Draggable from 'react-draggable'
 
 interface ModalProps {
   title?: string
-  children: React.ReactNode
+  children: ReactNode
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
   maxWidth?: string
@@ -65,7 +65,7 @@ export const Modal = ({
                   leaveTo='opacity-0 scale-95'
                 >
                   <Dialog.Panel
-                    className={`${directionClass} ${bodyPadding} w-full max-w-md transform overflow-hidden rounded-none bg-white text-left align-middle shadow-modal transition-all`}
+                    className={`${directionClass} ${bodyPadding} w-full max-w-md transform overflow-hidden rounded-md bg-white text-left align-middle shadow-modal transition-all`}
                     style={{ maxWidth: maxWidth, maxHeight: maxHeight }}
                   >
                     {closeBtn && (
@@ -96,6 +96,6 @@ export const Modal = ({
   )
 }
 
-const DraggableDialog = ({ children, draggable }: { children: React.ReactNode; draggable: boolean }) => {
+const DraggableDialog = ({ children, draggable }: { children: ReactNode; draggable: boolean }) => {
   return draggable ? <Draggable>{children}</Draggable> : <>{children}</>
 }
