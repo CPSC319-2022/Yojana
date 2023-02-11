@@ -1,4 +1,4 @@
-import { CategoriesMenu } from '@/components/categoriesMenu'
+import { CategoriesMenu } from './CategoriesMenu'
 import { getSession } from 'next-auth/react'
 import { ReactElement, useState } from 'react'
 import { MdOutlineColorLens, MdOutlineDescription } from 'react-icons/md'
