@@ -54,6 +54,7 @@ export const CreateCategoryModal = () => {
           name: data.name,
           description: data.description,
           isMaster: data.isMaster,
+          icon: data.icon,
           creator: {
             id: session.user.id,
             name: session.user.name,
