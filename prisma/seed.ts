@@ -1,5 +1,6 @@
 // https://www.prisma.io/docs/guides/database/seed-database
 import { PrismaClient } from '@prisma/client'
+import tcolors from 'tailwindcss/colors'
 
 const prisma = new PrismaClient()
 
@@ -11,12 +12,12 @@ export const data = [
     name: 'Admin',
     isAdmin: true,
     categories: [
-      { name: 'PayDay', description: 'This is the day you get paid', color: '#ef4444', isMaster: true },
-      { name: 'Holiday', description: 'Statuary holidays', color: '#10b981', isMaster: true },
-      { name: 'Work from home', description: 'Work from home', color: '#0ea5e9', isMaster: true },
-      { name: 'Shareholder meeting', description: 'Shareholder meeting', color: '#8b5cf6', isMaster: true },
-      { name: 'Vacation', description: 'Corporate retrieve', color: '#1c1917', isMaster: true },
-      { name: 'Birthday', description: 'List of Birthdays', color: '#f59e0b', isMaster: true }
+      { name: 'PayDay', description: 'This is the day you get paid', color: tcolors.red[500], isMaster: true },
+      { name: 'Holiday', description: 'Statuary holidays', color: tcolors.emerald[500], isMaster: true },
+      { name: 'Work from home', description: 'Work from home', color: tcolors.sky[500], isMaster: true },
+      { name: 'Shareholder meeting', description: 'Shareholder meeting', color: tcolors.violet[500], isMaster: true },
+      { name: 'Vacation', description: 'Corporate retrieve', color: tcolors.slate[900], isMaster: true },
+      { name: 'Birthday', description: 'List of Birthdays', color: tcolors.amber[500], isMaster: true }
     ]
   }
 ]
