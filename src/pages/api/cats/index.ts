@@ -1,6 +1,6 @@
 import prisma from '@/prisma/prismadb'
-import type { NextApiRequest, NextApiResponse } from 'next'
 import { getCategories } from '@/prisma/queries'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {

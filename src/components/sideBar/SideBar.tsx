@@ -1,8 +1,31 @@
 import { CategoriesMenu } from '@/components/categoriesMenu'
-import { ReactElement } from 'react'
+import { getSession } from 'next-auth/react'
+import { ReactElement, useState } from 'react'
 import { MdOutlineColorLens, MdOutlineDescription } from 'react-icons/md'
 
 export const SideBar = (): ReactElement => {
+  const [categoryName, setCategoryName] = useState('')
+  const [categoryDescription, setCategoryDescription] = useState('')
+  const [categoryColor, setCategoryColor] = useState('')
+
+  const handlePOST = async () => {
+    const session = await getSession()
+
+    const response = await fetch('api/cats', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: categoryName,
+        description: categoryDescription,
+        color: categoryColor,
+        creatorId: session?.user.id,
+        dates: []
+      })
+    })
+    const data = await response.json()
+  }
   const mainStyle = {
     paddingTop: '0'
   }
@@ -55,21 +78,38 @@ export const SideBar = (): ReactElement => {
           </div>
 
           <div className='modal-body' style={{ padding: '1rems' }}>
-            <input id='categoryName' placeholder=' Name' style={emptyInputStyle} type='text' />
+            <input
+              onChange={(event) => setCategoryName(event.target.value)}
+              id='categoryName'
+              placeholder=' Name'
+              style={emptyInputStyle}
+              type='text'
+            />
 
             <div id='categoryDescription' style={innerBodyStyle}>
               <MdOutlineDescription size={32} />
-              <input id='categoryDescription' placeholder=' Add Descriptions' style={boxInputStyle} type='text' />
+              <input
+                onChange={(event) => setCategoryDescription(event.target.value)}
+                id='categoryDescription'
+                placeholder=' Add Descriptions'
+                style={boxInputStyle}
+                type='text'
+              />
             </div>
 
             <div id='categoryColor' style={innerBodyStyle}>
               <MdOutlineColorLens size={32} />
-              <input id='categoryColor' type='color' />
+              <input
+                onChange={(event) => setCategoryColor(event.target.value)}
+                defaultValue={categoryColor}
+                id='categoryColor'
+                type='color'
+              />
             </div>
           </div>
 
           <div className='modal-action'>
-            <button className='btn' style={{ background: '#008FFD', border: 'white' }}>
+            <button className='btn' style={{ background: '#008FFD', border: 'white' }} onClick={handlePOST}>
               Save
             </button>
           </div>
