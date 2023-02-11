@@ -81,7 +81,14 @@ export const CreateCategoryModal = () => {
 
   return (
     <>
-      <Modal title='Create Category' isOpen={isModalOpen} setIsOpen={setIsModalOpen} maxWidth={'40vw'} draggable={true}>
+      <Modal
+        buttonText='Create Category'
+        title='Create Category'
+        isOpen={isModalOpen}
+        setIsOpen={setIsModalOpen}
+        maxWidth={'40vw'}
+        draggable={true}
+      >
         <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
           <div className='mb-4'>
             <label className='mb-2 block font-medium text-gray-700'>Name</label>

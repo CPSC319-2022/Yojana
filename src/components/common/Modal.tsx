@@ -6,6 +6,7 @@ import { Button } from '@/components/common'
 import Draggable from 'react-draggable'
 
 interface ModalProps {
+  buttonText: string
   title?: string
   children: ReactNode
   isOpen: boolean
@@ -20,6 +21,7 @@ interface ModalProps {
 
 export const Modal = ({
   children: body,
+  buttonText,
   title,
   isOpen,
   setIsOpen,
@@ -35,7 +37,7 @@ export const Modal = ({
   return (
     <>
       <div>
-        <Button text='Create Category' onClick={() => setIsOpen(true)} />
+        <Button text={buttonText} onClick={() => setIsOpen(true)} />
       </div>
 
       <Transition appear show={isOpen} as={Fragment}>
