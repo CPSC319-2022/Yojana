@@ -12,12 +12,42 @@ export const data = [
     name: 'Admin',
     isAdmin: true,
     categories: [
-      { name: 'PayDay', description: 'This is the day you get paid', color: tcolors.red[500], isMaster: true },
-      { name: 'Holiday', description: 'Statuary holidays', color: tcolors.emerald[500], isMaster: true },
-      { name: 'Work from home', description: 'Work from home', color: tcolors.sky[500], isMaster: true },
-      { name: 'Shareholder meeting', description: 'Shareholder meeting', color: tcolors.violet[500], isMaster: true },
-      { name: 'Vacation', description: 'Corporate retrieve', color: tcolors.slate[900], isMaster: true },
-      { name: 'Birthday', description: 'List of Birthdays', color: tcolors.amber[500], isMaster: true }
+      {
+        name: 'PayDay',
+        description: 'This is the day you get paid',
+        color: tcolors.red[500],
+        isMaster: true,
+        icon: '\u25BA'
+      },
+      {
+        name: 'Holiday',
+        description: 'Statuary holidays',
+        color: tcolors.emerald[500],
+        isMaster: true,
+        icon: '\u25A3'
+      },
+      {
+        name: 'Work from home',
+        description: 'Work from home',
+        color: tcolors.sky[500],
+        isMaster: true,
+        icon: '\u25C9'
+      },
+      {
+        name: 'Shareholder meeting',
+        description: 'Shareholder meeting',
+        color: tcolors.violet[500],
+        isMaster: true,
+        icon: '\u2660'
+      },
+      {
+        name: 'Vacation',
+        description: 'Corporate retrieve',
+        color: tcolors.slate[900],
+        isMaster: true,
+        icon: '\u25EA'
+      },
+      { name: 'Birthday', description: 'List of Birthdays', color: tcolors.amber[500], isMaster: true, icon: '\u25A9' }
     ]
   }
 ]
@@ -67,6 +97,7 @@ const seed = async () => {
             color: category.color,
             isMaster: category.isMaster,
             creatorId: user.id,
+            icon: category.icon,
             entries: {
               createMany: {
                 // create around 25 random dates for each category in 2023

@@ -34,6 +34,7 @@ export const getCategories = (state: State) =>
       description: cat.description,
       color: cat.color,
       isMaster: cat.isMaster,
+      icon: cat.icon,
       creatorId: cat.creator.id
     }
   })

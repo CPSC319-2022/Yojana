@@ -5,15 +5,16 @@ import { useAppSelector } from '@/redux/hooks'
 import { getInterval } from '@/redux/reducers/MainCalendarReducer'
 
 interface EventBlockProps {
+  icon?: string
   color: string
   label: string
 }
 
-export const EventBlock = (props: EventBlockProps): ReactElement => {
+export const EventBlock = ({ color, label, icon = '' }: EventBlockProps): ReactElement => {
   const activeCalView = useAppSelector(getInterval)
   return (
-    <div className={`bg-[${props.color}] mt-1 ${getTextColor(props.color)} min-h-[1vh]`}>
-      {activeCalView === CalendarInterval.MONTH ? props.label : ''}
+    <div className={`bg-[${color}] mt-1 ${getTextColor(color)} min-h-[1vh]`}>
+      <span className='ml-1'>{activeCalView === CalendarInterval.MONTH ? `${icon} ${label}` : ''}</span>
     </div>
   )
 }

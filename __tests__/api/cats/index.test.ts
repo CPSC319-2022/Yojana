@@ -23,6 +23,7 @@ describe('/api/cats', () => {
           description: 'abc',
           color: '#000000',
           isMaster: false,
+          icon: '',
           creator: {
             id: '1',
             name: 'test',
@@ -58,6 +59,7 @@ describe('/api/cats', () => {
         color: '#000000',
         isMaster: false,
         creatorId: 'id0',
+        icon: '123',
         dates: generateISODates()
       }
       const req = createRequest({
@@ -83,6 +85,7 @@ describe('/api/cats', () => {
         color: '#000000',
         isMaster: false,
         creatorId: 'abc123',
+        icon: '',
         dates: generateISODates()
       }
 
@@ -110,7 +113,8 @@ describe('/api/cats', () => {
         description: 'new desc',
         color: '#000000',
         isMaster: false,
-        creatorId: 'cba123'
+        creatorId: 'cba123',
+        icon: ''
       }
       const req = createRequest({
         method: 'PUT',
@@ -133,7 +137,8 @@ describe('/api/cats', () => {
         description: 'abc',
         color: '#000000',
         isMaster: false,
-        creatorId: '1'
+        creatorId: '1',
+        icon: ''
       }
       const req = createRequest({
         method: 'PUT',
@@ -157,7 +162,8 @@ describe('/api/cats', () => {
         description: 'something',
         color: '#000000',
         isMaster: false,
-        creatorId: 'abc123'
+        creatorId: 'abc123',
+        icon: ''
       }
 
       const req = createRequest({

@@ -7,6 +7,7 @@ export type AppData = Prisma.CategoryGetPayload<{
     description: true
     color: true
     isMaster: true
+    icon: true
     creator: {
       select: {
         id: true

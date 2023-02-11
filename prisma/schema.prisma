@@ -21,6 +21,7 @@ model Category {
   description String  @default("")
   color       String  @db.VarChar(7)
   isMaster    Boolean @default(false)
+  icon        String  @default("") @db.VarChar(6)
   creator     User    @relation(fields: [creatorId], references: [id])
   creatorId   String
   entries     Entry[]
