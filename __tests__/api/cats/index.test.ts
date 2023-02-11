@@ -83,7 +83,7 @@ describe('/api/cats', () => {
         color: '#000000',
         isMaster: false,
         creatorId: 'abc123',
-        entries: generateISODates()
+        dates: generateISODates()
       }
 
       const req = createRequest({
