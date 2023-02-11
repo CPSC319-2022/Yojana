@@ -1,17 +1,21 @@
 import React, { ReactElement, useCallback } from 'react'
 
 import { useAppSelector } from '@/redux/hooks'
-import { getDate } from '@/redux/reducers/MainCalendarReducer'
+import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
 import { getCategoriesOfMonth } from '@/redux/reducers/AppDataReducer'
 import { EventBlock } from '@/components/mainCalendar/EventBlock'
 import { AppData } from '@/types/AppData'
+import dayjs from 'dayjs'
 
 interface MonthProps {
   monthOffset: number
   className?: string
 }
 export const Month = (props: MonthProps): ReactElement => {
-  const targetDate = useAppSelector(getDate).add(props.monthOffset, 'month')
+  const monthView = useAppSelector(isMonthInterval)
+  const stateDate = useAppSelector(getDate)
+  const referenceDate = useAppSelector(isYearInterval) ? dayjs().startOf('year') : stateDate
+  const targetDate = referenceDate.add(props.monthOffset, 'month')
   const monthStartDate = targetDate.startOf('month')
   const daysInMonth = targetDate.daysInMonth()
   const numWeeks = Math.ceil((daysInMonth + monthStartDate.day()) / 7)
@@ -27,7 +31,7 @@ export const Month = (props: MonthProps): ReactElement => {
         <EventBlock color={calEvent.color} label={calEvent.name || ''} key={key} />
       ))
       return (
-        <div className='tile overflow-y-auto bg-white' key={day.date()}>
+        <div className={`tile overflow-y-auto bg-white`} key={day.date()}>
           <span
             className={`${offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''}`}
           >
@@ -60,8 +64,25 @@ export const Month = (props: MonthProps): ReactElement => {
     for (let i = 0 - monthStartDate.day(); i < daysInMonth; i += 7) {
       weeks.push(renderWeek(i))
     }
-    return weeks
-  }, [daysInMonth, monthStartDate, renderWeek])
+    return <div className={`h-[${monthView ? '95%' : '90%'}]`}>{weeks}</div>
+  }, [daysInMonth, monthStartDate, monthView, renderWeek])
 
-  return <div className={props.className + ' ' + 'box-border flex-1'}>{generateWeeks()}</div>
+  const generateDayNames = useCallback(() => {
+    return (
+      <div className='grid grid-cols-7'>
+        {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((letter, index) => (
+          <span className='tile text-m text-slate-400' key={index}>
+            {letter}
+          </span>
+        ))}
+      </div>
+    )
+  }, [])
+
+  return (
+    <div className={props.className + ' ' + 'box-border bg-slate-200' + ' ' + (monthView ? 'h-full' : '')}>
+      {generateDayNames()}
+      {generateWeeks()}
+    </div>
+  )
 }

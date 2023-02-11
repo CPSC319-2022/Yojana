@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 import { CalViewDropdown } from './CalViewDropdown'
-import { decrementDate, getDate, incrementDate } from '@/redux/reducers/MainCalendarReducer'
+import { decrementDate, getDate, incrementDate, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
 import { signOut, useSession } from 'next-auth/react'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 
@@ -11,6 +11,7 @@ interface NavBarProps {
 export const NavBar = (props: NavBarProps): ReactElement => {
   const dispatch = useAppDispatch()
   const targetDate = useAppSelector(getDate)
+  const yearView = useAppSelector(isYearInterval)
   const { data: session } = useSession()
 
   return (
@@ -23,7 +24,7 @@ export const NavBar = (props: NavBarProps): ReactElement => {
         <button className='btn ml-1' onClick={() => dispatch(incrementDate())}>
           &gt;
         </button>
-        <h4 className='ml-3 text-center text-xl'>{targetDate.format('MMMM YYYY')}</h4>
+        <h4 className='ml-3 text-center text-xl'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
       </div>
       <CalViewDropdown />
       {session?.user.isAdmin ? 'Admin' : 'User'}

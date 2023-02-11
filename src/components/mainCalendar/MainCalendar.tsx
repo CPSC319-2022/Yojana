@@ -18,5 +18,5 @@ export const MainCalendar = (): ReactElement => {
         return <Month monthOffset={0} />
     }
   }, [activeCalView])
-  return <div className='flex grow flex-col bg-black'>{calView}</div>
+  return <div className='flex grow flex-col overflow-y-auto bg-white'>{calView}</div>
 }
