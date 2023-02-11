@@ -95,7 +95,7 @@ export const CreateCategoryModal = () => {
             <input
               placeholder={errors.name ? 'Name is required' : ''}
               className={`focus:shadow-outline w-full appearance-none rounded-md border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none ${
-                errors.name && 'border border-red-500'
+                errors.name && 'border-red-500'
               }`}
               {...register('name', { required: true })}
             />
