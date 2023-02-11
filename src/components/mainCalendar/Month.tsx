@@ -64,7 +64,7 @@ export const Month = (props: MonthProps): ReactElement => {
     for (let i = 0 - monthStartDate.day(); i < daysInMonth; i += 7) {
       weeks.push(renderWeek(i))
     }
-    return <div className={`h-[${monthView ? '95%' : '90%'}]`}>{weeks}</div>
+    return <div className={`${monthView ? 'h-[95%]' : 'h-[90%]'}`}>{weeks}</div>
   }, [daysInMonth, monthStartDate, monthView, renderWeek])
 
   const generateDayNames = useCallback(() => {
