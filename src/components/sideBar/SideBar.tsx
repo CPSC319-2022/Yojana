@@ -109,9 +109,14 @@ export const SideBar = (): ReactElement => {
           </div>
 
           <div className='modal-action'>
-            <button className='btn' style={{ background: '#008FFD', border: 'white' }} onClick={handlePOST}>
+            <label
+              htmlFor='my-modal-6'
+              className='btn'
+              style={{ background: '#008FFD', border: 'white' }}
+              onClick={handlePOST}
+            >
               Save
-            </button>
+            </label>
           </div>
         </div>
       </div>
