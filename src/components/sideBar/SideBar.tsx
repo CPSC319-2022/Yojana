@@ -26,38 +26,7 @@ export const SideBar = (): ReactElement => {
     })
     const data = await response.json()
   }
-  const mainStyle = {
-    paddingTop: '0'
-  }
-  const headerStyle = {
-    display: 'flex',
-    FlexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    FlexWrap: 'nowrap'
-  }
-  const closerStyle = {
-    background: 'white',
-    color: 'black',
-    border: 'none'
-  }
-  const emptyInputStyle = {
-    borderBottom: '1px solid #000',
-    width: '100%',
-    marginTop: '1rem'
-  }
-  const innerBodyStyle = {
-    margin: '1.5rem',
-    width: '100%',
-    display: 'flex',
-    FlexDirection: 'row'
-    // alignItems: "center",
-  }
-  const boxInputStyle = {
-    border: '1px solid #00192C',
-    borderRadius: '6px',
-    width: '82.5%'
-  }
+
   return (
     <div>
       <label htmlFor='my-modal-6' className='btn'>
@@ -67,42 +36,41 @@ export const SideBar = (): ReactElement => {
 
       <input type='checkbox' id='my-modal-6' className='modal-toggle' />
       <div className='modal modal-bottom sm:modal-middle'>
-        <div className='modal-box' style={mainStyle}>
-          <div className='modal-header' style={headerStyle}>
-            <h3 className='text-lg font-bold' style={{ marginLeft: '0.7rem' }}>
-              Create New Category
-            </h3>
-            <label htmlFor='my-modal-6' className='btn' style={closerStyle}>
+        <div className='modal-box py-5'>
+          <div className='modal-header flex items-center justify-between'>
+            <h3 className='ml-7 text-lg font-bold'>Create New Category</h3>
+            <label htmlFor='my-modal-6' className='close-btn btn border-white bg-white text-black'>
               X
             </label>
           </div>
 
-          <div className='modal-body' style={{ padding: '1rems' }}>
+          <div className='modal-body px-5'>
             <input
               onChange={(event) => setCategoryName(event.target.value)}
               id='categoryName'
               placeholder=' Name'
-              style={emptyInputStyle}
+              className='mb-5 w-full border-b-2'
               type='text'
             />
 
-            <div id='categoryDescription' style={innerBodyStyle}>
+            <div id='categoryDescription' className='mb-5 flex items-center'>
               <MdOutlineDescription size={32} />
               <input
                 onChange={(event) => setCategoryDescription(event.target.value)}
                 id='categoryDescription'
                 placeholder=' Add Descriptions'
-                style={boxInputStyle}
+                className='ml-5 w-full border border-gray-400 p-2'
                 type='text'
               />
             </div>
 
-            <div id='categoryColor' style={innerBodyStyle}>
+            <div id='categoryColor' className='flex items-center'>
               <MdOutlineColorLens size={32} />
               <input
                 onChange={(event) => setCategoryColor(event.target.value)}
                 defaultValue={categoryColor}
                 id='categoryColor'
+                className='ml-5'
                 type='color'
               />
             </div>
