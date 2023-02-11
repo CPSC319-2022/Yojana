@@ -18,7 +18,7 @@ const Calendar = ({ data }: { data: AppData[] }) => {
           <div className='w-1/5 pl-2 pr-2'>
             <SideBar />
           </div>
-          <div className='flex w-4/5 flex-col overflow-y-auto'>
+          <div className='flex w-4/5 flex-col'>
             <MainCalendar />
           </div>
         </div>
