@@ -15,6 +15,7 @@ CREATE TABLE `Category` (
     `description` VARCHAR(191) NOT NULL DEFAULT '',
     `color` VARCHAR(7) NOT NULL,
     `isMaster` BOOLEAN NOT NULL DEFAULT false,
+    `icon` VARCHAR(6) NOT NULL DEFAULT '',
     `creatorId` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Category_name_key`(`name`),

@@ -1,10 +1,10 @@
 import { Checkbox } from '@/components/common'
-import React, { ReactElement, useMemo } from 'react'
-import { BsPencilSquare } from 'react-icons/bs'
-import { getCategories } from '@/redux/reducers/AppDataReducer'
-import { Category } from '@prisma/client'
-import { getTextColor } from '@/utils/color'
 import { useAppSelector } from '@/redux/hooks'
+import { getCategories } from '@/redux/reducers/AppDataReducer'
+import { getTextColor } from '@/utils/color'
+import { Category } from '@prisma/client'
+import { ReactElement, useMemo } from 'react'
+import { BsPencilSquare } from 'react-icons/bs'
 
 export const CategoriesMenu = (): ReactElement => {
   const categories: Category[] = useAppSelector(getCategories)
@@ -12,12 +12,11 @@ export const CategoriesMenu = (): ReactElement => {
   const eventList = useMemo(() => {
     return categories.map((calEvent, key) => (
       <div
-        className={`flex flex-row justify-between bg-[${calEvent.color}] mt-1 pr-2 pl-2 ${getTextColor(
-          calEvent.color
-        )}`}
+        className={`mt-1 flex flex-row  justify-between pr-2 pl-2 ${getTextColor(calEvent.color)}`}
         key={`category-item-${key}`}
+        style={{ background: calEvent.color }}
       >
-        <Checkbox label={calEvent.name} id={`checkbox-${key}`} key={`checkbox-${key}`} />
+        <Checkbox label={`${calEvent.icon} ${calEvent.name}`} id={`checkbox-${key}`} key={`checkbox-${key}`} />
         <span className='mt-1 cursor-pointer'>
           <BsPencilSquare />
         </span>
@@ -26,7 +25,7 @@ export const CategoriesMenu = (): ReactElement => {
   }, [categories])
 
   return (
-    <div>
+    <div className='mt-4'>
       <h3 className='text-xl'>Categories</h3>
       {eventList}
     </div>

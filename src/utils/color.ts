@@ -6,3 +6,9 @@ import { hex } from 'wcag-contrast'
 export const getTextColor = (bgColor: string) => {
   return hex(bgColor, '#ffffff') > 4.5 ? 'text-white' : 'text-black'
 }
+
+// generate a random hex color
+// 16777215 is the max value for a hex color (#ffffff)
+export const randomColor = () => {
+  return '#' + Math.floor(Math.random() * 16777215).toString(16)
+}

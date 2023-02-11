@@ -28,7 +28,7 @@ export const Month = (props: MonthProps): ReactElement => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
       const day = monthStartDate.add(offsetFromMonthStart, 'days')
       const dayCategories = categoriesPerDate[day.date() - 1]?.map((calEvent, key) => (
-        <EventBlock color={calEvent.color} label={calEvent.name || ''} key={key} />
+        <EventBlock color={calEvent.color} label={calEvent.name || ''} icon={calEvent.icon} key={key} />
       ))
       return (
         <div className={`tile overflow-y-auto bg-white`} key={day.date()}>
