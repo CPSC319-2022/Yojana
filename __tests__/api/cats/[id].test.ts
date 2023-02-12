@@ -159,7 +159,7 @@ describe('/api/cats/[id]', () => {
     const method = 'PUT'
     const req = createRequest({
       method: method,
-      url: '/cats',
+      url: '/cats/1',
       body: mock_body
     })
     const res = createResponse()

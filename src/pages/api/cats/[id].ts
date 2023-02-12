@@ -16,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       } catch (e) {
         res.status(409).send('There was an error retrieving the category')
       }
-      return
+      return res
     case 'DELETE':
       const token = await getToken({ req })
       if (!token?.isAdmin) {
@@ -44,7 +44,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
     default:
       res.setHeader('Allow', ['GET', 'DELETE'])
-      res.status(405).end(`Method ${method} Not Allowed`)
+      return res.status(405).end(`Method ${method} Not Allowed`)
   }
 }
 
