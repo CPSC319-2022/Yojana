@@ -12,11 +12,17 @@ export const CategoriesMenu = (): ReactElement => {
   const eventList = useMemo(() => {
     return categories.map((calEvent, key) => (
       <div
-        className={`mt-1 flex flex-row  justify-between pr-2 pl-2 ${getTextColor(calEvent.color)}`}
+        className={`mt-1 flex flex-row  justify-between pr-2 pl-2 `}
         key={`category-item-${key}`}
-        style={{ background: calEvent.color }}
+        //style={{ background: calEvent.color }}
+        style={{ background: 'white' }}
       >
-        <Checkbox label={`${calEvent.icon} ${calEvent.name}`} id={`checkbox-${key}`} key={`checkbox-${key}`} />
+        <Checkbox
+          label={`${calEvent.icon} ${calEvent.name}`}
+          id={`checkbox-${key}`}
+          key={`checkbox-${key}`}
+          color={`checkbox-${calEvent.color}`}
+        />
         <span className='mt-1 cursor-pointer'>
           <BsPencilSquare />
         </span>
