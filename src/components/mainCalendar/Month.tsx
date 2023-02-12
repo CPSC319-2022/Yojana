@@ -14,7 +14,7 @@ interface MonthProps {
 export const Month = (props: MonthProps): ReactElement => {
   const monthView = useAppSelector(isMonthInterval)
   const stateDate = useAppSelector(getDate)
-  const referenceDate = useAppSelector(isYearInterval) ? dayjs().startOf('year') : stateDate
+  const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
   const targetDate = referenceDate.add(props.monthOffset, 'month')
   const monthStartDate = targetDate.startOf('month')
   const daysInMonth = targetDate.daysInMonth()
