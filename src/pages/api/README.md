@@ -173,3 +173,39 @@ other:
       description: invalid method
       text: Method Not Allowed
 ```
+
+## /api/cats/[id]
+
+```yaml
+get:
+  responses:
+    200:
+      description: details about a single category, its dates, and its creator
+    object:
+      id: int
+      name: string
+      description: string
+      color: string
+      isMaster: boolean
+      creatorId: string
+delete:
+  responses:
+    200:
+      description: delete a category by its id and return the deleted category
+      object:
+        id: int
+        name: string
+        description: string
+        color: string
+        isMaster: boolean
+        creatorId: string
+    401:
+      description: user is not authorized to delete category
+      text: Unauthorized
+    404:
+      description: category does not exist
+      text: category does not exist
+    409:
+      description: internal error
+      text: There was an error deleting the category
+```
