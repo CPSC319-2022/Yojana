@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '@/prisma/prismadb'
+import { getToken } from 'next-auth/jwt'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const categoryId = Number(req.query.id)
@@ -13,6 +14,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       category ? res.status(200).json(category) : res.status(404).send('Not Found')
       break
     case 'DELETE':
+      const token = await getToken({ req })
+      if (!token?.isAdmin) {
+        return res.status(401).send('Unauthorized')
+      }
       // Delete data from your database
       const categoryExists = await prisma.category.findFirst({
         where: { id: categoryId }
