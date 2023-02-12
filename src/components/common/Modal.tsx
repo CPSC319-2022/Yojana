@@ -1,7 +1,7 @@
 // Adapted from: https://headlessui.com/react/dialog
 
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, ReactNode } from 'react'
+import { Fragment, ReactNode, useRef } from 'react'
 import { Button } from '@/components/common'
 import Draggable from 'react-draggable'
 
@@ -110,9 +110,11 @@ interface DraggableDialogProps {
 }
 
 const DraggableDialog = ({ children, draggable, handleId, bounds }: DraggableDialogProps) => {
+  // Draggable needs a ref to the underlying DOM node: https://stackoverflow.com/a/63603903/8488681
+  const nodeRef = useRef(null)
   return draggable ? (
-    <Draggable handle={`#${handleId}`} bounds={typeof bounds === 'string' ? `#${bounds}` : bounds}>
-      {children}
+    <Draggable handle={`#${handleId}`} bounds={typeof bounds === 'string' ? `#${bounds}` : bounds} nodeRef={nodeRef}>
+      <div ref={nodeRef}>{children}</div>
     </Draggable>
   ) : (
     <>{children}</>
