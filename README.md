@@ -37,6 +37,13 @@ to log in to MySQL Shell.
 mysql -u root -p # enter your password
 ```
 
+To connect to a remote Azure MySQL database use:
+
+```bash
+# remove the < > and replace with the correct values
+mysql -h <azure fullyQualifiedDomainName> -u <azure administratorLogin> -p # enter your password
+```
+
 See [this](https://www.prisma.io/dataguide/mysql) for more information on interacting with MySQL using MySQL Shell.
 
 ### Environment Variables
