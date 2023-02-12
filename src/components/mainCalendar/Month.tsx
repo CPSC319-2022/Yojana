@@ -22,7 +22,6 @@ export const Month = (props: MonthProps): ReactElement => {
 
   const categoriesPerDate: AppData[][] = useAppSelector((state) => getCategoriesOfMonth(state, targetDate))
 
-  // this thing needs to work by offset
   const renderDay = useCallback(
     (firstDateOfWeek: number, dayNum: number) => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
