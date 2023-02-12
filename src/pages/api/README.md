@@ -181,13 +181,16 @@ get:
   responses:
     200:
       description: details about a single category, its dates, and its creator
-    object:
-      id: int
-      name: string
-      description: string
-      color: string
-      isMaster: boolean
-      creatorId: string
+      object:
+        id: int
+        name: string
+        description: string
+        color: string
+        isMaster: boolean
+        creatorId: string
+    409:
+      description: internal error
+      text: There was an error getting the category
 delete:
   responses:
     200:

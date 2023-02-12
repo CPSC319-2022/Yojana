@@ -8,11 +8,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (method) {
     case 'GET':
       // Get category data from the database. Useful for specific category details and form pre-population.
-      const category = await prisma.category.findFirst({
-        where: { id: categoryId }
-      })
-      category ? res.status(200).json(category) : res.status(404).send('Not Found')
-      break
+      try {
+        const category = await prisma.category.findUniqueOrThrow({
+          where: { id: categoryId }
+        })
+        category ? res.status(200).json(category) : res.status(404).send('Not Found')
+      } catch (e) {
+        res.status(409).send('There was an error retrieving the category')
+      }
+      return
     case 'DELETE':
       const token = await getToken({ req })
       if (!token?.isAdmin) {
