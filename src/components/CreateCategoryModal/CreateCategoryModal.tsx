@@ -96,6 +96,8 @@ export const CreateCategoryModal = () => {
         maxWidth={'40vw'}
         draggable={true}
         closeWhenClickOutside={false}
+        handle={'create-category-modal-handle'}
+        bounds={'create-category-modal-wrapper'}
       >
         <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
           <div className='mb-4'>
