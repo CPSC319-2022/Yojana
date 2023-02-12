@@ -97,14 +97,12 @@ export const Modal = ({
   )
 }
 
-const DraggableDialog = ({
-  children,
-  draggable,
-  handle = '.handle'
-}: {
+interface DraggableDialogProps {
   children: ReactNode
   draggable: boolean
   handle?: string
-}) => {
+}
+
+const DraggableDialog = ({ children, draggable, handle = '.handle' }: DraggableDialogProps) => {
   return draggable ? <Draggable handle={handle}>{children}</Draggable> : <>{children}</>
 }
