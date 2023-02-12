@@ -188,6 +188,7 @@ get:
       description: details about a single category, its dates, and its creator
       object:
         id: int
+        icon: string
         name: string
         description: string
         color: string
@@ -202,6 +203,7 @@ delete:
       description: delete a category by its id and return the deleted category
       object:
         id: int
+        icon: string
         name: string
         description: string
         color: string

@@ -22,6 +22,7 @@ const mockUser = {
 const mock_body = {
   id: 1,
   name: 'def',
+  icon: '\u1919',
   description: 'abc',
   color: '#000000',
   isMaster: false,
