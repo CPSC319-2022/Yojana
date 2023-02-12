@@ -95,6 +95,7 @@ export const CreateCategoryModal = () => {
         setIsOpen={setIsModalOpen}
         maxWidth={'40vw'}
         draggable={true}
+        closeWhenClickOutside={false}
       >
         <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
           <div className='mb-4'>

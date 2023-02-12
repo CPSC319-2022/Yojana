@@ -17,6 +17,7 @@ interface ModalProps {
   direction?: 'top' | 'bottom'
   closeBtn?: boolean
   bodyPadding?: string
+  closeWhenClickOutside?: boolean
 }
 
 export const Modal = ({
@@ -30,66 +31,64 @@ export const Modal = ({
   draggable = false,
   direction,
   closeBtn = true,
-  bodyPadding = 'p-6'
+  closeWhenClickOutside = true
 }: ModalProps) => {
   const directionClass = direction ? `absolute ${direction}-0 my-10` : ''
 
   return (
     <>
       <div>
-        <Button text={buttonText} onClick={() => setIsOpen(true)} />
+        <Button text={buttonText} onClick={() => setIsOpen(!isOpen)} />
       </div>
 
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as='div' className='relative z-10' onClose={() => setIsOpen(false)}>
-          <Transition.Child
-            as={Fragment}
-            enter='ease-out duration-300'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='ease-in duration-200'
-            leaveFrom='opacity-100'
-            leaveTo='opacity-0'
-          >
-            <div className='fixed inset-0' />
-          </Transition.Child>
-
+        <Dialog
+          as='div'
+          className='pointer-events-none absolute top-0 z-10 flex h-screen w-screen items-center justify-center'
+          onClose={() => {
+            if (closeWhenClickOutside) {
+              setIsOpen(false)
+            }
+          }}
+        >
           <DraggableDialog draggable={draggable}>
-            <div className='fixed inset-0 overflow-y-auto'>
-              <div className='flex min-h-full items-center justify-center p-4 text-center'>
-                <Transition.Child
-                  as={Fragment}
-                  enter='ease-out duration-300'
-                  enterFrom='opacity-0 scale-95'
-                  enterTo='opacity-100 scale-100'
-                  leave='ease-in duration-200'
-                  leaveFrom='opacity-100 scale-100'
-                  leaveTo='opacity-0 scale-95'
+            <div className='pointer-events-auto'>
+              <Transition.Child
+                as={Fragment}
+                enter='ease-out duration-300'
+                enterFrom='opacity-0 scale-95'
+                enterTo='opacity-100 scale-100'
+                leave='ease-in duration-200'
+                leaveFrom='opacity-100 scale-100'
+                leaveTo='opacity-0 scale-95'
+              >
+                <Dialog.Panel
+                  className={`${directionClass} w-full max-w-md transform overflow-hidden rounded-md bg-white text-left align-middle shadow-modal transition-all`}
+                  style={{ maxWidth: maxWidth, maxHeight: maxHeight }}
                 >
-                  <Dialog.Panel
-                    className={`${directionClass} ${bodyPadding} w-full max-w-md transform overflow-hidden rounded-md bg-white text-left align-middle shadow-modal transition-all`}
-                    style={{ maxWidth: maxWidth, maxHeight: maxHeight }}
-                  >
+                  <div className='handle w-full cursor-move bg-slate-100'>
                     {closeBtn && (
-                      <div className='absolute top-0 right-2'>
+                      <div className='flex justify-end'>
                         <button
                           type='button'
-                          className='text-3xl text-gray-400 hover:text-gray-500 focus:outline-none'
+                          className='px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
                           onClick={() => setIsOpen(false)}
                         >
                           ×
                         </button>
                       </div>
                     )}
+                  </div>
+                  <div className='px-6 pb-6 pt-3'>
                     {title && (
                       <Dialog.Title as='h3' className='text-lg font-medium leading-6 text-gray-900'>
                         {title}
                       </Dialog.Title>
                     )}
                     <Dialog.Description as='div'>{body}</Dialog.Description>
-                  </Dialog.Panel>
-                </Transition.Child>
-              </div>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
             </div>
           </DraggableDialog>
         </Dialog>
@@ -98,6 +97,12 @@ export const Modal = ({
   )
 }
 
-const DraggableDialog = ({ children, draggable }: { children: ReactNode; draggable: boolean }) => {
-  return draggable ? <Draggable>{children}</Draggable> : <>{children}</>
+interface DraggableDialogProps {
+  children: ReactNode
+  draggable: boolean
+  handle?: string
+}
+
+const DraggableDialog = ({ children, draggable, handle = '.handle' }: DraggableDialogProps) => {
+  return draggable ? <Draggable handle={handle}>{children}</Draggable> : <>{children}</>
 }
