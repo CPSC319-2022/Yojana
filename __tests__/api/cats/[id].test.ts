@@ -154,4 +154,20 @@ describe('/api/cats/[id]', () => {
       expect(res._getData()).toBe('There was an error deleting the category')
     })
   })
+
+  it('should fail for any other method', async () => {
+    const method = 'PUT'
+    const req = createRequest({
+      method: method,
+      url: '/cats',
+      body: mock_body
+    })
+    const res = createResponse()
+
+    jest.spyOn(jwt, 'getToken').mockResolvedValue(mockAdmin)
+
+    await cats(req, res)
+    expect(res._getStatusCode()).toBe(405)
+    expect(res._getData()).toBe(`Method ${method} Not Allowed`)
+  })
 })
