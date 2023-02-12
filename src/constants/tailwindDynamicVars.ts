@@ -13,7 +13,7 @@
  * Green: bg-[#f59e0b]
  * Blue: bg-[#0ea5e9]
  * Purple: bg-[#ef4444]
- * Black: bg-[#1c1917]
+ * Black: bg-[#0f172a]
  * Orange: bg-[#8b5cf6]
  */
 

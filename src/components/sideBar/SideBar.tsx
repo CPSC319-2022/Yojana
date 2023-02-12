@@ -1,11 +1,12 @@
-import React, { ReactElement } from 'react'
-import { CategoriesMenu } from '@/components/categoriesMenu'
+import { CategoriesMenu } from './CategoriesMenu'
+import { ReactElement } from 'react'
+import { CreateCategoryModal } from '@/components/CreateCategoryModal'
 
 export const SideBar = (): ReactElement => {
   return (
-    <div>
-      <button className='btn'>Create</button>
+    <>
+      <CreateCategoryModal />
       <CategoriesMenu />
-    </div>
+    </>
   )
 }

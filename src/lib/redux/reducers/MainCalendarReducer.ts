@@ -11,7 +11,7 @@ interface State {
 }
 
 const initialState = {
-  interval: CalendarInterval.MONTH,
+  interval: CalendarInterval.YEAR,
   date: dayjs()
 }
 
@@ -36,5 +36,7 @@ const mainCalendarSlice = createSlice({
 
 export const { setInterval, decrementDate, setDate, incrementDate } = mainCalendarSlice.actions
 export const getInterval = (state: State) => state.mainCalendar.interval
+export const isYearInterval = (state: State) => state.mainCalendar.interval === CalendarInterval.YEAR
+export const isMonthInterval = (state: State) => state.mainCalendar.interval === CalendarInterval.MONTH
 export const getDate = (state: State) => state.mainCalendar.date
 export const mainCalendarReducer = mainCalendarSlice.reducer

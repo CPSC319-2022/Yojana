@@ -1,6 +1,6 @@
 import prisma from '@/prisma/prismadb'
-import type { NextApiRequest, NextApiResponse } from 'next'
 import { getCategories } from '@/prisma/queries'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
@@ -21,7 +21,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             name: req.body.name,
             description: req.body.description,
             color: req.body.color,
-            isMaster: req.body.isMaster
+            isMaster: req.body.isMaster,
+            icon: req.body.icon
           }
         })
         return res.status(200).json(edited_category)
@@ -40,6 +41,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             color: req.body.color,
             isMaster: req.body.isMaster,
             creatorId: req.body.creatorId,
+            icon: req.body.icon,
             entries: {
               createMany: {
                 data: req.body.dates.map((entry: string) => ({ entry }))

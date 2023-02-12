@@ -18,12 +18,14 @@ const appDataSlice = createSlice({
   reducers: {
     setAppData: (state, action: PayloadAction<AppData[]>) => {
       state.data = action.payload
+    },
+    addCategory: (state, action: PayloadAction<AppData>) => {
+      state.data.push(action.payload)
     }
   }
 })
 
-export const { setAppData } = appDataSlice.actions
-export const getAppData = (state: State) => state.appData.data
+export const { setAppData, addCategory } = appDataSlice.actions
 export const getCategories = (state: State) =>
   state.appData.data.map((cat) => {
     return {
@@ -32,15 +34,9 @@ export const getCategories = (state: State) =>
       description: cat.description,
       color: cat.color,
       isMaster: cat.isMaster,
+      icon: cat.icon,
       creatorId: cat.creator.id
     }
-  })
-
-export const getCategoriesOnDate = (state: State, date: Dayjs) =>
-  state.appData.data.filter((cat) => {
-    return cat.entries.some((entry) => {
-      return dayjs(entry.date).isSame(date, 'day')
-    })
   })
 
 export const getCategoriesOfMonth = (state: State, dateInMonth: Dayjs) => {

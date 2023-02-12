@@ -9,7 +9,8 @@ export const getCategories = async () => {
       color: true,
       isMaster: true,
       creator: true,
-      entries: true
+      entries: true,
+      icon: true
     }
   })
   return categories

@@ -111,6 +111,7 @@ get:
           description: string
           color: string
           isMaster: boolean
+          icon: string
           creator:
             object:
               id: string
@@ -129,6 +130,7 @@ put:
     name: string
     description: string
     color: string
+    icon: string
     isMaster: boolean
   responses:
     200:
@@ -138,6 +140,7 @@ put:
         name: string
         description: string
         color: string
+        icon: string
         isMaster: boolean
         creatorId: string
     404:
@@ -151,6 +154,7 @@ post:
     name: string
     description: string
     color: string
+    icon: string
     isMaster: boolean,
     creatorId: string
     dates: ISOString[]
@@ -162,6 +166,7 @@ post:
         name: string
         description: string
         color: string
+        icon: string
         isMaster: boolean
         creatorId: string
     409:
