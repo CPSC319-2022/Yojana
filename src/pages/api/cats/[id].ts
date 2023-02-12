@@ -9,7 +9,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     case 'GET':
       // Get category data from the database. Useful for specific category details and form pre-population.
       try {
-        const category = await prisma.category.findUniqueOrThrow({
+        const category = await prisma.category.findUnique({
           where: { id: categoryId }
         })
         category ? res.status(200).json(category) : res.status(404).send('Not Found')

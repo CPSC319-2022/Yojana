@@ -29,6 +29,59 @@ const mock_body = {
   dates: generateISODates()
 }
 describe('/api/cats/[id]', () => {
+  describe('GET', () => {
+    it('should return a 200 status code', async () => {
+      const req = createRequest({
+        method: 'GET',
+        url: '/cats/1'
+      })
+      const res = createResponse()
+
+      jest.spyOn(jwt, 'getToken').mockResolvedValue(mockUser)
+
+      prismaMock.category.findUnique.mockResolvedValue(mock_body)
+
+      await cats(req, res)
+
+      expect(res._getStatusCode()).toBe(200)
+      expect(res._getData()).toBe(JSON.stringify(mock_body))
+    })
+
+    it('should return a 404 if category not found', async () => {
+      const req = createRequest({
+        method: 'GET',
+        url: '/cats/1'
+      })
+      const res = createResponse()
+
+      jest.spyOn(jwt, 'getToken').mockResolvedValue(mockUser)
+
+      prismaMock.category.findUnique.mockResolvedValue(null)
+
+      await cats(req, res)
+
+      expect(res._getStatusCode()).toBe(404)
+      expect(res._getData()).toBe('Not Found')
+    })
+
+    it('should return a 409 if there was an internal error', async () => {
+      const req = createRequest({
+        method: 'GET',
+        url: '/cats/1'
+      })
+      const res = createResponse()
+
+      jest.spyOn(jwt, 'getToken').mockResolvedValue(mockUser)
+
+      prismaMock.category.findUnique.mockRejectedValue(new Error('Internal Error'))
+
+      await cats(req, res)
+
+      expect(res._getStatusCode()).toBe(409)
+      expect(res._getData()).toBe('There was an error retrieving the category')
+    })
+  })
+
   describe('DELETE', () => {
     it('should return a 200 status code when category is deleted', async () => {
       const req = createRequest({
