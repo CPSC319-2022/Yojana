@@ -11,6 +11,8 @@ interface ModalProps {
   children: ReactNode
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
+  handle: string
+  bounds?: string | { left: number; top: number; right: number; bottom: number }
   maxWidth?: string
   maxHeight?: string
   draggable?: boolean
@@ -31,7 +33,9 @@ export const Modal = ({
   draggable = false,
   direction,
   closeBtn = true,
-  closeWhenClickOutside = true
+  closeWhenClickOutside = true,
+  handle,
+  bounds
 }: ModalProps) => {
   const directionClass = direction ? `absolute ${direction}-0 my-10` : ''
 
@@ -44,14 +48,15 @@ export const Modal = ({
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as='div'
-          className='pointer-events-none absolute top-0 z-10 flex h-screen w-screen items-center justify-center'
+          id={typeof bounds === 'string' ? bounds : undefined}
+          className='pointer-events-none absolute top-0 z-10 flex h-screen w-screen items-center justify-center p-5'
           onClose={() => {
             if (closeWhenClickOutside) {
               setIsOpen(false)
             }
           }}
         >
-          <DraggableDialog draggable={draggable}>
+          <DraggableDialog draggable={draggable} bounds={bounds} handleId={handle}>
             <div className='pointer-events-auto'>
               <Transition.Child
                 as={Fragment}
@@ -66,7 +71,7 @@ export const Modal = ({
                   className={`${directionClass} w-full max-w-md transform overflow-hidden rounded-md bg-white text-left align-middle shadow-modal transition-all`}
                   style={{ maxWidth: maxWidth, maxHeight: maxHeight }}
                 >
-                  <div className='handle w-full cursor-move bg-slate-100'>
+                  <div id={handle} className='w-full cursor-move bg-slate-100'>
                     {closeBtn && (
                       <div className='flex justify-end'>
                         <button
@@ -100,9 +105,16 @@ export const Modal = ({
 interface DraggableDialogProps {
   children: ReactNode
   draggable: boolean
-  handle?: string
+  handleId: string
+  bounds?: string | { left: number; top: number; right: number; bottom: number }
 }
 
-const DraggableDialog = ({ children, draggable, handle = '.handle' }: DraggableDialogProps) => {
-  return draggable ? <Draggable handle={handle}>{children}</Draggable> : <>{children}</>
+const DraggableDialog = ({ children, draggable, handleId, bounds }: DraggableDialogProps) => {
+  return draggable ? (
+    <Draggable handle={`#${handleId}`} bounds={typeof bounds === 'string' ? `#${bounds}` : bounds}>
+      {children}
+    </Draggable>
+  ) : (
+    <>{children}</>
+  )
 }
