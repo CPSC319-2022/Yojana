@@ -4,7 +4,7 @@ import { Dropdown } from '@/components/common'
 
 export const AccountViewDropdown = () => {
   const { data: session } = useSession()
-  const sessionU = session?.user.isAdmin ? 'Admin' : 'User'
+  const name = session?.user.name || ''
 
   return (
     <Dropdown
@@ -18,7 +18,7 @@ export const AccountViewDropdown = () => {
         },
         {
           key: 'User',
-          label: sessionU,
+          label: name,
           onClick: () => {}
         }
       ]}
