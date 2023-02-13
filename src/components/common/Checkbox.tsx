@@ -11,11 +11,15 @@ interface CheckboxProps {
 export const Checkbox = ({ color, id, checkboxClassName, label, wrapperClassName }: CheckboxProps) => {
   return (
     <div className={wrapperClassName}>
+      <style jsx>{`
+        input[type='checkbox'] {
+          accent-color: ${color};
+        }
+      `}</style>
       <input
         type='checkbox'
         id={id}
-        className={`${color} ${checkboxClassName} relative bottom-px align-middle`}
-        style={{ accentColor: color }}
+        className={`${checkboxClassName} relative bottom-px align-middle`}
         defaultChecked
       />
       <label className='ml-2' htmlFor={id}>
