@@ -38,7 +38,7 @@ export const Checkbox = (props: CheckboxProps): ReactElement => {
   return (
     <div>
       <label>
-        <input type='checkbox' id={props.id} className={color} />
+        <input type='checkbox' id={props.id} className={color} defaultChecked />
       </label>
       <label className='ml-2' htmlFor={props.id}>
         {props.label}
