@@ -5,17 +5,13 @@ import { decrementDate, getDate, incrementDate, isYearInterval } from '@/redux/r
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Button } from '@/components/common'
 
-interface NavBarProps {
-  className: string
-}
-
-export const NavBar = (props: NavBarProps): ReactElement => {
+export const NavBar = (): ReactElement => {
   const dispatch = useAppDispatch()
   const targetDate = useAppSelector(getDate)
   const yearView = useAppSelector(isYearInterval)
 
   return (
-    <div className={props.className + ' ' + 'justify-between'}>
+    <div className={'box-border flex h-[12vh] w-full flex-row justify-between'}>
       <h1 className='text-2xl font-medium'>Yojana</h1>
       <div className='flex flex-row'>
         <Button text='<' onClick={() => dispatch(decrementDate())} className='mr-3' />
