@@ -6,6 +6,7 @@ interface CheckboxProps {
   className?: string
   color: string
 }
+
 export const Checkbox = (props: CheckboxProps): ReactElement => {
   let color
   if (props.color === '#f59e0b') {
