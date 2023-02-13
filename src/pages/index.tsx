@@ -12,7 +12,7 @@ const Calendar = ({ data }: { data: AppData[] }) => {
 
   return (
     <main>
-      <div className='flex h-screen w-full flex-col bg-white text-black'>
+      <div className='flex h-screen w-full flex-col bg-white text-slate-800'>
         <NavBar />
         <div className='border-box flex h-[88vh] w-full flex-row'>
           <div className='w-1/5 pr-2'>
