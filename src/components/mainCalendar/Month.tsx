@@ -29,22 +29,15 @@ export const Month = (props: MonthProps): ReactElement => {
       const dayCategories = categoriesPerDate[day.date() - 1]?.map((calEvent, key) => (
         <EventBlock color={calEvent.color} label={calEvent.name || ''} icon={calEvent.icon} key={key} />
       ))
-      const numberToKeep = monthView ? 4 : 2
-      const overFlowed =
-        dayCategories?.length > numberToKeep ? (
-          <div className={`${monthView ? 'text-s' : 'text-xs'}`}>
-            {'+' + (dayCategories?.length - numberToKeep)} more{' '}
-          </div>
-        ) : null
+
       return (
-        <div className={`tile overflow-y-hidden bg-white`} key={day.date()}>
+        <div className={`tile overflow-y-auto bg-white pr-0.5 pl-0.5`} key={day.date()}>
           <span
             className={`${offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''}`}
           >
             {day.date()}
           </span>
-          {dayCategories?.slice(0, numberToKeep)}
-          {overFlowed}
+          {dayCategories}
         </div>
       )
     },
