@@ -1,9 +1,9 @@
-import React, { ReactElement, useCallback } from 'react'
+import { ReactElement, useCallback } from 'react'
 
-import { useAppSelector } from '@/redux/hooks'
-import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
-import { getCategoriesOfMonth } from '@/redux/reducers/AppDataReducer'
 import { EventBlock } from '@/components/mainCalendar/EventBlock'
+import { useAppSelector } from '@/redux/hooks'
+import { getCategoriesOfMonth } from '@/redux/reducers/AppDataReducer'
+import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
 import { AppData } from '@/types/AppData'
 import dayjs from 'dayjs'
 
@@ -29,8 +29,9 @@ export const Month = (props: MonthProps): ReactElement => {
       const dayCategories = categoriesPerDate[day.date() - 1]?.map((calEvent, key) => (
         <EventBlock color={calEvent.color} label={calEvent.name || ''} icon={calEvent.icon} key={key} />
       ))
+
       return (
-        <div className={`tile overflow-y-auto bg-white`} key={day.date()}>
+        <div className={`tile overflow-y-auto bg-white pr-0.5 pl-0.5`} key={day.date()}>
           <span
             className={`${offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''}`}
           >

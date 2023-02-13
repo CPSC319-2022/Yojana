@@ -12,7 +12,7 @@ export const CategoriesMenu = (): ReactElement => {
   const eventList = useMemo(() => {
     return categories.map((calEvent, key) => (
       <div
-        className={`mt-1 flex flex-row  justify-between pr-2 pl-2 ${getTextColor(calEvent.color)}`}
+        className={`mt-1 flex flex-row justify-between rounded-md pr-2 pl-2 ${getTextColor(calEvent.color)}`}
         key={`category-item-${key}`}
         style={{ background: calEvent.color }}
       >
