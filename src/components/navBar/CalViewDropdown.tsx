@@ -1,10 +1,10 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import { getInterval, setInterval } from '@/redux/reducers/MainCalendarReducer'
 import { CalendarInterval } from '@/constants/enums'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Dropdown } from '@/components/common'
 
-export const CalViewDropdown = (): ReactElement => {
+export const CalViewDropdown = () => {
   const dispatch = useAppDispatch()
   const activeCalView = useAppSelector(getInterval)
 

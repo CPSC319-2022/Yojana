@@ -2,10 +2,10 @@ import { Checkbox } from '@/components/common'
 import { useAppSelector } from '@/redux/hooks'
 import { getCategories } from '@/redux/reducers/AppDataReducer'
 import { Category } from '@prisma/client'
-import { ReactElement, useMemo } from 'react'
+import { useMemo } from 'react'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 
-export const CategoriesMenu = (): ReactElement => {
+export const CategoriesMenu = () => {
   const categories: Category[] = useAppSelector(getCategories)
 
   const eventList = useMemo(() => {

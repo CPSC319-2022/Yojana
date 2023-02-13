@@ -1,11 +1,11 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import { AccountViewDropdown } from './AccountViewDropdown'
 import { CalViewDropdown } from './CalViewDropdown'
 import { decrementDate, getDate, incrementDate, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Button } from '@/components/common'
 
-export const NavBar = (): ReactElement => {
+export const NavBar = () => {
   const dispatch = useAppDispatch()
   const targetDate = useAppSelector(getDate)
   const yearView = useAppSelector(isYearInterval)

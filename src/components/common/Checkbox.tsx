@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 
 interface CheckboxProps {
   label: string
@@ -8,7 +8,7 @@ interface CheckboxProps {
   color: string
 }
 
-export const Checkbox = ({ color, id, checkboxClassName, label, wrapperClassName }: CheckboxProps): ReactElement => {
+export const Checkbox = ({ color, id, checkboxClassName, label, wrapperClassName }: CheckboxProps) => {
   return (
     <div className={wrapperClassName}>
       <input
