@@ -21,8 +21,8 @@ export const NavBar = () => {
       <h1 className='text-2xl font-medium'>Yojana</h1>
       <div className='flex w-[25vw] flex-row items-center'>
         <Button text='Today' onClick={() => dispatch(jumpToToday())} className='mr-10' />
-        <Button text='<' onClick={() => dispatch(decrementDate())} className='mr-3' />
-        <Button text='>' onClick={() => dispatch(incrementDate())} className='mr-3' />
+        <Button text='&lt;' onClick={() => dispatch(decrementDate())} className='mr-3' />
+        <Button text='&gt;' onClick={() => dispatch(incrementDate())} className='mr-3' />
         <h4 className='text-center text-lg'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
       </div>
       <CalViewDropdown />
