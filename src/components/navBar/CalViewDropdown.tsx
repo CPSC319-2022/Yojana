@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useMemo } from 'react'
+import React, { Fragment, ReactElement } from 'react'
 import { getInterval, setInterval } from '@/redux/reducers/MainCalendarReducer'
 import { CalendarInterval } from '@/constants/enums'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
@@ -13,24 +13,6 @@ export const CalViewDropdown = (): ReactElement => {
       dispatch(setInterval(selectedKey as CalendarInterval))
     }
   }
-
-  /*
-    const renderItems = useMemo(() => {
-        const onSelect = (selectedKey: string) => {
-            if (selectedKey !== activeCalView && selectedKey !== null) {
-                dispatch(setInterval(selectedKey as CalendarInterval))
-            }
-        }
-
-        return Object.values(CalendarInterval).map((view) => {
-            return (
-                <li key={view} onClick={() => onSelect(view)} className='p-2 hover:bg-gray-500'>
-                    {view}
-                </li>
-            )
-        })
-    }, [dispatch, activeCalView])
-     */
 
   return (
     <div id='calendar-view-menu' className='dropdown' title={activeCalView}>
