@@ -10,12 +10,7 @@ export const CategoriesMenu = (): ReactElement => {
 
   const eventList = useMemo(() => {
     return categories.map((calEvent, key) => (
-      <div
-        className={`mt-1 flex flex-row justify-between rounded-md pr-2 pl-2`}
-        key={`category-item-${key}`}
-        //style={{ background: calEvent.color }}
-        style={{ background: 'white' }}
-      >
+      <div className={`mt-1 flex flex-row justify-between rounded-md bg-white pr-2`} key={`category-item-${key}`}>
         <Checkbox
           label={`${calEvent.icon} ${calEvent.name}`}
           id={`checkbox-${key}`}

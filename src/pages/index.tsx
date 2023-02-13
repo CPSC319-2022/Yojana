@@ -15,7 +15,7 @@ const Calendar = ({ data }: { data: AppData[] }) => {
       <div className='flex h-screen w-full flex-col bg-white text-black'>
         <NavBar />
         <div className='border-box flex h-[88vh] w-full flex-row'>
-          <div className='w-1/5 pl-2 pr-2'>
+          <div className='w-1/5 pr-2'>
             <SideBar />
           </div>
           <div className='flex w-4/5 flex-col'>
