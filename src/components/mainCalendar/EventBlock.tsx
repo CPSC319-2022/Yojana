@@ -16,7 +16,7 @@ export const EventBlock = (props: EventBlockProps): ReactElement => {
       aria-label={props.label}
       className={`bg-[${props.color}] mt-1 ${getTextColor(
         props.color
-      )} min-h-[1vh] overflow-x-hidden whitespace-nowrap rounded-md pl-1 pr-1`}
+      )} mx-1 min-h-[1vh] overflow-x-hidden whitespace-nowrap rounded-md px-1`}
     >
       {monthView ? props.icon + ' ' + props.label : ''}
     </div>
