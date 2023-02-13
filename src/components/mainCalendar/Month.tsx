@@ -80,7 +80,7 @@ export const Month = (props: MonthProps): ReactElement => {
   }, [])
 
   return (
-    <div className={props.className + ' ' + 'box-border bg-slate-200' + ' ' + (monthView ? 'h-full' : '')}>
+    <div className={props.className + ' ' + 'box-border bg-slate-100' + ' ' + (monthView ? 'h-full' : '')}>
       {generateDayNames()}
       {generateWeeks()}
     </div>

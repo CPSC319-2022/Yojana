@@ -20,7 +20,7 @@ export const AccountViewDropdown = (): ReactElement => {
     <div id='account-view-menu' className='dropdown' title='account'>
       <Menu as='div' className='relative inline-block text-left'>
         <div>
-          <Menu.Button className='inline-flex w-full justify-center rounded-md border border-gray-200 bg-white bg-opacity-20 px-4 py-2 text-sm font-medium text-black hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
+          <Menu.Button className='inline-flex w-full justify-center rounded-md border border-gray-200 bg-white bg-opacity-20 px-4 py-2 font-medium text-black hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
             Account
           </Menu.Button>
         </div>
@@ -42,7 +42,7 @@ export const AccountViewDropdown = (): ReactElement => {
                     onClick={() => onSelect('Logout')}
                     className={`${
                       active ? 'bg-gray-300 text-black' : 'text-gray-900'
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    } group flex w-full items-center rounded-md px-2 py-2`}
                   >
                     Logout
                   </button>
@@ -55,7 +55,7 @@ export const AccountViewDropdown = (): ReactElement => {
                     onClick={() => onSelect('ID')}
                     className={`${
                       active ? 'bg-gray-300 text-black' : 'text-gray-900'
-                    } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    } group flex w-full items-center rounded-md px-2 py-2`}
                   >
                     {sessionU}
                   </button>

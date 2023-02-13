@@ -26,7 +26,7 @@ export const CategoriesMenu = (): ReactElement => {
 
   return (
     <div className='mt-4'>
-      <h3 className='text-xl'>Categories</h3>
+      <h3 className='text-lg'>Categories</h3>
       {eventList}
     </div>
   )
