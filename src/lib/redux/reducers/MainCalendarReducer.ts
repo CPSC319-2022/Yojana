@@ -11,7 +11,7 @@ interface State {
 }
 
 const initialState = {
-  interval: CalendarInterval.YEAR,
+  interval: CalendarInterval.MONTH,
   date: dayjs()
 }
 

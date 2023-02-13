@@ -14,9 +14,9 @@ export const CalViewDropdown = () => {
       containerClassName='w-[12vw]'
       menuItems={[
         {
-          key: CalendarInterval.YEAR,
-          label: CalendarInterval.YEAR,
-          onClick: () => dispatch(setInterval(CalendarInterval.YEAR))
+          key: CalendarInterval.MONTH,
+          label: CalendarInterval.MONTH,
+          onClick: () => dispatch(setInterval(CalendarInterval.MONTH))
         },
         {
           key: CalendarInterval.FOUR_MONTHS,
@@ -24,9 +24,9 @@ export const CalViewDropdown = () => {
           onClick: () => dispatch(setInterval(CalendarInterval.FOUR_MONTHS))
         },
         {
-          key: CalendarInterval.MONTH,
-          label: CalendarInterval.MONTH,
-          onClick: () => dispatch(setInterval(CalendarInterval.MONTH))
+          key: CalendarInterval.YEAR,
+          label: CalendarInterval.YEAR,
+          onClick: () => dispatch(setInterval(CalendarInterval.YEAR))
         }
       ]}
     />
