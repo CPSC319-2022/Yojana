@@ -28,7 +28,7 @@ const Calendar = ({ data }: { data: AppData[] }) => {
 }
 
 // get data from database on server side
-export async function getServerSideProps() {
+export const getServerSideProps = async () => {
   // make query to database to get categories
   const categories = await getCategories()
 

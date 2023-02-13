@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import { signOut, useSession } from 'next-auth/react'
 import { Dropdown } from '@/components/common'
 
-export const AccountViewDropdown = (): ReactElement => {
+export const AccountViewDropdown = () => {
   const { data: session } = useSession()
   const sessionU = session?.user.isAdmin ? 'Admin' : 'User'
 
