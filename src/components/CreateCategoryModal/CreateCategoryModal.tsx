@@ -7,12 +7,16 @@ import { useAppDispatch } from '@/redux/hooks'
 import { Category } from '@prisma/client'
 import { addCategory } from '@/redux/reducers/AppDataReducer'
 import { randomColor } from '@/utils/color'
+import * as z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-interface FormValues {
-  name: string
-  description: string
-  color: string
-}
+const schema = z.object({
+  name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
+  description: z.string().trim().max(191).optional(),
+  color: z.string().refine((color) => /^#[0-9A-F]{6}$/i.test(color), { message: 'Invalid color' })
+})
+
+type Schema = z.infer<typeof schema>
 
 export const CreateCategoryModal = () => {
   const { data: session } = useSession()
@@ -21,15 +25,18 @@ export const CreateCategoryModal = () => {
     register,
     handleSubmit,
     control,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
     reset
-  } = useForm<FormValues>()
+  } = useForm<Schema>({
+    resolver: zodResolver(schema),
+    shouldUseNativeValidation: true
+  })
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
 
-  const onSubmit: SubmitHandler<FormValues> = async ({ name, color, description }) => {
+  const onSubmit: SubmitHandler<Schema> = async ({ name, color, description }) => {
     if (!session) {
       console.error('No session found')
       return
@@ -88,21 +95,23 @@ export const CreateCategoryModal = () => {
         setIsOpen={setIsModalOpen}
         maxWidth={'40vw'}
         draggable={true}
+        closeWhenClickOutside={false}
+        handle={'create-category-modal-handle'}
+        bounds={'create-category-modal-wrapper'}
       >
         <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
           <div className='mb-4'>
             <label className='mb-2 block font-medium text-gray-700'>Name</label>
             <input
-              placeholder={errors.name ? 'Name is required' : ''}
-              className={`focus:shadow-outline w-full appearance-none rounded-md border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none ${
-                errors.name && 'border-red-500'
-              }`}
-              {...register('name', { required: true })}
+              placeholder='Enter a name for the category'
+              className='focus:shadow-outline w-full appearance-none rounded-md border py-2 px-3 leading-tight text-gray-700 shadow invalid:border-red-500 invalid:bg-red-50 invalid:text-red-500 invalid:placeholder-red-500 focus:outline-none'
+              {...register('name')}
             />
           </div>
           <div className='mb-4'>
             <label className='mb-2 block font-medium text-gray-700'>Description</label>
             <textarea
+              placeholder='Enter a description for the category'
               className='focus:shadow-outline w-full appearance-none rounded-md border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
               {...register('description')}
             />

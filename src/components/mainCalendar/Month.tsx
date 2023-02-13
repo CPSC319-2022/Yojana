@@ -1,9 +1,9 @@
-import React, { ReactElement, useCallback } from 'react'
+import { ReactElement, useCallback } from 'react'
 
-import { useAppSelector } from '@/redux/hooks'
-import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
-import { getCategoriesOfMonth } from '@/redux/reducers/AppDataReducer'
 import { EventBlock } from '@/components/mainCalendar/EventBlock'
+import { useAppSelector } from '@/redux/hooks'
+import { getCategoriesOfMonth } from '@/redux/reducers/AppDataReducer'
+import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
 import { AppData } from '@/types/AppData'
 import dayjs from 'dayjs'
 
@@ -14,7 +14,7 @@ interface MonthProps {
 export const Month = (props: MonthProps): ReactElement => {
   const monthView = useAppSelector(isMonthInterval)
   const stateDate = useAppSelector(getDate)
-  const referenceDate = useAppSelector(isYearInterval) ? dayjs().startOf('year') : stateDate
+  const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
   const targetDate = referenceDate.add(props.monthOffset, 'month')
   const monthStartDate = targetDate.startOf('month')
   const daysInMonth = targetDate.daysInMonth()
@@ -22,7 +22,6 @@ export const Month = (props: MonthProps): ReactElement => {
 
   const categoriesPerDate: AppData[][] = useAppSelector((state) => getCategoriesOfMonth(state, targetDate))
 
-  // this thing needs to work by offset
   const renderDay = useCallback(
     (firstDateOfWeek: number, dayNum: number) => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
@@ -30,8 +29,9 @@ export const Month = (props: MonthProps): ReactElement => {
       const dayCategories = categoriesPerDate[day.date() - 1]?.map((calEvent, key) => (
         <EventBlock color={calEvent.color} label={calEvent.name || ''} icon={calEvent.icon} key={key} />
       ))
+
       return (
-        <div className={`tile overflow-y-auto bg-white`} key={day.date()}>
+        <div className={`tile overflow-y-auto bg-white pr-0.5 pl-0.5`} key={day.date()}>
           <span
             className={`${offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''}`}
           >
