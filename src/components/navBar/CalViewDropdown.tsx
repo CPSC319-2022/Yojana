@@ -36,7 +36,7 @@ export const CalViewDropdown = (): ReactElement => {
     <div id='calendar-view-menu' className='dropdown' title={activeCalView}>
       <Menu as='div' className='relative inline-block text-left'>
         <div>
-          <Menu.Button className='inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
+          <Menu.Button className='inline-flex w-full justify-center rounded-md border border-gray-200 bg-white bg-opacity-20 px-4 py-2 text-sm font-medium text-black hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'>
             {activeCalView}
           </Menu.Button>
         </div>
@@ -57,7 +57,7 @@ export const CalViewDropdown = (): ReactElement => {
                     key={'Year'}
                     onClick={() => onSelect('Year')}
                     className={`${
-                      active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                      active ? 'bg-gray-300 text-black' : 'text-gray-900'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                   >
                     Year
@@ -70,7 +70,7 @@ export const CalViewDropdown = (): ReactElement => {
                     key={'4 Months'}
                     onClick={() => onSelect('4 Months')}
                     className={`${
-                      active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                      active ? 'bg-gray-300 text-black' : 'text-gray-900'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                   >
                     4 Months
@@ -83,7 +83,7 @@ export const CalViewDropdown = (): ReactElement => {
                     key={'Month'}
                     onClick={() => onSelect('Month')}
                     className={`${
-                      active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                      active ? 'bg-gray-300 text-black' : 'text-gray-900'
                     } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                   >
                     Month

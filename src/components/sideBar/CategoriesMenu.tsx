@@ -21,7 +21,7 @@ export const CategoriesMenu = (): ReactElement => {
           label={`${calEvent.icon} ${calEvent.name}`}
           id={`checkbox-${key}`}
           key={`checkbox-${key}`}
-          color={`checkbox-${calEvent.color}`}
+          color={calEvent.color}
         />
         <span className='mt-1 cursor-pointer'>
           <BsPencilSquare />
