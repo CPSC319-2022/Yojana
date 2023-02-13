@@ -20,6 +20,7 @@ interface ModalProps {
   closeBtn?: boolean
   bodyPadding?: string
   closeWhenClickOutside?: boolean
+  buttonClassName?: string
 }
 
 export const Modal = ({
@@ -35,14 +36,15 @@ export const Modal = ({
   closeBtn = true,
   closeWhenClickOutside = true,
   handle,
-  bounds
+  bounds,
+  buttonClassName
 }: ModalProps) => {
   const directionClass = direction ? `absolute ${direction}-0 my-10` : ''
 
   return (
     <>
       <div>
-        <Button text={buttonText} onClick={() => setIsOpen(!isOpen)} />
+        <Button text={buttonText} onClick={() => setIsOpen(!isOpen)} className={buttonClassName} />
       </div>
 
       <Transition appear show={isOpen} as={Fragment}>

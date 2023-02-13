@@ -3,11 +3,12 @@ import React, { ReactElement } from 'react'
 interface CheckboxProps {
   label: string
   id: string
-  className?: string
+  checkboxClassName?: string
+  wrapperClassName?: string
   color: string
 }
 
-export const Checkbox = ({ color, id, className, label }: CheckboxProps): ReactElement => {
+export const Checkbox = ({ color, id, checkboxClassName, label, wrapperClassName }: CheckboxProps): ReactElement => {
   if (color === '#f59e0b') {
     color = 'accent-orange-400'
   } else if (color === '#10b981') {
@@ -23,10 +24,13 @@ export const Checkbox = ({ color, id, className, label }: CheckboxProps): ReactE
   }
 
   return (
-    <div>
-      <label>
-        <input type='checkbox' id={id} className={`${color} ${className}`} defaultChecked />
-      </label>
+    <div className={wrapperClassName}>
+      <input
+        type='checkbox'
+        id={id}
+        className={`${color} ${checkboxClassName} relative bottom-px align-middle`}
+        defaultChecked
+      />
       <label className='ml-2' htmlFor={id}>
         {label}
       </label>
