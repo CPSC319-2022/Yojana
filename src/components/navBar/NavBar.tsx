@@ -24,17 +24,6 @@ export const NavBar = (props: NavBarProps): ReactElement => {
       </div>
       <CalViewDropdown />
       <AccountViewDropdown />
-
-      {/*
-            {session?.user.isAdmin ? 'Admin' : 'User'}
-      {session && (
-        <button className='rounded-md border border-gray-200 bg-white px-2 py-1 text-sm font-medium text-black focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-600 focus-visible:ring-offset-2 enabled:hover:bg-gray-100 disabled:opacity-75' onClick={() => signOut()}>
-          Logout
-        </button>
-      )}
-    </div>
-  )
-             */}
     </div>
   )
 }
