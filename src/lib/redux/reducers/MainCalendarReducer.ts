@@ -30,11 +30,14 @@ const mainCalendarSlice = createSlice({
     },
     decrementDate: (state) => {
       state.date = state.date.subtract(convertToDurationKey(state.interval), 'M')
+    },
+    jumpToToday: (state) => {
+      state.date = dayjs()
     }
   }
 })
 
-export const { setInterval, decrementDate, setDate, incrementDate } = mainCalendarSlice.actions
+export const { setInterval, decrementDate, setDate, incrementDate, jumpToToday } = mainCalendarSlice.actions
 export const getInterval = (state: State) => state.mainCalendar.interval
 export const isYearInterval = (state: State) => state.mainCalendar.interval === CalendarInterval.YEAR
 export const isMonthInterval = (state: State) => state.mainCalendar.interval === CalendarInterval.MONTH
