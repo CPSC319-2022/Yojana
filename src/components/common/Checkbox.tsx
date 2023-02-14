@@ -1,17 +1,29 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 
 interface CheckboxProps {
   label: string
   id: string
-  className?: string
+  checkboxClassName?: string
+  wrapperClassName?: string
+  color: string
 }
 
-export const Checkbox = (props: CheckboxProps): ReactElement => {
+export const Checkbox = ({ color, id, checkboxClassName, label, wrapperClassName }: CheckboxProps) => {
   return (
-    <div>
-      <input type='checkbox' id={props.id} />
-      <label className='ml-2' htmlFor={props.id}>
-        {props.label}
+    <div className={wrapperClassName}>
+      <style jsx>{`
+        input[type='checkbox'] {
+          accent-color: ${color};
+        }
+      `}</style>
+      <input
+        type='checkbox'
+        id={id}
+        className={`${checkboxClassName} relative bottom-px align-middle`}
+        defaultChecked
+      />
+      <label className='ml-2' htmlFor={id}>
+        {label}
       </label>
     </div>
   )

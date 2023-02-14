@@ -1,8 +1,7 @@
 import { CategoriesMenu } from './CategoriesMenu'
-import { ReactElement } from 'react'
 import { CreateCategoryModal } from '@/components/CreateCategoryModal'
 
-export const SideBar = (): ReactElement => {
+export const SideBar = () => {
   return (
     <>
       <CreateCategoryModal />

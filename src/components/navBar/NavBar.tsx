@@ -1,38 +1,32 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
+import { AccountViewDropdown } from './AccountViewDropdown'
 import { CalViewDropdown } from './CalViewDropdown'
-import { decrementDate, getDate, incrementDate, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
-import { signOut, useSession } from 'next-auth/react'
+import {
+  decrementDate,
+  getDate,
+  incrementDate,
+  isYearInterval,
+  jumpToToday
+} from '@/redux/reducers/MainCalendarReducer'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { Button } from '@/components/common'
 
-interface NavBarProps {
-  className: string
-}
-
-export const NavBar = (props: NavBarProps): ReactElement => {
+export const NavBar = () => {
   const dispatch = useAppDispatch()
   const targetDate = useAppSelector(getDate)
   const yearView = useAppSelector(isYearInterval)
-  const { data: session } = useSession()
 
   return (
-    <div className={props.className + ' ' + 'justify-between'}>
-      <h1 className='text-2xl font-medium'>Calendar</h1>
-      <div className='flex flex-row'>
-        <button className='btn mr-1' onClick={() => dispatch(decrementDate())}>
-          &lt;
-        </button>
-        <button className='btn ml-1' onClick={() => dispatch(incrementDate())}>
-          &gt;
-        </button>
-        <h4 className='ml-3 text-center text-xl'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
+    <div className='box-border flex h-[12vh] w-full flex-row items-center justify-between px-5'>
+      <h1 className='text-2xl font-medium'>Yojana</h1>
+      <div className='flex w-[25vw] flex-row items-center'>
+        <Button text='Today' onClick={() => dispatch(jumpToToday())} className='mr-10' />
+        <Button text='&lt;' onClick={() => dispatch(decrementDate())} className='mr-3' />
+        <Button text='&gt;' onClick={() => dispatch(incrementDate())} className='mr-3' />
+        <h4 className='text-center text-lg'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
       </div>
       <CalViewDropdown />
-      {session?.user.isAdmin ? 'Admin' : 'User'}
-      {session && (
-        <button className='btn' onClick={() => signOut()}>
-          Logout
-        </button>
-      )}
+      <AccountViewDropdown />
     </div>
   )
 }

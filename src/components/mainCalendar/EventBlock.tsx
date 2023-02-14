@@ -1,7 +1,6 @@
 import { useAppSelector } from '@/redux/hooks'
 import { isMonthInterval } from '@/redux/reducers/MainCalendarReducer'
 import { getTextColor } from '@/utils/color'
-import { ReactElement } from 'react'
 
 interface EventBlockProps {
   color: string
@@ -9,7 +8,7 @@ interface EventBlockProps {
   icon: string
 }
 
-export const EventBlock = (props: EventBlockProps): ReactElement => {
+export const EventBlock = (props: EventBlockProps) => {
   const monthView = useAppSelector(isMonthInterval)
   return (
     <div

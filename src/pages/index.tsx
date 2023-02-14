@@ -12,10 +12,10 @@ const Calendar = ({ data }: { data: AppData[] }) => {
 
   return (
     <main>
-      <div className='flex h-screen w-full flex-col bg-white text-black'>
-        <NavBar className='navbar box-border flex h-[12vh] w-full flex-row' />
+      <div className='flex h-screen w-full flex-col bg-white text-slate-800'>
+        <NavBar />
         <div className='border-box flex h-[88vh] w-full flex-row'>
-          <div className='w-1/5 pl-2 pr-2'>
+          <div className='w-1/5 pr-2'>
             <SideBar />
           </div>
           <div className='flex w-4/5 flex-col'>
@@ -28,7 +28,7 @@ const Calendar = ({ data }: { data: AppData[] }) => {
 }
 
 // get data from database on server side
-export async function getServerSideProps() {
+export const getServerSideProps = async () => {
   // make query to database to get categories
   const categories = await getCategories()
 

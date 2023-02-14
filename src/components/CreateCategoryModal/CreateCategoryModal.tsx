@@ -98,6 +98,7 @@ export const CreateCategoryModal = () => {
         closeWhenClickOutside={false}
         handle={'create-category-modal-handle'}
         bounds={'create-category-modal-wrapper'}
+        buttonClassName={'ml-5'}
       >
         <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
           <div className='mb-4'>

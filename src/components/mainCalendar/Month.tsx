@@ -1,4 +1,4 @@
-import { ReactElement, useCallback } from 'react'
+import { useCallback } from 'react'
 
 import { EventBlock } from '@/components/mainCalendar/EventBlock'
 import { useAppSelector } from '@/redux/hooks'
@@ -11,7 +11,7 @@ interface MonthProps {
   monthOffset: number
   className?: string
 }
-export const Month = (props: MonthProps): ReactElement => {
+export const Month = (props: MonthProps) => {
   const monthView = useAppSelector(isMonthInterval)
   const stateDate = useAppSelector(getDate)
   const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
@@ -60,7 +60,7 @@ export const Month = (props: MonthProps): ReactElement => {
   )
 
   const generateWeeks = useCallback(() => {
-    const weeks: ReactElement[] = []
+    const weeks = []
     for (let i = 0 - monthStartDate.day(); i < daysInMonth; i += 7) {
       weeks.push(renderWeek(i))
     }
@@ -80,7 +80,7 @@ export const Month = (props: MonthProps): ReactElement => {
   }, [])
 
   return (
-    <div className={props.className + ' ' + 'box-border bg-slate-200' + ' ' + (monthView ? 'h-full' : '')}>
+    <div className={props.className + ' ' + 'box-border bg-slate-100' + ' ' + (monthView ? 'h-full' : '')}>
       {generateDayNames()}
       {generateWeeks()}
     </div>
