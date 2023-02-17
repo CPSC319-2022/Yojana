@@ -66,6 +66,35 @@ other:
       text: Method Not Allowed
 ```
 
+## /api/users/:id
+
+```yaml
+get:
+  responses:
+    200:
+      description: user data with matching id
+      array:
+        object:
+          id: string
+          name: string
+          email: string
+          isAdmin: boolean
+    400:
+      description: no id, id not a string
+      text: Bad Request
+    401:
+      description: user is not an admin
+      text: Unauthorized
+    404:
+      description: user id not found
+      text: Not Found
+other:
+  responses:
+    405:
+      description: invalid method
+      text: Method Not Allowed
+```
+
 ## /api/dates
 
 ```yaml
