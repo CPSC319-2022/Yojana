@@ -1,0 +1,40 @@
+import { Category, Prisma } from '@prisma/client'
+
+// This is the same as Category, but with the show property
+export interface CategoryState extends Category {
+  show: boolean
+}
+
+// This is the type that is returned from the Prisma client
+export type CategoryFull = Prisma.CategoryGetPayload<{
+  select: {
+    id: true
+    name: true
+    description: true
+    color: true
+    isMaster: true
+    icon: true
+    creator: {
+      select: {
+        id: true
+        email: true
+        name: true
+        isAdmin: true
+      }
+    }
+    entries: {
+      select: {
+        id: true
+        date: true
+      }
+    }
+  }
+}>
+
+// This is the same as CategoryFull, but with the show property for the Category
+export interface CategoryFullState extends CategoryFull {
+  show: boolean
+}
+
+// This is the type that is used in the Redux store in the AppDataReducer
+export type AppData = CategoryFullState[]

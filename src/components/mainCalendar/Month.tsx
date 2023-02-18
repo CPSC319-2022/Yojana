@@ -4,13 +4,14 @@ import { EventBlock } from '@/components/mainCalendar/EventBlock'
 import { useAppSelector } from '@/redux/hooks'
 import { getCategoriesOfMonth } from '@/redux/reducers/AppDataReducer'
 import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
-import { AppData } from '@/types/AppData'
+import { CategoryFullState } from '@/types/prisma'
 import dayjs from 'dayjs'
 
 interface MonthProps {
   monthOffset: number
   className?: string
 }
+
 export const Month = (props: MonthProps) => {
   const monthView = useAppSelector(isMonthInterval)
   const stateDate = useAppSelector(getDate)
@@ -20,15 +21,17 @@ export const Month = (props: MonthProps) => {
   const daysInMonth = targetDate.daysInMonth()
   const numWeeks = Math.ceil((daysInMonth + monthStartDate.day()) / 7)
 
-  const categoriesPerDate: AppData[][] = useAppSelector((state) => getCategoriesOfMonth(state, targetDate))
+  const categoriesPerDate: CategoryFullState[][] = useAppSelector((state) => getCategoriesOfMonth(state, targetDate))
 
   const renderDay = useCallback(
     (firstDateOfWeek: number, dayNum: number) => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
       const day = monthStartDate.add(offsetFromMonthStart, 'days')
-      const dayCategories = categoriesPerDate[day.date() - 1]?.map((calEvent, key) => (
-        <EventBlock color={calEvent.color} label={calEvent.name || ''} icon={calEvent.icon} key={key} />
-      ))
+      const dayCategories = categoriesPerDate[day.date() - 1]?.map((calEvent, key) => {
+        if (calEvent.show) {
+          return <EventBlock color={calEvent.color} label={calEvent.name} icon={calEvent.icon} key={key} />
+        }
+      })
 
       return (
         <div className={`tile overflow-y-auto bg-white pr-0.5 pl-0.5`} key={day.date()}>

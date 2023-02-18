@@ -1,31 +1,43 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AppData } from '@/types/AppData'
+import { AppData, CategoryFullState } from '@/types/prisma'
 import dayjs, { Dayjs } from 'dayjs'
+import { setCookie } from 'cookies-next'
 
 interface State {
   appData: {
-    data: AppData[]
+    data: AppData
   }
 }
 
 const initialState = {
-  data: [] as AppData[]
+  data: [] as AppData
 }
 
 const appDataSlice = createSlice({
   name: 'appData',
   initialState,
   reducers: {
-    setAppData: (state, action: PayloadAction<AppData[]>) => {
+    setAppData: (state, action: PayloadAction<AppData>) => {
       state.data = action.payload
     },
-    addCategory: (state, action: PayloadAction<AppData>) => {
+    addCategory: (state, action: PayloadAction<CategoryFullState>) => {
+      setCookie(`yojana.show-category-${action.payload.id}`, action.payload.show)
       state.data.push(action.payload)
+    },
+    updateCategory: (state, action: PayloadAction<CategoryFullState>) => {
+      setCookie(`yojana.show-category-${action.payload.id}`, action.payload.show)
+      const index = state.data.findIndex((cat) => cat.id === action.payload.id)
+      state.data[index] = action.payload
+    },
+    toggleCategory: (state, action: PayloadAction<number>) => {
+      const index = state.data.findIndex((cat) => cat.id === action.payload)
+      setCookie(`yojana.show-category-${action.payload}`, !state.data[index].show)
+      state.data[index].show = !state.data[index].show
     }
   }
 })
 
-export const { setAppData, addCategory } = appDataSlice.actions
+export const { setAppData, addCategory, updateCategory, toggleCategory } = appDataSlice.actions
 export const getCategories = (state: State) =>
   state.appData.data.map((cat) => {
     return {
@@ -34,6 +46,7 @@ export const getCategories = (state: State) =>
       description: cat.description,
       color: cat.color,
       isMaster: cat.isMaster,
+      show: cat.show,
       icon: cat.icon,
       creatorId: cat.creator.id
     }

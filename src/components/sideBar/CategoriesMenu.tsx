@@ -1,12 +1,13 @@
 import { Checkbox } from '@/components/common'
-import { useAppSelector } from '@/redux/hooks'
-import { getCategories } from '@/redux/reducers/AppDataReducer'
-import { Category } from '@prisma/client'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { getCategories, toggleCategory } from '@/redux/reducers/AppDataReducer'
 import { useMemo } from 'react'
 import { BsThreeDotsVertical } from 'react-icons/bs'
+import { CategoryState } from '@/types/prisma'
 
 export const CategoriesMenu = () => {
-  const categories: Category[] = useAppSelector(getCategories)
+  const dispatch = useAppDispatch()
+  const categories: CategoryState[] = useAppSelector(getCategories)
 
   const eventList = useMemo(() => {
     return categories.map((calEvent, key) => (
@@ -19,15 +20,17 @@ export const CategoriesMenu = () => {
           id={`checkbox-${key}`}
           key={`checkbox-${key}`}
           color={calEvent.color}
+          defaultChecked={calEvent.show}
           checkboxClassName={`h-5 w-5`}
           wrapperClassName='pl-5 items-center'
+          onChange={() => dispatch(toggleCategory(calEvent.id))}
         />
         <span className='mt-1 cursor-pointer text-white group-hover:text-slate-500'>
           <BsThreeDotsVertical />
         </span>
       </div>
     ))
-  }, [categories])
+  }, [categories, dispatch])
 
   return (
     <div className='mt-4'>
