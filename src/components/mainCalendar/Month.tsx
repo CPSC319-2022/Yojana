@@ -29,7 +29,7 @@ export const Month = (props: MonthProps) => {
       const day = monthStartDate.add(offsetFromMonthStart, 'days')
       const dayCategories = categoriesPerDate[day.date() - 1]?.map((calEvent, key) => {
         if (calEvent.show) {
-          return <EventBlock color={calEvent.color} label={calEvent.name || ''} icon={calEvent.icon} key={key} />
+          return <EventBlock color={calEvent.color} label={calEvent.name} icon={calEvent.icon} key={key} />
         }
       })
 
