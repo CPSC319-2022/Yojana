@@ -1,12 +1,12 @@
 import { NavBar } from '@/components/navBar'
 import { MainCalendar } from '@/components/mainCalendar'
 import { SideBar } from '@/components/sideBar/'
-import { AppData } from '@/types/AppData'
+import { CategoryFull } from '@/types/prisma'
 import { getCategories } from '@/prisma/queries'
 import { setAppData } from '@/redux/reducers/AppDataReducer'
 import { useAppDispatch } from '@/redux/hooks'
 
-const Calendar = ({ data }: { data: AppData[] }) => {
+const Calendar = ({ data }: { data: CategoryFull[] }) => {
   const dispatch = useAppDispatch()
   dispatch(setAppData(data))
 
