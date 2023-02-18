@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AppData, CategoryFull, CategoryFullState } from '@/types/prisma'
+import { AppData, CategoryFullState } from '@/types/prisma'
 import dayjs, { Dayjs } from 'dayjs'
+import { setCookie } from 'cookies-next'
 
 interface State {
   appData: {
@@ -16,28 +17,21 @@ const appDataSlice = createSlice({
   name: 'appData',
   initialState,
   reducers: {
-    setAppData: (state, action: PayloadAction<CategoryFull[]>) => {
-      state.data = action.payload.map((cat) => {
-        return {
-          // Add show property to each category
-          // This is used to toggle the visibility of the category in the calendar
-          // TODO: use cookies to save the show property for each category
-          //       so that the user can set the default visibility of each category
-          //       consider moving this to the backend, in getServersideProps in index.tsx
-          show: true,
-          ...cat
-        }
-      })
+    setAppData: (state, action: PayloadAction<AppData>) => {
+      state.data = action.payload
     },
     addCategory: (state, action: PayloadAction<CategoryFullState>) => {
+      setCookie(`yojana.show-category-${action.payload.id}`, action.payload.show)
       state.data.push(action.payload)
     },
     updateCategory: (state, action: PayloadAction<CategoryFullState>) => {
+      setCookie(`yojana.show-category-${action.payload.id}`, action.payload.show)
       const index = state.data.findIndex((cat) => cat.id === action.payload.id)
       state.data[index] = action.payload
     },
     toggleCategory: (state, action: PayloadAction<number>) => {
       const index = state.data.findIndex((cat) => cat.id === action.payload)
+      setCookie(`yojana.show-category-${action.payload}`, !state.data[index].show)
       state.data[index].show = !state.data[index].show
     }
   }
