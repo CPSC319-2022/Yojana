@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
+import { FiFile } from 'react-icons/fi'
 
 export const CsvUploader = () => {
   const [csvFileName, setCsvFileName] = useState('')
@@ -17,15 +18,18 @@ export const CsvUploader = () => {
     })
   }, [])
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: '.csv' })
 
   return (
     <div {...getRootProps()} className='mx-auto w-full max-w-sm'>
       {csvFileName ? (
         <div className='m-8 flex h-48 cursor-pointer items-center justify-center rounded-lg p-4'>
-          <input {...getInputProps()} accept='.csv' />
+          <input {...getInputProps()} />
           <div className='text-center'>
-            <p className='mb-2 font-medium text-gray-600'>Uploaded: {csvFileName}</p>
+            <div className='mb-2 flex items-center'>
+              <FiFile className='text-green-500' size={18} />
+              <p className='ml-2 font-medium text-gray-600'>Uploaded: {csvFileName}</p>
+            </div>
             <div className='flex space-x-4'>
               <button
                 className='rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700'
@@ -44,7 +48,7 @@ export const CsvUploader = () => {
         </div>
       ) : (
         <div className='m-8 flex h-48 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-400 p-4 hover:border-blue-500'>
-          <input {...getInputProps()} accept='.csv' />
+          <input {...getInputProps()} />
           <div className='text-center'>
             {isDragActive ? (
               <p className='font-medium text-gray-600'>Drop the file here ...</p>
