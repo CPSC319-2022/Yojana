@@ -1,7 +1,7 @@
 import { Fragment, ReactNode, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
 
-interface AlertProps {
+export interface AlertProps {
   children: ReactNode
   type: 'success' | 'error' | 'warning' | 'info'
   setShow: (show: boolean) => void

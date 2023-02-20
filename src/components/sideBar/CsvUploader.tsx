@@ -2,10 +2,15 @@ import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { FiFile } from 'react-icons/fi'
 
-export const CsvUploader = () => {
+export const CsvUploader = ({ onSuccess }: { onSuccess: (added: number, error: boolean) => void }) => {
   const [csvFileName, setCsvFileName] = useState('')
   const onDrop = useCallback((acceptedFiles: File[]) => {
     acceptedFiles.forEach((file) => {
+      if (file.type !== 'text/csv') {
+        alert('File not supported')
+        return
+      }
+
       const reader = new FileReader()
 
       reader.onload = () => {
@@ -18,13 +23,17 @@ export const CsvUploader = () => {
     })
   }, [])
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: '.csv' })
+  const handleSubmit = () => {
+    console.log('Publishing new dates...')
+    onSuccess(5, false)
+  }
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
-    <div {...getRootProps()} className='mx-auto w-full max-w-sm'>
+    <div className='mx-auto w-full max-w-sm'>
       {csvFileName ? (
         <div className='m-8 flex h-48 cursor-pointer items-center justify-center rounded-lg p-4'>
-          <input {...getInputProps()} />
           <div className='text-center'>
             <div className='mb-2 flex items-center'>
               <FiFile className='text-green-500' size={18} />
@@ -33,7 +42,7 @@ export const CsvUploader = () => {
             <div className='flex space-x-4'>
               <button
                 className='rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700'
-                onClick={() => console.log('Publishing new dates...')}
+                onClick={() => handleSubmit()}
               >
                 Publish
               </button>
@@ -47,8 +56,11 @@ export const CsvUploader = () => {
           </div>
         </div>
       ) : (
-        <div className='m-8 flex h-48 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-400 p-4 hover:border-blue-500'>
-          <input {...getInputProps()} />
+        <div
+          {...getRootProps()}
+          className='m-8 flex h-48 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-400 p-4 hover:border-blue-500'
+        >
+          <input {...getInputProps()} accept='.csv' />
           <div className='text-center'>
             {isDragActive ? (
               <p className='font-medium text-gray-600'>Drop the file here ...</p>
