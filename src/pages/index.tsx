@@ -18,7 +18,7 @@ const Calendar = ({ data }: { data: AppData }) => {
     <main>
       <div className='flex h-screen w-full flex-col bg-white text-slate-800'>
         <NavBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <div className='border-box flex h-[88vh] w-full flex-row'>
+        <div className='border-box flex h-[90vh] w-full flex-row'>
           <div
             className={`${
               sidebarOpen ? 'w-1/5 translate-x-0' : 'w-0 -translate-x-full'

@@ -36,7 +36,9 @@ export const Month = (props: MonthProps) => {
       return (
         <div className={`tile overflow-y-auto bg-white pr-0.5 pl-0.5`} key={day.date()}>
           <span
-            className={`${offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''}`}
+            className={`${
+              offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''
+            } block text-center`}
           >
             {day.date()}
           </span>
@@ -74,7 +76,7 @@ export const Month = (props: MonthProps) => {
     return (
       <div className='grid grid-cols-7'>
         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((letter, index) => (
-          <span className='tile text-m text-slate-400' key={index}>
+          <span className='tile text-m text-center text-slate-400' key={index}>
             {letter}
           </span>
         ))}

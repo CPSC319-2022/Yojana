@@ -22,7 +22,7 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
   const yearView = useAppSelector(isYearInterval)
 
   return (
-    <div className='box-border flex h-[12vh] w-full flex-row items-center justify-between px-5'>
+    <div className='box-border flex h-[10vh] w-full flex-row items-center justify-between border-b px-5'>
       <div className='flex flex-row items-center'>
         <Button
           text='&#9776;'
