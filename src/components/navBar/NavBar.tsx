@@ -36,7 +36,7 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
         <Button text='Today' onClick={() => dispatch(jumpToToday())} className='mr-10' />
         <Button text='&lt;' onClick={() => dispatch(decrementDate())} className='mr-3' />
         <Button text='&gt;' onClick={() => dispatch(incrementDate())} className='mr-3' />
-        <h4 className='text-center text-lg'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
+        <h4 className='flex-none text-center text-lg'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
       </div>
       <CalViewDropdown />
       <AccountViewDropdown />
