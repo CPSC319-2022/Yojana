@@ -12,7 +12,7 @@ export const CategoriesMenu = () => {
   const eventList = useMemo(() => {
     return categories.map((calEvent, key) => (
       <div
-        className='group mt-1 flex flex-row justify-between rounded-r-md bg-white py-1 hover:bg-slate-100'
+        className='group mt-1 flex flex-row justify-between rounded-r-md bg-white py-1 pr-2 hover:bg-slate-100'
         key={`category-item-${key}`}
       >
         <Checkbox
