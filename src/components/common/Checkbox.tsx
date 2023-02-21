@@ -20,7 +20,7 @@ export const Checkbox = ({
   onChange
 }: CheckboxProps) => {
   return (
-    <div className={wrapperClassName}>
+    <div className={`truncate ${wrapperClassName}`}>
       <style jsx>{`
         input[type='checkbox'] {
           accent-color: ${color};

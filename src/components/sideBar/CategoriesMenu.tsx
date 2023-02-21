@@ -34,7 +34,7 @@ export const CategoriesMenu = () => {
 
   return (
     <div className='mt-4'>
-      <h3 className='pl-5 text-lg'>Categories</h3>
+      <h3 className='truncate pl-5 text-lg'>Categories</h3>
       {eventList}
     </div>
   )
