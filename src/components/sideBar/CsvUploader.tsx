@@ -1,9 +1,23 @@
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { FiFile } from 'react-icons/fi'
+import { useSession } from 'next-auth/react'
+import csv from 'csv-parser'
+
+interface CsvEntry {
+  Category: string
+  Date: string
+}
+
+interface EntryMap {
+  [key: string]: string[]
+}
 
 export const CsvUploader = ({ onSuccess }: { onSuccess: (added: number, error: boolean) => void }) => {
+  const { data: session } = useSession()
   const [csvFileName, setCsvFileName] = useState('')
+  const [csvEntries, setCsvEntries] = useState<CsvEntry[]>([])
+
   const onDrop = useCallback((acceptedFiles: File[]) => {
     acceptedFiles.forEach((file) => {
       if (file.type !== 'text/csv') {
@@ -14,8 +28,17 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (added: number, error: b
       const reader = new FileReader()
 
       reader.onload = () => {
-        const csvString = reader.result as string
-        console.log(csvString)
+        const stream = csv()
+        stream.on('data', (data) => {
+          console.log(data)
+          setCsvEntries((prev) => [...prev, data])
+        })
+        stream.on('end', () => {
+          console.log('CSV file successfully processed')
+        })
+
+        stream.write(reader.result)
+        stream.end()
       }
 
       setCsvFileName(file.name)
@@ -23,7 +46,63 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (added: number, error: b
     })
   }, [])
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (!session) {
+      console.error('No session found')
+      return
+    }
+
+    let entryMap: EntryMap = {}
+    for (let key in csvEntries) {
+      if (csvEntries.hasOwnProperty(key)) {
+        let entry = csvEntries[key]
+        entryMap[entry.Category] = [...(entryMap[entry.Category] ?? []), new Date(entry.Date).toISOString()]
+      }
+    }
+
+    // let successCats: string[] = []
+    // let failureCats: string[] = []
+    // for (let key in entryMap) {
+    //   if (csvEntries.hasOwnProperty(key)) {
+    //     const response = await fetch('api/cats', {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json'
+    //       },
+    //       body: JSON.stringify({
+    //         name: key,
+    //         description: '',
+    //         creatorId: session.user.id,
+    //         dates: entryMap[key]
+    //       })
+    //     })
+    //     if (response.ok) {
+    //       const data: Category = await response.json()
+    //       dispatch(
+    //         addCategory({
+    //           id: data.id,
+    //           color: data.color,
+    //           name: data.name,
+    //           description: data.description,
+    //           isMaster: data.isMaster,
+    //           icon: data.icon,
+    //           show: true,
+    //           creator: {
+    //             id: session.user.id,
+    //             name: session.user.name,
+    //             email: session.user.email,
+    //             isAdmin: session.user.isAdmin
+    //           },
+    //           entries: []
+    //         })
+    //       )
+    //     } else {
+    //       console.error('Error creating category')
+    //     }
+    //   }
+    // }
+
+    console.log('entryMap:', entryMap)
     console.log('Publishing new dates...')
     onSuccess(5, false)
   }
