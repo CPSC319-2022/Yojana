@@ -10,17 +10,9 @@ interface CheckboxProps {
   onChange?: () => void
 }
 
-export const Checkbox = ({
-  color,
-  id,
-  checkboxClassName,
-  label,
-  wrapperClassName,
-  defaultChecked = false,
-  onChange
-}: CheckboxProps) => {
+export const Checkbox = ({ color, id, checkboxClassName, label, defaultChecked = false, onChange }: CheckboxProps) => {
   return (
-    <div className={`truncate ${wrapperClassName}`}>
+    <div className={`items-center truncate`}>
       <style jsx>{`
         input[type='checkbox'] {
           accent-color: ${color};

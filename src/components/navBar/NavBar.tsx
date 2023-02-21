@@ -22,7 +22,7 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
   const yearView = useAppSelector(isYearInterval)
 
   return (
-    <div className='box-border flex h-[12vh] w-full flex-row items-center justify-between px-5'>
+    <div className='box-border flex h-[10vh] w-full flex-row items-center justify-between border-b px-5'>
       <div className='flex flex-row items-center'>
         <Button
           text='&#9776;'
@@ -36,7 +36,7 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
         <Button text='Today' onClick={() => dispatch(jumpToToday())} className='mr-10' />
         <Button text='&lt;' onClick={() => dispatch(decrementDate())} className='mr-3' />
         <Button text='&gt;' onClick={() => dispatch(incrementDate())} className='mr-3' />
-        <h4 className='text-center text-lg'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
+        <h4 className='flex-none text-center text-lg'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
       </div>
       <CalViewDropdown />
       <AccountViewDropdown />

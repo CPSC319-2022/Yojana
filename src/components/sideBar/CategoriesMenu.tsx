@@ -21,8 +21,7 @@ export const CategoriesMenu = () => {
           key={`checkbox-${key}`}
           color={calEvent.color}
           defaultChecked={calEvent.show}
-          checkboxClassName={`h-5 w-5`}
-          wrapperClassName='pl-5 items-center'
+          checkboxClassName={`h-5 w-5 ml-5`}
           onChange={() => dispatch(toggleCategory(calEvent.id))}
         />
         <span className='mt-1 cursor-pointer text-white group-hover:text-slate-500'>
