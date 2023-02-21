@@ -60,48 +60,6 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (added: number, error: b
       }
     }
 
-    // let successCats: string[] = []
-    // let failureCats: string[] = []
-    // for (let key in entryMap) {
-    //   if (csvEntries.hasOwnProperty(key)) {
-    //     const response = await fetch('api/cats', {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json'
-    //       },
-    //       body: JSON.stringify({
-    //         name: key,
-    //         description: '',
-    //         creatorId: session.user.id,
-    //         dates: entryMap[key]
-    //       })
-    //     })
-    //     if (response.ok) {
-    //       const data: Category = await response.json()
-    //       dispatch(
-    //         addCategory({
-    //           id: data.id,
-    //           color: data.color,
-    //           name: data.name,
-    //           description: data.description,
-    //           isMaster: data.isMaster,
-    //           icon: data.icon,
-    //           show: true,
-    //           creator: {
-    //             id: session.user.id,
-    //             name: session.user.name,
-    //             email: session.user.email,
-    //             isAdmin: session.user.isAdmin
-    //           },
-    //           entries: []
-    //         })
-    //       )
-    //     } else {
-    //       console.error('Error creating category')
-    //     }
-    //   }
-    // }
-
     console.log('entryMap:', entryMap)
     console.log('Publishing new dates...')
     onSuccess(5, false)
