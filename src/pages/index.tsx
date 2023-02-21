@@ -6,7 +6,6 @@ import { getCategories } from '@/prisma/queries'
 import { setAppData } from '@/redux/reducers/AppDataReducer'
 import { useAppDispatch } from '@/redux/hooks'
 import { useState } from 'react'
-import { Transition } from '@headlessui/react'
 import { getCookies, setCookie } from 'cookies-next'
 import { GetServerSideProps } from 'next'
 
@@ -20,20 +19,14 @@ const Calendar = ({ data }: { data: AppData }) => {
       <div className='flex h-screen w-full flex-col bg-white text-slate-800'>
         <NavBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className='border-box flex h-[88vh] w-full flex-row'>
-          <Transition
-            show={sidebarOpen}
-            enter='transition ease-out duration-200 transform'
-            enterFrom='-translate-x-full'
-            enterTo='translate-x-0'
-            leave='transition ease-in duration-200 transform'
-            leaveFrom='translate-x-0'
-            leaveTo='-translate-x-full'
+          <div
+            className={`${
+              sidebarOpen ? 'w-1/5 translate-x-0' : 'w-0 -translate-x-full'
+            } overflow-hidden pr-2 transition-all`}
           >
-            <div className='pr-2'>
-              <SideBar />
-            </div>
-          </Transition>
-          <div className='flex w-full flex-col'>
+            <SideBar />
+          </div>
+          <div className={`${sidebarOpen ? 'w-4/5' : 'w-full'} flex flex-col transition-all`}>
             <MainCalendar />
           </div>
         </div>
