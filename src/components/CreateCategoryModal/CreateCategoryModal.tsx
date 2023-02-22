@@ -2,7 +2,7 @@ import { useSession } from 'next-auth/react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { ColorPicker } from '@/components/ColorPicker'
 import React, { useState } from 'react'
-import { Alert, Button, Modal, Tabs } from '@/components/common'
+import { Button, Modal, Tabs } from '@/components/common'
 import { useAppDispatch } from '@/redux/hooks'
 import { Category, Entry } from '@prisma/client'
 import { addCategory } from '@/redux/reducers/AppDataReducer'
@@ -14,6 +14,7 @@ import { Disclosure, Transition } from '@headlessui/react'
 import { BsChevronUp } from 'react-icons/bs'
 import dayjs from 'dayjs'
 import { generateDatesFromCron } from '@/utils/dates'
+import { setAlert } from '@/redux/reducers/AlertReducer'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
@@ -63,8 +64,6 @@ export const CreateCategoryModal = () => {
   })
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [showAlert, setShowAlert] = useState(false)
-  const [alertMessage, setAlertMessage] = useState('')
 
   const onSubmit: SubmitHandler<Schema> = async ({ name, color, description, repeating }) => {
     if (!session) {
@@ -127,9 +126,12 @@ export const CreateCategoryModal = () => {
       }))
       setIsModalOpen(false)
     } else {
-      const text = await response.text()
-      setAlertMessage(text)
-      setShowAlert(true)
+      if (response.status !== 500) {
+        const text = await response.text()
+        dispatch(setAlert({ message: text, type: 'error', show: true }))
+      } else {
+        dispatch(setAlert({ message: 'Something went wrong. Please try again later.', type: 'error', show: true }))
+      }
     }
   }
 
@@ -220,9 +222,6 @@ export const CreateCategoryModal = () => {
           </div>
         </form>
       </Modal>
-      <Alert type='error' setShow={setShowAlert} show={showAlert}>
-        <strong className='font-bold'>Error:</strong> <span className='block sm:inline'>{alertMessage}</span>
-      </Alert>
     </>
   )
 }
