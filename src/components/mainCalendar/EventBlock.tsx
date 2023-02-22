@@ -11,13 +11,20 @@ interface EventBlockProps {
 export const EventBlock = (props: EventBlockProps) => {
   const monthView = useAppSelector(isMonthInterval)
   return (
-    <div
-      aria-label={props.label}
-      className={`bg-[${props.color}] mt-1 ${getTextColor(
-        props.color
-      )} mx-1 min-h-[1vh] overflow-x-hidden whitespace-nowrap rounded-md px-1.5`}
-    >
-      {monthView ? props.icon + ' ' + props.label : ''}
-    </div>
+    <>
+      <style jsx>{`
+        .event-block {
+          background-color: ${props.color};
+        }
+      `}</style>
+      <div
+        aria-label={props.label}
+        className={`event-block mt-1 ${getTextColor(
+          props.color
+        )} mx-1 min-h-[1vh] overflow-x-hidden whitespace-nowrap rounded-md px-1.5`}
+      >
+        {monthView ? props.icon + ' ' + props.label : ''}
+      </div>
+    </>
   )
 }

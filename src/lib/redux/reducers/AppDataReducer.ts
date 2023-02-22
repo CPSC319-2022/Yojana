@@ -47,6 +47,9 @@ export const getCategories = (state: State) =>
       color: cat.color,
       isMaster: cat.isMaster,
       show: cat.show,
+      cron: cat.cron,
+      startDate: cat.startDate,
+      endDate: cat.endDate,
       icon: cat.icon,
       creatorId: cat.creator.id
     }
@@ -54,11 +57,12 @@ export const getCategories = (state: State) =>
 
 export const getCategoriesOfMonth = (state: State, dateInMonth: Dayjs) => {
   const monthStart = dateInMonth.startOf('month')
-  const dates = Array.from(Array(dateInMonth.daysInMonth()).keys()).map((num: number) => monthStart.add(num, 'days'))
+  const dates = Array.from({ length: monthStart.daysInMonth() }, (_, i) => monthStart.add(i, 'day'))
   return dates.map((day: Dayjs) =>
     state.appData.data.filter((cat) => {
       return cat.entries.some((entry) => {
-        return dayjs(entry.date).isSame(day, 'day')
+        // TODO: Fix this hack to get the correct date, ignore timezones
+        return dayjs(entry.date).add(1, 'day').isSame(day, 'day')
       })
     })
   )
