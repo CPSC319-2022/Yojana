@@ -86,8 +86,8 @@ export const CreateCategoryModal = () => {
         color: color,
         creatorId: session.user.id,
         cron: repeating.cron,
-        startDate: repeating.startDate,
-        endDate: repeating.endDate,
+        startDate: repeating.cron ? repeating.startDate : undefined,
+        endDate: repeating.cron ? repeating.endDate : undefined,
         dates: dates
       })
     })
