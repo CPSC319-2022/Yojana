@@ -1,8 +1,9 @@
 import { Button, HoverButton } from '@/components/common/Button'
+import { EditCategoryModal } from '@/EditCategoryModal'
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
-// import { EditCategoryModal } from '@/EditCategoryModal'
+import { Fragment, useRef } from 'react'
 
+// TODO: specify title type
 interface DropdownProps {
   title: string | any
   id?: number
@@ -56,12 +57,13 @@ export const Dropdown = ({ title, menuItems, containerClassName = '' }: Dropdown
 
 // TODO: close after hover
 export const HoverDropdown = ({ title, id, menuItems, containerClassName = '' }: DropdownProps) => {
+  const ref: any = useRef(null)
   return (
     <div className={containerClassName} title={title}>
       <Menu as='div' className='relative inline-block text-left'>
         {({ open, close }) => (
           <>
-            <Menu.Button as={HoverButton} text={title} onClick={() => open && close()} />
+            <Menu.Button ref={ref} as={HoverButton} text={title} onClick={() => open && close()} />
             <Transition
               as={Fragment}
               enter='transition ease-out duration-100'
@@ -73,7 +75,7 @@ export const HoverDropdown = ({ title, id, menuItems, containerClassName = '' }:
             >
               <Menu.Items className='w-42 absolute left-0 mt-2 hidden origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none group-hover:block'>
                 <div className='px-1 py-1'>
-                  {/* <EditCategoryModal id={Number(id)}/> */}
+                  <EditCategoryModal id={Number(id)} />
                   {menuItems.map((item) => (
                     <Menu.Item key={item.key}>
                       {({ active }) => (

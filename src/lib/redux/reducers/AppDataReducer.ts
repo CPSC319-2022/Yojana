@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AppData, CategoryFullState } from '@/types/prisma'
-import dayjs, { Dayjs } from 'dayjs'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { setCookie } from 'cookies-next'
+import dayjs, { Dayjs } from 'dayjs'
 
 interface State {
   appData: {
@@ -38,6 +38,10 @@ const appDataSlice = createSlice({
 })
 
 export const { setAppData, addCategory, updateCategory, toggleCategory } = appDataSlice.actions
+export const getSpecificCategory = (state: State, id: number) => {
+  const index = state.appData.data.findIndex((cat) => cat.id === id)
+  return state.appData.data.at(index)
+}
 export const getCategories = (state: State) =>
   state.appData.data.map((cat) => {
     return {
