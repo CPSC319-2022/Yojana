@@ -65,7 +65,7 @@ export const Year = () => {
         days.push(renderDay(monthStartDate, offset, monthNum))
       }
 
-      return <div className='box-border h-[90%]'>{days}</div>
+      return <div className='box-border'>{days}</div>
     },
     [renderDay]
   )
@@ -74,7 +74,7 @@ export const Year = () => {
     return Array.from(Array(12).keys()).map((monthNum) => {
       const monthStartDate = dayjs(yearStartDate).add(monthNum, 'month')
       return (
-        <div key={`${yearNum}-${monthNum}`}>
+        <div className='bg-white' key={`${yearNum}-${monthNum}`}>
           <h3 className='bg-slate-100 text-center text-slate-400'>{monthStartDate.format('MMM')}</h3>
           {generateMonth(monthStartDate)}
         </div>
