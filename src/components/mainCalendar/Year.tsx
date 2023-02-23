@@ -74,7 +74,7 @@ export const Year = () => {
     return Array.from(Array(12).keys()).map((monthNum) => {
       const monthStartDate = dayjs(yearStartDate).add(monthNum, 'month')
       return (
-        <div className='bg-white' key={`${yearNum}-${monthNum}`}>
+        <div className='bg-slate-400' key={`${yearNum}-${monthNum}`}>
           <h3 className='bg-slate-100 text-center text-slate-400'>{monthStartDate.format('MMM')}</h3>
           {generateMonth(monthStartDate)}
         </div>
