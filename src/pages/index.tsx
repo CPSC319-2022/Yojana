@@ -21,8 +21,8 @@ const Calendar = ({ data }: { data: AppData }) => {
         <div className='border-box flex h-[90vh] w-full flex-row'>
           <div
             className={`${
-              sidebarOpen ? 'w-1/5 translate-x-0' : 'w-0 -translate-x-full'
-            } overflow-hidden pr-2 transition-all`}
+              sidebarOpen ? 'w-1/5 translate-x-0 pr-2' : 'w-0 -translate-x-full'
+            } overflow-hidden transition-all`}
           >
             <SideBar />
           </div>
