@@ -83,7 +83,7 @@ export const Year = () => {
   }, [generateMonth, yearNum, yearStartDate])
 
   return (
-    <div className='grow bg-slate-100'>
+    <div className='grow bg-slate-200'>
       <div className={'box-border grid h-full grow grid-cols-12 gap-0.5'}>{months}</div>
     </div>
   )
