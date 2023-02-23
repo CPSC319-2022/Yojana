@@ -17,7 +17,9 @@ export const Year = () => {
   const renderDayCategories = useCallback(
     (day: Dayjs, monthNum: number) => {
       if (monthNum < 0 || monthNum >= 12) return undefined
-      return categoriesPerDate[monthNum][day.date() - 1]?.map((calEvent, key) => {
+      const icons = categoriesPerDate[monthNum][day.date() - 1]
+      if (icons === undefined || icons.length === 0) return <div className={'text-transparent'}>.</div>
+      return icons.map((calEvent, key) => {
         if (calEvent.show) {
           return (
             <>
@@ -46,7 +48,6 @@ export const Year = () => {
           className={'tile truncate pr-0.5 pl-0.5' + ' ' + (isSat || isSun ? 'bg-slate-100' : 'bg-white')}
           key={`${yearNum}-${monthNum}-${day.date()}`}
         >
-          <span className={'mr-2'}>{day.date()}</span>
           {renderDayCategories(day, monthNum)}
         </div>
       )
@@ -70,21 +71,45 @@ export const Year = () => {
     [renderDay]
   )
 
+  const renderDateNums = useMemo(() => {
+    return Array.from(Array(32).keys()).map((dateNum) => {
+      if (dateNum === 0) return <div className={'sticky top-0 bg-slate-100 text-transparent'}>.</div>
+      return (
+        <div className={'pl-1 pr-1'} key={dateNum}>
+          {dateNum}
+        </div>
+      )
+    })
+  }, [])
+
   const months = useMemo(() => {
-    return Array.from(Array(12).keys()).map((monthNum) => {
+    const twelveMonths = Array.from(Array(12).keys()).map((monthNum) => {
       const monthStartDate = dayjs(yearStartDate).add(monthNum, 'month')
       return (
         <div className='bg-white' key={`${yearNum}-${monthNum}`}>
-          <h3 className='bg-slate-100 text-center text-slate-400'>{monthStartDate.format('MMM')}</h3>
+          <h3 className='sticky top-0 bg-slate-100 text-center text-slate-400'>{monthStartDate.format('MMM')}</h3>
           {generateMonth(monthStartDate)}
         </div>
       )
     })
-  }, [generateMonth, yearNum, yearStartDate])
+    return Array.from(Array(3).keys()).map((groupNum) => {
+      return (
+        <div className={'inline-flex w-full'} key={'group-' + groupNum}>
+          <div className={'min-w-min bg-white'}>{renderDateNums}</div>
+          <div className={'grid grow grid-cols-4 gap-0.5'}>
+            {twelveMonths[groupNum * 4]}
+            {twelveMonths[groupNum * 4 + 1]}
+            {twelveMonths[groupNum * 4 + 2]}
+            {twelveMonths[groupNum * 4 + 3]}
+          </div>
+        </div>
+      )
+    })
+  }, [generateMonth, renderDateNums, yearNum, yearStartDate])
 
   return (
     <div className='grow bg-slate-200'>
-      <div className={'box-border grid h-full grow grid-cols-12 gap-0.5'}>{months}</div>
+      <div className={'box-border grid h-full grow grid-cols-3 gap-0.5'}>{months}</div>
     </div>
   )
 }
