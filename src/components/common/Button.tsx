@@ -24,4 +24,24 @@ export const Button = forwardRef(
   }
 )
 
+export const HoverButton = forwardRef(
+  (
+    { text = '', onClick, type, disabled, className, padding = 'px-0.84 py-0.42' }: ButtonProps,
+    ref: React.Ref<HTMLButtonElement>
+  ) => {
+    return (
+      <button
+        type={type}
+        onClick={onClick}
+        className={`inline-flex hidden justify-center rounded-md border border-transparent font-medium focus:outline-none focus-visible:ring-2 disabled:opacity-75 group-hover:block ${padding} ${className}`}
+        disabled={disabled}
+        ref={ref}
+      >
+        {text}
+      </button>
+    )
+  }
+)
+
 Button.displayName = 'Button'
+HoverButton.displayName = 'HoverButton'
