@@ -1,15 +1,16 @@
 import { ColorPicker } from '@/components/ColorPicker'
-import { Button, Modal, Tabs } from '@/components/common'
-import { DayOfWeekPicker } from '@/components/DayOfWeekPicker/DayOfWeekPicker'
+import { Button, Modal } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { getSpecificCategory } from '@/redux/reducers/AppDataReducer'
-import { Disclosure, Transition } from '@headlessui/react'
+import { setAlert } from '@/redux/reducers/AlertReducer'
+import { getSpecificCategory, updateCategory } from '@/redux/reducers/AppDataReducer'
+import { randomColor } from '@/utils/color'
+import { generateDatesFromCron } from '@/utils/dates'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Category, Entry } from '@prisma/client'
 import dayjs from 'dayjs'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { BsChevronUp } from 'react-icons/bs'
 import * as z from 'zod'
 
 const schema = z.object({
@@ -39,6 +40,7 @@ export const EditCategoryModal = ({ id, isOpen }: { id: number; isOpen: boolean 
   const { data: session } = useSession()
   const dispatch = useAppDispatch()
   const currentState = useAppSelector((state) => getSpecificCategory(state, id))
+
   const {
     register,
     handleSubmit,
@@ -53,11 +55,10 @@ export const EditCategoryModal = ({ id, isOpen }: { id: number; isOpen: boolean 
     defaultValues: {
       name: currentState?.name,
       description: currentState?.description,
+      color: currentState?.color,
       repeating: {
-        startDate: currentState?.startDate?.toString(),
-        // dayjs().startOf('year').format('YYYY-MM-DD'),
-        // dayjs().endOf('year').format('YYYY-MM-DD')
-        endDate: currentState?.endDate?.toString()
+        startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
+        endDate: dayjs().endOf('year').format('YYYY-MM-DD')
       }
     }
   })
@@ -69,66 +70,70 @@ export const EditCategoryModal = ({ id, isOpen }: { id: number; isOpen: boolean 
       return
     }
 
-    // let dates: string[] = []
-    // if (repeating.cron) {
-    //     dates = generateDatesFromCron(repeating.cron, repeating.startDate, repeating.endDate)
-    // }
-    // const response = await fetch('api/cats/', {
-    //     method: 'GET',
+    let dates: string[] = []
+    if (repeating.cron) {
+      dates = generateDatesFromCron(repeating.cron, repeating.startDate, repeating.endDate)
+    }
+    const response = await fetch('api/cats', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: currentState?.id,
+        name: name,
+        description: description,
+        color: color,
+        creatorId: session.user.id,
+        cron: repeating.cron,
+        startDate: repeating.cron ? repeating.startDate : undefined,
+        endDate: repeating.cron ? repeating.endDate : undefined,
+        dates: dates
+      })
+    })
+    if (response.ok) {
+      const data: Category & { entries: Entry[] } = await response.json()
 
-    //     body: JSON.stringify({
-    //         name: name,
-    //         description: description,
-    //         color: color,
-    //         creatorId: session.user.id,
-    //         cron: repeating.cron,
-    //         startDate: repeating.cron ? repeating.startDate : undefined,
-    //         endDate: repeating.cron ? repeating.endDate : undefined,
-    //         dates: dates
-    //     })
-    // })
-    // if (response.ok) {
-    //     const data: Category & { entries: Entry[] } = await response.json()
-    //     dispatch(
-    //         addCategory({
-    //             id: data.id,
-    //             color: data.color,
-    //             name: data.name,
-    //             description: data.description,
-    //             isMaster: data.isMaster,
-    //             icon: data.icon,
-    //             cron: data.cron,
-    //             startDate: data.startDate,
-    //             endDate: data.endDate,
-    //             show: true,
-    //             creator: {
-    //                 id: session.user.id,
-    //                 name: session.user.name,
-    //                 email: session.user.email,
-    //                 isAdmin: session.user.isAdmin
-    //             },
-    //             entries: data.entries
-    //         })
-    //     )
-    //     reset(() => ({
-    //         name: '',
-    //         description: '',
-    //         color: randomColor(),
-    //         repeating: {
-    //             cron: undefined,
-    //             startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
-    //             endDate: dayjs().endOf('year').format('YYYY-MM-DD')
-    //         }
-    //     }))
-    //     setIsModalOpen(false)
-    // } else {
-    //     if (response.status !== 500) {
-    //         const text = await response.text()
-    //         dispatch(setAlert({ message: text, type: 'error', show: true }))
-    //     } else {
-    //         dispatch(setAlert({ message: 'Something went wrong. Please try again later.', type: 'error', show: true }))
-    //     }
-    // }
+      dispatch(
+        updateCategory({
+          id: data.id,
+          color: data.color,
+          name: data.name,
+          description: data.description,
+          isMaster: data.isMaster,
+          icon: data.icon,
+          cron: data.cron,
+          startDate: data.startDate,
+          endDate: data.endDate,
+          show: true,
+          creator: {
+            id: session.user.id,
+            name: session.user.name,
+            email: session.user.email,
+            isAdmin: session.user.isAdmin
+          },
+          entries: currentState?.entries ? currentState?.entries : data.entries
+        })
+      )
+      reset(() => ({
+        name: '',
+        description: '',
+        color: randomColor(),
+        repeating: {
+          cron: undefined,
+          startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
+          endDate: dayjs().endOf('year').format('YYYY-MM-DD')
+        }
+      }))
+      setIsModalOpen(false)
+    } else {
+      if (response.status !== 500) {
+        const text = await response.text()
+        dispatch(setAlert({ message: text, type: 'error', show: true }))
+      } else {
+        dispatch(setAlert({ message: 'Something went wrong. Please try again later.', type: 'error', show: true }))
+      }
+    }
   }
 
   return (
@@ -164,9 +169,9 @@ export const EditCategoryModal = ({ id, isOpen }: { id: number; isOpen: boolean 
           </div>
           <div className='mb-6'>
             <label className='mb-2 block'>Color</label>
-            <ColorPicker control={control} name='color' rules={{ required: true }} />
+            <ColorPicker control={control} name='color' rules={{ required: false }} />
           </div>
-          <div className='mb-4'>
+          {/* <div className='mb-4'>
             <Disclosure>
               {({ open }) => (
                 <>
@@ -211,7 +216,7 @@ export const EditCategoryModal = ({ id, isOpen }: { id: number; isOpen: boolean 
                 </>
               )}
             </Disclosure>
-          </div>
+          </div> */}
           <div className='flex justify-end'>
             <Button type='button' disabled text='Add Dates' className='mr-3' />
             <Button type='submit' disabled={isSubmitting} text='Submit' onClick={handleSubmit(onSubmit)} />
