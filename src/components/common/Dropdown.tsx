@@ -1,7 +1,7 @@
 import { Button, HoverButton } from '@/components/common/Button'
 import { EditCategoryModal } from '@/EditCategoryModal'
-import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useRef } from 'react'
+import { Menu, Popover, Transition } from '@headlessui/react'
+import { Fragment, useState } from 'react'
 
 // TODO: specify title type
 interface DropdownProps {
@@ -57,14 +57,20 @@ export const Dropdown = ({ title, menuItems, containerClassName = '' }: Dropdown
 
 // TODO: close after hover
 export const HoverDropdown = ({ title, id, menuItems, containerClassName = '' }: DropdownProps) => {
-  const ref: any = useRef(null)
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleButtonClick = () => {
+    setIsOpen(!isOpen)
+  }
+
   return (
     <div className={containerClassName} title={title}>
-      <Menu as='div' className='relative inline-block text-left'>
-        {({ open, close }) => (
+      <Popover as='div' className='relative inline-block text-left'>
+        {({ open }) => (
           <>
-            <Menu.Button ref={ref} as={HoverButton} text={title} onClick={() => open && close()} />
+            <Popover.Button as={HoverButton} text={title} onClick={handleButtonClick} />
             <Transition
+              show={isOpen}
               as={Fragment}
               enter='transition ease-out duration-100'
               enterFrom='transform opacity-0 scale-95'
@@ -73,27 +79,27 @@ export const HoverDropdown = ({ title, id, menuItems, containerClassName = '' }:
               leaveFrom='transform opacity-100 scale-100'
               leaveTo='transform opacity-0 scale-95'
             >
-              <Menu.Items className='w-42 absolute left-0 mt-2 hidden origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none group-hover:block'>
+              <Popover.Panel
+                className='w-42 absolute left-0 mt-2 hidden origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none group-hover:block'
+                static
+              >
                 <div className='px-1 py-1'>
-                  <EditCategoryModal id={Number(id)} />
-                  {menuItems.map((item) => (
-                    <Menu.Item key={item.key}>
-                      {({ active }) => (
-                        <button
-                          onClick={item.onClick}
-                          className={`${active && 'bg-emerald-100'} flex w-full items-center rounded-md px-2 py-2`}
-                        >
-                          {item.label}
-                        </button>
-                      )}
-                    </Menu.Item>
-                  ))}
+                  <EditCategoryModal id={Number(id)} isOpen={isOpen} />
+                  {/* {menuItems.map((item) => (
+                    <button
+                      key={item.key}
+                      onClick={item.onClick}
+                      className={`flex w-full items-center rounded-md px-2 py-2`}
+                    >
+                      {item.label}
+                    </button>
+                  ))} */}
                 </div>
-              </Menu.Items>
+              </Popover.Panel>
             </Transition>
           </>
         )}
-      </Menu>
+      </Popover>
     </div>
   )
 }

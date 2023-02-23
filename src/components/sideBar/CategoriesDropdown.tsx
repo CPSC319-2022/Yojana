@@ -7,13 +7,7 @@ export const CategoriesDropdown = (id: { id: number }) => {
       title={<BsThreeDotsVertical />}
       id={id.id}
       containerClassName='mt-1 cursor-pointer group-hover:text-black'
-      menuItems={[
-        {
-          key: 'Delete',
-          label: 'Delete',
-          onClick: () => {}
-        }
-      ]}
+      menuItems={[]}
     />
   )
 }

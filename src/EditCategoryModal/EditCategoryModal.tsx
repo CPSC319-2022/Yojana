@@ -35,10 +35,10 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>
 
-export const EditCategoryModal = (id: { id: number }) => {
+export const EditCategoryModal = ({ id, isOpen }: { id: number; isOpen: boolean }) => {
   const { data: session } = useSession()
   const dispatch = useAppDispatch()
-  const currentState = useAppSelector((state) => getSpecificCategory(state, id.id))
+  const currentState = useAppSelector((state) => getSpecificCategory(state, id))
   const {
     register,
     handleSubmit,
@@ -54,12 +54,13 @@ export const EditCategoryModal = (id: { id: number }) => {
       name: currentState?.name,
       description: currentState?.description,
       repeating: {
-        startDate: currentState?.startDate,
-        endDate: currentState?.endDate
+        startDate: currentState?.startDate?.toString(),
+        // dayjs().startOf('year').format('YYYY-MM-DD'),
+        // dayjs().endOf('year').format('YYYY-MM-DD')
+        endDate: currentState?.endDate?.toString()
       }
     }
   })
-
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const onSubmit: SubmitHandler<Schema> = async ({ name, color, description, repeating }) => {
