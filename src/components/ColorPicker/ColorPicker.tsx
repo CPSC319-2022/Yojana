@@ -41,6 +41,7 @@ export const ColorPicker = ({ control, name, rules }: ColorPickerProps) => {
   }
 
   // Use react-hook-form's useController to get the onChange and value props
+  // if defaultValue is not provided, pick a random color from the colorPickerColors array
   const {
     field: { onChange, value }
   } = useController({

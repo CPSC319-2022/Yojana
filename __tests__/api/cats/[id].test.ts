@@ -3,7 +3,7 @@ import { createRequest, createResponse } from 'node-mocks-http'
 import cats from '@/pages/api/cats/[id]'
 import { prismaMock } from '@/prisma/singleton'
 import * as jwt from 'next-auth/jwt'
-import { generateISODates } from '@/tests/utils/dates'
+import { generateISODates } from '@/utils/backend/generateISODates'
 
 const mockAdmin = {
   id: '1',
@@ -27,12 +27,8 @@ const mock_body = {
   color: '#000000',
   isMaster: false,
   creatorId: 'id0',
-  dates: generateISODates(),
-  cron: null,
-  startDate: null,
-  endDate: null
+  dates: generateISODates()
 }
-
 describe('/api/cats/[id]', () => {
   describe('GET', () => {
     it('should return a 200 status code', async () => {

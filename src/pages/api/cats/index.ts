@@ -1,7 +1,6 @@
 import prisma from '@/prisma/prismadb'
 import { getCategories } from '@/prisma/queries'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import dayjs from 'dayjs'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
@@ -23,10 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             description: req.body.description,
             color: req.body.color,
             isMaster: req.body.isMaster,
-            icon: req.body.icon,
-            cron: req.body.cron,
-            startDate: req.body.startDate ? dayjs(req.body.startDate).toISOString() : null,
-            endDate: req.body.endDate ? dayjs(req.body.endDate).toISOString() : null
+            icon: req.body.icon
           }
         })
         return res.status(200).json(edited_category)
@@ -46,19 +42,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             isMaster: req.body.isMaster,
             creatorId: req.body.creatorId,
             icon: req.body.icon,
-            cron: req.body.cron,
-            startDate: req.body.startDate ? dayjs(req.body.startDate).toISOString() : null,
-            endDate: req.body.endDate ? dayjs(req.body.endDate).toISOString() : null,
             entries: {
               createMany: {
-                data: req.body.dates.map((date: string) => ({
-                  date: dayjs(date).toISOString()
-                }))
+                data: req.body.dates.map((entry: string) => ({ entry }))
               }
             }
-          },
-          include: {
-            entries: true
           }
         })
         return res.status(201).json(new_category)

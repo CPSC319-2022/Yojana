@@ -140,9 +140,6 @@ get:
           color: string
           isMaster: boolean
           icon: string
-          cron: string
-          startDate: ISOString
-          endDate: ISOString
           creator:
             object:
               id: string
@@ -172,9 +169,6 @@ put:
         description: string
         color: string
         icon: string
-        cron: string
-        startDate: ISOString
-        endDate: ISOString
         isMaster: boolean
         creatorId: string
     404:
@@ -201,9 +195,6 @@ post:
         description: string
         color: string
         icon: string
-        cron: string
-        startDate: ISOString
-        endDate: ISOString
         isMaster: boolean
         creatorId: string
     409:
@@ -229,9 +220,6 @@ get:
         name: string
         description: string
         color: string
-        cron: string
-        startDate: ISOString
-        endDate: ISOString
         isMaster: boolean
         creatorId: string
     409:
@@ -247,9 +235,6 @@ delete:
         name: string
         description: string
         color: string
-        cron: string
-        startDate: ISOString
-        endDate: ISOString
         isMaster: boolean
         creatorId: string
     401:

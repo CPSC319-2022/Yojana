@@ -14,9 +14,6 @@ export type CategoryFull = Prisma.CategoryGetPayload<{
     color: true
     isMaster: true
     icon: true
-    cron: true
-    startDate: true
-    endDate: true
     creator: {
       select: {
         id: true

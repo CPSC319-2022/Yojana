@@ -19,7 +19,6 @@
       "@/redux/*": ["./src/lib/redux/*"],
       "@/prisma/*": ["./src/lib/prisma/*"],
       "@/types/*": ["./src/lib/types/*"],
-      "@/tests/*": ["./__tests__/*"],
       "@/*": ["./src/*"]
     }
   },

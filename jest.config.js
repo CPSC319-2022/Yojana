@@ -23,13 +23,11 @@ const customJestConfig = {
     '@/redux/(.*)$': '<rootDir>/src/lib/redux/$1',
     '@/prisma/(.*)$': '<rootDir>/src/lib/prisma/$1',
     '@/types/(.*)$': '<rootDir>/src/lib/types/$1',
-    '@/tests/(.*)$': '<rootDir>/__tests__/$1',
     '@/(.*)$': '<rootDir>/src/$1'
   },
   testEnvironment: 'node',
   clearMocks: true,
-  setupFilesAfterEnv: ['<rootDir>/src/lib/prisma/singleton.ts'],
-  modulePathIgnorePatterns: ['<rootDir>/__tests__/utils']
+  setupFilesAfterEnv: ['<rootDir>/src/lib/prisma/singleton.ts']
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

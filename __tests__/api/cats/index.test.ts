@@ -2,7 +2,7 @@ import { prismaMock } from '@/prisma/singleton'
 import cats from '@/pages/api/cats'
 import '@testing-library/jest-dom'
 import { createRequest, createResponse } from 'node-mocks-http'
-import { generateISODates } from '@/tests/utils/dates'
+import { generateISODates } from '@/utils/backend/generateISODates'
 
 describe('/api/cats', () => {
   describe('GET', () => {
@@ -57,39 +57,7 @@ describe('/api/cats', () => {
         isMaster: false,
         creatorId: 'id0',
         icon: '123',
-        dates: generateISODates(),
-        cron: null,
-        startDate: null,
-        endDate: null
-      }
-      const req = createRequest({
-        method: 'POST',
-        url: '/cats',
-        body: mock_body
-      })
-      const res = createResponse()
-
-      prismaMock.category.create.mockResolvedValue(mock_body)
-
-      await cats(req, res)
-
-      expect(res._getStatusCode()).toBe(201)
-      expect(res._getData()).toBe(JSON.stringify(mock_body))
-    })
-
-    it('should return a 201 status code when category is created when cron is provided', async () => {
-      const mock_body = {
-        id: 0,
-        name: 'def',
-        description: 'abc',
-        color: '#000000',
-        isMaster: false,
-        creatorId: 'id0',
-        icon: '123',
-        dates: generateISODates(),
-        cron: '0 0 0 0 0',
-        startDate: new Date('2023-01-01'),
-        endDate: new Date('2023-01-01')
+        dates: generateISODates()
       }
       const req = createRequest({
         method: 'POST',
@@ -115,10 +83,7 @@ describe('/api/cats', () => {
         isMaster: false,
         creatorId: 'abc123',
         icon: '',
-        dates: generateISODates(),
-        cron: null,
-        startDate: null,
-        endDate: null
+        dates: generateISODates()
       }
 
       const req = createRequest({
@@ -146,37 +111,7 @@ describe('/api/cats', () => {
         color: '#000000',
         isMaster: false,
         creatorId: 'cba123',
-        icon: '',
-        cron: null,
-        startDate: null,
-        endDate: null
-      }
-      const req = createRequest({
-        method: 'PUT',
-        url: '/cats',
-        body: mock_body
-      })
-      const res = createResponse()
-
-      prismaMock.category.update.mockResolvedValue(mock_body)
-      await cats(req, res)
-
-      expect(res._getStatusCode()).toBe(200)
-      expect(res._getData()).toBe(JSON.stringify(mock_body))
-    })
-
-    it('should return a 200 status code when category is updated when cron is provided', async () => {
-      const mock_body = {
-        id: 0,
-        name: 'new name',
-        description: 'new desc',
-        color: '#000000',
-        isMaster: false,
-        creatorId: 'cba123',
-        icon: '',
-        cron: '0 0 0 0 0',
-        startDate: new Date('2023-01-01'),
-        endDate: new Date('2023-01-01')
+        icon: ''
       }
       const req = createRequest({
         method: 'PUT',
@@ -225,10 +160,7 @@ describe('/api/cats', () => {
         color: '#000000',
         isMaster: false,
         creatorId: 'abc123',
-        icon: '',
-        cron: null,
-        startDate: null,
-        endDate: null
+        icon: ''
       }
 
       const req = createRequest({

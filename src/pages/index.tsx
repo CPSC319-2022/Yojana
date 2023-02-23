@@ -8,7 +8,6 @@ import { useAppDispatch } from '@/redux/hooks'
 import { useState } from 'react'
 import { getCookies, setCookie } from 'cookies-next'
 import { GetServerSideProps } from 'next'
-import { Alert } from '@/components/common'
 
 const Calendar = ({ data }: { data: AppData }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -17,7 +16,6 @@ const Calendar = ({ data }: { data: AppData }) => {
 
   return (
     <main>
-      <Alert />
       <div className='flex h-screen w-full flex-col bg-white text-slate-800'>
         <NavBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className='border-box flex h-[90vh] w-full flex-row'>
