@@ -36,11 +36,10 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>
 
-export const EditCategoryModal = ({ id, isOpen }: { id: number; isOpen: boolean }) => {
+export const EditCategoryModal = ({ id, isOpen, onClose }: { id: number; isOpen: boolean; onClose: any }) => {
   const { data: session } = useSession()
   const dispatch = useAppDispatch()
   const currentState = useAppSelector((state) => getSpecificCategory(state, id))
-
   const {
     register,
     handleSubmit,
@@ -134,8 +133,8 @@ export const EditCategoryModal = ({ id, isOpen }: { id: number; isOpen: boolean 
         dispatch(setAlert({ message: 'Something went wrong. Please try again later.', type: 'error', show: true }))
       }
     }
+    onClose()
   }
-
   return (
     <>
       <Modal
@@ -148,7 +147,7 @@ export const EditCategoryModal = ({ id, isOpen }: { id: number; isOpen: boolean 
         closeWhenClickOutside={false}
         handle={'create-category-modal-handle'}
         bounds={'create-category-modal-wrapper'}
-        buttonClassName={`inline-flex justify-center bg-white rounded-md border border-transparent font-medium`}
+        buttonClassName={`w-16 inline-flex justify-center bg-white rounded-md border border-transparent font-medium`}
       >
         <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
           <div className='mb-4'>

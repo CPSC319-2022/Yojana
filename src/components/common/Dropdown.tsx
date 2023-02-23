@@ -1,9 +1,9 @@
 import { Button, HoverButton } from '@/components/common/Button'
+import { DeleteCategoryModal } from '@/DeleteCategoryModal'
 import { EditCategoryModal } from '@/EditCategoryModal'
 import { Menu, Popover, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 
-// TODO: specify title type
 interface DropdownProps {
   title: string | any
   id?: number
@@ -55,18 +55,21 @@ export const Dropdown = ({ title, menuItems, containerClassName = '' }: Dropdown
   )
 }
 
-// TODO: close after hover
+// TODO: close after clicking on a Panel, close after moving away from sidebar
 export const HoverDropdown = ({ title, id, menuItems, containerClassName = '' }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleButtonClick = () => {
     setIsOpen(!isOpen)
   }
+  const handleClosePopover = () => {
+    setIsOpen(false)
+  }
 
   return (
     <div className={containerClassName} title={title}>
       <Popover as='div' className='relative inline-block text-left'>
-        {({ open }) => (
+        {({}) => (
           <>
             <Popover.Button as={HoverButton} text={title} onClick={handleButtonClick} />
             <Transition
@@ -84,16 +87,8 @@ export const HoverDropdown = ({ title, id, menuItems, containerClassName = '' }:
                 static
               >
                 <div className='px-1 py-1'>
-                  <EditCategoryModal id={Number(id)} isOpen={isOpen} />
-                  {/* {menuItems.map((item) => (
-                    <button
-                      key={item.key}
-                      onClick={item.onClick}
-                      className={`flex w-full items-center rounded-md px-2 py-2`}
-                    >
-                      {item.label}
-                    </button>
-                  ))} */}
+                  <EditCategoryModal id={Number(id)} isOpen={isOpen} onClose={handleClosePopover} />
+                  <DeleteCategoryModal id={Number(id)} isOpen={isOpen} onClose={handleClosePopover} />
                 </div>
               </Popover.Panel>
             </Transition>
