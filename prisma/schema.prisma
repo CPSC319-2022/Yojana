@@ -16,13 +16,16 @@ model User {
 }
 
 model Category {
-  id          Int     @id @default(autoincrement())
-  name        String  @unique
-  description String  @default("")
-  color       String  @db.VarChar(7)
-  isMaster    Boolean @default(false)
-  icon        String  @default("") @db.VarChar(6)
-  creator     User    @relation(fields: [creatorId], references: [id])
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  description String    @default("")
+  color       String    @db.VarChar(7)
+  isMaster    Boolean   @default(false)
+  icon        String    @default("") @db.VarChar(6)
+  cron        String?   @default("")
+  startDate   DateTime? @db.Date()
+  endDate     DateTime? @db.Date()
+  creator     User      @relation(fields: [creatorId], references: [id])
   creatorId   String
   entries     Entry[]
 }
@@ -30,7 +33,7 @@ model Category {
 model Entry {
   id         Int      @id @default(autoincrement())
   date       DateTime @db.Date()
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId Int
 
   @@unique([date, categoryId])

@@ -30,7 +30,7 @@ export const Modal = ({
   isOpen,
   setIsOpen,
   maxWidth = '50vw',
-  maxHeight = '100vh',
+  maxHeight = '90vh',
   draggable = false,
   direction,
   closeBtn = true,
@@ -70,7 +70,7 @@ export const Modal = ({
                 leaveTo='opacity-0 scale-95'
               >
                 <Dialog.Panel
-                  className={`${directionClass} w-full max-w-md transform overflow-hidden rounded-md bg-white text-left align-middle shadow-modal transition-all`}
+                  className={`${directionClass} w-full max-w-md transform overflow-y-auto rounded-md bg-white text-left align-middle shadow-modal transition-all`}
                   style={{ maxWidth: maxWidth, maxHeight: maxHeight }}
                 >
                   <div id={handle} className='w-full cursor-move bg-slate-100'>

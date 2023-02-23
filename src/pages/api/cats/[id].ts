@@ -36,7 +36,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           })
           return res.status(200).json(deletedCategory)
         } catch (e) {
-          console.log(e)
           return res.status(409).send('There was an error deleting the category')
         }
       } else {
