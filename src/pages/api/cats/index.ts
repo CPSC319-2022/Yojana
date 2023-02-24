@@ -47,7 +47,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         })
         return res.status(200).json(edited_category)
       } catch (error) {
-        console.error(error)
         return res.status(404).send('category does not exist')
       }
     case 'POST':
@@ -55,7 +54,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         where: { name: req.body.name }
       })
       if (!categoryExists) {
-        console.log(dayjs(req.body.startDate).toISOString(), ' ', dayjs(req.body.endDate).toISOString())
         const new_category = await prisma.category.create({
           data: {
             name: req.body.name,
