@@ -1,7 +1,7 @@
 import * as parser from 'cron-parser'
 
 export const generateDatesFromCron = (
-  cron: any,
+  cron: string | undefined,
   start: string,
   end: string
 ): { date: string; isRepeating: boolean }[] => {
