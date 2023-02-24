@@ -75,7 +75,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     register,
     handleSubmit,
     control,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting, errors, isDirty },
     reset
   } = useForm<Schema>({
     resolver: zodResolver(schema),
@@ -270,7 +270,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           </div>
           <div className='flex justify-end'>
             <Button type='button' disabled text='Add Dates' className='mr-3' />
-            <Button type='submit' disabled={isSubmitting} text='Create' onClick={handleSubmit(onSubmit)} />
+            <Button
+              type='submit'
+              disabled={isSubmitting || (method === 'PUT' && !isDirty)}
+              text={method === 'POST' ? 'Create' : 'Update'}
+              onClick={handleSubmit(onSubmit)}
+            />
           </div>
         </form>
       </Modal>
