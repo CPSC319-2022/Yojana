@@ -174,7 +174,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         dispatch(setAlert({ message: 'Something went wrong. Please try again later.', type: 'error', show: true }))
       }
     }
-    callBack ? callBack() : callBack
+    callBack()
   }
 
   return (
