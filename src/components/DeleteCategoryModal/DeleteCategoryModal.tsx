@@ -41,7 +41,7 @@ export const DeleteCategoryModal = ({ id, onClose }: { id: number; onClose: () =
       overrideDefaultButtonStyle={true}
     >
       <div className='mt-2 p-3'>
-        <div className='flex justify-center text-lg'>Are you sure you want to delete this category?</div>
+        <div className='flex justify-center text-lg'>Are you sure you want to delete {`"${currentState?.name}"`}?</div>
         <div className='mt-5 flex justify-center'>
           <button
             type='button'
