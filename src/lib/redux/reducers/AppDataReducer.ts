@@ -44,7 +44,7 @@ const appDataSlice = createSlice({
 export const { setAppData, addCategory, updateCategory, toggleCategory, deleteCategory } = appDataSlice.actions
 export const getSpecificCategory = (state: State, id: number) => {
   const index = state.appData.data.findIndex((cat) => cat.id === id)
-  return state.appData.data.at(index)
+  return index !== -1 ? state.appData.data[index] : null
 }
 export const getCategories = (state: State) =>
   state.appData.data.map((cat) => {

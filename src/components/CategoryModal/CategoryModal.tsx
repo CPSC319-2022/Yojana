@@ -39,17 +39,22 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>
 
-export const CategoryModal = ({ method, id, callBack }: { method: string; id: number; callBack: any }) => {
+export const CategoryModal = ({ method, id, callBack }: { method: string; id: number; callBack: () => void }) => {
   const { data: session } = useSession()
   const dispatch = useAppDispatch()
   const currentState = useAppSelector((state) => getSpecificCategory(state, id))
-  const currentCron = id != -1 ? currentState?.cron?.split(' ').at(-1)?.split(',') : []
+  const currentRepeatingDays = id != -1 ? currentState?.cron?.split(' ').at(-1)?.split(',') : []
+  // remove empty string from array
+  if (currentRepeatingDays?.includes('')) {
+    currentRepeatingDays.splice(currentRepeatingDays.indexOf(''), 1)
+  }
   const defaultValues =
     method == 'POST'
       ? {
           name: '',
           description: '',
           repeating: {
+            cron: '',
             startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
             endDate: dayjs().endOf('year').format('YYYY-MM-DD')
           }
@@ -59,8 +64,10 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           description: currentState?.description,
           color: currentState?.color,
           repeating: {
-            startDate: currentState?.startDate?.toString().split('T')[0],
-            endDate: currentState?.endDate?.toString().split('T')[0]
+            cron: currentState?.cron || '',
+            startDate:
+              currentState?.startDate?.toString().split('T')[0] || dayjs().startOf('year').format('YYYY-MM-DD'),
+            endDate: currentState?.endDate?.toString().split('T')[0] || dayjs().endOf('year').format('YYYY-MM-DD')
           }
         }
 
@@ -85,9 +92,27 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       console.error('No session found')
       return
     }
-    let dates: string[] = []
-    repeating.cron = repeating.cron ? repeating.cron : currentState?.cron ? currentState?.cron : ''
-    dates = generateDatesFromCron(repeating.cron, repeating.startDate, repeating.endDate)
+    const newDates = new Set<{ date: string; isRepeating: boolean }>(
+      generateDatesFromCron(repeating.cron, repeating.startDate, repeating.endDate)
+    )
+    currentState?.entries.forEach((entry) => {
+      // this ensures that dates that are not repeating dates are not deleted
+      const dateString = dayjs(entry.date).toISOString()
+      if (!entry.isRepeating) {
+        newDates.add({ date: dateString, isRepeating: false })
+      }
+    })
+    // duplicates includes all entries that exist in the current state and the new state
+    // these entries will not be deleted from the database to save IOs
+    const duplicates = currentState?.entries.filter((entry) => {
+      const dateString = dayjs(entry.date).toISOString()
+      const isDuplicate = newDates.has({ date: dateString, isRepeating: false })
+      if (isDuplicate) {
+        // remove duplicate from dates since it already exists in the database
+        newDates.delete({ date: dateString, isRepeating: false })
+      }
+      return isDuplicate
+    })
 
     const response = await fetch('api/cats', {
       method: method,
@@ -100,16 +125,16 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         description: description,
         color: color,
         creatorId: session.user.id,
-        cron: repeating.cron,
+        cron: repeating.cron ? repeating.cron : undefined,
         startDate: repeating.cron ? repeating.startDate : undefined,
         endDate: repeating.cron ? repeating.endDate : undefined,
-        dates: dates,
-        oldEntries: currentState?.entries
+        dates: [...newDates],
+        duplicates: duplicates
       })
     })
     if (response.ok) {
       const data: Category & { entries: Entry[] } = await response.json()
-      const bodyToDispatch = {
+      const dispatchPayload = {
         id: data.id,
         color: data.color,
         name: data.name,
@@ -128,7 +153,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         },
         entries: data.entries
       }
-      dispatch(method === 'POST' ? addCategory(bodyToDispatch) : updateCategory(bodyToDispatch))
+      dispatch(method === 'POST' ? addCategory(dispatchPayload) : updateCategory(dispatchPayload))
 
       reset(() => ({
         name: '',
@@ -217,7 +242,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                               control={control}
                               name='repeating.cron'
                               rules={{ required: false }}
-                              picked={currentCron}
+                              picked={currentRepeatingDays}
                             />
                           </Tabs.Content>
                           <Tabs.Title>Monthly</Tabs.Title>

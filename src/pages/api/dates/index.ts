@@ -23,9 +23,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       if (!categoryId || !dates) return res.status(400).send('Bad Request')
 
       const numEntries = await prisma.entry.createMany({
-        data: dates.map((date: string) => ({
+        data: dates.map(({ date, isRepeating = false }: { date: string; isRepeating?: boolean }) => ({
           date: new Date(date),
-          categoryId: parseInt(categoryId.toString())
+          categoryId: parseInt(categoryId.toString()),
+          isRepeating: isRepeating
         }))
       })
       return res.status(200).json(numEntries.count)

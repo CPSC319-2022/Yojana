@@ -3,7 +3,6 @@ import cats from '@/pages/api/cats'
 import '@testing-library/jest-dom'
 import { createRequest, createResponse } from 'node-mocks-http'
 import { generateISODates } from '@/tests/utils/dates'
-import dayjs from 'dayjs'
 
 describe('/api/cats', () => {
   describe('GET', () => {
@@ -151,7 +150,7 @@ describe('/api/cats', () => {
         cron: null,
         startDate: null,
         endDate: null,
-        oldEntries: [],
+        duplicates: [],
         dates: []
       }
       const req = createRequest({
@@ -161,7 +160,7 @@ describe('/api/cats', () => {
       })
       const res = createResponse()
 
-      prismaMock.category.update.mockResolvedValue(mock_body)
+      prismaMock.$transaction.mockResolvedValue([undefined, mock_body])
       await cats(req, res)
 
       expect(res._getStatusCode()).toBe(200)
@@ -180,7 +179,7 @@ describe('/api/cats', () => {
         cron: '0 0 0 0 0',
         startDate: new Date('2023-01-01'),
         endDate: new Date('2023-01-01'),
-        oldEntries: [],
+        duplicates: [],
         dates: []
       }
       const req = createRequest({
@@ -190,7 +189,7 @@ describe('/api/cats', () => {
       })
       const res = createResponse()
 
-      prismaMock.category.update.mockResolvedValue(mock_body)
+      prismaMock.$transaction.mockResolvedValue([undefined, mock_body])
       await cats(req, res)
 
       expect(res._getStatusCode()).toBe(200)
@@ -206,7 +205,7 @@ describe('/api/cats', () => {
         isMaster: false,
         creatorId: '1',
         icon: '',
-        oldEntries: [],
+        duplicated: [],
         dates: []
       }
       const req = createRequest({
@@ -236,7 +235,7 @@ describe('/api/cats', () => {
         cron: null,
         startDate: null,
         endDate: null,
-        oldEntries: [],
+        duplicates: [],
         dates: []
       }
 
@@ -268,7 +267,7 @@ describe('/api/cats', () => {
       cron: null,
       startDate: null,
       endDate: null,
-      oldEntries: [{ id: 1, date: new Date('2022-01-01') }],
+      duplicates: [{ id: 1, date: new Date('2022-01-01'), isRepeating: false, categoryId: 1 }],
       dates: ['2023-01-01', '2023-01-02']
     }
     const req = createRequest({
@@ -278,44 +277,12 @@ describe('/api/cats', () => {
     })
     const res = createResponse()
 
-    prismaMock.category.update.mockResolvedValue(mock_body)
+    prismaMock.$transaction.mockResolvedValue([undefined, mock_body])
     await cats(req, res)
 
     expect(res._getStatusCode()).toBe(200)
     expect(res._getData()).toBe(JSON.stringify(mock_body))
-    expect(prismaMock.entry.deleteMany).toHaveBeenCalledWith({
-      where: { AND: [{ id: 1 }, { categoryId: 1 }] }
-    })
-  })
-
-  it('should not delete any entries when oldEntries is empty', async () => {
-    const mock_body = {
-      id: 1,
-      name: 'new name',
-      description: 'new desc',
-      color: '#000000',
-      isMaster: false,
-      creatorId: 'cba123',
-      icon: '',
-      cron: null,
-      startDate: null,
-      endDate: null,
-      oldEntries: [],
-      dates: ['2023-01-01', '2023-01-02']
-    }
-    const req = createRequest({
-      method: 'PUT',
-      url: '/cats',
-      body: mock_body
-    })
-    const res = createResponse()
-
-    prismaMock.category.update.mockResolvedValue(mock_body)
-    await cats(req, res)
-
-    expect(res._getStatusCode()).toBe(200)
-    expect(res._getData()).toBe(JSON.stringify(mock_body))
-    expect(prismaMock.entry.deleteMany).not.toHaveBeenCalled()
+    expect(prismaMock.$transaction).toHaveBeenCalledTimes(1)
   })
 
   it('should return a 405 status code when invalid method', async () => {

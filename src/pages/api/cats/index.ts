@@ -1,8 +1,8 @@
 import prisma from '@/prisma/prismadb'
 import { getCategories } from '@/prisma/queries'
-import { Entry } from '@prisma/client'
 import dayjs from 'dayjs'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { Entry } from '@prisma/client'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
@@ -17,35 +17,44 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(409).send('category name conflicting other category')
       }
       try {
-        req.body.oldEntries.map(async (Entry: Entry) => {
-          await prisma.entry.deleteMany({
-            where: { AND: [{ id: Entry.id }, { categoryId: req.body.id }] }
-          })
-        })
-        const edited_category = await prisma.category.update({
-          where: { id: req.body.id },
-          data: {
-            name: req.body.name,
-            description: req.body.description,
-            color: req.body.color,
-            isMaster: req.body.isMaster,
-            icon: req.body.icon,
-            cron: req.body.cron,
-            startDate: req.body.startDate ? dayjs(req.body.startDate).toISOString() : null,
-            endDate: req.body.endDate ? dayjs(req.body.endDate).toISOString() : null,
-            entries: {
-              createMany: {
-                data: req.body.dates.map((date: string) => ({
-                  date: dayjs(date).toISOString()
-                }))
-              }
+        const [, editedCategory] = await prisma.$transaction([
+          prisma.entry.deleteMany({
+            where: {
+              id: {
+                notIn: req.body.duplicates.map((date: Entry) => date.id)
+              },
+              categoryId: req.body.id
             }
-          },
-          include: {
-            entries: true
-          }
-        })
-        return res.status(200).json(edited_category)
+          }),
+          prisma.category.update({
+            where: { id: req.body.id },
+            data: {
+              name: req.body.name,
+              description: req.body.description,
+              color: req.body.color,
+              isMaster: req.body.isMaster,
+              icon: req.body.icon,
+              cron: req.body.cron,
+              startDate: req.body.startDate ? dayjs(req.body.startDate).toISOString() : null,
+              endDate: req.body.endDate ? dayjs(req.body.endDate).toISOString() : null,
+              entries: {
+                createMany: {
+                  data: req.body.dates.map(
+                    ({ date, isRepeating = false }: { date: string; isRepeating?: boolean }) => ({
+                      date: dayjs(date).toISOString(),
+                      isRepeating: isRepeating
+                    })
+                  ),
+                  skipDuplicates: true
+                }
+              }
+            },
+            include: {
+              entries: true
+            }
+          })
+        ])
+        return res.status(200).json(editedCategory)
       } catch (error) {
         return res.status(404).send('category does not exist')
       }
@@ -67,8 +76,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             endDate: req.body.endDate ? dayjs(req.body.endDate).toISOString() : null,
             entries: {
               createMany: {
-                data: req.body.dates.map((date: string) => ({
-                  date: dayjs(date).toISOString()
+                data: req.body.dates.map(({ date, isRepeating = false }: { date: string; isRepeating?: boolean }) => ({
+                  date: dayjs(date).toISOString(),
+                  isRepeating: isRepeating
                 }))
               }
             }
