@@ -151,17 +151,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     }
     callBack ? callBack() : callBack
   }
-  const buttonText = method === 'POST' ? 'Create Category' : 'Edit'
-  const title = method === 'POST' ? 'Create Category' : 'Edit Category'
-  const style =
-    method === 'POST'
-      ? 'mt-4 ml-5 truncate'
-      : `w-16 inline-flex justify-center bg-white rounded-md border border-transparent font-medium`
+
   return (
     <>
       <Modal
-        buttonText={buttonText}
-        title={title}
+        buttonText={method === 'POST' ? 'Create Category' : 'Edit'}
+        title={method === 'POST' ? 'Create Category' : 'Edit Category'}
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
         maxWidth={'40vw'}
@@ -169,7 +164,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         closeWhenClickOutside={false}
         handle={'create-category-modal-handle'}
         bounds={'create-category-modal-wrapper'}
-        buttonClassName={style}
+        buttonClassName={
+          method === 'POST'
+            ? 'mt-4 ml-5 truncate'
+            : `group flex w-full items-center rounded-md px-2 py-2 hover:bg-slate-100`
+        }
+        overrideDefaultButtonStyle={method !== 'POST'}
       >
         <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
           <div className='mb-4'>

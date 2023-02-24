@@ -8,7 +8,7 @@ export const AccountViewDropdown = () => {
 
   return (
     <Dropdown
-      title='Account'
+      text='Account'
       containerClassName='w-[12vw]'
       menuItems={[
         {

@@ -10,7 +10,7 @@ export const CalViewDropdown = () => {
 
   return (
     <Dropdown
-      title={activeCalView}
+      text={activeCalView}
       containerClassName='w-[12vw]'
       menuItems={[
         {
