@@ -2,13 +2,13 @@ import { useAppSelector } from '@/redux/hooks'
 import { isMonthInterval } from '@/redux/reducers/MainCalendarReducer'
 import { getTextColor } from '@/utils/color'
 
-interface EventBlockProps {
+interface CategoryBlockProps {
   color: string
   label: string
   icon: string
 }
 
-export const EventBlock = (props: EventBlockProps) => {
+export const CategoryBlock = (props: CategoryBlockProps) => {
   const monthView = useAppSelector(isMonthInterval)
 
   return (

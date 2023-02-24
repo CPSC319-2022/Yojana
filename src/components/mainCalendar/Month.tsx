@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { EventBlock } from '@/components/mainCalendar/EventBlock'
+import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
 import { useAppSelector } from '@/redux/hooks'
 import { getCategoriesOfMonth } from '@/redux/reducers/AppDataReducer'
 import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
@@ -28,7 +28,7 @@ export const Month = (props: MonthProps) => {
       const day = monthStartDate.add(offsetFromMonthStart, 'days')
       const dayCategories = categoriesPerDate[day.date() - 1]?.map((calEvent, key) => {
         if (calEvent.show) {
-          return <EventBlock color={calEvent.color} label={calEvent.name} icon={calEvent.icon} key={key} />
+          return <CategoryBlock color={calEvent.color} label={calEvent.name} icon={calEvent.icon} key={key} />
         }
       })
 
@@ -54,10 +54,18 @@ export const Month = (props: MonthProps) => {
       const generatedDays = Array.from(Array(7).keys()).map((dayNum) => {
         return renderDay(firstDateOfWeek, dayNum)
       })
+      console.log(numWeeks)
       return (
-        <div className={`h-1/${numWeeks} grid grid-cols-7 gap-0.5 pt-0.5`} key={firstDateOfWeek}>
-          {generatedDays}
-        </div>
+        <>
+          <style jsx>{`
+            div {
+              height: calc(100% / ${numWeeks});
+            }
+          `}</style>
+          <div className='grid grid-cols-7 gap-0.5 pt-0.5' key={firstDateOfWeek}>
+            {generatedDays}
+          </div>
+        </>
       )
     },
     [numWeeks, renderDay]
