@@ -1,8 +1,8 @@
 import { Button, HoverButton } from '@/components/common/Button'
 import { DeleteCategoryModal } from '@/DeleteCategoryModal'
-import { EditCategoryModal } from '@/EditCategoryModal'
 import { Menu, Popover, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
+import { CategoryModal } from '../CategoryModal'
 
 interface DropdownProps {
   title: string | any
@@ -87,7 +87,7 @@ export const HoverDropdown = ({ title, id, menuItems, containerClassName = '' }:
                 static
               >
                 <div className='px-1 py-1'>
-                  <EditCategoryModal id={Number(id)} isOpen={isOpen} onClose={handleClosePopover} />
+                  <CategoryModal method='PUT' id={Number(id)} callBack={handleClosePopover} />
                   <DeleteCategoryModal id={Number(id)} isOpen={isOpen} onClose={handleClosePopover} />
                 </div>
               </Popover.Panel>

@@ -1,17 +1,20 @@
-import { ColorPicker } from '@/components/ColorPicker'
-import { Button, Modal } from '@/components/common'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { setAlert } from '@/redux/reducers/AlertReducer'
-import { getSpecificCategory, updateCategory } from '@/redux/reducers/AppDataReducer'
-import { randomColor } from '@/utils/color'
-import { generateDatesFromCron } from '@/utils/dates'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Category, Entry } from '@prisma/client'
-import dayjs from 'dayjs'
 import { useSession } from 'next-auth/react'
-import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { ColorPicker } from '@/components/ColorPicker'
+import React, { useState } from 'react'
+import { Button, Modal, Tabs } from '@/components/common'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { Category, Entry } from '@prisma/client'
+import { addCategory, getSpecificCategory, updateCategory } from '@/redux/reducers/AppDataReducer'
+import { randomColor } from '@/utils/color'
 import * as z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { DayOfWeekPicker } from '@/components/DayOfWeekPicker/DayOfWeekPicker'
+import { Disclosure, Transition } from '@headlessui/react'
+import { BsChevronUp } from 'react-icons/bs'
+import dayjs from 'dayjs'
+import { generateDatesFromCron } from '@/utils/dates'
+import { setAlert } from '@/redux/reducers/AlertReducer'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
@@ -36,10 +39,31 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>
 
-export const EditCategoryModal = ({ id, isOpen, onClose }: { id: number; isOpen: boolean; onClose: any }) => {
+export const CategoryModal = ({ method, id, callBack }: { method: string; id: number; callBack: any }) => {
   const { data: session } = useSession()
   const dispatch = useAppDispatch()
   const currentState = useAppSelector((state) => getSpecificCategory(state, id))
+
+  const defaultValues =
+    method == 'POST'
+      ? {
+          name: '',
+          description: '',
+          repeating: {
+            startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
+            endDate: dayjs().endOf('year').format('YYYY-MM-DD')
+          }
+        }
+      : {
+          name: currentState?.name,
+          description: currentState?.description,
+          color: currentState?.color,
+          repeating: {
+            startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
+            endDate: dayjs().endOf('year').format('YYYY-MM-DD')
+          }
+        }
+
   const {
     register,
     handleSubmit,
@@ -51,16 +75,9 @@ export const EditCategoryModal = ({ id, isOpen, onClose }: { id: number; isOpen:
     shouldUseNativeValidation: true,
     mode: 'onSubmit',
     reValidateMode: 'onBlur',
-    defaultValues: {
-      name: currentState?.name,
-      description: currentState?.description,
-      color: currentState?.color,
-      repeating: {
-        startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
-        endDate: dayjs().endOf('year').format('YYYY-MM-DD')
-      }
-    }
+    defaultValues: defaultValues
   })
+
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const onSubmit: SubmitHandler<Schema> = async ({ name, color, description, repeating }) => {
@@ -74,7 +91,7 @@ export const EditCategoryModal = ({ id, isOpen, onClose }: { id: number; isOpen:
       dates = generateDatesFromCron(repeating.cron, repeating.startDate, repeating.endDate)
     }
     const response = await fetch('api/cats', {
-      method: 'PUT',
+      method: method,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -93,27 +110,27 @@ export const EditCategoryModal = ({ id, isOpen, onClose }: { id: number; isOpen:
     if (response.ok) {
       const data: Category & { entries: Entry[] } = await response.json()
 
-      dispatch(
-        updateCategory({
-          id: data.id,
-          color: data.color,
-          name: data.name,
-          description: data.description,
-          isMaster: data.isMaster,
-          icon: data.icon,
-          cron: data.cron,
-          startDate: data.startDate,
-          endDate: data.endDate,
-          show: true,
-          creator: {
-            id: session.user.id,
-            name: session.user.name,
-            email: session.user.email,
-            isAdmin: session.user.isAdmin
-          },
-          entries: currentState?.entries ? currentState?.entries : data.entries
-        })
-      )
+      const bodyToDispatch = {
+        id: data.id,
+        color: data.color,
+        name: data.name,
+        description: data.description,
+        isMaster: data.isMaster,
+        icon: data.icon,
+        cron: data.cron,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        show: true,
+        creator: {
+          id: session.user.id,
+          name: session.user.name,
+          email: session.user.email,
+          isAdmin: session.user.isAdmin
+        },
+        entries: currentState?.entries ? currentState?.entries : data.entries
+      }
+      dispatch(method === 'POST' ? addCategory(bodyToDispatch) : updateCategory(bodyToDispatch))
+
       reset(() => ({
         name: '',
         description: '',
@@ -133,13 +150,19 @@ export const EditCategoryModal = ({ id, isOpen, onClose }: { id: number; isOpen:
         dispatch(setAlert({ message: 'Something went wrong. Please try again later.', type: 'error', show: true }))
       }
     }
-    onClose()
+    callBack ? callBack() : callBack
   }
+  const buttonText = method === 'POST' ? 'Create Category' : 'Edit'
+  const title = method === 'POST' ? 'Create Category' : 'Edit Category'
+  const style =
+    method === 'POST'
+      ? 'mt-4 ml-5 truncate'
+      : `w-16 inline-flex justify-center bg-white rounded-md border border-transparent font-medium`
   return (
     <>
       <Modal
-        buttonText='Edit'
-        title='Edit Category'
+        buttonText={buttonText}
+        title={title}
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
         maxWidth={'40vw'}
@@ -147,7 +170,7 @@ export const EditCategoryModal = ({ id, isOpen, onClose }: { id: number; isOpen:
         closeWhenClickOutside={false}
         handle={'create-category-modal-handle'}
         bounds={'create-category-modal-wrapper'}
-        buttonClassName={`w-16 inline-flex justify-center bg-white rounded-md border border-transparent font-medium`}
+        buttonClassName={style}
       >
         <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
           <div className='mb-4'>
@@ -168,9 +191,9 @@ export const EditCategoryModal = ({ id, isOpen, onClose }: { id: number; isOpen:
           </div>
           <div className='mb-6'>
             <label className='mb-2 block'>Color</label>
-            <ColorPicker control={control} name='color' rules={{ required: false }} />
+            <ColorPicker control={control} name='color' rules={{ required: true }} />
           </div>
-          {/* <div className='mb-4'>
+          <div className='mb-4'>
             <Disclosure>
               {({ open }) => (
                 <>
@@ -215,10 +238,10 @@ export const EditCategoryModal = ({ id, isOpen, onClose }: { id: number; isOpen:
                 </>
               )}
             </Disclosure>
-          </div> */}
+          </div>
           <div className='flex justify-end'>
             <Button type='button' disabled text='Add Dates' className='mr-3' />
-            <Button type='submit' disabled={isSubmitting} text='Submit' onClick={handleSubmit(onSubmit)} />
+            <Button type='submit' disabled={isSubmitting} text='Create' onClick={handleSubmit(onSubmit)} />
           </div>
         </form>
       </Modal>

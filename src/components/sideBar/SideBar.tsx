@@ -1,10 +1,10 @@
+import { CategoryModal } from '@/components/CategoryModal'
 import { CategoriesMenu } from './CategoriesMenu'
-import { CreateCategoryModal } from '@/components/CreateCategoryModal'
 
 export const SideBar = () => {
   return (
     <div className='pt-2'>
-      <CreateCategoryModal />
+      <CategoryModal method='POST' id={-1} callBack={null} />
       <CategoriesMenu />
     </div>
   )
