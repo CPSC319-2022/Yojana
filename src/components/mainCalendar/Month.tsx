@@ -1,5 +1,4 @@
 import { useCallback } from 'react'
-
 import { EventBlock } from '@/components/mainCalendar/EventBlock'
 import { useAppSelector } from '@/redux/hooks'
 import { getCategoriesOfMonth } from '@/redux/reducers/AppDataReducer'

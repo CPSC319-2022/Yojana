@@ -76,4 +76,9 @@ export const getCategoriesOfMonth = (state: State, dateInMonth: Dayjs) => {
   )
 }
 
+export const getCategoriesOfYear = (state: State, yearStart: Dayjs) => {
+  const months = Array.from(Array(12).keys()).map((num: number) => yearStart.add(num, 'months'))
+  return months.map((monthStartDate: Dayjs) => getCategoriesOfMonth(state, monthStartDate))
+}
+
 export const appDataReducer = appDataSlice.reducer
