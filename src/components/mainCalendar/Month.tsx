@@ -54,7 +54,6 @@ export const Month = (props: MonthProps) => {
       const generatedDays = Array.from(Array(7).keys()).map((dayNum) => {
         return renderDay(firstDateOfWeek, dayNum)
       })
-      console.log(numWeeks)
       return (
         <>
           <style jsx>{`
