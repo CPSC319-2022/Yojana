@@ -24,9 +24,9 @@ const Calendar = ({ data }: { data: AppData }) => {
           <div
             className={`${
               sidebarOpen ? 'w-1/5 translate-x-0 pr-2' : 'w-0 -translate-x-full'
-            } overflow-hidden transition-all`}
+            } overflow-visible transition-all`}
           >
-            <SideBar />
+            {sidebarOpen && <SideBar />}
           </div>
           <div className={`${sidebarOpen ? 'w-4/5' : 'w-full'} flex flex-col transition-all`}>
             <MainCalendar />

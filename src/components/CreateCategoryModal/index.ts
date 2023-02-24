@@ -1,1 +1,0 @@
-export { CreateCategoryModal } from './CreateCategoryModal'

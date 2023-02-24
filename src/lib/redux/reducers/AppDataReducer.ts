@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AppData, CategoryFullState } from '@/types/prisma'
-import dayjs, { Dayjs } from 'dayjs'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { setCookie } from 'cookies-next'
+import dayjs, { Dayjs } from 'dayjs'
 
 interface State {
   appData: {
@@ -33,11 +33,19 @@ const appDataSlice = createSlice({
       const index = state.data.findIndex((cat) => cat.id === action.payload)
       setCookie(`yojana.show-category-${action.payload}`, !state.data[index].show)
       state.data[index].show = !state.data[index].show
+    },
+    deleteCategory: (state, action: PayloadAction<number>) => {
+      const index = state.data.findIndex((cat) => cat.id === action.payload)
+      state.data.splice(index, 1)
     }
   }
 })
 
-export const { setAppData, addCategory, updateCategory, toggleCategory } = appDataSlice.actions
+export const { setAppData, addCategory, updateCategory, toggleCategory, deleteCategory } = appDataSlice.actions
+export const getSpecificCategory = (state: State, id: number) => {
+  const index = state.appData.data.findIndex((cat) => cat.id === id)
+  return index !== -1 ? state.appData.data[index] : null
+}
 export const getCategories = (state: State) =>
   state.appData.data.map((cat) => {
     return {

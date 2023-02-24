@@ -31,10 +31,11 @@ model Category {
 }
 
 model Entry {
-  id         Int      @id @default(autoincrement())
-  date       DateTime @db.Date()
-  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  categoryId Int
+  id          Int      @id @default(autoincrement())
+  date        DateTime @db.Date()
+  isRepeating Boolean  @default(false)
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId  Int
 
   @@unique([date, categoryId])
 }

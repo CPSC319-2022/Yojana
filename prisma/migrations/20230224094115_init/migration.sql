@@ -29,6 +29,7 @@ CREATE TABLE `Category` (
 CREATE TABLE `Entry` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `date` DATE NOT NULL,
+    `isRepeating` BOOLEAN NOT NULL DEFAULT false,
     `categoryId` INTEGER NOT NULL,
 
     UNIQUE INDEX `Entry_date_categoryId_key`(`date`, `categoryId`),

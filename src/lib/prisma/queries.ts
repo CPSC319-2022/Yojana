@@ -8,6 +8,9 @@ export const getCategories = async () => {
       description: true,
       color: true,
       isMaster: true,
+      cron: true,
+      startDate: true,
+      endDate: true,
       creator: true,
       entries: true,
       icon: true

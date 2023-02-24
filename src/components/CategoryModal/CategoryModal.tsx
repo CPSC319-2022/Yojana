@@ -3,9 +3,9 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { ColorPicker } from '@/components/ColorPicker'
 import React, { useState } from 'react'
 import { Button, Modal, Tabs } from '@/components/common'
-import { useAppDispatch } from '@/redux/hooks'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Category, Entry } from '@prisma/client'
-import { addCategory } from '@/redux/reducers/AppDataReducer'
+import { addCategory, getSpecificCategory, updateCategory } from '@/redux/reducers/AppDataReducer'
 import { randomColor } from '@/utils/color'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -39,28 +39,50 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>
 
-export const CreateCategoryModal = () => {
+export const CategoryModal = ({ method, id, callBack }: { method: string; id: number; callBack: () => void }) => {
   const { data: session } = useSession()
   const dispatch = useAppDispatch()
+  const currentState = useAppSelector((state) => getSpecificCategory(state, id))
+  const currentRepeatingDays = id != -1 ? currentState?.cron?.split(' ').at(-1)?.split(',') : []
+  // remove empty string from array
+  if (currentRepeatingDays?.includes('')) {
+    currentRepeatingDays.splice(currentRepeatingDays.indexOf(''), 1)
+  }
+  const defaultValues =
+    method == 'POST'
+      ? {
+          name: '',
+          description: '',
+          repeating: {
+            cron: '',
+            startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
+            endDate: dayjs().endOf('year').format('YYYY-MM-DD')
+          }
+        }
+      : {
+          name: currentState?.name,
+          description: currentState?.description,
+          color: currentState?.color,
+          repeating: {
+            cron: currentState?.cron || '',
+            startDate:
+              currentState?.startDate?.toString().split('T')[0] || dayjs().startOf('year').format('YYYY-MM-DD'),
+            endDate: currentState?.endDate?.toString().split('T')[0] || dayjs().endOf('year').format('YYYY-MM-DD')
+          }
+        }
+
   const {
     register,
     handleSubmit,
     control,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting, errors, isDirty },
     reset
   } = useForm<Schema>({
     resolver: zodResolver(schema),
     shouldUseNativeValidation: true,
     mode: 'onSubmit',
     reValidateMode: 'onBlur',
-    defaultValues: {
-      name: '',
-      description: '',
-      repeating: {
-        startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
-        endDate: dayjs().endOf('year').format('YYYY-MM-DD')
-      }
-    }
+    defaultValues: defaultValues
   })
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -70,50 +92,69 @@ export const CreateCategoryModal = () => {
       console.error('No session found')
       return
     }
+    const newDates = new Set<{ date: string; isRepeating: boolean }>(
+      generateDatesFromCron(repeating.cron, repeating.startDate, repeating.endDate)
+    )
+    currentState?.entries.forEach((entry) => {
+      // this ensures that dates that are not repeating dates are not deleted
+      const dateString = dayjs(entry.date).toISOString()
+      if (!entry.isRepeating) {
+        newDates.add({ date: dateString, isRepeating: false })
+      }
+    })
+    // duplicates includes all entries that exist in the current state and the new state
+    // these entries will not be deleted from the database to save IOs
+    const duplicates = currentState?.entries.filter((entry) => {
+      const dateString = dayjs(entry.date).toISOString()
+      const isDuplicate = newDates.has({ date: dateString, isRepeating: false })
+      if (isDuplicate) {
+        // remove duplicate from dates since it already exists in the database
+        newDates.delete({ date: dateString, isRepeating: false })
+      }
+      return isDuplicate
+    })
 
-    let dates: string[] = []
-    if (repeating.cron) {
-      dates = generateDatesFromCron(repeating.cron, repeating.startDate, repeating.endDate)
-    }
     const response = await fetch('api/cats', {
-      method: 'POST',
+      method: method,
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        id: currentState?.id,
         name: name,
         description: description,
         color: color,
         creatorId: session.user.id,
-        cron: repeating.cron,
+        cron: repeating.cron ? repeating.cron : undefined,
         startDate: repeating.cron ? repeating.startDate : undefined,
         endDate: repeating.cron ? repeating.endDate : undefined,
-        dates: dates
+        dates: [...newDates],
+        duplicates: duplicates
       })
     })
     if (response.ok) {
       const data: Category & { entries: Entry[] } = await response.json()
-      dispatch(
-        addCategory({
-          id: data.id,
-          color: data.color,
-          name: data.name,
-          description: data.description,
-          isMaster: data.isMaster,
-          icon: data.icon,
-          cron: data.cron,
-          startDate: data.startDate,
-          endDate: data.endDate,
-          show: true,
-          creator: {
-            id: session.user.id,
-            name: session.user.name,
-            email: session.user.email,
-            isAdmin: session.user.isAdmin
-          },
-          entries: data.entries
-        })
-      )
+      const dispatchPayload = {
+        id: data.id,
+        color: data.color,
+        name: data.name,
+        description: data.description,
+        isMaster: data.isMaster,
+        icon: data.icon,
+        cron: data.cron,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        show: true,
+        creator: {
+          id: session.user.id,
+          name: session.user.name,
+          email: session.user.email,
+          isAdmin: session.user.isAdmin
+        },
+        entries: data.entries
+      }
+      dispatch(method === 'POST' ? addCategory(dispatchPayload) : updateCategory(dispatchPayload))
+
       reset(() => ({
         name: '',
         description: '',
@@ -133,13 +174,14 @@ export const CreateCategoryModal = () => {
         dispatch(setAlert({ message: 'Something went wrong. Please try again later.', type: 'error', show: true }))
       }
     }
+    callBack()
   }
 
   return (
     <>
       <Modal
-        buttonText='Create Category'
-        title='Create Category'
+        buttonText={method === 'POST' ? 'Create Category' : 'Edit'}
+        title={method === 'POST' ? 'Create Category' : 'Edit Category'}
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
         maxWidth={'40vw'}
@@ -147,7 +189,12 @@ export const CreateCategoryModal = () => {
         closeWhenClickOutside={false}
         handle={'create-category-modal-handle'}
         bounds={'create-category-modal-wrapper'}
-        buttonClassName={'mt-4 ml-5 truncate'}
+        buttonClassName={
+          method === 'POST'
+            ? 'mt-4 ml-5 truncate'
+            : `group flex w-full items-center rounded-md px-2 py-2 hover:bg-slate-100`
+        }
+        overrideDefaultButtonStyle={method !== 'POST'}
       >
         <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
           <div className='mb-4'>
@@ -191,7 +238,12 @@ export const CreateCategoryModal = () => {
                         <Tabs>
                           <Tabs.Title>Weekly</Tabs.Title>
                           <Tabs.Content>
-                            <DayOfWeekPicker control={control} name='repeating.cron' rules={{ required: false }} />
+                            <DayOfWeekPicker
+                              control={control}
+                              name='repeating.cron'
+                              rules={{ required: false }}
+                              picked={currentRepeatingDays}
+                            />
                           </Tabs.Content>
                           <Tabs.Title>Monthly</Tabs.Title>
                           <Tabs.Content>
@@ -218,7 +270,12 @@ export const CreateCategoryModal = () => {
           </div>
           <div className='flex justify-end'>
             <Button type='button' disabled text='Add Dates' className='mr-3' />
-            <Button type='submit' disabled={isSubmitting} text='Create' onClick={handleSubmit(onSubmit)} />
+            <Button
+              type='submit'
+              disabled={isSubmitting || (method === 'PUT' && !isDirty)}
+              text={method === 'POST' ? 'Create' : 'Update'}
+              onClick={handleSubmit(onSubmit)}
+            />
           </div>
         </form>
       </Modal>

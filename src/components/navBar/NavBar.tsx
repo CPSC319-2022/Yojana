@@ -27,8 +27,7 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
         <Button
           text='&#9776;'
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className='mr-5 text-2xl'
-          padding='px-3 pt-0.5 pb-2'
+          className='mr-5 px-3 pt-0.5 pb-2 text-2xl'
         />
         <h1 className='text-2xl font-medium'>Yojana</h1>
       </div>

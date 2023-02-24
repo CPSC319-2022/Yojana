@@ -163,6 +163,7 @@ put:
     color: string
     icon: string
     isMaster: boolean
+    duplicates: Entry[]
   responses:
     200:
       description: update existing category details by its id
@@ -177,6 +178,7 @@ put:
         endDate: ISOString
         isMaster: boolean
         creatorId: string
+        entries: Entry[]
     404:
       description: category does not exist
       text: category does not exist
@@ -206,6 +208,7 @@ post:
         endDate: ISOString
         isMaster: boolean
         creatorId: string
+        entries: Entry[]
     409:
       description: creating a new category with a non-unique name
       text: category name must be unique

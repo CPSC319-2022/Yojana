@@ -149,7 +149,9 @@ describe('/api/cats', () => {
         icon: '',
         cron: null,
         startDate: null,
-        endDate: null
+        endDate: null,
+        duplicates: [],
+        dates: []
       }
       const req = createRequest({
         method: 'PUT',
@@ -158,7 +160,7 @@ describe('/api/cats', () => {
       })
       const res = createResponse()
 
-      prismaMock.category.update.mockResolvedValue(mock_body)
+      prismaMock.$transaction.mockResolvedValue([undefined, mock_body])
       await cats(req, res)
 
       expect(res._getStatusCode()).toBe(200)
@@ -176,7 +178,9 @@ describe('/api/cats', () => {
         icon: '',
         cron: '0 0 0 0 0',
         startDate: new Date('2023-01-01'),
-        endDate: new Date('2023-01-01')
+        endDate: new Date('2023-01-01'),
+        duplicates: [],
+        dates: []
       }
       const req = createRequest({
         method: 'PUT',
@@ -185,7 +189,7 @@ describe('/api/cats', () => {
       })
       const res = createResponse()
 
-      prismaMock.category.update.mockResolvedValue(mock_body)
+      prismaMock.$transaction.mockResolvedValue([undefined, mock_body])
       await cats(req, res)
 
       expect(res._getStatusCode()).toBe(200)
@@ -200,7 +204,9 @@ describe('/api/cats', () => {
         color: '#000000',
         isMaster: false,
         creatorId: '1',
-        icon: ''
+        icon: '',
+        duplicated: [],
+        dates: []
       }
       const req = createRequest({
         method: 'PUT',
@@ -228,7 +234,9 @@ describe('/api/cats', () => {
         icon: '',
         cron: null,
         startDate: null,
-        endDate: null
+        endDate: null,
+        duplicates: [],
+        dates: []
       }
 
       const req = createRequest({
@@ -245,6 +253,36 @@ describe('/api/cats', () => {
       expect(res._getStatusCode()).toBe(409)
       expect(res._getData()).toBe('category name conflicting other category')
     })
+  })
+
+  it('should update category with provided entries', async () => {
+    const mock_body = {
+      id: 1,
+      name: 'new name',
+      description: 'new desc',
+      color: '#000000',
+      isMaster: false,
+      creatorId: 'cba123',
+      icon: '',
+      cron: null,
+      startDate: null,
+      endDate: null,
+      duplicates: [{ id: 1, date: new Date('2022-01-01'), isRepeating: false, categoryId: 1 }],
+      dates: ['2023-01-01', '2023-01-02']
+    }
+    const req = createRequest({
+      method: 'PUT',
+      url: '/cats',
+      body: mock_body
+    })
+    const res = createResponse()
+
+    prismaMock.$transaction.mockResolvedValue([undefined, mock_body])
+    await cats(req, res)
+
+    expect(res._getStatusCode()).toBe(200)
+    expect(res._getData()).toBe(JSON.stringify(mock_body))
+    expect(prismaMock.$transaction).toHaveBeenCalledTimes(1)
   })
 
   it('should return a 405 status code when invalid method', async () => {

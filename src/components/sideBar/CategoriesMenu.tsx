@@ -1,10 +1,9 @@
 import { Checkbox } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategories, toggleCategory } from '@/redux/reducers/AppDataReducer'
-import { useMemo } from 'react'
-import { BsThreeDotsVertical } from 'react-icons/bs'
 import { CategoryState } from '@/types/prisma'
-
+import { useMemo } from 'react'
+import { CategoriesDropdown } from './CategoriesDropdown'
 export const CategoriesMenu = () => {
   const dispatch = useAppDispatch()
   const categories: CategoryState[] = useAppSelector(getCategories)
@@ -24,9 +23,7 @@ export const CategoriesMenu = () => {
           checkboxClassName={`h-5 w-5 ml-5`}
           onChange={() => dispatch(toggleCategory(calEvent.id))}
         />
-        <span className='mt-1 cursor-pointer text-white group-hover:text-slate-500'>
-          <BsThreeDotsVertical />
-        </span>
+        <CategoriesDropdown id={calEvent.id} />
       </div>
     ))
   }, [categories, dispatch])

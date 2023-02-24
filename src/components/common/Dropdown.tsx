@@ -1,24 +1,44 @@
-import React, { Fragment } from 'react'
-import { Menu, Transition } from '@headlessui/react'
 import { Button } from '@/components/common/Button'
+import { Menu, Transition } from '@headlessui/react'
+import React, { Fragment } from 'react'
+import { IconType } from 'react-icons'
 
-interface DropdownProps {
-  title: string
+export interface DropdownProps {
+  text?: string
+  id?: number
   menuItems: {
     key: string
     label: string
     onClick: () => void
+    props?: any
   }[]
   containerClassName?: string
+  buttonClassName?: string
+  overrideDefaultButtonStyle?: boolean
+  Icon?: IconType
 }
 
-export const Dropdown = ({ title, menuItems, containerClassName = '' }: DropdownProps) => {
+export const Dropdown = ({
+  text,
+  menuItems,
+  containerClassName = '',
+  buttonClassName,
+  overrideDefaultButtonStyle,
+  Icon
+}: DropdownProps) => {
   return (
-    <div className={containerClassName} title={title}>
+    <div className={containerClassName}>
       <Menu as='div' className='relative inline-block text-left'>
         {({ open, close }) => (
           <>
-            <Menu.Button as={Button} text={title} onClick={() => open && close()} />
+            <Menu.Button
+              as={Button}
+              text={text}
+              Icon={Icon}
+              onClick={() => open && close()}
+              className={buttonClassName}
+              overrideDefaultStyle={overrideDefaultButtonStyle}
+            />
             <Transition
               as={Fragment}
               enter='transition ease-out duration-100'

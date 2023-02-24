@@ -21,6 +21,8 @@ interface ModalProps {
   bodyPadding?: string
   closeWhenClickOutside?: boolean
   buttonClassName?: string
+  showCloseBtn?: boolean
+  overrideDefaultButtonStyle?: boolean
 }
 
 export const Modal = ({
@@ -37,14 +39,21 @@ export const Modal = ({
   closeWhenClickOutside = true,
   handle,
   bounds,
-  buttonClassName
+  buttonClassName,
+  showCloseBtn = true,
+  overrideDefaultButtonStyle = false
 }: ModalProps) => {
   const directionClass = direction ? `absolute ${direction}-0 my-10` : ''
 
   return (
     <>
       <div>
-        <Button text={buttonText} onClick={() => setIsOpen(!isOpen)} className={buttonClassName} />
+        <Button
+          text={buttonText}
+          onClick={() => setIsOpen(true)}
+          className={buttonClassName}
+          overrideDefaultStyle={overrideDefaultButtonStyle}
+        />
       </div>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -58,6 +67,7 @@ export const Modal = ({
             }
           }}
         >
+          {closeWhenClickOutside && <div className='fixed inset-0 bg-black/30' aria-hidden='true' />}
           <DraggableDialog draggable={draggable} bounds={bounds} handleId={handle}>
             <div className='pointer-events-auto'>
               <Transition.Child
@@ -73,19 +83,21 @@ export const Modal = ({
                   className={`${directionClass} w-full max-w-md transform overflow-y-auto rounded-md bg-white text-left align-middle shadow-modal transition-all`}
                   style={{ maxWidth: maxWidth, maxHeight: maxHeight }}
                 >
-                  <div id={handle} className='w-full cursor-move bg-slate-100'>
-                    {closeBtn && (
-                      <div className='flex justify-end'>
-                        <button
-                          type='button'
-                          className='px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
-                          onClick={() => setIsOpen(false)}
-                        >
-                          ×
-                        </button>
-                      </div>
-                    )}
-                  </div>
+                  {showCloseBtn && (
+                    <div id={handle} className='w-full cursor-move bg-slate-100'>
+                      {closeBtn && (
+                        <div className='flex justify-end'>
+                          <button
+                            type='button'
+                            className='px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
+                            onClick={() => setIsOpen(false)}
+                          >
+                            ×
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
                   <div className='px-6 pb-6 pt-3'>
                     {title && (
                       <Dialog.Title as='h3' className='text-lg font-medium leading-6 text-gray-900'>
