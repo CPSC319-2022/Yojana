@@ -43,7 +43,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const { data: session } = useSession()
   const dispatch = useAppDispatch()
   const currentState = useAppSelector((state) => getSpecificCategory(state, id))
-
+  const currentCron = id != -1 ? currentState?.cron?.split(' ').at(-1)?.split(',') : []
   const defaultValues =
     method == 'POST'
       ? {
@@ -59,8 +59,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           description: currentState?.description,
           color: currentState?.color,
           repeating: {
-            startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
-            endDate: dayjs().endOf('year').format('YYYY-MM-DD')
+            startDate: currentState?.startDate?.toString().split('T')[0],
+            endDate: currentState?.endDate?.toString().split('T')[0]
           }
         }
 
@@ -85,11 +85,10 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       console.error('No session found')
       return
     }
-
     let dates: string[] = []
-    if (repeating.cron) {
-      dates = generateDatesFromCron(repeating.cron, repeating.startDate, repeating.endDate)
-    }
+    repeating.cron = repeating.cron ? repeating.cron : currentState?.cron ? currentState?.cron : ''
+    dates = generateDatesFromCron(repeating.cron, repeating.startDate, repeating.endDate)
+
     const response = await fetch('api/cats', {
       method: method,
       headers: {
@@ -104,12 +103,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         cron: repeating.cron,
         startDate: repeating.cron ? repeating.startDate : undefined,
         endDate: repeating.cron ? repeating.endDate : undefined,
-        dates: dates
+        dates: dates,
+        oldEntries: currentState?.entries
       })
     })
     if (response.ok) {
       const data: Category & { entries: Entry[] } = await response.json()
-
       const bodyToDispatch = {
         id: data.id,
         color: data.color,
@@ -127,7 +126,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           email: session.user.email,
           isAdmin: session.user.isAdmin
         },
-        entries: currentState?.entries ? currentState?.entries : data.entries
+        entries: data.entries
       }
       dispatch(method === 'POST' ? addCategory(bodyToDispatch) : updateCategory(bodyToDispatch))
 
@@ -214,7 +213,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                         <Tabs>
                           <Tabs.Title>Weekly</Tabs.Title>
                           <Tabs.Content>
-                            <DayOfWeekPicker control={control} name='repeating.cron' rules={{ required: false }} />
+                            <DayOfWeekPicker
+                              control={control}
+                              name='repeating.cron'
+                              rules={{ required: false }}
+                              picked={currentCron}
+                            />
                           </Tabs.Content>
                           <Tabs.Title>Monthly</Tabs.Title>
                           <Tabs.Content>

@@ -1,6 +1,6 @@
 import * as parser from 'cron-parser'
 
-export const generateDatesFromCron = (cron: string, start: string, end: string): string[] => {
+export const generateDatesFromCron = (cron: any, start: string, end: string): string[] => {
   const dates = []
   try {
     const interval = parser.parseExpression(cron, { currentDate: start, endDate: end, iterator: true })

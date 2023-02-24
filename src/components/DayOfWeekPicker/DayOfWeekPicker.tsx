@@ -5,9 +5,10 @@ interface DayOfWeekPickerProps {
   control: any
   name: string
   rules?: any
+  picked?: any
 }
 
-export const DayOfWeekPicker = ({ control, name, rules }: DayOfWeekPickerProps) => {
+export const DayOfWeekPicker = ({ control, name, rules, picked }: DayOfWeekPickerProps) => {
   const {
     field: { onChange }
   } = useController({
@@ -17,7 +18,7 @@ export const DayOfWeekPicker = ({ control, name, rules }: DayOfWeekPickerProps) 
   })
 
   const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
-  const [selectedDays, setSelectedDays] = useState<typeof daysOfWeek>([])
+  const [selectedDays, setSelectedDays] = useState<typeof daysOfWeek>(picked)
 
   const handleDayChange = (day: string) => {
     const cronexpr = '0 0 * * '
