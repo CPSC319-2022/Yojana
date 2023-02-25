@@ -55,16 +55,12 @@ export const Month = (props: MonthProps) => {
         return renderDay(firstDateOfWeek, dayNum)
       })
       return (
-        <>
-          <style jsx>{`
-            div {
-              height: calc(100% / ${numWeeks});
-            }
-          `}</style>
-          <div className='grid grid-cols-7 gap-0.5 pt-0.5' key={firstDateOfWeek}>
-            {generatedDays}
-          </div>
-        </>
+        <div
+          className={(numWeeks === 5 ? 'h-1/5' : 'h-1/6') + ' ' + 'grid h-1/5 grid-cols-7 gap-0.5 pt-0.5'}
+          key={firstDateOfWeek}
+        >
+          {generatedDays}
+        </div>
       )
     },
     [numWeeks, renderDay]

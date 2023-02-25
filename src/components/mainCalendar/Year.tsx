@@ -18,9 +18,10 @@ export const Year = () => {
     (day: Dayjs, monthNum: number) => {
       if (monthNum < 0 || monthNum >= 12) return undefined
       const icons = categoriesPerDate[monthNum][day.date() - 1]
-      if (icons === undefined || icons.length === 0) return <div className={'text-transparent'}>.</div>
-      return icons.map((calEvent, key) => {
+      let addedIcons = false
+      const dayIcons = icons?.map((calEvent, key) => {
         if (calEvent.show) {
+          addedIcons = true
           return (
             <>
               <style jsx>{`
@@ -33,6 +34,9 @@ export const Year = () => {
           )
         }
       })
+
+      if (addedIcons) return dayIcons
+      return <div className={'text-transparent'}>.</div>
     },
     [categoriesPerDate]
   )
