@@ -1,14 +1,14 @@
-import { NavBar } from '@/components/navBar'
+import { Alert } from '@/components/common'
 import { MainCalendar } from '@/components/mainCalendar'
+import { NavBar } from '@/components/navBar'
 import { SideBar } from '@/components/sideBar/'
-import { AppData } from '@/types/prisma'
 import { getCategories } from '@/prisma/queries'
-import { setAppData } from '@/redux/reducers/AppDataReducer'
 import { useAppDispatch } from '@/redux/hooks'
-import { useState } from 'react'
+import { setAppData } from '@/redux/reducers/AppDataReducer'
+import { AppData } from '@/types/prisma'
 import { getCookies, setCookie } from 'cookies-next'
 import { GetServerSideProps } from 'next'
-import { Alert } from '@/components/common'
+import { useState } from 'react'
 
 const Calendar = ({ data }: { data: AppData }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -19,12 +19,14 @@ const Calendar = ({ data }: { data: AppData }) => {
     <main>
       <Alert />
       <div className='flex h-screen w-full flex-col bg-white text-slate-800'>
-        <NavBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <div className='z-10'>
+          <NavBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        </div>
         <div className='border-box flex h-[90vh] w-full flex-row'>
           <div
             className={`${
               sidebarOpen ? 'w-1/5 translate-x-0 pr-2' : 'w-0 -translate-x-full'
-            } overflow-visible transition-all`}
+            } z-0 overflow-visible transition-all`}
           >
             {sidebarOpen && <SideBar />}
           </div>
