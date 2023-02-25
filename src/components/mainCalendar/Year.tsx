@@ -17,11 +17,8 @@ export const Year = () => {
   const renderDayCategories = useCallback(
     (day: Dayjs, monthNum: number) => {
       if (monthNum < 0 || monthNum >= 12) return undefined
-      const icons = categoriesPerDate[monthNum][day.date() - 1]
-      let addedIcons = false
-      const dayIcons = icons?.map((calEvent, key) => {
+      const icons = categoriesPerDate[monthNum][day.date() - 1]?.map((calEvent, key) => {
         if (calEvent.show) {
-          addedIcons = true
           return (
             <>
               <style jsx>{`
@@ -34,9 +31,8 @@ export const Year = () => {
           )
         }
       })
-
-      if (addedIcons) return dayIcons
-      return <div className={'text-transparent'}>.</div>
+      icons.push(<span>&nbsp;</span>)
+      return icons
     },
     [categoriesPerDate]
   )
