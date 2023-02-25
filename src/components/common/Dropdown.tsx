@@ -16,6 +16,8 @@ export interface DropdownProps {
   buttonClassName?: string
   overrideDefaultButtonStyle?: boolean
   Icon?: IconType
+  setKeepFocus?: Function
+  keepPanelOpen?: boolean
 }
 
 export const Dropdown = ({
