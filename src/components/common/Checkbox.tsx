@@ -26,6 +26,9 @@ export const Checkbox = ({
         input[type='checkbox'] {
           accent-color: ${color};
         }
+        span {
+          color: ${color};
+        }
       `}</style>
       <input
         type='checkbox'
@@ -35,7 +38,7 @@ export const Checkbox = ({
         onChange={onChange}
       />
       <label className='ml-2' htmlFor={id}>
-        <span className={'pr-1 font-bold'}>{icon}</span>
+        <span className={'colored pr-1 font-bold'}>{icon}</span>
         {label}
       </label>
     </div>
