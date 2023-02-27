@@ -15,7 +15,7 @@ export const data = [
       {
         name: 'PayDay',
         description: 'This is the day you get paid',
-        color: tcolors.green[500],
+        color: tcolors.emerald[500],
         isMaster: true,
         icon: '\u0024'
       },
