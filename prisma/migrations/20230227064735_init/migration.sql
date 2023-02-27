@@ -15,7 +15,7 @@ CREATE TABLE `Category` (
     `description` VARCHAR(191) NOT NULL DEFAULT '',
     `color` VARCHAR(7) NOT NULL,
     `isMaster` BOOLEAN NOT NULL DEFAULT false,
-    `icon` VARCHAR(6) NOT NULL DEFAULT '',
+    `icon` VARCHAR(12) NOT NULL DEFAULT '',
     `cron` VARCHAR(191) NULL DEFAULT '',
     `startDate` DATE NULL,
     `endDate` DATE NULL,

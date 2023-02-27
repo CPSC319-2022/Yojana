@@ -26,7 +26,9 @@ export const Year = () => {
                   color: ${calEvent.color};
                 }
               `}</style>
-              <span key={key}>{calEvent.icon}</span>
+              <span className={'pl-0.5 pr-0.5 font-bold'} key={key}>
+                {calEvent.icon}
+              </span>
             </>
           )
         }
