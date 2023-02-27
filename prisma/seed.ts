@@ -15,14 +15,14 @@ export const data = [
       {
         name: 'PayDay',
         description: 'This is the day you get paid',
-        color: tcolors.red[500],
+        color: tcolors.green[500],
         isMaster: true,
         icon: '\u0024'
       },
       {
         name: 'Holiday',
         description: 'Statuary holidays',
-        color: tcolors.emerald[500],
+        color: tcolors.red[500],
         isMaster: true,
         icon: '\u25A3'
       },
