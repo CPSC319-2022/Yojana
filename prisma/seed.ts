@@ -17,7 +17,7 @@ export const data = [
         description: 'This is the day you get paid',
         color: tcolors.red[500],
         isMaster: true,
-        icon: '\u25BA'
+        icon: '\u0024'
       },
       {
         name: 'Holiday',
@@ -31,7 +31,7 @@ export const data = [
         description: 'Work from home',
         color: tcolors.sky[500],
         isMaster: true,
-        icon: '\u25C9'
+        icon: '\u2b1f'
       },
       {
         name: 'Shareholder meeting',
@@ -45,9 +45,15 @@ export const data = [
         description: 'Corporate retrieve',
         color: tcolors.slate[900],
         isMaster: true,
-        icon: '\u25EA'
+        icon: '\u2708'
       },
-      { name: 'Birthday', description: 'List of Birthdays', color: tcolors.amber[500], isMaster: true, icon: '\u25A9' }
+      {
+        name: 'Birthday',
+        description: 'List of Birthdays',
+        color: tcolors.amber[500],
+        isMaster: true,
+        icon: '\uD83D\uDD6F'
+      }
     ]
   }
 ]

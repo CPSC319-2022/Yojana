@@ -15,7 +15,8 @@ export const CategoriesMenu = () => {
         key={`category-item-${key}`}
       >
         <Checkbox
-          label={`${calEvent.icon} ${calEvent.name}`}
+          icon={calEvent.icon}
+          label={calEvent.name}
           id={`checkbox-${key}`}
           key={`checkbox-${key}`}
           color={calEvent.color}
