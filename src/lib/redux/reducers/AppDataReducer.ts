@@ -79,9 +79,9 @@ const _addEntriesToYearMap = (yearMap: YearMap, entries: EntryWithoutCategoryId[
   entries.forEach((entry) => {
     // TODO: Fix this hack to get the correct date, ignore timezones
     const date = dayjs(entry.date).add(1, 'day')
-    const year = date.year()
-    const month = date.month()
-    const day = date.date()
+    const year = date.year() // 2021
+    const month = date.month() // 0-11
+    const day = date.date() // 1-31
     // create year if it doesn't exist
     if (!yearMap[year]) {
       yearMap[year] = {}
