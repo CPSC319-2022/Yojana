@@ -101,7 +101,7 @@ const _addEntriesToYearMap = (yearMap: YearMap, entries: EntryWithoutCategoryId[
       isRepeating: entry.isRepeating,
       categoryId: categoryId
     })
-  }, {} as YearMap)
+  })
   return yearMap
 }
 
