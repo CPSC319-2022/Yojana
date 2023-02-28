@@ -33,7 +33,6 @@ export const Month = (props: MonthProps) => {
       if (offsetFromMonthStart < 0) {
         entriesOnDay = prevMonth[day.date()]
       } else if (offsetFromMonthStart >= daysInMonth) {
-        console.log('next', nextMonth, day.date())
         entriesOnDay = nextMonth[day.date()]
       } else {
         entriesOnDay = currMonth[day.date()]
