@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
 import { useAppSelector } from '@/redux/hooks'
-import { getCategoryMap, getEntriesInMonth } from '@/redux/reducers/AppDataReducer'
+import { getCategoryMap, getEntriesInPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
 import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
 import dayjs from 'dayjs'
 
@@ -21,13 +21,22 @@ export const Month = (props: MonthProps) => {
   const numWeeks = Math.ceil((daysInMonth + monthStartDate.day()) / 7)
 
   const categoryMap = useAppSelector(getCategoryMap)
-  const entriesInMonth = useAppSelector((state) => getEntriesInMonth(state, targetDate))
+  const { prevMonth, currMonth, nextMonth } = useAppSelector((state) =>
+    getEntriesInPrevCurrNextMonth(state, targetDate)
+  )
 
   const renderDay = useCallback(
     (firstDateOfWeek: number, dayNum: number) => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
       const day = monthStartDate.add(offsetFromMonthStart, 'days')
-      const entriesOnDay = entriesInMonth[day.date() - 1]
+      let entriesOnDay
+      if (offsetFromMonthStart < 0) {
+        entriesOnDay = prevMonth[day.date() - 1]
+      } else if (offsetFromMonthStart >= daysInMonth) {
+        entriesOnDay = nextMonth[day.date() - 1]
+      } else {
+        entriesOnDay = currMonth[day.date() - 1]
+      }
       const dayBlocks = entriesOnDay?.map((entry, key) => {
         const category = categoryMap[entry.categoryId]
         if (category.show) {
@@ -48,7 +57,7 @@ export const Month = (props: MonthProps) => {
         </div>
       )
     },
-    [categoryMap, entriesInMonth, daysInMonth, monthStartDate]
+    [categoryMap, currMonth, daysInMonth, monthStartDate, nextMonth, prevMonth]
   )
 
   // monthOffset is the offset of the Sunday from the beginning of the month.

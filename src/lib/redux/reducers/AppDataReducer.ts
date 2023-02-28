@@ -139,6 +139,18 @@ export const getEntriesInMonth = (state: State, date: Dayjs) => {
   return state.appData.yearMap[date.year()][date.month()]
 }
 
+export const getEntriesInPrevCurrNextMonth = (state: State, date: Dayjs) => {
+  const year = date.year()
+  const month = date.month()
+  const prevMonth = date.subtract(1, 'month').month()
+  const nextMonth = date.add(2, 'month').month()
+  return {
+    prevMonth: state.appData.yearMap[year][prevMonth],
+    currMonth: state.appData.yearMap[year][month],
+    nextMonth: state.appData.yearMap[year][nextMonth]
+  }
+}
+
 export const getEntriesInYear = (state: State, date: Dayjs) => {
   return state.appData.yearMap[date.year()]
 }
