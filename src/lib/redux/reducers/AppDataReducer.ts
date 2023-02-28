@@ -142,13 +142,15 @@ export const getMonth = (state: State, date: Dayjs) => {
 
 export const getPrevCurrNextMonth = (state: State, date: Dayjs) => {
   const year = date.year()
+  const prevYear = date.subtract(1, 'month').year()
+  const nextYear = date.add(1, 'month').year()
   const month = date.month()
   const prevMonth = date.subtract(1, 'month').month()
   const nextMonth = date.add(1, 'month').month()
   return {
-    prevMonth: state.appData.yearMap[year][prevMonth],
+    prevMonth: state.appData.yearMap[prevYear][prevMonth],
     currMonth: state.appData.yearMap[year][month],
-    nextMonth: state.appData.yearMap[year][nextMonth]
+    nextMonth: state.appData.yearMap[nextYear][nextMonth]
   }
 }
 
