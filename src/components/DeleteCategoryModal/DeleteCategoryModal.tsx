@@ -1,12 +1,12 @@
 import { Modal } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setAlert } from '@/redux/reducers/AlertReducer'
-import { deleteCategory, getSpecificCategory } from '@/redux/reducers/AppDataReducer'
+import { deleteCategory, getCategory } from '@/redux/reducers/AppDataReducer'
 import { useState } from 'react'
 
 export const DeleteCategoryModal = ({ id, onClose }: { id: number; onClose: () => void }) => {
   const dispatch = useAppDispatch()
-  const currentState = useAppSelector((state) => getSpecificCategory(state, id))
+  const currentState = useAppSelector((state) => getCategory(state, id))
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
 

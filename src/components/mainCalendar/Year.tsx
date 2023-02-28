@@ -1,33 +1,32 @@
 import React, { useCallback, useMemo } from 'react'
 import { useAppSelector } from '@/redux/hooks'
-import { getCategoriesOfYear } from '@/redux/reducers/AppDataReducer'
+import { getCategoryMap, getEntriesInYear } from '@/redux/reducers/AppDataReducer'
 import { getDate } from '@/redux/reducers/MainCalendarReducer'
-import { CategoryFullState } from '@/types/prisma'
 import dayjs, { Dayjs } from 'dayjs'
 
 export const Year = () => {
   const stateDate = useAppSelector(getDate)
+  const categoryMap = useAppSelector(getCategoryMap)
+  const entriesInYear = useAppSelector((state) => getEntriesInYear(state, stateDate))
+
   const yearStartDate = dayjs(stateDate).startOf('year')
   const yearNum = yearStartDate.get('year')
 
-  const categoriesPerDate: CategoryFullState[][][] = useAppSelector((state) =>
-    getCategoriesOfYear(state, yearStartDate)
-  )
-
   const renderDayCategories = useCallback(
     (day: Dayjs, monthNum: number) => {
-      if (monthNum < 0 || monthNum >= 12) return undefined
-      const icons = categoriesPerDate[monthNum][day.date() - 1]?.map((calEvent, key) => {
-        if (calEvent.show) {
+      const entriesOnDay = entriesInYear?.[monthNum]?.[day.date() - 1] ?? []
+      const icons = entriesOnDay.map((calEvent, key) => {
+        const category = categoryMap[calEvent.categoryId]
+        if (category.show) {
           return (
             <>
               <style jsx>{`
                 span {
-                  color: ${calEvent.color};
+                  color: ${category.color};
                 }
               `}</style>
               <span className={'pl-0.5 pr-0.5 font-bold'} key={key}>
-                {calEvent.icon}
+                {category.icon}
               </span>
             </>
           )
@@ -36,7 +35,7 @@ export const Year = () => {
       icons.push(<span>&nbsp;</span>)
       return icons
     },
-    [categoriesPerDate]
+    [categoryMap, entriesInYear]
   )
 
   const renderDay = useCallback(

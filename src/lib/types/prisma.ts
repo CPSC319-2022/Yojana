@@ -1,4 +1,4 @@
-import { Category, Prisma } from '@prisma/client'
+import { Category, Entry, Prisma } from '@prisma/client'
 
 // This is the same as Category, but with the show property
 export interface CategoryState extends Category {
@@ -42,3 +42,6 @@ export interface CategoryFullState extends CategoryFull {
 
 // This is the type that is used in the Redux store in the AppDataReducer
 export type AppData = CategoryFullState[]
+
+// This is the same as Entry, but without the categoryId property
+export interface EntryWithoutCategoryId extends Omit<Entry, 'categoryId'> {}
