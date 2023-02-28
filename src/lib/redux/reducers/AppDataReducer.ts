@@ -4,7 +4,7 @@ import { setCookie } from 'cookies-next'
 import dayjs, { Dayjs } from 'dayjs'
 import { Entry } from '@prisma/client'
 
-interface YearMap {
+interface EntryMap {
   [year: string]: {
     [month: string]: {
       [day: string]: Entry[]
@@ -19,13 +19,13 @@ interface CategoryMap {
 interface State {
   appData: {
     data: AppData
-    yearMap: YearMap
+    entryMap: EntryMap
   }
 }
 
 const initialState = {
   data: [] as AppData,
-  yearMap: {} as YearMap
+  entryMap: {} as EntryMap
 }
 
 const appDataSlice = createSlice({
@@ -35,23 +35,23 @@ const appDataSlice = createSlice({
     setAppData: (state, action: PayloadAction<AppData>) => {
       // update data
       state.data = action.payload
-      // update YearMap
-      state.yearMap = _createYearMap(action.payload)
+      // update EntryMap
+      state.entryMap = _createEntryMap(action.payload)
     },
     addCategory: (state, action: PayloadAction<CategoryFullState>) => {
       setCookie(`yojana.show-category-${action.payload.id}`, action.payload.show)
       // update data
       state.data.push(action.payload)
-      // add entries to YearMap
-      _addEntriesToYearMap(state.yearMap, action.payload.entries, action.payload.id)
+      // add entries to EntryMap
+      _addEntriesToEntryMap(state.entryMap, action.payload.entries, action.payload.id)
     },
     updateCategory: (state, action: PayloadAction<CategoryFullState>) => {
       setCookie(`yojana.show-category-${action.payload.id}`, action.payload.show)
       const index = state.data.findIndex((cat) => cat.id === action.payload.id)
       // update data
       state.data[index] = action.payload
-      // update YearMap
-      state.yearMap = _createYearMap(state.data)
+      // update EntryMap
+      state.entryMap = _createEntryMap(state.data)
     },
     toggleCategory: (state, action: PayloadAction<number>) => {
       const index = state.data.findIndex((cat) => cat.id === action.payload)
@@ -62,20 +62,20 @@ const appDataSlice = createSlice({
       const index = state.data.findIndex((cat) => cat.id === action.payload)
       // update data
       state.data.splice(index, 1)
-      // update YearMap
-      state.yearMap = _createYearMap(state.data)
+      // update EntryMap
+      state.entryMap = _createEntryMap(state.data)
     }
   }
 })
 
-const _createYearMap = (data: AppData) => {
+const _createEntryMap = (data: AppData) => {
   return data.reduce((acc, cat) => {
     // return the accumulator with the new entries added
-    return _addEntriesToYearMap(acc, cat.entries, cat.id)
-  }, {} as YearMap)
+    return _addEntriesToEntryMap(acc, cat.entries, cat.id)
+  }, {} as EntryMap)
 }
 
-const _addEntriesToYearMap = (yearMap: YearMap, entries: EntryWithoutCategoryId[], categoryId: number) => {
+const _addEntriesToEntryMap = (entryMap: EntryMap, entries: EntryWithoutCategoryId[], categoryId: number) => {
   entries.forEach((entry) => {
     // TODO: Fix this hack to get the correct date, ignore timezones
     const date = dayjs(entry.date).add(1, 'day')
@@ -83,26 +83,26 @@ const _addEntriesToYearMap = (yearMap: YearMap, entries: EntryWithoutCategoryId[
     const month = date.month() // 0-11
     const day = date.date() // 1-31
     // create year if it doesn't exist
-    if (!yearMap[year]) {
-      yearMap[year] = {}
+    if (!entryMap[year]) {
+      entryMap[year] = {}
     }
     // create month if it doesn't exist
-    if (!yearMap[year][month]) {
-      yearMap[year][month] = {}
+    if (!entryMap[year][month]) {
+      entryMap[year][month] = {}
     }
     // create day if it doesn't exist
-    if (!yearMap[year][month][day]) {
-      yearMap[year][month][day] = []
+    if (!entryMap[year][month][day]) {
+      entryMap[year][month][day] = []
     }
     // add entry to day
-    yearMap[year][month][day].push({
+    entryMap[year][month][day].push({
       id: entry.id,
       date: entry.date,
       isRepeating: entry.isRepeating,
       categoryId: categoryId
     })
   })
-  return yearMap
+  return entryMap
 }
 
 export const { setAppData, addCategory, updateCategory, toggleCategory, deleteCategory } = appDataSlice.actions
@@ -137,7 +137,7 @@ export const getCategoryMap = (state: State) => {
 }
 
 export const getMonth = (state: State, date: Dayjs) => {
-  return state.appData.yearMap[date.year()][date.month()]
+  return state.appData.entryMap[date.year()][date.month()]
 }
 
 export const getPrevCurrNextMonth = (state: State, date: Dayjs) => {
@@ -148,14 +148,14 @@ export const getPrevCurrNextMonth = (state: State, date: Dayjs) => {
   const prevMonth = date.subtract(1, 'month').month()
   const nextMonth = date.add(1, 'month').month()
   return {
-    prevMonth: state.appData.yearMap[prevYear][prevMonth],
-    currMonth: state.appData.yearMap[year][month],
-    nextMonth: state.appData.yearMap[nextYear][nextMonth]
+    prevMonth: state.appData.entryMap[prevYear][prevMonth],
+    currMonth: state.appData.entryMap[year][month],
+    nextMonth: state.appData.entryMap[nextYear][nextMonth]
   }
 }
 
 export const getYear = (state: State, date: Dayjs) => {
-  return state.appData.yearMap[date.year()]
+  return state.appData.entryMap[date.year()]
 }
 
 export const appDataReducer = appDataSlice.reducer
