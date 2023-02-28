@@ -77,7 +77,8 @@ const _createYearMap = (data: AppData) => {
 
 const _addEntriesToYearMap = (yearMap: YearMap, entries: EntryWithoutCategoryId[], categoryId: number) => {
   entries.forEach((entry) => {
-    const date = dayjs(entry.date)
+    // TODO: Fix this hack to get the correct date, ignore timezones
+    const date = dayjs(entry.date).add(1, 'day')
     const year = date.year()
     const month = date.month()
     const day = date.date()
@@ -96,7 +97,7 @@ const _addEntriesToYearMap = (yearMap: YearMap, entries: EntryWithoutCategoryId[
     // add entry to day
     yearMap[year][month][day].push({
       id: entry.id,
-      date: dayjs(dayjs(entry.date).toISOString().split('T')[0]).toDate(),
+      date: entry.date,
       isRepeating: entry.isRepeating,
       categoryId: categoryId
     })
@@ -143,7 +144,7 @@ export const getEntriesInPrevCurrNextMonth = (state: State, date: Dayjs) => {
   const year = date.year()
   const month = date.month()
   const prevMonth = date.subtract(1, 'month').month()
-  const nextMonth = date.add(2, 'month').month()
+  const nextMonth = date.add(1, 'month').month()
   return {
     prevMonth: state.appData.yearMap[year][prevMonth],
     currMonth: state.appData.yearMap[year][month],

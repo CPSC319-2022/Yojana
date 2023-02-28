@@ -14,7 +14,7 @@ export const Year = () => {
 
   const renderDayCategories = useCallback(
     (day: Dayjs, monthNum: number) => {
-      const entriesOnDay = entriesInYear?.[monthNum]?.[day.date() - 1] ?? []
+      const entriesOnDay = entriesInYear?.[monthNum]?.[day.date()] ?? []
       const icons = entriesOnDay.map((calEvent, key) => {
         const category = categoryMap[calEvent.categoryId]
         if (category.show) {
