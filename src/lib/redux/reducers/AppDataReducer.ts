@@ -136,11 +136,11 @@ export const getCategoryMap = (state: State) => {
   }, {} as CategoryMap)
 }
 
-export const getEntriesInMonth = (state: State, date: Dayjs) => {
+export const getMonth = (state: State, date: Dayjs) => {
   return state.appData.yearMap[date.year()][date.month()]
 }
 
-export const getEntriesInPrevCurrNextMonth = (state: State, date: Dayjs) => {
+export const getPrevCurrNextMonth = (state: State, date: Dayjs) => {
   const year = date.year()
   const month = date.month()
   const prevMonth = date.subtract(1, 'month').month()
@@ -152,7 +152,7 @@ export const getEntriesInPrevCurrNextMonth = (state: State, date: Dayjs) => {
   }
 }
 
-export const getEntriesInYear = (state: State, date: Dayjs) => {
+export const getYear = (state: State, date: Dayjs) => {
   return state.appData.yearMap[date.year()]
 }
 

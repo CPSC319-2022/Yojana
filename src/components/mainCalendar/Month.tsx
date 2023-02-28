@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
 import { useAppSelector } from '@/redux/hooks'
-import { getCategoryMap, getEntriesInPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
+import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
 import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
 import dayjs from 'dayjs'
 
@@ -21,9 +21,7 @@ export const Month = (props: MonthProps) => {
   const numWeeks = Math.ceil((daysInMonth + monthStartDate.day()) / 7)
 
   const categoryMap = useAppSelector(getCategoryMap)
-  const { prevMonth, currMonth, nextMonth } = useAppSelector((state) =>
-    getEntriesInPrevCurrNextMonth(state, targetDate)
-  )
+  const { prevMonth, currMonth, nextMonth } = useAppSelector((state) => getPrevCurrNextMonth(state, targetDate))
 
   const renderDay = useCallback(
     (firstDateOfWeek: number, dayNum: number) => {

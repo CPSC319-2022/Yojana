@@ -1,13 +1,13 @@
 import React, { useCallback, useMemo } from 'react'
 import { useAppSelector } from '@/redux/hooks'
-import { getCategoryMap, getEntriesInYear } from '@/redux/reducers/AppDataReducer'
+import { getCategoryMap, getYear } from '@/redux/reducers/AppDataReducer'
 import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import dayjs, { Dayjs } from 'dayjs'
 
 export const Year = () => {
   const stateDate = useAppSelector(getDate)
   const categoryMap = useAppSelector(getCategoryMap)
-  const entriesInYear = useAppSelector((state) => getEntriesInYear(state, stateDate))
+  const entriesInYear = useAppSelector((state) => getYear(state, stateDate))
 
   const yearStartDate = dayjs(stateDate).startOf('year')
   const yearNum = yearStartDate.get('year')
