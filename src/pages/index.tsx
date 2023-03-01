@@ -11,12 +11,17 @@ import { wrapper } from '@/redux/store'
 import { setDate, setInterval } from '@/redux/reducers/MainCalendarReducer'
 import dayjs from 'dayjs'
 import { CalendarInterval } from '@/constants/enums'
+import { AppData } from '@/types/prisma'
+import { useAppDispatch } from '@/redux/hooks'
 
 interface CalendarProps {
+  data: AppData
   sidebarOpenInitial: boolean
 }
 
-const Calendar = ({ sidebarOpenInitial }: CalendarProps) => {
+const Calendar = ({ sidebarOpenInitial, data }: CalendarProps) => {
+  const dispatch = useAppDispatch()
+  dispatch(setAppData(data))
   const [sidebarOpen, setSidebarOpen] = useState(sidebarOpenInitial)
 
   return (
@@ -86,8 +91,10 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
       return { ...category, show: show }
     })
 
-    store.dispatch(setAppData(appDate))
-    return { props: { sidebarOpenInitial } }
+    // pass data to the page via props
+    return { props: { data: JSON.parse(JSON.stringify(appDate)), sidebarOpenInitial } }
+    // the reason why we do JSON.parse(JSON.stringify(categories)) is because we need to convert the prisma object to a normal object
+    // https://github.com/vercel/next.js/issues/11993
   }
 })
 
