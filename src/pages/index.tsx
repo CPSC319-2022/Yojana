@@ -12,8 +12,12 @@ import { setDate, setInterval } from '@/redux/reducers/MainCalendarReducer'
 import dayjs from 'dayjs'
 import { CalendarInterval } from '@/constants/enums'
 
-const Calendar = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+interface CalendarProps {
+  sidebarOpenInitial: boolean
+}
+
+const Calendar = ({ sidebarOpenInitial }: CalendarProps) => {
+  const [sidebarOpen, setSidebarOpen] = useState(sidebarOpenInitial)
 
   return (
     <main>
@@ -57,6 +61,15 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     // get cookies
     const cookies = getCookies({ req, res })
 
+    // if sidebar cookie is undefined, set it to true
+    let sidebarOpenInitial = true
+    if (cookies['yojana.sidebar-open'] === undefined) {
+      setCookie('yojana.sidebar-open', true, { req, res })
+    } else {
+      // if sidebar cookie is defined, set sidebarOpenInitial to the value of the cookie
+      sidebarOpenInitial = cookies['yojana.sidebar-open'] === 'true'
+    }
+
     // make query to database to get categories
     const categories = await getCategories()
     // add show property to each category based on cookie value
@@ -74,7 +87,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     })
 
     store.dispatch(setAppData(appDate))
-    return { props: {} }
+    return { props: { sidebarOpenInitial } }
   }
 })
 

@@ -12,6 +12,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Button } from '@/components/common'
 import { useRouter } from 'next/router'
+import { setCookie } from 'cookies-next'
 
 interface NavBarProps {
   sidebarOpen: boolean
@@ -53,7 +54,10 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
       <div className='flex flex-row items-center'>
         <Button
           text='&#9776;'
-          onClick={() => setSidebarOpen(!sidebarOpen)}
+          onClick={() => {
+            setSidebarOpen(!sidebarOpen)
+            setCookie(`yojana.sidebar-open`, !sidebarOpen)
+          }}
           className='mr-5 px-3 pt-0.5 pb-2 text-2xl'
         />
         <h1 className='text-2xl font-medium'>Yojana</h1>
