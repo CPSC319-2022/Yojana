@@ -35,9 +35,7 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
           query: {
             ...router.query,
             interval: interval,
-            year: targetDate.year(),
-            month: targetDate.month(),
-            day: targetDate.date()
+            date: targetDate.format('YYYY-MM-DD')
           }
         },
         undefined,

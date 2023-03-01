@@ -44,14 +44,10 @@ const Calendar = ({ sidebarOpenInitial }: CalendarProps) => {
 // get data from database on server side
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps((store) => {
   return async ({ req, res, query }) => {
-    const { interval, year, month, day } = query
-    try {
-      if (year && month && day) {
-        store.dispatch(setDate(dayjs(new Date(Number(year), Number(month), Number(day)))))
-      }
-    } catch (e) {
-      // if date query params are invalid, set date to today
-      store.dispatch(setDate(dayjs()))
+    const { interval, date } = query
+    // check if date query param is valid
+    if (date && typeof date === 'string' && dayjs(date).isValid()) {
+      store.dispatch(setDate(dayjs(date)))
     }
     // check if interval query param is valid
     if (interval && Object.values(CalendarInterval).includes(interval as CalendarInterval)) {
