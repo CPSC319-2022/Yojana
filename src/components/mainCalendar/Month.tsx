@@ -29,11 +29,11 @@ export const Month = (props: MonthProps) => {
       const day = monthStartDate.add(offsetFromMonthStart, 'days')
       let entriesOnDay
       if (offsetFromMonthStart < 0) {
-        entriesOnDay = prevMonth[day.date()]
+        entriesOnDay = prevMonth?.[day.date()]
       } else if (offsetFromMonthStart >= daysInMonth) {
-        entriesOnDay = nextMonth[day.date()]
+        entriesOnDay = nextMonth?.[day.date()]
       } else {
-        entriesOnDay = currMonth[day.date()]
+        entriesOnDay = currMonth?.[day.date()]
       }
       const dayBlocks = entriesOnDay?.map((entry, key) => {
         const category = categoryMap[entry.categoryId]
