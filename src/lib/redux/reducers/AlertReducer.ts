@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import tcolors from 'tailwindcss/colors'
+import { HYDRATE } from 'next-redux-wrapper'
 
 interface State {
   alert: Alert
@@ -54,6 +55,14 @@ const alertSlice = createSlice({
     },
     setShow: (state, action: PayloadAction<boolean>) => {
       state.show = action.payload
+    }
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action: PayloadAction<State>) => {
+      return {
+        ...state,
+        ...action.payload.alert
+      }
     }
   }
 })

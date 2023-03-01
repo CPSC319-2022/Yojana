@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AccountViewDropdown } from './AccountViewDropdown'
 import { CalViewDropdown } from './CalViewDropdown'
 import {
@@ -10,6 +10,7 @@ import {
 } from '@/redux/reducers/MainCalendarReducer'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Button } from '@/components/common'
+import { useRouter } from 'next/router'
 
 interface NavBarProps {
   sidebarOpen: boolean
@@ -20,6 +21,24 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
   const dispatch = useAppDispatch()
   const targetDate = useAppSelector(getDate)
   const yearView = useAppSelector(isYearInterval)
+  const router = useRouter()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    // mounted ensures that the router push does not happen on the first render
+    if (mounted) {
+      router.push(
+        {
+          query: { ...router.query, year: targetDate.year(), month: targetDate.month(), day: targetDate.date() }
+        },
+        undefined,
+        { shallow: true }
+      )
+    } else {
+      setMounted(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mounted, targetDate])
 
   return (
     <div className='box-border flex h-[10vh] w-full flex-row items-center justify-between border-b px-5'>

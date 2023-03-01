@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { CalendarInterval } from '@/constants/enums'
 import dayjs, { Dayjs } from 'dayjs'
 import { convertToDurationKey } from '@/utils/month'
+import { HYDRATE } from 'next-redux-wrapper'
 
 interface State {
   mainCalendar: {
@@ -11,7 +12,7 @@ interface State {
 }
 
 const initialState = {
-  interval: CalendarInterval.MONTH,
+  interval: CalendarInterval.YEAR,
   date: dayjs()
 }
 
@@ -33,6 +34,14 @@ const mainCalendarSlice = createSlice({
     },
     jumpToToday: (state) => {
       state.date = dayjs()
+    }
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action: PayloadAction<State>) => {
+      return {
+        ...state,
+        ...action.payload.mainCalendar
+      }
     }
   }
 })

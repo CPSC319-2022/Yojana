@@ -1,19 +1,19 @@
 import { NavBar } from '@/components/navBar'
 import { MainCalendar } from '@/components/mainCalendar'
 import { SideBar } from '@/components/sideBar/'
-import { AppData } from '@/types/prisma'
 import { getCategories } from '@/prisma/queries'
 import { setAppData } from '@/redux/reducers/AppDataReducer'
-import { useAppDispatch } from '@/redux/hooks'
 import { useState } from 'react'
 import { getCookies, setCookie } from 'cookies-next'
 import { GetServerSideProps } from 'next'
 import { Alert } from '@/components/common'
+import { wrapper } from '@/redux/store'
+import { setDate, setInterval } from '@/redux/reducers/MainCalendarReducer'
+import dayjs from 'dayjs'
+import { CalendarInterval } from '@/constants/enums'
 
-const Calendar = ({ data }: { data: AppData }) => {
+const Calendar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const dispatch = useAppDispatch()
-  dispatch(setAppData(data))
 
   return (
     <main>
@@ -38,30 +38,44 @@ const Calendar = ({ data }: { data: AppData }) => {
 }
 
 // get data from database on server side
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  // get cookies
-  const cookies = getCookies({ req, res })
-
-  // make query to database to get categories
-  let categories = await getCategories()
-  // add show property to each category based on cookie value
-  categories = categories.map((category) => {
-    let show = true
-    const key = `yojana.show-category-${category.id}`
-    if (cookies[key] === undefined) {
-      // if cookie is undefined, set it to true
-      setCookie(key, 'true', { req, res })
-    } else {
-      // if cookie is defined, set show to the value of the cookie
-      show = cookies[key] === 'true'
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps((store) => {
+  return async ({ req, res, query }) => {
+    const { interval, year, month, day } = query
+    try {
+      if (year && month && day) {
+        store.dispatch(setDate(dayjs(new Date(Number(year), Number(month), Number(day)))))
+      }
+    } catch (e) {
+      // if date query params are invalid, set date to today
+      store.dispatch(setDate(dayjs()))
     }
-    return { ...category, show: show }
-  })
+    // check if interval query param is valid
+    if (interval && Object.values(CalendarInterval).includes(interval as CalendarInterval)) {
+      store.dispatch(setInterval(interval as CalendarInterval))
+    }
 
-  // pass data to the page via props
-  return { props: { data: JSON.parse(JSON.stringify(categories)) } }
-  // the reason why we do JSON.parse(JSON.stringify(categories)) is because we need to convert the prisma object to a normal object
-  // https://github.com/vercel/next.js/issues/11993
-}
+    // get cookies
+    const cookies = getCookies({ req, res })
+
+    // make query to database to get categories
+    const categories = await getCategories()
+    // add show property to each category based on cookie value
+    const appDate = categories.map((category) => {
+      let show = true
+      const key = `yojana.show-category-${category.id}`
+      if (cookies[key] === undefined) {
+        // if cookie is undefined, set it to true
+        setCookie(key, 'true', { req, res })
+      } else {
+        // if cookie is defined, set show to the value of the cookie
+        show = cookies[key] === 'true'
+      }
+      return { ...category, show: show }
+    })
+
+    store.dispatch(setAppData(appDate))
+    return { props: {} }
+  }
+})
 
 export default Calendar
