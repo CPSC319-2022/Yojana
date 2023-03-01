@@ -106,7 +106,7 @@ const seed = async () => {
             icon: category.icon,
             entries: {
               createMany: {
-                // create around 25 random dates for each category in 2023
+                // create 100 random dates for each category
                 data: generateRandomDates(new Date(2022, 0, 1), new Date(2024, 11, 31), 100, category.name)
               }
             }

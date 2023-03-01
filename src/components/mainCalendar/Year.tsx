@@ -19,20 +19,18 @@ export const Year = () => {
         const category = categoryMap[calEvent.categoryId]
         if (category.show) {
           return (
-            <>
+            <span className={'pl-0.5 pr-0.5 font-bold'} key={`${calEvent.id}-${key}`}>
               <style jsx>{`
-                span {
+                * {
                   color: ${category.color};
                 }
               `}</style>
-              <span className={'pl-0.5 pr-0.5 font-bold'} key={key}>
-                {category.icon}
-              </span>
-            </>
+              {category.icon}
+            </span>
           )
         }
       })
-      icons.push(<span>&nbsp;</span>)
+      icons.push(<span key={`${monthNum}-${day.get('day')}`}>&nbsp;</span>)
       return icons
     },
     [categoryMap, entriesInYear]
@@ -74,7 +72,12 @@ export const Year = () => {
 
   const renderDateNums = useMemo(() => {
     return Array.from(Array(32).keys()).map((dateNum) => {
-      if (dateNum === 0) return <div className={'sticky top-0 bg-slate-100 text-transparent'}>.</div>
+      if (dateNum === 0)
+        return (
+          <div className={'sticky top-0 bg-slate-100 text-transparent'} key={dateNum}>
+            .
+          </div>
+        )
       return (
         <div className={'pl-1 pr-1'} key={dateNum}>
           {dateNum}
