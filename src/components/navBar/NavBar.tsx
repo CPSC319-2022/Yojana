@@ -4,6 +4,7 @@ import { CalViewDropdown } from './CalViewDropdown'
 import {
   decrementDate,
   getDate,
+  getInterval,
   incrementDate,
   isYearInterval,
   jumpToToday
@@ -21,6 +22,7 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
   const dispatch = useAppDispatch()
   const targetDate = useAppSelector(getDate)
   const yearView = useAppSelector(isYearInterval)
+  const interval = useAppSelector(getInterval)
   const router = useRouter()
   const [mounted, setMounted] = useState(false)
 
@@ -29,7 +31,13 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
     if (mounted) {
       router.push(
         {
-          query: { ...router.query, year: targetDate.year(), month: targetDate.month(), day: targetDate.date() }
+          query: {
+            ...router.query,
+            interval: interval,
+            year: targetDate.year(),
+            month: targetDate.month(),
+            day: targetDate.date()
+          }
         },
         undefined,
         { shallow: true }
@@ -38,7 +46,7 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
       setMounted(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mounted, targetDate])
+  }, [targetDate, interval])
 
   return (
     <div className='box-border flex h-[10vh] w-full flex-row items-center justify-between border-b px-5'>

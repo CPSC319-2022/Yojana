@@ -3,7 +3,6 @@ import { mainCalendarReducer } from './reducers/MainCalendarReducer'
 import { appDataReducer } from './reducers/AppDataReducer'
 import { alertReducer } from '@/redux/reducers/AlertReducer'
 import { createWrapper } from 'next-redux-wrapper'
-import dayjs from 'dayjs'
 
 const rootReducer = combineReducers({
   mainCalendar: mainCalendarReducer,
@@ -36,14 +35,5 @@ export type AppDispatch = typeof store.dispatch
 export const wrapper = createWrapper<AppStore>(makeStore, {
   // fixes SerializableError: Error serializing `.initialState.mainCalendar.date`
   serializeState: (state) => JSON.stringify(state),
-  deserializeState: (state) => {
-    const deserializedState = JSON.parse(state)
-    // ensures that the date is a dayjs object and not a string
-    if (deserializedState.mainCalendar.date) {
-      deserializedState.mainCalendar.date = dayjs(deserializedState.mainCalendar.date)
-    } else {
-      deserializedState.mainCalendar.date = dayjs()
-    }
-    return deserializedState
-  }
+  deserializeState: (state) => JSON.parse(state)
 })

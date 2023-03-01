@@ -1,19 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { CalendarInterval } from '@/constants/enums'
 import dayjs, { Dayjs } from 'dayjs'
-import { convertToDurationKey } from '@/utils/month'
+import { convertToNumMonths } from '@/utils/month'
 import { HYDRATE } from 'next-redux-wrapper'
 
 interface State {
   mainCalendar: {
     interval: CalendarInterval
-    date: Dayjs
+    date: number
   }
 }
 
 const initialState = {
   interval: CalendarInterval.YEAR,
-  date: dayjs()
+  date: dayjs().unix()
 }
 
 const mainCalendarSlice = createSlice({
@@ -24,16 +24,16 @@ const mainCalendarSlice = createSlice({
       state.interval = action.payload
     },
     setDate: (state, action: PayloadAction<Dayjs>) => {
-      state.date = action.payload
+      state.date = action.payload.unix()
     },
     incrementDate: (state) => {
-      state.date = state.date.add(convertToDurationKey(state.interval), 'M')
+      state.date = dayjs.unix(state.date).add(convertToNumMonths(state.interval), 'M').unix()
     },
     decrementDate: (state) => {
-      state.date = state.date.subtract(convertToDurationKey(state.interval), 'M')
+      state.date = dayjs.unix(state.date).subtract(convertToNumMonths(state.interval), 'M').unix()
     },
     jumpToToday: (state) => {
-      state.date = dayjs()
+      state.date = dayjs().unix()
     }
   },
   extraReducers: {
@@ -50,5 +50,5 @@ export const { setInterval, decrementDate, setDate, incrementDate, jumpToToday }
 export const getInterval = (state: State) => state.mainCalendar.interval
 export const isYearInterval = (state: State) => state.mainCalendar.interval === CalendarInterval.YEAR
 export const isMonthInterval = (state: State) => state.mainCalendar.interval === CalendarInterval.MONTH
-export const getDate = (state: State) => state.mainCalendar.date
+export const getDate = (state: State) => dayjs.unix(state.mainCalendar.date)
 export const mainCalendarReducer = mainCalendarSlice.reducer

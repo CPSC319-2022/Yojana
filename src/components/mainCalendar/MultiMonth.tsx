@@ -1,6 +1,6 @@
 import { useAppSelector } from '@/redux/hooks'
 import { getDate, getInterval } from '@/redux/reducers/MainCalendarReducer'
-import { convertToDurationKey } from '@/utils/month'
+import { convertToNumMonths } from '@/utils/month'
 import { Month } from '@/components/mainCalendar/Month'
 import dayjs from 'dayjs'
 
@@ -8,7 +8,7 @@ export const MultiMonth = () => {
   const activeCalView = useAppSelector(getInterval)
   const targetDate = useAppSelector(getDate)
 
-  const months = Array.from(Array(convertToDurationKey(activeCalView)).keys()).map((monthNum) => {
+  const months = Array.from(Array(convertToNumMonths(activeCalView)).keys()).map((monthNum) => {
     return (
       <div key={monthNum}>
         <h3 className='text-base'>{dayjs(targetDate).add(monthNum, 'month').format('MMMM')}</h3>
