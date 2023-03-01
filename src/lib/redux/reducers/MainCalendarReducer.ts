@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { CalendarInterval } from '@/constants/enums'
 import dayjs, { Dayjs } from 'dayjs'
-import { convertToNumMonths } from '@/utils/month'
+import { intervalToNumMonths } from '@/utils/month'
 import { HYDRATE } from 'next-redux-wrapper'
 
 interface State {
@@ -27,10 +27,10 @@ const mainCalendarSlice = createSlice({
       state.date = action.payload.unix()
     },
     incrementDate: (state) => {
-      state.date = dayjs.unix(state.date).add(convertToNumMonths(state.interval), 'M').unix()
+      state.date = dayjs.unix(state.date).add(intervalToNumMonths(state.interval), 'M').unix()
     },
     decrementDate: (state) => {
-      state.date = dayjs.unix(state.date).subtract(convertToNumMonths(state.interval), 'M').unix()
+      state.date = dayjs.unix(state.date).subtract(intervalToNumMonths(state.interval), 'M').unix()
     },
     jumpToToday: (state) => {
       state.date = dayjs().unix()
