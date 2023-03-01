@@ -1,42 +1,39 @@
 import React, { useCallback, useMemo } from 'react'
 import { useAppSelector } from '@/redux/hooks'
-import { getCategoriesOfYear } from '@/redux/reducers/AppDataReducer'
+import { getCategoryMap, getYear } from '@/redux/reducers/AppDataReducer'
 import { getDate } from '@/redux/reducers/MainCalendarReducer'
-import { CategoryFullState } from '@/types/prisma'
 import dayjs, { Dayjs } from 'dayjs'
 
 export const Year = () => {
   const stateDate = useAppSelector(getDate)
+  const categoryMap = useAppSelector(getCategoryMap)
+  const entriesInYear = useAppSelector((state) => getYear(state, stateDate))
+
   const yearStartDate = dayjs(stateDate).startOf('year')
   const yearNum = yearStartDate.get('year')
 
-  const categoriesPerDate: CategoryFullState[][][] = useAppSelector((state) =>
-    getCategoriesOfYear(state, yearStartDate)
-  )
-
   const renderDayCategories = useCallback(
     (day: Dayjs, monthNum: number) => {
-      if (monthNum < 0 || monthNum >= 12) return undefined
-      const icons = categoriesPerDate[monthNum][day.date() - 1]?.map((calEvent, key) => {
-        if (calEvent.show) {
+      const entriesOnDay = entriesInYear?.[monthNum]?.[day.date()] ?? []
+      const icons = entriesOnDay.map((calEvent, key) => {
+        const category = categoryMap[calEvent.categoryId]
+        if (category.show) {
           return (
-            <>
+            <span className={'px-0.5 font-bold'} key={`${calEvent.id}-${key}`}>
               <style jsx>{`
-                span {
-                  color: ${calEvent.color};
+                * {
+                  color: ${category.color};
                 }
               `}</style>
-              <span className={'pl-0.5 pr-0.5 font-bold'} key={key}>
-                {calEvent.icon}
-              </span>
-            </>
+              {category.icon}
+            </span>
           )
         }
       })
-      icons.push(<span>&nbsp;</span>)
+      icons.push(<span key={`${monthNum}-${day.get('day')}`}>&nbsp;</span>)
       return icons
     },
-    [categoriesPerDate]
+    [categoryMap, entriesInYear]
   )
 
   const renderDay = useCallback(
@@ -47,7 +44,7 @@ export const Year = () => {
 
       return (
         <div
-          className={'tile truncate pr-0.5 pl-0.5' + ' ' + (isSat || isSun ? 'bg-slate-100' : 'bg-white')}
+          className={'tile truncate px-0.5' + ' ' + (isSat || isSun ? 'bg-slate-100' : 'bg-white')}
           key={`${yearNum}-${monthNum}-${day.date()}`}
         >
           {renderDayCategories(day, monthNum)}
@@ -75,9 +72,14 @@ export const Year = () => {
 
   const renderDateNums = useMemo(() => {
     return Array.from(Array(32).keys()).map((dateNum) => {
-      if (dateNum === 0) return <div className={'sticky top-0 bg-slate-100 text-transparent'}>.</div>
+      if (dateNum === 0)
+        return (
+          <div className={'sticky top-0 bg-slate-100 text-transparent'} key={dateNum}>
+            .
+          </div>
+        )
       return (
-        <div className={'pl-1 pr-1'} key={dateNum}>
+        <div className={'px-1'} key={dateNum}>
           {dateNum}
         </div>
       )

@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 import { Button, Modal, Tabs } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Category, Entry } from '@prisma/client'
-import { addCategory, getSpecificCategory, updateCategory } from '@/redux/reducers/AppDataReducer'
+import { addCategory, getCategory, updateCategory } from '@/redux/reducers/AppDataReducer'
 import { randomColor } from '@/utils/color'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -42,7 +42,7 @@ type Schema = z.infer<typeof schema>
 export const CategoryModal = ({ method, id, callBack }: { method: string; id: number; callBack: () => void }) => {
   const { data: session } = useSession()
   const dispatch = useAppDispatch()
-  const currentState = useAppSelector((state) => getSpecificCategory(state, id))
+  const currentState = useAppSelector((state) => getCategory(state, id))
   const currentRepeatingDays = id != -1 ? currentState?.cron?.split(' ').at(-1)?.split(',') : []
   // remove empty string from array
   if (currentRepeatingDays?.includes('')) {

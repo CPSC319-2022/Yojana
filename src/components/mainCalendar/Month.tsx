@@ -1,9 +1,8 @@
 import { useCallback } from 'react'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
 import { useAppSelector } from '@/redux/hooks'
-import { getCategoriesOfMonth } from '@/redux/reducers/AppDataReducer'
+import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
 import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
-import { CategoryFullState } from '@/types/prisma'
 import dayjs from 'dayjs'
 
 interface MonthProps {
@@ -15,20 +14,31 @@ export const Month = (props: MonthProps) => {
   const monthView = useAppSelector(isMonthInterval)
   const stateDate = useAppSelector(getDate)
   const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
+
   const targetDate = referenceDate.add(props.monthOffset, 'month')
   const monthStartDate = targetDate.startOf('month')
   const daysInMonth = targetDate.daysInMonth()
   const numWeeks = Math.ceil((daysInMonth + monthStartDate.day()) / 7)
 
-  const categoriesPerDate: CategoryFullState[][] = useAppSelector((state) => getCategoriesOfMonth(state, targetDate))
+  const categoryMap = useAppSelector(getCategoryMap)
+  const { prevMonth, currMonth, nextMonth } = useAppSelector((state) => getPrevCurrNextMonth(state, targetDate))
 
   const renderDay = useCallback(
     (firstDateOfWeek: number, dayNum: number) => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
       const day = monthStartDate.add(offsetFromMonthStart, 'days')
-      const dayCategories = categoriesPerDate[day.date() - 1]?.map((calEvent, key) => {
-        if (calEvent.show) {
-          return <CategoryBlock color={calEvent.color} label={calEvent.name} icon={calEvent.icon} key={key} />
+      let entriesOnDay
+      if (offsetFromMonthStart < 0) {
+        entriesOnDay = prevMonth?.[day.date()]
+      } else if (offsetFromMonthStart >= daysInMonth) {
+        entriesOnDay = nextMonth?.[day.date()]
+      } else {
+        entriesOnDay = currMonth?.[day.date()]
+      }
+      const dayBlocks = entriesOnDay?.map((entry, key) => {
+        const category = categoryMap[entry.categoryId]
+        if (category.show) {
+          return <CategoryBlock color={category.color} label={category.name} icon={category.icon} key={key} />
         }
       })
 
@@ -41,11 +51,11 @@ export const Month = (props: MonthProps) => {
           >
             {day.date()}
           </span>
-          {dayCategories}
+          {dayBlocks}
         </div>
       )
     },
-    [categoriesPerDate, daysInMonth, monthStartDate]
+    [categoryMap, currMonth, daysInMonth, monthStartDate, nextMonth, prevMonth]
   )
 
   // monthOffset is the offset of the Sunday from the beginning of the month.
