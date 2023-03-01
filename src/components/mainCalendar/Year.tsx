@@ -19,7 +19,7 @@ export const Year = () => {
         const category = categoryMap[calEvent.categoryId]
         if (category.show) {
           return (
-            <span className={'pl-0.5 pr-0.5 font-bold'} key={`${calEvent.id}-${key}`}>
+            <span className={'px-0.5 font-bold'} key={`${calEvent.id}-${key}`}>
               <style jsx>{`
                 * {
                   color: ${category.color};
@@ -44,7 +44,7 @@ export const Year = () => {
 
       return (
         <div
-          className={'tile truncate pr-0.5 pl-0.5' + ' ' + (isSat || isSun ? 'bg-slate-100' : 'bg-white')}
+          className={'tile truncate px-0.5' + ' ' + (isSat || isSun ? 'bg-slate-100' : 'bg-white')}
           key={`${yearNum}-${monthNum}-${day.date()}`}
         >
           {renderDayCategories(day, monthNum)}
@@ -79,7 +79,7 @@ export const Year = () => {
           </div>
         )
       return (
-        <div className={'pl-1 pr-1'} key={dateNum}>
+        <div className={'px-1'} key={dateNum}>
           {dateNum}
         </div>
       )
