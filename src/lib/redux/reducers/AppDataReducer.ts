@@ -4,6 +4,9 @@ import { setCookie } from 'cookies-next'
 import dayjs, { Dayjs } from 'dayjs'
 import { Entry } from '@prisma/client'
 
+// year: 2023
+// month: 0-11
+// day: 1-31
 interface EntryMap {
   [year: string]: {
     [month: string]: {
@@ -79,7 +82,7 @@ const _addEntriesToEntryMap = (entryMap: EntryMap, entries: EntryWithoutCategory
   entries.forEach((entry) => {
     // TODO: Fix this hack to get the correct date, ignore timezones
     const date = dayjs(entry.date).add(1, 'day')
-    const year = date.year() // 2021
+    const year = date.year() // 2023
     const month = date.month() // 0-11
     const day = date.date() // 1-31
     // create year if it doesn't exist
