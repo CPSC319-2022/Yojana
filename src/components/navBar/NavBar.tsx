@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Button } from '@/components/common'
 import { useRouter } from 'next/router'
 import { setCookie } from 'cookies-next'
+import { BsCaretLeftFill, BsCaretRightFill } from 'react-icons/bs'
 
 interface NavBarProps {
   sidebarOpen: boolean
@@ -62,8 +63,8 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
       </div>
       <div className='flex w-[25vw] flex-row items-center'>
         <Button text='Today' onClick={() => dispatch(jumpToToday())} className='mr-10' />
-        <Button text='&lt;' onClick={() => dispatch(decrementDate())} className='mr-3' />
-        <Button text='&gt;' onClick={() => dispatch(incrementDate())} className='mr-3' />
+        <Button Icon={BsCaretLeftFill} onClick={() => dispatch(decrementDate())} className='mr-3 py-3' />
+        <Button Icon={BsCaretRightFill} onClick={() => dispatch(incrementDate())} className='mr-3 py-3' />
         <h4 className='flex-none text-center text-lg'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
       </div>
       <CalViewDropdown />
