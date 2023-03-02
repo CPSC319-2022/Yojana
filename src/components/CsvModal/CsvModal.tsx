@@ -9,10 +9,10 @@ export const CsvModal = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleUploadSuccess = (number: number, error: boolean) => {
+  const handleUploadSuccess = (number: number | undefined, error: string | undefined) => {
     setIsModalOpen(false)
     if (error) {
-      dispatch(setAlert({ message: `There was an error processing your request`, type: 'error', show: true }))
+      dispatch(setAlert({ message: `There was an error processing your request: ${error}`, type: 'error', show: true }))
     } else {
       dispatch(setAlert({ message: `successfully addded ${number} entries`, type: 'success', show: true }))
     }

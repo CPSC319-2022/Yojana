@@ -13,7 +13,11 @@ interface EntryMap {
   [key: string]: string[]
 }
 
-export const CsvUploader = ({ onSuccess }: { onSuccess: (added: number, error: boolean) => void }) => {
+export const CsvUploader = ({
+  onSuccess
+}: {
+  onSuccess: (added: number | undefined, error: string | undefined) => void
+}) => {
   const { data: session } = useSession()
   const [csvFileName, setCsvFileName] = useState('')
   const [csvEntries, setCsvEntries] = useState<CsvEntry[]>([])
@@ -49,11 +53,16 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (added: number, error: b
     }
 
     let entryMap: EntryMap = {}
-    for (let key in csvEntries) {
-      if (csvEntries.hasOwnProperty(key)) {
-        let entry = csvEntries[key]
-        entryMap[entry.Category] = [...(entryMap[entry.Category] ?? []), new Date(entry.Date).toISOString()]
+    try {
+      for (let key in csvEntries) {
+        if (csvEntries.hasOwnProperty(key)) {
+          let entry = csvEntries[key]
+          entryMap[entry.Category] = [...(entryMap[entry.Category] ?? []), new Date(entry.Date).toISOString()]
+        }
       }
+    } catch (error) {
+      onSuccess(0, 'make sure your csv file is formatted correctly')
+      return
     }
 
     try {
@@ -66,10 +75,10 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (added: number, error: b
       })
 
       const data = await response.json()
-      onSuccess(data.entriesAdded, false)
+      onSuccess(data.entriesAdded, undefined)
     } catch (error) {
       console.error(error)
-      onSuccess(0, true)
+      onSuccess(undefined, "couldn't add entries")
     }
   }
 
