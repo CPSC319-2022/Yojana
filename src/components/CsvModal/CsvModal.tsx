@@ -31,7 +31,7 @@ export const CsvModal = () => {
         closeWhenClickOutside={true}
         handle={'create-category-modal-handle'}
         bounds={'create-category-modal-wrapper'}
-        buttonClassName={'ml-5'}
+        buttonClassName={'ml-5 mt-2'}
       >
         <CsvUploader onSuccess={handleUploadSuccess} />
       </Modal>
