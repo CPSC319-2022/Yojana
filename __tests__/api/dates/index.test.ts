@@ -29,12 +29,14 @@ describe('/api/dates', () => {
         {
           id: 1,
           date: new Date(),
-          categoryId: 1
+          categoryId: 1,
+          isRepeating: false
         },
         {
           id: 2,
           date: new Date(),
-          categoryId: 2
+          categoryId: 2,
+          isRepeating: false
         }
       ]
 
