@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { setCookie } from 'cookies-next'
 import dayjs, { Dayjs } from 'dayjs'
 import { Entry } from '@prisma/client'
+import { HYDRATE } from 'next-redux-wrapper'
 
 // year: 2023
 // month: 0-11
@@ -67,6 +68,14 @@ const appDataSlice = createSlice({
       state.data.splice(index, 1)
       // update EntryMap
       state.entryMap = _createEntryMap(state.data)
+    }
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action: PayloadAction<State>) => {
+      return {
+        ...state,
+        ...action.payload.appData
+      }
     }
   }
 })
