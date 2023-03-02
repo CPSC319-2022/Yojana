@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '@/prisma/prismadb'
-import * as util from 'util'
 import { getToken } from 'next-auth/jwt'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -12,9 +11,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(401).send('Unauthorized')
   }
   const categories = req.body
-  console.log(util.inspect(categories, { showHidden: false, depth: null, colors: true }))
-
-  console.log(Object.keys(categories))
   const validCategories = await prisma.category.findMany({
     where: {
       name: {
@@ -22,8 +18,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
     }
   })
-  console.log('printing valid categories')
-  console.log(validCategories)
   let entriesToAdd = []
   for (const categoryToAddTo of Object.keys(categories)) {
     for (const newDate of categories[categoryToAddTo]) {
@@ -37,9 +31,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
     }
   }
-  console.log(entriesToAdd)
   try {
-    await prisma.entry.createMany({
+    const createdEntries = await prisma.entry.createMany({
       data: entriesToAdd.map(
         ({ date, isRepeating = false, categoryId }: { date: Date; isRepeating?: boolean; categoryId?: number }) => ({
           date: date,
@@ -48,9 +41,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         })
       )
     })
-    return res.status(200).send(`${entriesToAdd.length} entries added`)
+    let response = { entriesAdded: createdEntries.count }
+    return res.status(201).json(response)
   } catch (error) {
-    console.log(error)
     return res.status(500).send('Internal Server Error')
   }
 }
