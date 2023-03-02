@@ -1,7 +1,8 @@
 import { Button } from '@/components/common/Button'
 import { Menu, Transition } from '@headlessui/react'
-import React, { Fragment, Dispatch } from 'react'
+import React, { Dispatch, Fragment } from 'react'
 import { IconType } from 'react-icons'
+import { BsCaretDownFill } from 'react-icons/bs'
 
 export interface DropdownProps {
   text?: string
@@ -26,7 +27,7 @@ export const Dropdown = ({
   containerClassName = '',
   buttonClassName,
   overrideDefaultButtonStyle,
-  Icon
+  Icon = BsCaretDownFill
 }: DropdownProps) => {
   return (
     <div className={containerClassName}>
@@ -37,6 +38,7 @@ export const Dropdown = ({
               as={Button}
               text={text}
               Icon={Icon}
+              iconClassName={`mt-1 ml-1.5 ${open ? 'rotate-180' : ''}`}
               onClick={() => open && close()}
               className={buttonClassName}
               overrideDefaultStyle={overrideDefaultButtonStyle}
