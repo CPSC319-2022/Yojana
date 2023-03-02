@@ -34,8 +34,8 @@ export const Button = forwardRef(
         disabled={disabled}
         ref={ref}
       >
-        {Icon && <Icon className={iconClassName} />}
         {text}
+        {Icon && <Icon className={iconClassName} />}
       </button>
     )
   }
