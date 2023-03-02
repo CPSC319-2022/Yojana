@@ -1,39 +1,20 @@
-import { Fragment, ReactNode, useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { getAlert, setShow } from '@/redux/reducers/AlertReducer'
 
-export interface AlertProps {
-  children: ReactNode
-  type: 'success' | 'error' | 'warning' | 'info'
-  setShow: (show: boolean) => void
-  show: boolean
-}
-
-export const Alert = ({ children: message, type, show, setShow }: AlertProps) => {
-  const bgColor =
-    type === 'error'
-      ? 'bg-red-200'
-      : type === 'warning'
-      ? 'bg-yellow-200'
-      : type === 'info'
-      ? 'bg-blue-200'
-      : 'bg-green-200'
-  const textColor =
-    type === 'error'
-      ? 'text-red-700'
-      : type === 'warning'
-      ? 'text-yellow-700'
-      : type === 'info'
-      ? 'text-blue-700'
-      : 'text-green-700'
+export const Alert = () => {
+  const { message, textColor, backgroundColor, type, show } = useAppSelector(getAlert)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (show) {
       const timer = setTimeout(() => {
-        setShow(false)
+        dispatch(setShow(false))
       }, 5000)
       return () => clearTimeout(timer)
     }
-  }, [show, setShow])
+  }, [show, dispatch])
 
   return (
     <Transition appear show={show} as={Fragment}>
@@ -47,9 +28,21 @@ export const Alert = ({ children: message, type, show, setShow }: AlertProps) =>
         leaveTo='opacity-0'
       >
         <div className='fixed top-10 left-0 right-0 z-50 mx-auto w-3/4 md:w-1/2'>
-          <div className={`rounded-md ${bgColor} py-3 px-4 text-center ${textColor}`} role='alert'>
-            {message}
-            <button type='button' className={`float-right font-bold ${textColor}`} onClick={() => setShow(false)}>
+          <style jsx>
+            {`
+              .alert {
+                background-color: ${backgroundColor};
+                color: ${textColor};
+              }
+              .alert button {
+                color: ${textColor};
+              }
+            `}
+          </style>
+          <div className={`alert rounded-md py-3 px-4 text-center`} role='alert'>
+            {type === 'error' && <strong className='font-bold'>Error:</strong>}{' '}
+            <span className='block sm:inline'>{message}</span>
+            <button type='button' className={`float-right font-bold`} onClick={() => dispatch(setShow(false))}>
               &times;
             </button>
           </div>

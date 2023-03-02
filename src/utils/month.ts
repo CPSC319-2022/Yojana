@@ -1,6 +1,6 @@
 import { CalendarInterval } from '@/constants/enums'
 
-export const convertToDurationKey = (interval: CalendarInterval) => {
+export const intervalToNumMonths = (interval: CalendarInterval) => {
   switch (interval) {
     case CalendarInterval.YEAR:
       return 12

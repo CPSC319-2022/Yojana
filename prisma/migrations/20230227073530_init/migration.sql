@@ -15,7 +15,10 @@ CREATE TABLE `Category` (
     `description` VARCHAR(191) NOT NULL DEFAULT '',
     `color` VARCHAR(7) NOT NULL,
     `isMaster` BOOLEAN NOT NULL DEFAULT false,
-    `icon` VARCHAR(6) NOT NULL DEFAULT '',
+    `icon` VARCHAR(12) NOT NULL DEFAULT '',
+    `cron` VARCHAR(191) NULL DEFAULT '',
+    `startDate` DATE NULL,
+    `endDate` DATE NULL,
     `creatorId` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Category_name_key`(`name`),
@@ -26,6 +29,7 @@ CREATE TABLE `Category` (
 CREATE TABLE `Entry` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `date` DATE NOT NULL,
+    `isRepeating` BOOLEAN NOT NULL DEFAULT false,
     `categoryId` INTEGER NOT NULL,
 
     UNIQUE INDEX `Entry_date_categoryId_key`(`date`, `categoryId`),
@@ -36,4 +40,4 @@ CREATE TABLE `Entry` (
 ALTER TABLE `Category` ADD CONSTRAINT `Category_creatorId_fkey` FOREIGN KEY (`creatorId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Entry` ADD CONSTRAINT `Entry_categoryId_fkey` FOREIGN KEY (`categoryId`) REFERENCES `Category`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Entry` ADD CONSTRAINT `Entry_categoryId_fkey` FOREIGN KEY (`categoryId`) REFERENCES `Category`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

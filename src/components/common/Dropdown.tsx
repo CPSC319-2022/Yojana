@@ -1,24 +1,48 @@
-import React, { Fragment } from 'react'
-import { Menu, Transition } from '@headlessui/react'
 import { Button } from '@/components/common/Button'
+import { Menu, Transition } from '@headlessui/react'
+import React, { Dispatch, Fragment } from 'react'
+import { IconType } from 'react-icons'
+import { BsCaretDownFill } from 'react-icons/bs'
 
-interface DropdownProps {
-  title: string
+export interface DropdownProps {
+  text?: string
+  id?: number
   menuItems: {
     key: string
     label: string
     onClick: () => void
+    props?: any
   }[]
   containerClassName?: string
+  buttonClassName?: string
+  overrideDefaultButtonStyle?: boolean
+  Icon?: IconType
+  setKeepFocus?: Dispatch<React.SetStateAction<number>>
+  keepPanelOpen?: boolean
 }
 
-export const Dropdown = ({ title, menuItems, containerClassName = '' }: DropdownProps) => {
+export const Dropdown = ({
+  text,
+  menuItems,
+  containerClassName = '',
+  buttonClassName,
+  overrideDefaultButtonStyle,
+  Icon = BsCaretDownFill
+}: DropdownProps) => {
   return (
-    <div className={containerClassName} title={title}>
+    <div className={containerClassName}>
       <Menu as='div' className='relative inline-block text-left'>
         {({ open, close }) => (
           <>
-            <Menu.Button as={Button} text={title} onClick={() => open && close()} />
+            <Menu.Button
+              as={Button}
+              text={text}
+              Icon={Icon}
+              iconClassName={`mt-1 ml-1.5 ${open ? 'rotate-180' : ''}`}
+              onClick={() => open && close()}
+              className={buttonClassName}
+              overrideDefaultStyle={overrideDefaultButtonStyle}
+            />
             <Transition
               as={Fragment}
               enter='transition ease-out duration-100'

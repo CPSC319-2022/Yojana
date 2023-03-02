@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { AccountViewDropdown } from './AccountViewDropdown'
 import { CalViewDropdown } from './CalViewDropdown'
 import {
   decrementDate,
   getDate,
+  getInterval,
   incrementDate,
   isYearInterval,
   jumpToToday
 } from '@/redux/reducers/MainCalendarReducer'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Button } from '@/components/common'
+import { useRouter } from 'next/router'
+import { setCookie } from 'cookies-next'
 
 interface NavBarProps {
   sidebarOpen: boolean
@@ -20,15 +23,40 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
   const dispatch = useAppDispatch()
   const targetDate = useAppSelector(getDate)
   const yearView = useAppSelector(isYearInterval)
+  const interval = useAppSelector(getInterval)
+  const router = useRouter()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    // mounted ensures that the router push does not happen on the first render
+    if (mounted) {
+      router.push(
+        {
+          query: {
+            ...router.query,
+            interval: interval,
+            date: targetDate.format('YYYY-MM-DD')
+          }
+        },
+        undefined,
+        { shallow: true }
+      )
+    } else {
+      setMounted(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [targetDate, interval])
 
   return (
-    <div className='box-border flex h-[12vh] w-full flex-row items-center justify-between px-5'>
+    <div className='box-border flex h-[10vh] w-full flex-row items-center justify-between border-b px-5'>
       <div className='flex flex-row items-center'>
         <Button
           text='&#9776;'
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          className='mr-5 text-2xl'
-          padding='px-3 pt-0.5 pb-2'
+          onClick={() => {
+            setSidebarOpen(!sidebarOpen)
+            setCookie(`yojana.sidebar-open`, !sidebarOpen)
+          }}
+          className='mr-5 px-3 pt-0.5 pb-2 text-2xl'
         />
         <h1 className='text-2xl font-medium'>Yojana</h1>
       </div>
@@ -36,7 +64,7 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
         <Button text='Today' onClick={() => dispatch(jumpToToday())} className='mr-10' />
         <Button text='&lt;' onClick={() => dispatch(decrementDate())} className='mr-3' />
         <Button text='&gt;' onClick={() => dispatch(incrementDate())} className='mr-3' />
-        <h4 className='text-center text-lg'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
+        <h4 className='flex-none text-center text-lg'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
       </div>
       <CalViewDropdown />
       <AccountViewDropdown />

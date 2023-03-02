@@ -140,6 +140,9 @@ get:
           color: string
           isMaster: boolean
           icon: string
+          cron: string
+          startDate: ISOString
+          endDate: ISOString
           creator:
             object:
               id: string
@@ -160,6 +163,7 @@ put:
     color: string
     icon: string
     isMaster: boolean
+    duplicates: Entry[]
   responses:
     200:
       description: update existing category details by its id
@@ -169,8 +173,12 @@ put:
         description: string
         color: string
         icon: string
+        cron: string
+        startDate: ISOString
+        endDate: ISOString
         isMaster: boolean
         creatorId: string
+        entries: Entry[]
     404:
       description: category does not exist
       text: category does not exist
@@ -195,8 +203,12 @@ post:
         description: string
         color: string
         icon: string
+        cron: string
+        startDate: ISOString
+        endDate: ISOString
         isMaster: boolean
         creatorId: string
+        entries: Entry[]
     409:
       description: creating a new category with a non-unique name
       text: category name must be unique
@@ -220,6 +232,9 @@ get:
         name: string
         description: string
         color: string
+        cron: string
+        startDate: ISOString
+        endDate: ISOString
         isMaster: boolean
         creatorId: string
     409:
@@ -235,6 +250,9 @@ delete:
         name: string
         description: string
         color: string
+        cron: string
+        startDate: ISOString
+        endDate: ISOString
         isMaster: boolean
         creatorId: string
     401:
