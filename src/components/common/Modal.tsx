@@ -23,6 +23,7 @@ interface ModalProps {
   buttonClassName?: string
   showCloseBtn?: boolean
   overrideDefaultButtonStyle?: boolean
+  closeParent?: () => void
 }
 
 export const Modal = ({
@@ -41,7 +42,8 @@ export const Modal = ({
   bounds,
   buttonClassName,
   showCloseBtn = true,
-  overrideDefaultButtonStyle = false
+  overrideDefaultButtonStyle = false,
+  closeParent
 }: ModalProps) => {
   const directionClass = direction ? `absolute ${direction}-0 my-10` : ''
 
@@ -90,7 +92,10 @@ export const Modal = ({
                           <button
                             type='button'
                             className='px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
-                            onClick={() => setIsOpen(false)}
+                            onClick={() => {
+                              setIsOpen(false)
+                              closeParent?.()
+                            }}
                           >
                             ×
                           </button>

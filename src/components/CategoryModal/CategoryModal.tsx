@@ -195,6 +195,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             : `group flex w-full items-center rounded-md px-2 py-2 hover:bg-slate-100`
         }
         overrideDefaultButtonStyle={method !== 'POST'}
+        closeParent={callBack}
       >
         <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
           <div className='mb-4'>

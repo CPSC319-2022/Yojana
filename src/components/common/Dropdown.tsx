@@ -1,6 +1,6 @@
 import { Button } from '@/components/common/Button'
 import { Menu, Transition } from '@headlessui/react'
-import React, { Fragment } from 'react'
+import React, { Fragment, Dispatch } from 'react'
 import { IconType } from 'react-icons'
 
 export interface DropdownProps {
@@ -16,6 +16,8 @@ export interface DropdownProps {
   buttonClassName?: string
   overrideDefaultButtonStyle?: boolean
   Icon?: IconType
+  setKeepFocus?: Dispatch<React.SetStateAction<number>>
+  keepPanelOpen?: boolean
 }
 
 export const Dropdown = ({

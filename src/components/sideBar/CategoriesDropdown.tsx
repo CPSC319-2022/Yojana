@@ -1,40 +1,49 @@
+import { CategoryModal } from '@/components/CategoryModal'
+import { Button } from '@/components/common'
+import { DeleteCategoryModal } from '@/components/DeleteCategoryModal'
+import { Popover, Transition } from '@headlessui/react'
+import { Fragment, Dispatch } from 'react'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { DropdownProps } from '../common/Dropdown'
-import React, { Fragment, useState } from 'react'
-import { Popover, Transition } from '@headlessui/react'
-import { CategoryModal } from '@/components/CategoryModal'
-import { DeleteCategoryModal } from '@/components/DeleteCategoryModal'
-import { Button } from '@/components/common'
 
-export const CategoriesDropdown = (id: { id: number }) => {
+export const CategoriesDropdown = (props: {
+  id: number
+  setKeepFocus: Dispatch<React.SetStateAction<number>>
+  keepOpen: boolean
+}) => {
+  const { id, setKeepFocus, keepOpen } = props
+
   return (
     <HoverDropdown
       Icon={BsThreeDotsVertical}
-      id={id.id}
+      id={id}
       menuItems={[]}
       overrideDefaultButtonStyle={true}
-      buttonClassName='cursor-pointer text-white group-hover:text-slate-500 group-hover:block hidden'
+      buttonClassName={`z-0 focus:outline-none cursor-pointer group-hover:text-slate-500 ${
+        keepOpen ? 'text-slate-500' : 'text-white'
+      }`}
+      setKeepFocus={setKeepFocus}
+      keepPanelOpen={keepOpen}
     />
   )
 }
 
-// TODO: close after clicking on a Panel, close after moving away from sidebar
 const HoverDropdown = ({
   text,
   id,
   Icon,
   containerClassName = '',
   buttonClassName,
-  overrideDefaultButtonStyle
+  overrideDefaultButtonStyle,
+  setKeepFocus,
+  keepPanelOpen
 }: DropdownProps) => {
-  const [isOpen, setIsOpen] = useState(false)
-
   const handleButtonClick = () => {
-    setIsOpen(!isOpen)
+    keepPanelOpen ? handleClosePopover() : setKeepFocus?.(Number(id))
   }
 
   const handleClosePopover = () => {
-    setIsOpen(false)
+    setKeepFocus && setKeepFocus(-1)
   }
 
   return (
@@ -50,7 +59,7 @@ const HoverDropdown = ({
             overrideDefaultStyle={overrideDefaultButtonStyle}
           />
           <Transition
-            show={isOpen}
+            show={keepPanelOpen}
             as={Fragment}
             enter='transition ease-out duration-100'
             enterFrom='transform opacity-0 scale-95'
@@ -60,7 +69,7 @@ const HoverDropdown = ({
             leaveTo='transform opacity-0 scale-95'
           >
             <Popover.Panel
-              className='w-42 absolute left-0 mt-2 hidden w-28 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none group-hover:block'
+              className='w-42 absolute left-0 z-10 mt-2 w-28 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
               static
             >
               <div className='px-1 py-1'>
