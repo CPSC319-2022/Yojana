@@ -1,32 +1,34 @@
-import { Alert } from '@/components/common'
-import { MainCalendar } from '@/components/mainCalendar'
 import { NavBar } from '@/components/navBar'
+import { MainCalendar } from '@/components/mainCalendar'
 import { SideBar } from '@/components/sideBar/'
 import { getCategories } from '@/prisma/queries'
-import { useAppDispatch } from '@/redux/hooks'
 import { setAppData } from '@/redux/reducers/AppDataReducer'
-import { AppData } from '@/types/prisma'
+import { useState } from 'react'
 import { getCookies, setCookie } from 'cookies-next'
 import { GetServerSideProps } from 'next'
-import { useState } from 'react'
+import { Alert } from '@/components/common'
+import { wrapper } from '@/redux/store'
+import { setDate, setInterval } from '@/redux/reducers/MainCalendarReducer'
+import dayjs from 'dayjs'
+import { CalendarInterval } from '@/constants/enums'
 
-const Calendar = ({ data }: { data: AppData }) => {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const dispatch = useAppDispatch()
-  dispatch(setAppData(data))
+interface CalendarProps {
+  sidebarOpenInitial: boolean
+}
+
+const Calendar = ({ sidebarOpenInitial }: CalendarProps) => {
+  const [sidebarOpen, setSidebarOpen] = useState(sidebarOpenInitial)
 
   return (
     <main>
       <Alert />
       <div className='flex h-screen w-full flex-col bg-white text-slate-800'>
-        <div className='z-10'>
-          <NavBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        </div>
+        <NavBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <div className='border-box flex h-[90vh] w-full flex-row'>
           <div
             className={`${
               sidebarOpen ? 'w-1/5 translate-x-0 pr-2' : 'w-0 -translate-x-full'
-            } z-0 overflow-visible transition-all`}
+            } overflow-visible transition-all`}
           >
             {sidebarOpen && <SideBar />}
           </div>
@@ -40,30 +42,49 @@ const Calendar = ({ data }: { data: AppData }) => {
 }
 
 // get data from database on server side
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  // get cookies
-  const cookies = getCookies({ req, res })
-
-  // make query to database to get categories
-  let categories = await getCategories()
-  // add show property to each category based on cookie value
-  categories = categories.map((category) => {
-    let show = true
-    const key = `yojana.show-category-${category.id}`
-    if (cookies[key] === undefined) {
-      // if cookie is undefined, set it to true
-      setCookie(key, 'true', { req, res })
-    } else {
-      // if cookie is defined, set show to the value of the cookie
-      show = cookies[key] === 'true'
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps((store) => {
+  return async ({ req, res, query }) => {
+    const { interval, date } = query
+    // check if date query param is valid
+    if (date && typeof date === 'string' && dayjs(date).isValid()) {
+      store.dispatch(setDate(dayjs(date)))
     }
-    return { ...category, show: show }
-  })
+    // check if interval query param is valid
+    if (interval && Object.values(CalendarInterval).includes(interval as CalendarInterval)) {
+      store.dispatch(setInterval(interval as CalendarInterval))
+    }
 
-  // pass data to the page via props
-  return { props: { data: JSON.parse(JSON.stringify(categories)) } }
-  // the reason why we do JSON.parse(JSON.stringify(categories)) is because we need to convert the prisma object to a normal object
-  // https://github.com/vercel/next.js/issues/11993
-}
+    // get cookies
+    const cookies = getCookies({ req, res })
+
+    // if sidebar cookie is undefined, set it to true
+    let sidebarOpenInitial = true
+    if (cookies['yojana.sidebar-open'] === undefined) {
+      setCookie('yojana.sidebar-open', true, { req, res })
+    } else {
+      // if sidebar cookie is defined, set sidebarOpenInitial to the value of the cookie
+      sidebarOpenInitial = cookies['yojana.sidebar-open'] === 'true'
+    }
+
+    // make query to database to get categories
+    const categories = await getCategories()
+    // add show property to each category based on cookie value
+    const appDate = categories.map((category) => {
+      let show = true
+      const key = `yojana.show-category-${category.id}`
+      if (cookies[key] === undefined) {
+        // if cookie is undefined, set it to true
+        setCookie(key, 'true', { req, res })
+      } else {
+        // if cookie is defined, set show to the value of the cookie
+        show = cookies[key] === 'true'
+      }
+      return { ...category, show: show }
+    })
+
+    store.dispatch(setAppData(appDate))
+    return { props: { sidebarOpenInitial } }
+  }
+})
 
 export default Calendar

@@ -2,11 +2,15 @@ import { CategoryModal } from '@/components/CategoryModal'
 import { Button } from '@/components/common'
 import { DeleteCategoryModal } from '@/components/DeleteCategoryModal'
 import { Popover, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
+import { Fragment, Dispatch } from 'react'
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { DropdownProps } from '../common/Dropdown'
 
-export const CategoriesDropdown = (props: { id: number; setKeepFocus: Function; keepOpen: boolean }) => {
+export const CategoriesDropdown = (props: {
+  id: number
+  setKeepFocus: Dispatch<React.SetStateAction<number>>
+  keepOpen: boolean
+}) => {
   const { id, setKeepFocus, keepOpen } = props
 
   return (
@@ -35,7 +39,7 @@ const HoverDropdown = ({
   keepPanelOpen
 }: DropdownProps) => {
   const handleButtonClick = () => {
-    keepPanelOpen ? handleClosePopover() : setKeepFocus && setKeepFocus(id)
+    keepPanelOpen ? handleClosePopover() : setKeepFocus?.(Number(id))
   }
 
   const handleClosePopover = () => {
@@ -48,7 +52,6 @@ const HoverDropdown = ({
         <>
           <Popover.Button
             as={Button}
-            // disabled={}
             text={text}
             Icon={Icon}
             onClick={handleButtonClick}
