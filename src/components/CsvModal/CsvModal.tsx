@@ -33,6 +33,14 @@ export const CsvModal = () => {
         bounds={'create-category-modal-wrapper'}
         buttonClassName={'ml-5 mt-2'}
       >
+        <p className='text-sm text-gray-500'>
+          Upload a CSV file with the following format: <br />
+          <span className='text-gray-400'>
+            Category,Date <br />
+            {'<Category1 Name>'},{'<Category1 Date (yyyy-mm-dd)>'} <br />
+            {'<Category2 Name>'},{'<Category2 Date (yyyy-mm-dd)>'}
+          </span>
+        </p>
         <CsvUploader onSuccess={handleUploadSuccess} />
       </Modal>
     </>
