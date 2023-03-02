@@ -30,11 +30,7 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (added: number, error: b
       reader.onload = () => {
         const stream = csv()
         stream.on('data', (data) => {
-          console.log(data)
           setCsvEntries((prev) => [...prev, data])
-        })
-        stream.on('end', () => {
-          console.log('CSV file successfully processed')
         })
 
         stream.write(reader.result)
@@ -60,9 +56,21 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (added: number, error: b
       }
     }
 
-    console.log('entryMap:', entryMap)
-    console.log('Publishing new dates...')
-    onSuccess(5, false)
+    try {
+      const response = await fetch('/api/cats/batch', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(entryMap)
+      })
+
+      const data = await response.json()
+      onSuccess(data.entriesAdded, false)
+    } catch (error) {
+      console.error(error)
+      onSuccess(0, true)
+    }
   }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
