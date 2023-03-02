@@ -1,16 +1,16 @@
-import { NavBar } from '@/components/navBar'
+import { Alert } from '@/components/common'
 import { MainCalendar } from '@/components/mainCalendar'
+import { NavBar } from '@/components/navBar'
 import { SideBar } from '@/components/sideBar/'
+import { CalendarInterval } from '@/constants/enums'
 import { getCategories } from '@/prisma/queries'
 import { setAppData } from '@/redux/reducers/AppDataReducer'
-import { useState } from 'react'
-import { getCookies, setCookie } from 'cookies-next'
-import { GetServerSideProps } from 'next'
-import { Alert } from '@/components/common'
-import { wrapper } from '@/redux/store'
 import { setDate, setInterval } from '@/redux/reducers/MainCalendarReducer'
+import { wrapper } from '@/redux/store'
+import { getCookies, setCookie } from 'cookies-next'
 import dayjs from 'dayjs'
-import { CalendarInterval } from '@/constants/enums'
+import { GetServerSideProps } from 'next'
+import { useState } from 'react'
 
 interface CalendarProps {
   sidebarOpenInitial: boolean
@@ -23,8 +23,10 @@ const Calendar = ({ sidebarOpenInitial }: CalendarProps) => {
     <main>
       <Alert />
       <div className='flex h-screen w-full flex-col bg-white text-slate-800'>
-        <NavBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <div className='border-box flex h-[90vh] w-full flex-row'>
+        <div className='z-10'>
+          <NavBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        </div>
+        <div className='border-box z-0 flex h-[90vh] w-full flex-row'>
           <div
             className={`${
               sidebarOpen ? 'w-1/5 translate-x-0 pr-2' : 'w-0 -translate-x-full'
