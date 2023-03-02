@@ -42,15 +42,23 @@ export const Month = (props: MonthProps) => {
         }
       })
 
+      const currentDate = new Date(Date.UTC(dayjs().year(), dayjs().month(), dayjs().date()))
+      const isCurrentDate = day.toISOString().slice(0, 10) === currentDate.toISOString().slice(0, 10)
+      const todayCircle = isCurrentDate ? 'rounded-full bg-blue-500' : ''
+
       return (
         <div className={`tile overflow-y-auto bg-white pr-0.5 pl-0.5`} key={day.date()}>
-          <span
-            className={`${
-              offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''
-            } block text-center`}
-          >
-            {day.date()}
-          </span>
+          <div className={`flex items-center justify-center`}>
+            <div className={`flex h-7 w-7 items-center justify-center ${todayCircle}`}>
+              <span
+                className={`${
+                  offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''
+                } block text-center`}
+              >
+                {day.date()}
+              </span>
+            </div>
+          </div>
           {dayBlocks}
         </div>
       )
