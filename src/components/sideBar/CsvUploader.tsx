@@ -91,7 +91,7 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (added?: number, error?:
               <p className='ml-2 text-slate-600'>Uploaded: {csvFileName}</p>
             </div>
             <div className='flex space-x-4'>
-              <Button onClick={() => handleSubmit()} text='Publish' />
+              <Button onClick={() => handleSubmit()} text='Import' />
               <button
                 type='button'
                 className='mr-3 inline-flex justify-center rounded-md border border-transparent bg-slate-100 py-2 px-4 text-slate-900 enabled:hover:bg-slate-200 disabled:opacity-75'
