@@ -15,6 +15,7 @@ interface ModalProps {
   bounds?: string | { left: number; top: number; right: number; bottom: number }
   maxWidth?: string
   maxHeight?: string
+  minWidth?: string
   draggable?: boolean
   direction?: 'top' | 'bottom'
   closeBtn?: boolean
@@ -34,6 +35,7 @@ export const Modal = ({
   setIsOpen,
   maxWidth = '50vw',
   maxHeight = '90vh',
+  minWidth,
   draggable = false,
   direction,
   closeBtn = true,
@@ -43,7 +45,8 @@ export const Modal = ({
   buttonClassName,
   showCloseBtn = true,
   overrideDefaultButtonStyle = false,
-  closeParent
+  closeParent,
+  bodyPadding = 'px-6 pb-6 pt-3'
 }: ModalProps) => {
   const directionClass = direction ? `absolute ${direction}-0 my-10` : ''
 
@@ -83,7 +86,7 @@ export const Modal = ({
               >
                 <Dialog.Panel
                   className={`${directionClass} w-full max-w-md transform overflow-y-auto rounded-md bg-white text-left align-middle shadow-modal transition-all`}
-                  style={{ maxWidth: maxWidth, maxHeight: maxHeight }}
+                  style={{ maxWidth: maxWidth, maxHeight: maxHeight, minWidth: minWidth }}
                 >
                   {showCloseBtn && (
                     <div id={handle} className='w-full cursor-move bg-slate-100'>
@@ -103,7 +106,7 @@ export const Modal = ({
                       )}
                     </div>
                   )}
-                  <div className='px-6 pb-6 pt-3'>
+                  <div className={bodyPadding}>
                     {title && (
                       <Dialog.Title as='h3' className='text-lg font-medium leading-6 text-gray-900'>
                         {title}

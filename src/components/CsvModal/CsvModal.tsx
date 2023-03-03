@@ -9,7 +9,7 @@ export const CsvModal = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleUploadSuccess = (number: number | undefined, error: string | undefined) => {
+  const handleUploadSuccess = (number?: number, error?: string) => {
     setIsModalOpen(false)
     if (error) {
       dispatch(setAlert({ message: `There was an error processing your request: ${error}`, type: 'error', show: true }))
@@ -21,27 +21,49 @@ export const CsvModal = () => {
   return (
     <>
       <Modal
-        buttonText='Batch Add'
-        title='Batch Add Categories and Entries'
+        buttonText='Import'
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
-        maxWidth={'40vw'}
-        draggable={true}
-        // consider making this the default behavior
+        draggable={false}
         closeWhenClickOutside={true}
-        handle={'create-category-modal-handle'}
-        bounds={'create-category-modal-wrapper'}
-        buttonClassName={'ml-5 mt-2'}
+        handle='csv-import-modal-handle'
+        bounds='csv-import-modal-wrapper'
+        buttonClassName='ml-3'
+        showCloseBtn={false}
+        bodyPadding='p-6'
+        minWidth='30vw'
       >
-        <p className='text-sm text-gray-500'>
-          Upload a CSV file with the following format: <br />
-          <span className='text-gray-400'>
-            Category,Date <br />
-            {'<Category1 Name>'},{'<Category1 Date (yyyy-mm-dd)>'} <br />
-            {'<Category2 Name>'},{'<Category2 Date (yyyy-mm-dd)>'}
-          </span>
-        </p>
-        <CsvUploader onSuccess={handleUploadSuccess} />
+        <div className='flex h-full w-full flex-col'>
+          <h3 className='mb-2 text-lg'>Import from CSV</h3>
+          <p className='text-sm'>
+            Upload a CSV file with the following format: <br />
+            <table className='mb-6 mt-3 w-full table-auto'>
+              <thead>
+                <tr>
+                  <th className='border px-4 py-2'>Category</th>
+                  <th className='border px-4 py-2'>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className='border px-4 py-2'>
+                    <span>Pay Check</span>
+                    <span className='text-slate-400'> (Category Name)</span>
+                  </td>
+                  <td className='border px-4 py-2'>
+                    <span>2021-01-01</span>
+                    <span className='text-slate-400'> (YYYY-MM-DD)</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td className='border px-4 py-2'>Workshop</td>
+                  <td className='border px-4 py-2'>2021-01-02</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <CsvUploader onSuccess={handleUploadSuccess} />
+        </div>
       </Modal>
     </>
   )

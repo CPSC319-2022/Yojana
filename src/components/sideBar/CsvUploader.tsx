@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { FiFile } from 'react-icons/fi'
+import { BsFillFileEarmarkBarGraphFill } from 'react-icons/bs'
 import { useSession } from 'next-auth/react'
 import csv from 'csv-parser'
+import { Button } from '@/components/common'
 
 interface CsvEntry {
   Category: string
@@ -13,11 +14,7 @@ interface EntryMap {
   [key: string]: string[]
 }
 
-export const CsvUploader = ({
-  onSuccess
-}: {
-  onSuccess: (added: number | undefined, error: string | undefined) => void
-}) => {
+export const CsvUploader = ({ onSuccess }: { onSuccess: (added?: number, error?: string) => void }) => {
   const { data: session } = useSession()
   const [csvFileName, setCsvFileName] = useState('')
   const [csvEntries, setCsvEntries] = useState<CsvEntry[]>([])
@@ -85,23 +82,19 @@ export const CsvUploader = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
-    <div className='mx-auto w-full max-w-sm'>
+    <div className='w-full'>
       {csvFileName ? (
-        <div className='m-8 flex h-48 cursor-pointer items-center justify-center rounded-lg p-4'>
+        <div className='flex h-48 w-full cursor-pointer items-center justify-center rounded-lg'>
           <div className='text-center'>
-            <div className='mb-2 flex items-center'>
-              <FiFile className='text-green-500' size={18} />
-              <p className='ml-2 font-medium text-gray-600'>Uploaded: {csvFileName}</p>
+            <div className='mb-6 flex items-center'>
+              <BsFillFileEarmarkBarGraphFill className='text-green-500' size={18} />
+              <p className='ml-2 text-slate-600'>Uploaded: {csvFileName}</p>
             </div>
             <div className='flex space-x-4'>
+              <Button onClick={() => handleSubmit()} text='Publish' />
               <button
-                className='rounded bg-blue-500 py-2 px-4 font-bold text-white hover:bg-blue-700'
-                onClick={() => handleSubmit()}
-              >
-                Publish
-              </button>
-              <button
-                className='rounded bg-gray-500 py-2 px-4 font-bold text-white hover:bg-gray-700'
+                type='button'
+                className='mr-3 inline-flex justify-center rounded-md border border-transparent bg-slate-100 py-2 px-4 text-slate-900 enabled:hover:bg-slate-200 disabled:opacity-75'
                 onClick={() => setCsvFileName('')}
               >
                 Cancel
@@ -112,17 +105,17 @@ export const CsvUploader = ({
       ) : (
         <div
           {...getRootProps()}
-          className='m-8 flex h-48 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-gray-400 p-4 hover:border-blue-500'
+          className='flex h-48 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-slate-300 hover:border-emerald-500'
         >
           <input {...getInputProps()} accept='.csv' />
           <div className='text-center'>
             {isDragActive ? (
-              <p className='font-medium text-gray-600'>Drop the file here ...</p>
+              <p className='text-slate-600'>Drop the file here ...</p>
             ) : (
               <>
-                <p className='font-medium text-gray-600'>Drag and drop a CSV file here</p>
-                <p className='text-gray-400'>or</p>
-                <p className='font-medium text-gray-600'>Click to browse</p>
+                <p className='text-slate-600'>Drag and drop a CSV file here</p>
+                <p className='text-slate-400'>or</p>
+                <p className='text-slate-600'>Click to browse</p>
               </>
             )}
           </div>
