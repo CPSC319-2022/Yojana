@@ -59,9 +59,9 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const [selectedDays, setSelectedDays] = useState<DayOfWeek>(currentRepeatingDays || [])
   const selectedDates = useAppSelector(getSelectedDates)
   const [dirtyDates, setDirtyDates] = useState(false)
-  const getIndividualDates = (dates: EntryWithoutCategoryId[]) => {
+  const getInitialDates = (dates: EntryWithoutCategoryId[], isRepeating: boolean) => {
     return dates
-      .filter((entry) => !entry.isRepeating)
+      .filter((entry) => entry.isRepeating === isRepeating)
       .map((entry) => {
         return {
           // TODO: Fix this hack to get the correct date, ignore timezones
@@ -71,7 +71,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       })
   }
   useEffect(() => {
-    dispatch(setIndividualDates(getIndividualDates(currentState?.entries || [])))
+    dispatch(setIndividualDates(getInitialDates(currentState?.entries || [], false)))
+    dispatch(setRepeatingDates(getInitialDates(currentState?.entries || [], true)))
     //   eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -137,25 +138,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       return
     }
     const newDates = new Set<{ date: string; isRepeating: boolean }>(selectedDates)
-    currentState?.entries.forEach((entry) => {
-      // this ensures that dates that are not repeating dates are not deleted
-      const dateString = dayjs(entry.date).toISOString()
-      if (!entry.isRepeating) {
-        newDates.add({ date: dateString, isRepeating: false })
-      }
-    })
-    // duplicates includes all entries that exist in the current state and the new state
-    // these entries will not be deleted from the database to save IOs
-    const duplicates = currentState?.entries.filter((entry) => {
-      const dateString = dayjs(entry.date).toISOString()
-      const isDuplicate = newDates.has({ date: dateString, isRepeating: false })
-      if (isDuplicate) {
-        // remove duplicate from dates since it already exists in the database
-        newDates.delete({ date: dateString, isRepeating: false })
-      }
-      return isDuplicate
-    })
-
+    console.log(currentState?.entries, ...newDates)
     const response = await fetch('api/cats', {
       method: method,
       headers: {
@@ -171,7 +154,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         startDate: repeating.cron ? repeating.startDate : undefined,
         endDate: repeating.cron ? repeating.endDate : undefined,
         dates: [...newDates],
-        duplicates: duplicates
+        toDelete: currentState?.entries
       })
     })
     if (response.ok) {
@@ -316,7 +299,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           <div className='flex justify-end'>
             <Button
               type='button'
-              text='Add Dates'
+              text={method === 'POST' ? 'Add Dates' : 'Update Dates'}
               className='mr-3'
               onClick={() => {
                 const repeating = getValues('repeating')

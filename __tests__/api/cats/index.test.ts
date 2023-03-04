@@ -150,7 +150,7 @@ describe('/api/cats', () => {
         cron: null,
         startDate: null,
         endDate: null,
-        duplicates: [],
+        toDelete: [],
         dates: []
       }
       const req = createRequest({
@@ -179,7 +179,7 @@ describe('/api/cats', () => {
         cron: '0 0 0 0 0',
         startDate: new Date('2023-01-01'),
         endDate: new Date('2023-01-01'),
-        duplicates: [],
+        toDelete: [],
         dates: []
       }
       const req = createRequest({
@@ -205,7 +205,7 @@ describe('/api/cats', () => {
         isMaster: false,
         creatorId: '1',
         icon: '',
-        duplicated: [],
+        toDelete: [],
         dates: []
       }
       const req = createRequest({
@@ -235,7 +235,7 @@ describe('/api/cats', () => {
         cron: null,
         startDate: null,
         endDate: null,
-        duplicates: [],
+        toDelete: [],
         dates: []
       }
 
@@ -267,7 +267,7 @@ describe('/api/cats', () => {
       cron: null,
       startDate: null,
       endDate: null,
-      duplicates: [{ id: 1, date: new Date('2022-01-01'), isRepeating: false, categoryId: 1 }],
+      toDelete: [{ id: 1, date: new Date('2022-01-01'), isRepeating: false, categoryId: 1 }],
       dates: ['2023-01-01', '2023-01-02']
     }
     const req = createRequest({

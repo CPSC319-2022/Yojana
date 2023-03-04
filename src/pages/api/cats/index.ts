@@ -21,7 +21,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           prisma.entry.deleteMany({
             where: {
               id: {
-                notIn: req.body.duplicates.map((date: Entry) => date.id)
+                in: req.body.toDelete.map((date: Entry) => date.id)
               },
               categoryId: req.body.id
             }
