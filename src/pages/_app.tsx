@@ -1,10 +1,14 @@
-import '@/styles/globals.css'
-import React from 'react'
-import Head from 'next/head'
 import { wrapper } from '@/redux/store'
-import { Provider } from 'react-redux'
-import { SessionProvider } from 'next-auth/react'
+import '@/styles/globals.css'
+import { SessionProvider, useSession } from 'next-auth/react'
 import { AppProps } from 'next/app'
+import Head from 'next/head'
+import React from 'react'
+import { Provider } from 'react-redux'
+
+type AuthProps = {
+  children: React.ReactNode
+}
 
 const App = ({ Component, ...rest }: AppProps) => {
   const { store, props } = wrapper.useWrappedStore(rest)
@@ -17,10 +21,27 @@ const App = ({ Component, ...rest }: AppProps) => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Provider store={store}>
-        <Component {...props.pageProps} />
+        <Auth>
+          <Component {...props.pageProps} />
+        </Auth>
       </Provider>
     </SessionProvider>
   )
+  function Auth({ children }: AuthProps) {
+    const { data: session, status } = useSession()
+    const isUser = !!session?.user
+    React.useEffect(() => {
+      if (status === 'loading') return // Do nothing while loading
+    }, [isUser, status])
+
+    if (isUser) {
+      return <>{children}</>
+    }
+
+    // Session is being fetched, or no user.
+    // If no user, useEffect() will redirect.
+    return <div>Loading...</div>
+  }
 }
 
 export default App

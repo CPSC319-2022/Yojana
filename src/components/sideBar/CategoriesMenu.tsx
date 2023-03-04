@@ -2,14 +2,16 @@ import { Checkbox } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategories, toggleCategory } from '@/redux/reducers/AppDataReducer'
 import { CategoryState } from '@/types/prisma'
+import { useSession } from 'next-auth/react'
 import { useMemo, useState } from 'react'
 import { CategoriesDropdown } from './CategoriesDropdown'
 
 export const CategoriesMenu = () => {
+  const session = useSession()
+  const isAdmin = session && session.data?.user && session.data.user.isAdmin
   const dispatch = useAppDispatch()
   const categories: CategoryState[] = useAppSelector(getCategories)
   const [keepFocus, setKeepFocus] = useState(-1)
-
   const eventList = useMemo(() => {
     return categories.map((calEvent, key) => (
       <div
@@ -28,11 +30,12 @@ export const CategoriesMenu = () => {
           checkboxClassName={`h-5 w-5 ml-5`}
           onChange={() => dispatch(toggleCategory(calEvent.id))}
         />
-        <CategoriesDropdown id={calEvent.id} setKeepFocus={setKeepFocus} keepOpen={keepFocus === calEvent.id} />
+        {isAdmin && (
+          <CategoriesDropdown id={calEvent.id} setKeepFocus={setKeepFocus} keepOpen={keepFocus === calEvent.id} />
+        )}
       </div>
     ))
   }, [categories, dispatch, keepFocus])
-
   return (
     <div className='mt-4'>
       <h3 className='truncate pl-5 text-lg'>Categories</h3>
