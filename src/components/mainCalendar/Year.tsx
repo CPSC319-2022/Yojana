@@ -1,18 +1,21 @@
 import React, { useCallback, useMemo } from 'react'
-import { useAppSelector } from '@/redux/hooks'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getYear } from '@/redux/reducers/AppDataReducer'
 import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import dayjs, { Dayjs } from 'dayjs'
-import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
+import { getIsSelectingDates, getYearSelectedDates, toggleIndividualDate } from '@/redux/reducers/DateSelectorReducer'
 
 export const Year = () => {
   const stateDate = useAppSelector(getDate)
   const categoryMap = useAppSelector(getCategoryMap)
   const entriesInYear = useAppSelector((state) => getYear(state, stateDate))
   const isSelectingDates = useAppSelector(getIsSelectingDates)
+  const yearSelected = useAppSelector((state) => getYearSelectedDates(state, stateDate))
 
   const yearStartDate = dayjs(stateDate).startOf('year')
   const yearNum = yearStartDate.get('year')
+
+  const dispatch = useAppDispatch()
 
   const renderDayCategories = useCallback(
     (day: Dayjs, monthNum: number) => {
@@ -45,19 +48,41 @@ export const Year = () => {
   const renderDay = useCallback(
     (monthStartDate: Dayjs, dateOffset: number, monthNum: number) => {
       const day = monthStartDate.add(dateOffset, 'days')
-      const isSun = day.day() === 0
-      const isSat = day.day() === 6
+      const isWeekend = day.day() === 0 || day.day() === 6
+      const selected = yearSelected?.[monthNum]?.[day.date()]
+
+      let backgroundColor
+      if (!isSelectingDates) {
+        backgroundColor = isWeekend ? 'bg-slate-100' : 'bg-white'
+      } else {
+        if (isWeekend && selected?.isSelected) {
+          backgroundColor = 'bg-emerald-200'
+        } else if (isWeekend) {
+          backgroundColor = 'bg-slate-100'
+        } else if (selected?.isSelected) {
+          backgroundColor = 'bg-emerald-100'
+        } else {
+          backgroundColor = 'bg-white'
+        }
+      }
 
       return (
         <div
-          className={'tile truncate px-0.5' + ' ' + (isSat || isSun ? 'bg-slate-100' : 'bg-white')}
+          className={`tile truncate px-0.5 ${backgroundColor} ${
+            isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''
+          }`}
           key={`${yearNum}-${monthNum}-${day.date()}`}
+          onClick={() => {
+            if (!selected || !selected?.isRepeating) {
+              dispatch(toggleIndividualDate(day))
+            }
+          }}
         >
           {renderDayCategories(day, monthNum)}
         </div>
       )
     },
-    [renderDayCategories, yearNum]
+    [dispatch, isSelectingDates, renderDayCategories, yearNum, yearSelected]
   )
 
   const generateMonth = useCallback(

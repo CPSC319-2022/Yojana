@@ -1,10 +1,14 @@
 import { useCallback } from 'react'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
-import { useAppSelector } from '@/redux/hooks'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
 import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
 import dayjs from 'dayjs'
-import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
+import {
+  getIsSelectingDates,
+  getPrevCurrNextMonthSelectedDates,
+  toggleIndividualDate
+} from '@/redux/reducers/DateSelectorReducer'
 
 interface MonthProps {
   monthOffset: number
@@ -24,12 +28,18 @@ export const Month = (props: MonthProps) => {
 
   const categoryMap = useAppSelector(getCategoryMap)
   const { prevMonth, currMonth, nextMonth } = useAppSelector((state) => getPrevCurrNextMonth(state, targetDate))
+  const { prevMonthSelected, currMonthSelected, nextMonthSelected } = useAppSelector((state) =>
+    getPrevCurrNextMonthSelectedDates(state, targetDate)
+  )
+
+  const dispatch = useAppDispatch()
 
   const renderDay = useCallback(
     (firstDateOfWeek: number, dayNum: number) => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
       const day = monthStartDate.add(offsetFromMonthStart, 'days')
       let dayBlocks: (JSX.Element | undefined)[] = []
+      let selected: { isSelected: boolean; isRepeating: boolean } = { isSelected: false, isRepeating: false }
       if (!isSelectingDates) {
         let entriesOnDay
         if (offsetFromMonthStart < 0) {
@@ -46,10 +56,28 @@ export const Month = (props: MonthProps) => {
             return <CategoryBlock color={category.color} label={category.name} icon={category.icon} key={key} />
           }
         })
+      } else {
+        if (offsetFromMonthStart < 0) {
+          selected = prevMonthSelected?.[day.date()]
+        } else if (offsetFromMonthStart >= daysInMonth) {
+          selected = nextMonthSelected?.[day.date()]
+        } else {
+          selected = currMonthSelected?.[day.date()]
+        }
       }
 
       return (
-        <div className={`tile overflow-y-auto bg-white pr-0.5 pl-0.5`} key={day.date()}>
+        <div
+          className={`tile overflow-y-auto ${selected?.isSelected ? 'bg-emerald-100' : 'bg-white'} px-0.5 ${
+            isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''
+          } `}
+          key={day.date()}
+          onClick={() => {
+            if (!selected || !selected?.isRepeating) {
+              dispatch(toggleIndividualDate(day))
+            }
+          }}
+        >
           <span
             className={`${
               offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''
@@ -61,7 +89,19 @@ export const Month = (props: MonthProps) => {
         </div>
       )
     },
-    [categoryMap, currMonth, daysInMonth, monthStartDate, nextMonth, prevMonth, isSelectingDates]
+    [
+      monthStartDate,
+      isSelectingDates,
+      daysInMonth,
+      prevMonth,
+      nextMonth,
+      currMonth,
+      categoryMap,
+      prevMonthSelected,
+      nextMonthSelected,
+      currMonthSelected,
+      dispatch
+    ]
   )
 
   // monthOffset is the offset of the Sunday from the beginning of the month.

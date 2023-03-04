@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { ColorPicker } from '@/components/ColorPicker'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Modal, Tabs } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Category, Entry } from '@prisma/client'
@@ -9,13 +9,20 @@ import { addCategory, getCategory, updateCategory } from '@/redux/reducers/AppDa
 import { randomColor } from '@/utils/color'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { DayOfWeekPicker } from '@/components/DayOfWeekPicker/DayOfWeekPicker'
+import { DayOfWeek, DayOfWeekPicker } from '@/components/DayOfWeekPicker/DayOfWeekPicker'
 import { Disclosure, Transition } from '@headlessui/react'
 import { BsChevronUp } from 'react-icons/bs'
 import dayjs from 'dayjs'
 import { generateDatesFromCron } from '@/utils/dates'
 import { setAlert } from '@/redux/reducers/AlertReducer'
-import { setIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
+import {
+  getSelectedDates,
+  resetSelectedDates,
+  setIndividualDates,
+  setIsSelectingDates,
+  setRepeatingDates
+} from '@/redux/reducers/DateSelectorReducer'
+import { EntryWithoutCategoryId } from '@/types/prisma'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
@@ -49,6 +56,25 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   if (currentRepeatingDays?.includes('')) {
     currentRepeatingDays.splice(currentRepeatingDays.indexOf(''), 1)
   }
+  const [selectedDays, setSelectedDays] = useState<DayOfWeek>(currentRepeatingDays || [])
+  const selectedDates = useAppSelector(getSelectedDates)
+  const [dirtyDates, setDirtyDates] = useState(false)
+  const getIndividualDates = (dates: EntryWithoutCategoryId[]) => {
+    return dates
+      .filter((entry) => !entry.isRepeating)
+      .map((entry) => {
+        return {
+          // TODO: Fix this hack to get the correct date, ignore timezones
+          date: dayjs(entry.date).add(1, 'day').toISOString(),
+          isRepeating: false
+        }
+      })
+  }
+  useEffect(() => {
+    dispatch(setIndividualDates(getIndividualDates(currentState?.entries || [])))
+    //   eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const defaultValues =
     method == 'POST'
       ? {
@@ -77,6 +103,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     handleSubmit,
     control,
     formState: { isSubmitting, errors, isDirty },
+    getValues,
     reset
   } = useForm<Schema>({
     resolver: zodResolver(schema),
@@ -86,6 +113,21 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     defaultValues: defaultValues
   })
 
+  const resetForm = () => {
+    reset(() => ({
+      name: '',
+      description: '',
+      color: randomColor(),
+      repeating: {
+        cron: undefined,
+        startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
+        endDate: dayjs().endOf('year').format('YYYY-MM-DD')
+      }
+    }))
+    setSelectedDays([])
+    dispatch(resetSelectedDates())
+  }
+
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
 
@@ -94,9 +136,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       console.error('No session found')
       return
     }
-    const newDates = new Set<{ date: string; isRepeating: boolean }>(
-      generateDatesFromCron(repeating.cron, repeating.startDate, repeating.endDate)
-    )
+    const newDates = new Set<{ date: string; isRepeating: boolean }>(selectedDates)
     currentState?.entries.forEach((entry) => {
       // this ensures that dates that are not repeating dates are not deleted
       const dateString = dayjs(entry.date).toISOString()
@@ -157,17 +197,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       }
       dispatch(method === 'POST' ? addCategory(dispatchPayload) : updateCategory(dispatchPayload))
 
-      reset(() => ({
-        name: '',
-        description: '',
-        color: randomColor(),
-        repeating: {
-          cron: undefined,
-          startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
-          endDate: dayjs().endOf('year').format('YYYY-MM-DD')
-        }
-      }))
       setIsModalOpen(false)
+      resetForm()
     } else {
       if (response.status !== 500) {
         const text = await response.text()
@@ -185,7 +216,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         buttonText={method === 'POST' ? 'Create Category' : 'Edit'}
         title={method === 'POST' ? 'Create Category' : 'Edit Category'}
         isOpen={isModalOpen}
-        setIsOpen={setIsModalOpen}
+        setIsOpen={(open) => {
+          setIsModalOpen(open)
+          if (!open) {
+            resetForm()
+          }
+        }}
         maxWidth={'40vw'}
         draggable={true}
         closeWhenClickOutside={false}
@@ -250,7 +286,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                               control={control}
                               name='repeating.cron'
                               rules={{ required: false }}
-                              picked={currentRepeatingDays}
+                              selectedDays={selectedDays}
+                              setSelectedDays={setSelectedDays}
                             />
                           </Tabs.Content>
                           <Tabs.Title>Monthly</Tabs.Title>
@@ -282,13 +319,17 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
               text='Add Dates'
               className='mr-3'
               onClick={() => {
+                const repeating = getValues('repeating')
+                const repeatingDates = generateDatesFromCron(repeating.cron, repeating.startDate, repeating.endDate)
+                dispatch(setRepeatingDates(repeatingDates))
                 setIsMinimized(true)
                 dispatch(setIsSelectingDates(true))
+                setDirtyDates(true)
               }}
             />
             <Button
               type='submit'
-              disabled={isSubmitting || (method === 'PUT' && !isDirty)}
+              disabled={isSubmitting || (method === 'PUT' && !isDirty && !dirtyDates)}
               text={method === 'POST' ? 'Create' : 'Update'}
               onClick={handleSubmit(onSubmit)}
             />

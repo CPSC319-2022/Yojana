@@ -79,7 +79,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 data: req.body.dates.map(({ date, isRepeating = false }: { date: string; isRepeating?: boolean }) => ({
                   date: dayjs(date).toISOString(),
                   isRepeating: isRepeating
-                }))
+                })),
+                skipDuplicates: true
               }
             }
           },
