@@ -12,6 +12,8 @@ interface ModalProps {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
   handle: string
+  isMinimized?: boolean
+  setIsMinimized?: (isMinimized: boolean) => void
   bounds?: string | { left: number; top: number; right: number; bottom: number }
   maxWidth?: string
   maxHeight?: string
@@ -32,6 +34,8 @@ export const Modal = ({
   title,
   isOpen,
   setIsOpen,
+  isMinimized = false,
+  setIsMinimized = () => {},
   maxWidth = '50vw',
   maxHeight = '90vh',
   draggable = false,
@@ -62,7 +66,9 @@ export const Modal = ({
         <Dialog
           as='div'
           id={typeof bounds === 'string' ? bounds : undefined}
-          className='pointer-events-none absolute top-0 z-10 flex h-screen w-screen items-center justify-center p-5'
+          className={`pointer-events-none absolute top-0 z-10 flex h-screen w-screen p-5 ${
+            isMinimized ? 'items-end justify-start' : 'items-center justify-center'
+          }`}
           onClose={() => {
             if (closeWhenClickOutside) {
               setIsOpen(false)
@@ -70,7 +76,7 @@ export const Modal = ({
           }}
         >
           {closeWhenClickOutside && <div className='fixed inset-0 bg-black/30' aria-hidden='true' />}
-          <DraggableDialog draggable={draggable} bounds={bounds} handleId={handle}>
+          <DraggableDialog draggable={draggable} bounds={bounds} handleId={handle} isMinimized={isMinimized}>
             <div className='pointer-events-auto'>
               <Transition.Child
                 as={Fragment}
@@ -86,19 +92,29 @@ export const Modal = ({
                   style={{ maxWidth: maxWidth, maxHeight: maxHeight }}
                 >
                   {showCloseBtn && (
-                    <div id={handle} className='w-full cursor-move bg-slate-100'>
+                    <div id={handle} className={`w-full bg-slate-100 ${!isMinimized ? 'cursor-move' : ''}`}>
                       {closeBtn && (
                         <div className='flex justify-end'>
-                          <button
-                            type='button'
-                            className='px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
-                            onClick={() => {
-                              setIsOpen(false)
-                              closeParent?.()
-                            }}
-                          >
-                            ×
-                          </button>
+                          {isMinimized ? (
+                            <button
+                              type='button'
+                              className='px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
+                              onClick={() => setIsMinimized(false)}
+                            >
+                              +
+                            </button>
+                          ) : (
+                            <button
+                              type='button'
+                              className='px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
+                              onClick={() => {
+                                setIsOpen(false)
+                                closeParent?.()
+                              }}
+                            >
+                              ×
+                            </button>
+                          )}
                         </div>
                       )}
                     </div>
@@ -109,7 +125,7 @@ export const Modal = ({
                         {title}
                       </Dialog.Title>
                     )}
-                    <Dialog.Description as='div'>{body}</Dialog.Description>
+                    {!isMinimized && <Dialog.Description as='div'>{body}</Dialog.Description>}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
@@ -125,14 +141,21 @@ interface DraggableDialogProps {
   children: ReactNode
   draggable: boolean
   handleId: string
+  isMinimized: boolean
   bounds?: string | { left: number; top: number; right: number; bottom: number }
 }
 
-const DraggableDialog = ({ children, draggable, handleId, bounds }: DraggableDialogProps) => {
+const DraggableDialog = ({ children, draggable, handleId, bounds, isMinimized }: DraggableDialogProps) => {
   // Draggable needs a ref to the underlying DOM node: https://stackoverflow.com/a/63603903/8488681
   const nodeRef = useRef(null)
   return draggable ? (
-    <Draggable handle={`#${handleId}`} bounds={typeof bounds === 'string' ? `#${bounds}` : bounds} nodeRef={nodeRef}>
+    <Draggable
+      handle={`#${handleId}`}
+      bounds={typeof bounds === 'string' ? `#${bounds}` : bounds}
+      nodeRef={nodeRef}
+      disabled={isMinimized}
+      position={isMinimized ? { x: 0, y: 0 } : undefined}
+    >
       <div ref={nodeRef}>{children}</div>
     </Draggable>
   ) : (

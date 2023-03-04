@@ -4,6 +4,7 @@ import { useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
 import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
 import dayjs from 'dayjs'
+import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 
 interface MonthProps {
   monthOffset: number
@@ -14,6 +15,7 @@ export const Month = (props: MonthProps) => {
   const monthView = useAppSelector(isMonthInterval)
   const stateDate = useAppSelector(getDate)
   const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
+  const isSelectingDates = useAppSelector(getIsSelectingDates)
 
   const targetDate = referenceDate.add(props.monthOffset, 'month')
   const monthStartDate = targetDate.startOf('month')
@@ -27,20 +29,24 @@ export const Month = (props: MonthProps) => {
     (firstDateOfWeek: number, dayNum: number) => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
       const day = monthStartDate.add(offsetFromMonthStart, 'days')
-      let entriesOnDay
-      if (offsetFromMonthStart < 0) {
-        entriesOnDay = prevMonth?.[day.date()]
-      } else if (offsetFromMonthStart >= daysInMonth) {
-        entriesOnDay = nextMonth?.[day.date()]
-      } else {
-        entriesOnDay = currMonth?.[day.date()]
-      }
-      const dayBlocks = entriesOnDay?.map((entry, key) => {
-        const category = categoryMap[entry.categoryId]
-        if (category.show) {
-          return <CategoryBlock color={category.color} label={category.name} icon={category.icon} key={key} />
+      let dayBlocks: (JSX.Element | undefined)[] = []
+      if (!isSelectingDates) {
+        let entriesOnDay
+        if (offsetFromMonthStart < 0) {
+          entriesOnDay = prevMonth?.[day.date()]
+        } else if (offsetFromMonthStart >= daysInMonth) {
+          entriesOnDay = nextMonth?.[day.date()]
+        } else {
+          entriesOnDay = currMonth?.[day.date()]
         }
-      })
+
+        dayBlocks = entriesOnDay?.map((entry, key) => {
+          const category = categoryMap[entry.categoryId]
+          if (category.show) {
+            return <CategoryBlock color={category.color} label={category.name} icon={category.icon} key={key} />
+          }
+        })
+      }
 
       return (
         <div className={`tile overflow-y-auto bg-white pr-0.5 pl-0.5`} key={day.date()}>
@@ -55,7 +61,7 @@ export const Month = (props: MonthProps) => {
         </div>
       )
     },
-    [categoryMap, currMonth, daysInMonth, monthStartDate, nextMonth, prevMonth]
+    [categoryMap, currMonth, daysInMonth, monthStartDate, nextMonth, prevMonth, isSelectingDates]
   )
 
   // monthOffset is the offset of the Sunday from the beginning of the month.

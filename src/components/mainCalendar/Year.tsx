@@ -3,37 +3,43 @@ import { useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getYear } from '@/redux/reducers/AppDataReducer'
 import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import dayjs, { Dayjs } from 'dayjs'
+import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 
 export const Year = () => {
   const stateDate = useAppSelector(getDate)
   const categoryMap = useAppSelector(getCategoryMap)
   const entriesInYear = useAppSelector((state) => getYear(state, stateDate))
+  const isSelectingDates = useAppSelector(getIsSelectingDates)
 
   const yearStartDate = dayjs(stateDate).startOf('year')
   const yearNum = yearStartDate.get('year')
 
   const renderDayCategories = useCallback(
     (day: Dayjs, monthNum: number) => {
-      const entriesOnDay = entriesInYear?.[monthNum]?.[day.date()] ?? []
-      const icons = entriesOnDay.map((calEvent, key) => {
-        const category = categoryMap[calEvent.categoryId]
-        if (category.show) {
-          return (
-            <span className={'px-0.5 font-bold'} key={`${calEvent.id}-${key}`}>
-              <style jsx>{`
-                * {
-                  color: ${category.color};
-                }
-              `}</style>
-              {category.icon}
-            </span>
-          )
-        }
-      })
+      let icons: (JSX.Element | undefined)[] = []
+
+      if (!isSelectingDates) {
+        const entriesOnDay = entriesInYear?.[monthNum]?.[day.date()] ?? []
+        icons = entriesOnDay.map((calEvent, key) => {
+          const category = categoryMap[calEvent.categoryId]
+          if (category.show) {
+            return (
+              <span className={'px-0.5 font-bold'} key={`${calEvent.id}-${key}`}>
+                <style jsx>{`
+                  * {
+                    color: ${category.color};
+                  }
+                `}</style>
+                {category.icon}
+              </span>
+            )
+          }
+        })
+      }
       icons.push(<span key={`${monthNum}-${day.get('day')}`}>&nbsp;</span>)
       return icons
     },
-    [categoryMap, entriesInYear]
+    [categoryMap, entriesInYear, isSelectingDates]
   )
 
   const renderDay = useCallback(

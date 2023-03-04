@@ -15,6 +15,7 @@ import { BsChevronUp } from 'react-icons/bs'
 import dayjs from 'dayjs'
 import { generateDatesFromCron } from '@/utils/dates'
 import { setAlert } from '@/redux/reducers/AlertReducer'
+import { setIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
@@ -86,6 +87,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   })
 
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isMinimized, setIsMinimized] = useState(false)
 
   const onSubmit: SubmitHandler<Schema> = async ({ name, color, description, repeating }) => {
     if (!session) {
@@ -196,6 +198,11 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         }
         overrideDefaultButtonStyle={method !== 'POST'}
         closeParent={callBack}
+        isMinimized={isMinimized}
+        setIsMinimized={(minimized) => {
+          setIsMinimized(minimized)
+          dispatch(setIsSelectingDates(minimized))
+        }}
       >
         <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
           <div className='mb-4'>
@@ -270,7 +277,15 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             </Disclosure>
           </div>
           <div className='flex justify-end'>
-            <Button type='button' disabled text='Add Dates' className='mr-3' />
+            <Button
+              type='button'
+              text='Add Dates'
+              className='mr-3'
+              onClick={() => {
+                setIsMinimized(true)
+                dispatch(setIsSelectingDates(true))
+              }}
+            />
             <Button
               type='submit'
               disabled={isSubmitting || (method === 'PUT' && !isDirty)}
