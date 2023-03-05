@@ -3,18 +3,23 @@ import { Modal } from '@/components/common'
 import { useAppDispatch } from '@/redux/hooks'
 import { CsvUploader } from '@/components/sideBar'
 import { setAlert } from '@/redux/reducers/AlertReducer'
+import { addEntriesBatch } from '@/redux/reducers/AppDataReducer'
+import { Entry } from '@prisma/client'
 
 export const CsvModal = () => {
   const dispatch = useAppDispatch()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleUploadSuccess = (number?: number, error?: string) => {
+  const handleUploadSuccess = (createdEntries?: Entry[], error?: string) => {
     setIsModalOpen(false)
     if (error) {
       dispatch(setAlert({ message: `There was an error processing your request: ${error}`, type: 'error', show: true }))
     } else {
-      dispatch(setAlert({ message: `successfully addded ${number} entries`, type: 'success', show: true }))
+      dispatch(addEntriesBatch(createdEntries!))
+      dispatch(
+        setAlert({ message: `successfully added ${createdEntries?.length} entries`, type: 'success', show: true })
+      )
     }
   }
 

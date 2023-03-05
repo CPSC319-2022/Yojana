@@ -32,18 +32,31 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
   try {
-    const createdEntries = await prisma.entry.createMany({
+    await prisma.entry.createMany({
       data: entriesToAdd.map(
         ({ date, isRepeating = false, categoryId }: { date: Date; isRepeating?: boolean; categoryId?: number }) => ({
           date: date,
           isRepeating: isRepeating,
-          categoryId: categoryId
+          categoryId: categoryId!
         })
       )
     })
-    let response = { entriesAdded: createdEntries.count }
+    const entriesToFind = entriesToAdd.map((entry) => {
+      return { date: entry.date, categoryId: entry.categoryId }
+    })
+    // get entries from database that were just created using date and categoryId
+    const addedEntries = await prisma.entry.findMany({
+      where: {
+        OR: entriesToFind.map((entry) => ({
+          date: entry.date,
+          categoryId: entry.categoryId
+        }))
+      }
+    })
+    let response = { createdEntries: addedEntries }
     return res.status(201).json(response)
   } catch (error) {
+    console.log(error)
     return res.status(500).send('Internal Server Error')
   }
 }

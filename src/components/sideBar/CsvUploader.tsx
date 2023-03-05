@@ -4,6 +4,7 @@ import { BsFillFileEarmarkBarGraphFill } from 'react-icons/bs'
 import { useSession } from 'next-auth/react'
 import csv from 'csv-parser'
 import { Button } from '@/components/common'
+import { Entry } from '@prisma/client'
 
 interface CsvEntry {
   Category: string
@@ -14,7 +15,7 @@ interface EntryMap {
   [key: string]: string[]
 }
 
-export const CsvUploader = ({ onSuccess }: { onSuccess: (added?: number, error?: string) => void }) => {
+export const CsvUploader = ({ onSuccess }: { onSuccess: (createdEntries?: Entry[], error?: string) => void }) => {
   const { data: session } = useSession()
   const [csvFileName, setCsvFileName] = useState('')
   const [csvEntries, setCsvEntries] = useState<CsvEntry[]>([])
@@ -58,7 +59,7 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (added?: number, error?:
         }
       }
     } catch (error) {
-      onSuccess(0, 'make sure your csv file is formatted correctly')
+      onSuccess([], 'make sure your csv file is formatted correctly')
       return
     }
 
@@ -72,7 +73,7 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (added?: number, error?:
       })
 
       const data = await response.json()
-      onSuccess(data.entriesAdded, undefined)
+      onSuccess(data.createdEntries, undefined)
     } catch (error) {
       console.error(error)
       onSuccess(undefined, "couldn't add entries")
