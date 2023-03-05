@@ -163,7 +163,7 @@ put:
     color: string
     icon: string
     isMaster: boolean
-    duplicates: Entry[]
+    toDelete: Entry[]
   responses:
     200:
       description: update existing category details by its id
