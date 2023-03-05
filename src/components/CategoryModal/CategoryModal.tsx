@@ -1,6 +1,7 @@
 import { useSession } from 'next-auth/react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { ColorPicker } from '@/components/ColorPicker'
+import { IconPicker } from '@/components/IconPicker'
 import React, { useState } from 'react'
 import { Button, Modal, Tabs } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
@@ -20,6 +21,7 @@ const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
   description: z.string().trim().max(191).optional(),
   color: z.string().refine((color) => /^#[0-9A-F]{6}$/i.test(color), { message: 'Invalid color' }),
+  icon: z.string().refine((icon) => /^[\u{0000}-\u{10FFFF}]+$/u.test(icon), { message: 'Invalid icon' }),
   repeating: z
     .object({
       cron: z.string().optional(),
@@ -63,6 +65,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           name: currentState?.name,
           description: currentState?.description,
           color: currentState?.color,
+          icon: currentState?.icon,
           repeating: {
             cron: currentState?.cron || '',
             startDate:
@@ -87,7 +90,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const onSubmit: SubmitHandler<Schema> = async ({ name, color, description, repeating }) => {
+  const onSubmit: SubmitHandler<Schema> = async ({ name, color, description, repeating }, icon) => {
     if (!session) {
       console.error('No session found')
       return
@@ -124,6 +127,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         name: name,
         description: description,
         color: color,
+        icon: icon,
         creatorId: session.user.id,
         cron: repeating.cron ? repeating.cron : undefined,
         startDate: repeating.cron ? repeating.startDate : undefined,
@@ -158,6 +162,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       reset(() => ({
         name: '',
         description: '',
+        icon: '🖂',
         color: randomColor(),
         repeating: {
           cron: undefined,
@@ -216,6 +221,10 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           <div className='mb-6'>
             <label className='mb-2 block'>Color</label>
             <ColorPicker control={control} name='color' rules={{ required: true }} />
+          </div>
+          <div className='mb-8'>
+            <label className='mb-2 block'>Icon</label>
+            <IconPicker control={control} name='icon' rules={{ required: true }} />
           </div>
           <div className='mb-4'>
             <Disclosure>
