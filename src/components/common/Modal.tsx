@@ -1,12 +1,11 @@
 // Adapted from: https://headlessui.com/react/dialog
 
+import { Button } from '@/components/common'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { getIsSelectingDates, resetSelectedDates } from '@/redux/reducers/DateSelectorReducer'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, ReactNode, useRef } from 'react'
-import { Button } from '@/components/common'
 import Draggable from 'react-draggable'
-import { useAppSelector } from '@/redux/hooks'
-import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
-
 interface ModalProps {
   buttonText: string
   title?: string
@@ -53,12 +52,16 @@ export const Modal = ({
 }: ModalProps) => {
   const directionClass = direction ? `absolute ${direction}-0 my-10` : ''
   const disable = useAppSelector(getIsSelectingDates)
+  const dispatch = useAppDispatch()
   return (
     <>
       <div>
         <Button
           text={buttonText}
-          onClick={() => setIsOpen(true)}
+          onClick={() => {
+            setIsOpen(true)
+            buttonText === 'Create Category' && dispatch(resetSelectedDates())
+          }}
           className={buttonClassName}
           overrideDefaultStyle={overrideDefaultButtonStyle}
           disabled={disable}

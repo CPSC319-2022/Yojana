@@ -50,7 +50,6 @@ type Schema = z.infer<typeof schema>
 export const CategoryModal = ({ method, id, callBack }: { method: string; id: number; callBack: () => void }) => {
   const { data: session } = useSession()
   const dispatch = useAppDispatch()
-  // dispatch(resetSelectedDates())
   const currentState = useAppSelector((state) => getCategory(state, id))
   const currentRepeatingDays = id != -1 ? currentState?.cron?.split(' ').at(-1)?.split(',') : []
   // remove empty string from array
