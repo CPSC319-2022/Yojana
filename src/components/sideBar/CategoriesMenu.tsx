@@ -1,4 +1,4 @@
-import { Checkbox, IconName } from '@/components/common'
+import { Checkbox } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategories, toggleCategory } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
@@ -24,10 +24,9 @@ export const CategoriesMenu = ({ session }: Props) => {
         ${!disable && 'hover:bg-slate-100'} 
         ${keepFocus === calEvent.id ? 'bg-slate-100' : ''}`}
         key={`category-item-${key}`}
-        id={`category-item-${key}`}
       >
         <Checkbox
-          icon={calEvent.icon as IconName}
+          icon={calEvent.icon}
           label={calEvent.name}
           id={`checkbox-${key}`}
           key={`checkbox-${key}`}
@@ -41,7 +40,7 @@ export const CategoriesMenu = ({ session }: Props) => {
         )}
       </div>
     ))
-  }, [categories, disable, dispatch, keepFocus, session.user.isAdmin])
+  }, [categories, dispatch, keepFocus])
   return (
     <div className='mt-4'>
       <h3 className='truncate pl-5 text-lg'>Categories</h3>
