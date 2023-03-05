@@ -41,10 +41,16 @@ export const Year = () => {
       const day = monthStartDate.add(dateOffset, 'days')
       const isSun = day.day() === 0
       const isSat = day.day() === 6
+      const isWeekend = isSun || isSat
+
+      const currentDate = new Date(Date.UTC(dayjs().year(), dayjs().month(), dayjs().date()))
+      const isCurrentDate = day.toISOString().slice(0, 10) === currentDate.toISOString().slice(0, 10)
 
       return (
         <div
-          className={'tile truncate px-0.5' + ' ' + (isSat || isSun ? 'bg-slate-100' : 'bg-white')}
+          className={`tile truncate px-0.5 ${
+            isCurrentDate ? 'bg-emerald-300' : isWeekend ? 'bg-slate-100' : 'bg-white'
+          }`}
           key={`${yearNum}-${monthNum}-${day.date()}`}
         >
           {renderDayCategories(day, monthNum)}

@@ -44,7 +44,7 @@ export const Month = (props: MonthProps) => {
 
       const currentDate = new Date(Date.UTC(dayjs().year(), dayjs().month(), dayjs().date()))
       const isCurrentDate = day.toISOString().slice(0, 10) === currentDate.toISOString().slice(0, 10)
-      const todayCircle = isCurrentDate ? 'rounded-full bg-blue-500' : ''
+      const todayCircle = isCurrentDate ? 'rounded-full bg-emerald-400' : ''
 
       return (
         <div className={`tile overflow-y-auto bg-white pr-0.5 pl-0.5`} key={day.date()}>
