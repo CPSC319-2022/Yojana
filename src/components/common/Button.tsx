@@ -1,9 +1,9 @@
 import React, { forwardRef } from 'react'
-import { IconType } from 'react-icons'
+import { Icon, IconName } from '@/components/common/Icon'
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   text?: string
-  Icon?: IconType
+  iconName?: IconName
   iconClassName?: string
   overrideDefaultStyle?: boolean
 }
@@ -12,7 +12,7 @@ export const Button = forwardRef(
   (
     {
       text = '',
-      Icon,
+      iconName,
       onClick,
       type,
       disabled = false,
@@ -35,7 +35,7 @@ export const Button = forwardRef(
         ref={ref}
       >
         {text}
-        {Icon && <Icon className={iconClassName} />}
+        {iconName && <Icon iconName={iconName} className={iconClassName} />}
       </button>
     )
   }
