@@ -24,6 +24,7 @@ const customJestConfig = {
     '@/prisma/(.*)$': '<rootDir>/src/lib/prisma/$1',
     '@/types/(.*)$': '<rootDir>/src/lib/types/$1',
     '@/tests/(.*)$': '<rootDir>/__tests__/$1',
+    '@/public/(.*)$': '<rootDir>/public/$1',
     '@/(.*)$': '<rootDir>/src/$1'
   },
   testEnvironment: 'node',
