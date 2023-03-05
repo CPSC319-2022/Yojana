@@ -1,5 +1,6 @@
-import { Button } from '@/components/common'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import React, { useEffect, useState } from 'react'
+import { AccountViewDropdown } from './AccountViewDropdown'
+import { CalViewDropdown } from './CalViewDropdown'
 import {
   decrementDate,
   getDate,
@@ -8,11 +9,10 @@ import {
   isYearInterval,
   jumpToToday
 } from '@/redux/reducers/MainCalendarReducer'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { Button } from '@/components/common'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import { AccountDropdown } from './AccountDropdown'
-import { CalViewDropdown } from './CalViewDropdown'
-import { setCookieMaxAge } from '@/utils/cookies'
+import { setCookie } from 'cookies-next'
 
 interface NavBarProps {
   sidebarOpen: boolean
@@ -54,7 +54,7 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
           text='&#9776;'
           onClick={() => {
             setSidebarOpen(!sidebarOpen)
-            setCookieMaxAge(`yojana.sidebar-open`, !sidebarOpen)
+            setCookie(`yojana.sidebar-open`, !sidebarOpen)
           }}
           className='mr-5 px-3 pt-0.5 pb-2 text-2xl'
         />
@@ -67,7 +67,7 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
         <h4 className='flex-none text-center text-lg'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
       </div>
       <CalViewDropdown />
-      <AccountDropdown />
+      <AccountViewDropdown />
     </div>
   )
 }

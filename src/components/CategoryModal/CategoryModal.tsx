@@ -1,5 +1,5 @@
 import { ColorPicker } from '@/components/ColorPicker'
-import { Button, Modal, Tabs } from '@/components/common'
+import { Button, Icon, Modal, Tabs } from '@/components/common'
 import { DayOfWeek, DayOfWeekPicker } from '@/components/DayOfWeekPicker/DayOfWeekPicker'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setAlert } from '@/redux/reducers/AlertReducer'
@@ -21,7 +21,6 @@ import dayjs from 'dayjs'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { BsChevronUp } from 'react-icons/bs'
 import * as z from 'zod'
 
 const schema = z.object({
@@ -250,7 +249,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                 <>
                   <Disclosure.Button className='flex w-full justify-between rounded-lg py-2 text-left text-slate-800 focus:outline-none'>
                     <span>Repeating</span>
-                    <BsChevronUp className={`${open ? 'rotate-180 transform' : ''} mt-0.5 h-5 w-5`} />
+                    <Icon iconName='CaretDownFill' className={`${open ? 'rotate-180 transform' : ''} mt-0.5 h-5 w-5`} />
                   </Disclosure.Button>
                   <Transition
                     enter='transition duration-100 ease-out'
