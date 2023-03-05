@@ -1,20 +1,9 @@
-import { useSession } from 'next-auth/react'
-import { SubmitHandler, useForm } from 'react-hook-form'
 import { ColorPicker } from '@/components/ColorPicker'
-import React, { useEffect, useState } from 'react'
 import { Button, Modal, Tabs } from '@/components/common'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { Category, Entry } from '@prisma/client'
-import { addCategory, getCategory, updateCategory } from '@/redux/reducers/AppDataReducer'
-import { randomColor } from '@/utils/color'
-import * as z from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { DayOfWeek, DayOfWeekPicker } from '@/components/DayOfWeekPicker/DayOfWeekPicker'
-import { Disclosure, Transition } from '@headlessui/react'
-import { BsChevronUp } from 'react-icons/bs'
-import dayjs from 'dayjs'
-import { generateDatesFromCron } from '@/utils/dates'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setAlert } from '@/redux/reducers/AlertReducer'
+import { addCategory, getCategory, updateCategory } from '@/redux/reducers/AppDataReducer'
 import {
   getSelectedDates,
   resetSelectedDates,
@@ -23,6 +12,17 @@ import {
   setRepeatingDates
 } from '@/redux/reducers/DateSelectorReducer'
 import { EntryWithoutCategoryId } from '@/types/prisma'
+import { randomColor } from '@/utils/color'
+import { generateDatesFromCron } from '@/utils/dates'
+import { Disclosure, Transition } from '@headlessui/react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Category, Entry } from '@prisma/client'
+import dayjs from 'dayjs'
+import { useSession } from 'next-auth/react'
+import { useEffect, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { BsChevronUp } from 'react-icons/bs'
+import * as z from 'zod'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
@@ -50,6 +50,7 @@ type Schema = z.infer<typeof schema>
 export const CategoryModal = ({ method, id, callBack }: { method: string; id: number; callBack: () => void }) => {
   const { data: session } = useSession()
   const dispatch = useAppDispatch()
+  // dispatch(resetSelectedDates())
   const currentState = useAppSelector((state) => getCategory(state, id))
   const currentRepeatingDays = id != -1 ? currentState?.cron?.split(' ').at(-1)?.split(',') : []
   // remove empty string from array

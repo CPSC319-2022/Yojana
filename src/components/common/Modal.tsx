@@ -4,6 +4,8 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, ReactNode, useRef } from 'react'
 import { Button } from '@/components/common'
 import Draggable from 'react-draggable'
+import { useAppSelector } from '@/redux/hooks'
+import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 
 interface ModalProps {
   buttonText: string
@@ -50,7 +52,7 @@ export const Modal = ({
   closeParent
 }: ModalProps) => {
   const directionClass = direction ? `absolute ${direction}-0 my-10` : ''
-
+  const disable = useAppSelector(getIsSelectingDates)
   return (
     <>
       <div>
@@ -59,6 +61,7 @@ export const Modal = ({
           onClick={() => setIsOpen(true)}
           className={buttonClassName}
           overrideDefaultStyle={overrideDefaultButtonStyle}
+          disabled={disable}
         />
       </div>
 

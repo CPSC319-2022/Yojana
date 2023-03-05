@@ -4,18 +4,19 @@ import { getCategories, toggleCategory } from '@/redux/reducers/AppDataReducer'
 import { CategoryState } from '@/types/prisma'
 import { useMemo, useState } from 'react'
 import { CategoriesDropdown } from './CategoriesDropdown'
+import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 
 export const CategoriesMenu = () => {
   const dispatch = useAppDispatch()
   const categories: CategoryState[] = useAppSelector(getCategories)
   const [keepFocus, setKeepFocus] = useState(-1)
+  const disable = useAppSelector(getIsSelectingDates)
 
   const eventList = useMemo(() => {
     return categories.map((calEvent, key) => (
       <div
-        className={`group mt-1 flex flex-row justify-between rounded-r-md  py-1 pr-2 hover:bg-slate-100 ${
-          keepFocus === calEvent.id ? 'bg-slate-100' : ''
-        }`}
+        className={`group mt-1 flex flex-row justify-between rounded-r-md  py-1 pr-2 
+        ${!disable && 'hover:bg-slate-100'} ${keepFocus === calEvent.id ? 'bg-slate-100' : ''}`}
         key={`category-item-${key}`}
       >
         <Checkbox
