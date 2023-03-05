@@ -215,7 +215,7 @@ describe('/api/cats', () => {
       })
       const res = createResponse()
 
-      prismaMock.category.update.mockRejectedValue(new Error('category does not exist'))
+      prismaMock.category.findFirst.mockResolvedValue(null)
 
       await cats(req, res)
 
