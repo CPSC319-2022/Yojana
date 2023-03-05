@@ -7,12 +7,20 @@ interface DayOfWeekPickerProps {
   rules?: any
   selectedDays?: DayOfWeek
   setSelectedDays: React.Dispatch<React.SetStateAction<DayOfWeek>>
+  updateState?: (cron: string) => void
 }
 
 const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 export type DayOfWeek = typeof daysOfWeek
 
-export const DayOfWeekPicker = ({ control, name, rules, selectedDays = [], setSelectedDays }: DayOfWeekPickerProps) => {
+export const DayOfWeekPicker = ({
+  control,
+  name,
+  rules,
+  selectedDays = [],
+  setSelectedDays,
+  updateState = () => {}
+}: DayOfWeekPickerProps) => {
   const {
     field: { onChange }
   } = useController({
@@ -34,8 +42,10 @@ export const DayOfWeekPicker = ({ control, name, rules, selectedDays = [], setSe
 
     if (days.length !== 0) {
       onChange(cronexpr + days.join(','))
+      updateState(cronexpr + days.join(','))
     } else {
       onChange('')
+      updateState('')
     }
   }
 

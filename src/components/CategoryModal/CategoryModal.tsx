@@ -56,7 +56,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   if (currentRepeatingDays?.includes('')) {
     currentRepeatingDays.splice(currentRepeatingDays.indexOf(''), 1)
   }
-  const [selectedDays, setSelectedDays] = useState<DayOfWeek>(currentRepeatingDays || [])
+  const [selectedDaysOfTheWeek, setSelectedDaysOfTheWeek] = useState<DayOfWeek>(currentRepeatingDays || [])
   const selectedDates = useAppSelector(getSelectedDates)
   const [dirtyDates, setDirtyDates] = useState(false)
   const getInitialDates = (dates: EntryWithoutCategoryId[], isRepeating: boolean) => {
@@ -66,7 +66,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         return {
           // TODO: Fix this hack to get the correct date, ignore timezones
           date: dayjs(entry.date).add(1, 'day').toISOString(),
-          isRepeating: false
+          isRepeating: isRepeating
         }
       })
   }
@@ -125,7 +125,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         endDate: dayjs().endOf('year').format('YYYY-MM-DD')
       }
     }))
-    setSelectedDays([])
+    setSelectedDaysOfTheWeek([])
     dispatch(resetSelectedDates())
   }
 
@@ -138,7 +138,6 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       return
     }
     const newDates = new Set<{ date: string; isRepeating: boolean }>(selectedDates)
-    console.log(currentState?.entries, ...newDates)
     const response = await fetch('api/cats', {
       method: method,
       headers: {
@@ -269,8 +268,13 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                               control={control}
                               name='repeating.cron'
                               rules={{ required: false }}
-                              selectedDays={selectedDays}
-                              setSelectedDays={setSelectedDays}
+                              selectedDays={selectedDaysOfTheWeek}
+                              setSelectedDays={setSelectedDaysOfTheWeek}
+                              updateState={(cron) => {
+                                const startDate = getValues('repeating.startDate')
+                                const endDate = getValues('repeating.endDate')
+                                dispatch(setRepeatingDates(generateDatesFromCron(cron, startDate, endDate)))
+                              }}
                             />
                           </Tabs.Content>
                           <Tabs.Title>Monthly</Tabs.Title>
@@ -302,9 +306,6 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
               text={method === 'POST' ? 'Add Dates' : 'Update Dates'}
               className='mr-3'
               onClick={() => {
-                const repeating = getValues('repeating')
-                const repeatingDates = generateDatesFromCron(repeating.cron, repeating.startDate, repeating.endDate)
-                dispatch(setRepeatingDates(repeatingDates))
                 setIsMinimized(true)
                 dispatch(setIsSelectingDates(true))
                 setDirtyDates(true)
