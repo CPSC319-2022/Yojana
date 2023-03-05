@@ -3,6 +3,7 @@ import { createRequest, createResponse } from 'node-mocks-http'
 import dates from '@/pages/api/dates/[id]'
 import { prismaMock } from '@/prisma/singleton'
 import * as jwt from 'next-auth/jwt'
+import { Entry } from '@prisma/client'
 
 describe('/api/dates/[id]', () => {
   describe('DELETE', () => {
@@ -28,7 +29,8 @@ describe('/api/dates/[id]', () => {
       // mock getToken from next-auth/jwt
       jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
 
-      const mock_entry = {
+      const mock_entry: Entry = {
+        isRepeating: false,
         id: idToDelete,
         date: new Date(),
         categoryId: 10
