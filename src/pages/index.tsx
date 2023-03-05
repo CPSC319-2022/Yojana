@@ -10,7 +10,9 @@ import { wrapper } from '@/redux/store'
 import { getCookies, setCookie } from 'cookies-next'
 import dayjs from 'dayjs'
 import { GetServerSideProps } from 'next'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { getIsSelectingDates, resetSelectedDates, setIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 
 interface CalendarProps {
   sidebarOpenInitial: boolean
@@ -18,6 +20,16 @@ interface CalendarProps {
 
 const Calendar = ({ sidebarOpenInitial }: CalendarProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(sidebarOpenInitial)
+  const dispatch = useAppDispatch()
+  const isSelectingDates = useAppSelector((state) => getIsSelectingDates(state))
+
+  // reset selected dates when sidebar is closed while in date selection mode
+  useEffect(() => {
+    if (!sidebarOpen && isSelectingDates) {
+      dispatch(resetSelectedDates())
+      dispatch(setIsSelectingDates(false))
+    }
+  }, [dispatch, isSelectingDates, sidebarOpen])
 
   return (
     <main>
