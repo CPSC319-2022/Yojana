@@ -21,7 +21,6 @@ interface State {
   dateSelector: {
     isSelectingDates: boolean
     individualDates: DateSelectionMap
-    individualDatesAtStart: DateSelectionMap
     repeatingDates: DateSelectionMap
   }
 }
@@ -29,7 +28,6 @@ interface State {
 const initialState = {
   isSelectingDates: false,
   individualDates: {} as DateSelectionMap,
-  individualDatesAtStart: {} as DateSelectionMap,
   repeatingDates: {} as DateSelectionMap
 }
 
@@ -39,10 +37,6 @@ const dateSelectorSlice = createSlice({
   reducers: {
     setIsSelectingDates: (state, action: PayloadAction<boolean>) => {
       state.isSelectingDates = action.payload
-      // If we are starting to select dates, save the current state of individual dates, so we can revert back to it if we cancel
-      if (action.payload) {
-        state.individualDatesAtStart = cloneDeep(state.individualDates)
-      }
     },
     setRepeatingDates: (state, action: PayloadAction<{ date: string | Date; isRepeating: boolean }[]>) => {
       state.repeatingDates = {}
@@ -71,13 +65,8 @@ const dateSelectorSlice = createSlice({
         state.individualDates[year][month][day].isSelected = !state.individualDates[year][month][day].isSelected
       }
     },
-    cancelDateSelection: (state) => {
-      // Revert individual dates back to the state they were in when we started selecting dates
-      state.individualDates = state.individualDatesAtStart
-    },
     resetSelectedDates: (state) => {
       state.individualDates = {}
-      state.individualDatesAtStart = {}
       state.repeatingDates = {}
     }
   },
@@ -112,14 +101,8 @@ const _addNewDates = (selectedDates: DateSelectionMap, dates: { date: string | D
   })
 }
 
-export const {
-  setIsSelectingDates,
-  setRepeatingDates,
-  toggleIndividualDate,
-  resetSelectedDates,
-  setIndividualDates,
-  cancelDateSelection
-} = dateSelectorSlice.actions
+export const { setIsSelectingDates, setRepeatingDates, toggleIndividualDate, resetSelectedDates, setIndividualDates } =
+  dateSelectorSlice.actions
 
 export const getSelectedDates = (state: State) => {
   const individualDates = state.dateSelector.individualDates

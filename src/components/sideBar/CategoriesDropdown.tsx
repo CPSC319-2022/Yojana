@@ -5,6 +5,7 @@ import { useAppSelector } from '@/redux/hooks'
 import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import { Popover, Transition } from '@headlessui/react'
 import { Dispatch, Fragment } from 'react'
+import { BsThreeDotsVertical } from 'react-icons/bs'
 import { DropdownProps } from '../common/Dropdown'
 
 export const CategoriesDropdown = (props: {
@@ -17,7 +18,7 @@ export const CategoriesDropdown = (props: {
 
   return (
     <HoverDropdown
-      iconName='ThreeDotsVertical'
+      Icon={BsThreeDotsVertical}
       id={id}
       menuItems={[]}
       overrideDefaultButtonStyle={true}
@@ -33,7 +34,7 @@ export const CategoriesDropdown = (props: {
 const HoverDropdown = ({
   text,
   id,
-  iconName,
+  Icon,
   containerClassName = '',
   buttonClassName,
   overrideDefaultButtonStyle,
@@ -55,10 +56,9 @@ const HoverDropdown = ({
             as={Button}
             disabled={disable}
             text={text}
-            iconName={iconName}
+            Icon={Icon}
             onClick={handleButtonClick}
             className={buttonClassName}
-            id={`category-dropdown-${id}`}
             overrideDefaultStyle={overrideDefaultButtonStyle}
           />
           <Transition

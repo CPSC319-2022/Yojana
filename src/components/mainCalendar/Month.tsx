@@ -9,7 +9,6 @@ import {
   getPrevCurrNextMonthSelectedDates,
   toggleIndividualDate
 } from '@/redux/reducers/DateSelectorReducer'
-import { IconName } from '@/components/common'
 
 interface MonthProps {
   monthOffset: number
@@ -54,9 +53,7 @@ export const Month = (props: MonthProps) => {
         dayBlocks = entriesOnDay?.map((entry, key) => {
           const category = categoryMap[entry.categoryId]
           if (category.show) {
-            return (
-              <CategoryBlock color={category.color} label={category.name} icon={category.icon as IconName} key={key} />
-            )
+            return <CategoryBlock color={category.color} label={category.name} icon={category.icon} key={key} />
           }
         })
       } else {
@@ -69,18 +66,11 @@ export const Month = (props: MonthProps) => {
         }
       }
 
-      const isToday = dayjs().isSame(day, 'day')
-      const todayCircle = isToday && !isSelectingDates ? 'rounded-full bg-emerald-200' : ''
-
-      const notCurrentMonth = offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth
-
       return (
         <div
-          className={`tile overflow-y-auto ${
-            selected?.isSelected ? (selected?.isRepeating ? 'bg-slate-100' : 'bg-emerald-100') : 'bg-white'
-          } ${
-            isSelectingDates && !selected?.isSelected ? 'hover:ring-2 hover:ring-inset hover:ring-emerald-200' : ''
-          } px-0.5 ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} `}
+          className={`tile overflow-y-auto ${selected?.isSelected ? 'bg-emerald-100' : 'bg-white'} px-0.5 ${
+            isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''
+          } `}
           key={day.date()}
           onClick={() => {
             if (!selected || !selected?.isRepeating) {
@@ -88,13 +78,13 @@ export const Month = (props: MonthProps) => {
             }
           }}
         >
-          <div className={`flex items-center justify-center`}>
-            <div className={`flex h-7 w-7 items-center justify-center ${todayCircle} mt-1`}>
-              <span className={`${notCurrentMonth ? 'text-slate-400' : ''} block text-center text-sm`}>
-                {day.date()}
-              </span>
-            </div>
-          </div>
+          <span
+            className={`${
+              offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''
+            } block text-center`}
+          >
+            {day.date()}
+          </span>
           {dayBlocks}
         </div>
       )
@@ -122,7 +112,7 @@ export const Month = (props: MonthProps) => {
       })
       return (
         <div
-          className={(numWeeks === 6 ? 'h-1/6' : 'h-1/5') + ' ' + 'grid h-1/5 grid-cols-7 gap-px pt-0.5'}
+          className={(numWeeks === 5 ? 'h-1/5' : 'h-1/6') + ' ' + 'grid h-1/5 grid-cols-7 gap-0.5 pt-0.5'}
           key={firstDateOfWeek}
         >
           {generatedDays}
@@ -134,12 +124,11 @@ export const Month = (props: MonthProps) => {
 
   const generateWeeks = useCallback(() => {
     const weeks = []
-    const target = numWeeks <= 4 ? 30 : daysInMonth
-    for (let i = 0 - monthStartDate.day(); i < target; i += 7) {
+    for (let i = 0 - monthStartDate.day(); i < daysInMonth; i += 7) {
       weeks.push(renderWeek(i))
     }
     return <div className={`${monthView ? 'h-[95%]' : 'h-[90%]'}`}>{weeks}</div>
-  }, [daysInMonth, monthStartDate, monthView, numWeeks, renderWeek])
+  }, [daysInMonth, monthStartDate, monthView, renderWeek])
 
   const generateDayNames = useCallback(() => {
     return (

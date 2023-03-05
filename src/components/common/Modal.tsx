@@ -6,7 +6,6 @@ import { getIsSelectingDates, resetSelectedDates } from '@/redux/reducers/DateSe
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, ReactNode, useRef } from 'react'
 import Draggable from 'react-draggable'
-import { getChildByType, removeChildrenByType } from 'react-nanny'
 
 interface ModalProps {
   buttonText: string
@@ -20,29 +19,28 @@ interface ModalProps {
   bounds?: string | { left: number; top: number; right: number; bottom: number }
   maxWidth?: string
   maxHeight?: string
-  minWidth?: string
   draggable?: boolean
   direction?: 'top' | 'bottom'
   closeBtn?: boolean
   bodyPadding?: string
   closeWhenClickOutside?: boolean
   buttonClassName?: string
-  buttonId?: string
   showCloseBtn?: boolean
   overrideDefaultButtonStyle?: boolean
   closeParent?: () => void
+  minimizedButtonText?: string
 }
 
 export const Modal = ({
-  children,
+  children: body,
   buttonText,
   title,
   isOpen,
   setIsOpen,
   isMinimized = false,
+  setIsMinimized = () => {},
   maxWidth = '50vw',
   maxHeight = '90vh',
-  minWidth,
   draggable = false,
   direction,
   closeBtn = true,
@@ -50,27 +48,22 @@ export const Modal = ({
   handle,
   bounds,
   buttonClassName,
-  buttonId,
   showCloseBtn = true,
   overrideDefaultButtonStyle = false,
   closeParent,
-  bodyPadding = 'px-6 pb-6 pt-3'
+  minimizedButtonText
 }: ModalProps) => {
   const directionClass = direction ? `absolute ${direction}-0 my-10` : ''
   const disable = useAppSelector(getIsSelectingDates)
   const dispatch = useAppDispatch()
-  const minimized = getChildByType(children, Minimized)
-  const body = removeChildrenByType(children, Minimized)
-
   return (
     <>
       <div>
         <Button
           text={buttonText}
-          id={buttonId}
           onClick={() => {
             setIsOpen(true)
-            title === 'Create Category' && dispatch(resetSelectedDates())
+            buttonText === 'Create Category' && dispatch(resetSelectedDates())
           }}
           className={buttonClassName}
           overrideDefaultStyle={overrideDefaultButtonStyle}
@@ -106,29 +99,39 @@ export const Modal = ({
                 {!isMinimized ? (
                   <Dialog.Panel
                     className={`${directionClass} w-full max-w-md transform overflow-y-auto rounded-md bg-white text-left align-middle shadow-modal transition-all`}
-                    style={{ maxWidth: maxWidth, maxHeight: maxHeight, minWidth: minWidth }}
+                    style={{ maxWidth: maxWidth, maxHeight: maxHeight }}
                   >
                     {showCloseBtn && (
                       <div id={handle} className={`w-full bg-slate-100 ${!isMinimized ? 'cursor-move' : ''}`}>
                         {closeBtn && (
                           <div className='flex justify-end'>
-                            <button
-                              type='button'
-                              className='px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
-                              onClick={() => {
-                                setIsOpen(false)
-                                closeParent?.()
-                              }}
-                            >
-                              ×
-                            </button>
+                            {isMinimized ? (
+                              <button
+                                type='button'
+                                className='rotate-45 px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
+                                onClick={() => setIsMinimized(false)}
+                              >
+                                ×
+                              </button>
+                            ) : (
+                              <button
+                                type='button'
+                                className='px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
+                                onClick={() => {
+                                  setIsOpen(false)
+                                  closeParent?.()
+                                }}
+                              >
+                                ×
+                              </button>
+                            )}
                           </div>
                         )}
                       </div>
                     )}
-                    <div className={bodyPadding}>
+                    <div className='px-6 pb-6 pt-3'>
                       {title && (
-                        <Dialog.Title as='h3' className='text-lg font-medium leading-6 text-slate-900'>
+                        <Dialog.Title as='h3' className='text-lg font-medium leading-6 text-gray-900'>
                           {title}
                         </Dialog.Title>
                       )}
@@ -136,7 +139,7 @@ export const Modal = ({
                     </div>
                   </Dialog.Panel>
                 ) : (
-                  <>{minimized}</>
+                  <Button text={minimizedButtonText} onClick={() => setIsMinimized(false)} />
                 )}
               </Transition.Child>
             </div>
@@ -146,12 +149,6 @@ export const Modal = ({
     </>
   )
 }
-
-const Minimized = ({ children }: { children: ReactNode }) => {
-  return <>{children}</>
-}
-
-Modal.Minimized = Minimized
 
 interface DraggableDialogProps {
   children: ReactNode

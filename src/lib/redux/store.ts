@@ -4,14 +4,12 @@ import { appDataReducer } from './reducers/AppDataReducer'
 import { alertReducer } from '@/redux/reducers/AlertReducer'
 import { createWrapper } from 'next-redux-wrapper'
 import { DateSelectorReducer } from '@/redux/reducers/DateSelectorReducer'
-import { preferencesReducer } from '@/redux/reducers/PreferencesReducer'
 
 const rootReducer = combineReducers({
   mainCalendar: mainCalendarReducer,
   appData: appDataReducer,
   alert: alertReducer,
-  dateSelector: DateSelectorReducer,
-  preferences: preferencesReducer
+  dateSelector: DateSelectorReducer
 })
 
 const makeStore = () =>
