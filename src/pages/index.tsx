@@ -44,7 +44,7 @@ const Calendar = ({ sidebarOpenInitial, session }: CalendarProps) => {
         <div className='border-box z-0 flex h-[90vh] w-full flex-row'>
           <div
             className={`${
-              sidebarOpen ? 'w-1/5 translate-x-0 border-r-2 border-emerald-100' : 'w-0 -translate-x-full'
+              sidebarOpen ? 'w-1/5 translate-x-0 border-r-2 border-emerald-100 pr-2' : 'w-0 -translate-x-full'
             } overflow-visible transition-all`}
           >
             {sidebarOpen && <SideBar session={session} />}
