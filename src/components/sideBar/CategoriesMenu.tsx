@@ -3,10 +3,15 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategories, toggleCategory } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import { CategoryState } from '@/types/prisma'
+import { Session } from 'next-auth'
 import { useMemo, useState } from 'react'
 import { CategoriesDropdown } from './CategoriesDropdown'
 
-export const CategoriesMenu = () => {
+interface Props {
+  session: Session
+}
+
+export const CategoriesMenu = ({ session }: Props) => {
   const dispatch = useAppDispatch()
   const categories: CategoryState[] = useAppSelector(getCategories)
   const [keepFocus, setKeepFocus] = useState(-1)
@@ -30,11 +35,12 @@ export const CategoriesMenu = () => {
           checkboxClassName={`h-5 w-5 ml-5`}
           onChange={() => dispatch(toggleCategory(calEvent.id))}
         />
-        <CategoriesDropdown id={calEvent.id} setKeepFocus={setKeepFocus} keepOpen={keepFocus === calEvent.id} />
+        {session.user.isAdmin && (
+          <CategoriesDropdown id={calEvent.id} setKeepFocus={setKeepFocus} keepOpen={keepFocus === calEvent.id} />
+        )}
       </div>
     ))
   }, [categories, dispatch, keepFocus])
-
   return (
     <div className='mt-4'>
       <h3 className='truncate pl-5 text-lg'>Categories</h3>
