@@ -10,13 +10,16 @@ import { wrapper } from '@/redux/store'
 import { getCookies, setCookie } from 'cookies-next'
 import dayjs from 'dayjs'
 import { GetServerSideProps } from 'next'
+import { getServerSession, Session } from 'next-auth'
 import { useState } from 'react'
+import { authOptions } from './api/auth/[...nextauth]'
 
 interface CalendarProps {
   sidebarOpenInitial: boolean
+  session: Session
 }
 
-const Calendar = ({ sidebarOpenInitial }: CalendarProps) => {
+const Calendar = ({ sidebarOpenInitial, session }: CalendarProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(sidebarOpenInitial)
 
   return (
@@ -32,7 +35,7 @@ const Calendar = ({ sidebarOpenInitial }: CalendarProps) => {
               sidebarOpen ? 'w-1/5 translate-x-0 pr-2' : 'w-0 -translate-x-full'
             } overflow-visible transition-all`}
           >
-            {sidebarOpen && <SideBar />}
+            {sidebarOpen && <SideBar session={session} />}
           </div>
           <div className={`${sidebarOpen ? 'w-4/5' : 'w-full'} flex flex-col transition-all`}>
             <MainCalendar />
@@ -85,7 +88,12 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     })
 
     store.dispatch(setAppData(appDate))
-    return { props: { sidebarOpenInitial } }
+    return {
+      props: {
+        sidebarOpenInitial,
+        session: await getServerSession(req, res, authOptions)
+      }
+    }
   }
 })
 

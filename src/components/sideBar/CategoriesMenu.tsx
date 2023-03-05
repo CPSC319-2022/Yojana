@@ -2,13 +2,15 @@ import { Checkbox } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategories, toggleCategory } from '@/redux/reducers/AppDataReducer'
 import { CategoryState } from '@/types/prisma'
-import { useSession } from 'next-auth/react'
+import { Session } from 'next-auth'
 import { useMemo, useState } from 'react'
 import { CategoriesDropdown } from './CategoriesDropdown'
 
-export const CategoriesMenu = () => {
-  const session = useSession()
-  const isAdmin = session && session.data?.user && session.data.user.isAdmin
+interface Props {
+  session: Session
+}
+
+export const CategoriesMenu = ({ session }: Props) => {
   const dispatch = useAppDispatch()
   const categories: CategoryState[] = useAppSelector(getCategories)
   const [keepFocus, setKeepFocus] = useState(-1)
@@ -30,7 +32,7 @@ export const CategoriesMenu = () => {
           checkboxClassName={`h-5 w-5 ml-5`}
           onChange={() => dispatch(toggleCategory(calEvent.id))}
         />
-        {isAdmin && (
+        {session.user.isAdmin && (
           <CategoriesDropdown id={calEvent.id} setKeepFocus={setKeepFocus} keepOpen={keepFocus === calEvent.id} />
         )}
       </div>
