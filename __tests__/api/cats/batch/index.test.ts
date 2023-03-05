@@ -3,6 +3,7 @@ import batch from '@/pages/api/cats/batch'
 import '@testing-library/jest-dom'
 import { createRequest, createResponse } from 'node-mocks-http'
 import * as jwt from 'next-auth/jwt'
+import { Entry } from '@prisma/client'
 
 const mockAdmin = {
   id: '1',
@@ -23,6 +24,27 @@ const mockBody = {
   Testing2: ['2025-03-22T00:00:00.000Z'],
   Testing3: ['2025-03-18T00:00:00.000Z']
 }
+
+const expectedResponse: Entry[] = [
+  {
+    id: 1,
+    date: new Date('2025-03-10T00:00:00.000Z'),
+    isRepeating: false,
+    categoryId: 21
+  },
+  {
+    id: 2,
+    date: new Date('2025-03-04T00:00:00.000Z'),
+    isRepeating: false,
+    categoryId: 21
+  },
+  {
+    id: 3,
+    date: new Date('2025-03-22T00:00:00.000Z'),
+    isRepeating: false,
+    categoryId: 22
+  }
+]
 
 const mockValidCats = [
   {
@@ -67,13 +89,12 @@ describe('/api/cats/batch', () => {
 
       prismaMock.entry.createMany.mockResolvedValue({ count: 3 })
 
-      const expectedResponse = {
-        entriesAdded: 3
-      }
+      prismaMock.entry.findMany.mockResolvedValue(expectedResponse)
+
       await batch(req, res)
 
       expect(res._getStatusCode()).toBe(201)
-      expect(res._getData()).toBe(JSON.stringify(expectedResponse))
+      expect(res._getData()).toBe(JSON.stringify({ createdEntries: expectedResponse }))
     })
 
     it('should return a 500 status code when batch add fails', async () => {
