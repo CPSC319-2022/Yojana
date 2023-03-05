@@ -6,6 +6,7 @@ import { getIsSelectingDates, resetSelectedDates } from '@/redux/reducers/DateSe
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, ReactNode, useRef } from 'react'
 import Draggable from 'react-draggable'
+
 interface ModalProps {
   buttonText: string
   title?: string
@@ -27,6 +28,7 @@ interface ModalProps {
   showCloseBtn?: boolean
   overrideDefaultButtonStyle?: boolean
   closeParent?: () => void
+  minimizedButtonText?: string
 }
 
 export const Modal = ({
@@ -48,7 +50,8 @@ export const Modal = ({
   buttonClassName,
   showCloseBtn = true,
   overrideDefaultButtonStyle = false,
-  closeParent
+  closeParent,
+  minimizedButtonText
 }: ModalProps) => {
   const directionClass = direction ? `absolute ${direction}-0 my-10` : ''
   const disable = useAppSelector(getIsSelectingDates)
@@ -93,47 +96,51 @@ export const Modal = ({
                 leaveFrom='opacity-100 scale-100'
                 leaveTo='opacity-0 scale-95'
               >
-                <Dialog.Panel
-                  className={`${directionClass} w-full max-w-md transform overflow-y-auto rounded-md bg-white text-left align-middle shadow-modal transition-all`}
-                  style={{ maxWidth: maxWidth, maxHeight: maxHeight }}
-                >
-                  {showCloseBtn && (
-                    <div id={handle} className={`w-full bg-slate-100 ${!isMinimized ? 'cursor-move' : ''}`}>
-                      {closeBtn && (
-                        <div className='flex justify-end'>
-                          {isMinimized ? (
-                            <button
-                              type='button'
-                              className='px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
-                              onClick={() => setIsMinimized(false)}
-                            >
-                              +
-                            </button>
-                          ) : (
-                            <button
-                              type='button'
-                              className='px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
-                              onClick={() => {
-                                setIsOpen(false)
-                                closeParent?.()
-                              }}
-                            >
-                              ×
-                            </button>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  <div className='px-6 pb-6 pt-3'>
-                    {title && (
-                      <Dialog.Title as='h3' className='text-lg font-medium leading-6 text-gray-900'>
-                        {title}
-                      </Dialog.Title>
+                {!isMinimized ? (
+                  <Dialog.Panel
+                    className={`${directionClass} w-full max-w-md transform overflow-y-auto rounded-md bg-white text-left align-middle shadow-modal transition-all`}
+                    style={{ maxWidth: maxWidth, maxHeight: maxHeight }}
+                  >
+                    {showCloseBtn && (
+                      <div id={handle} className={`w-full bg-slate-100 ${!isMinimized ? 'cursor-move' : ''}`}>
+                        {closeBtn && (
+                          <div className='flex justify-end'>
+                            {isMinimized ? (
+                              <button
+                                type='button'
+                                className='rotate-45 px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
+                                onClick={() => setIsMinimized(false)}
+                              >
+                                ×
+                              </button>
+                            ) : (
+                              <button
+                                type='button'
+                                className='px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
+                                onClick={() => {
+                                  setIsOpen(false)
+                                  closeParent?.()
+                                }}
+                              >
+                                ×
+                              </button>
+                            )}
+                          </div>
+                        )}
+                      </div>
                     )}
-                    {!isMinimized && <Dialog.Description as='div'>{body}</Dialog.Description>}
-                  </div>
-                </Dialog.Panel>
+                    <div className='px-6 pb-6 pt-3'>
+                      {title && (
+                        <Dialog.Title as='h3' className='text-lg font-medium leading-6 text-gray-900'>
+                          {title}
+                        </Dialog.Title>
+                      )}
+                      <Dialog.Description as='div'>{body}</Dialog.Description>
+                    </div>
+                  </Dialog.Panel>
+                ) : (
+                  <Button text={minimizedButtonText} onClick={() => setIsMinimized(false)} />
+                )}
               </Transition.Child>
             </div>
           </DraggableDialog>

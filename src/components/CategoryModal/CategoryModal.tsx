@@ -221,6 +221,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           setIsMinimized(minimized)
           dispatch(setIsSelectingDates(minimized))
         }}
+        minimizedButtonText='Save Dates'
       >
         <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
           <div className='mb-4'>
