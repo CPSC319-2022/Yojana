@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { BsFillFileEarmarkBarGraphFill } from 'react-icons/bs'
-import { useSession } from 'next-auth/react'
 import csv from 'csv-parser'
 import { Button } from '@/components/common'
 import { Entry } from '@prisma/client'
@@ -16,7 +15,6 @@ interface EntryMap {
 }
 
 export const CsvUploader = ({ onSuccess }: { onSuccess: (createdEntries?: Entry[], error?: string) => void }) => {
-  const { data: session } = useSession()
   const [csvFileName, setCsvFileName] = useState('')
   const [csvEntries, setCsvEntries] = useState<CsvEntry[]>([])
 
@@ -45,11 +43,6 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (createdEntries?: Entry[
   }, [])
 
   const handleSubmit = async () => {
-    if (!session) {
-      console.error('No session found')
-      return
-    }
-
     let entryMap: EntryMap = {}
     try {
       for (let key in csvEntries) {
