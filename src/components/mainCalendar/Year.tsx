@@ -50,10 +50,15 @@ export const Year = () => {
       const day = monthStartDate.add(dateOffset, 'days')
       const isWeekend = day.day() === 0 || day.day() === 6
       const selected = yearSelected?.[monthNum]?.[day.date()]
+      const isToday = day.isSame(dayjs(), 'day')
 
       let backgroundColor
       if (!isSelectingDates) {
-        backgroundColor = isWeekend ? 'bg-slate-100' : 'bg-white'
+        if (isToday) {
+          backgroundColor = 'bg-emerald-200'
+        } else {
+          backgroundColor = isWeekend ? 'bg-slate-100' : 'bg-white'
+        }
       } else {
         if (isWeekend && selected?.isSelected) {
           backgroundColor = 'bg-emerald-200'
