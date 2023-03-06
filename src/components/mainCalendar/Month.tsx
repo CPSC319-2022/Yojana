@@ -66,6 +66,9 @@ export const Month = (props: MonthProps) => {
         }
       }
 
+      const isToday = dayjs().isSame(day, 'day')
+      const todayCircle = isToday ? 'rounded-full bg-emerald-200' : ''
+
       return (
         <div
           className={`tile overflow-y-auto ${selected?.isSelected ? 'bg-emerald-100' : 'bg-white'} px-0.5 ${
@@ -78,13 +81,17 @@ export const Month = (props: MonthProps) => {
             }
           }}
         >
-          <span
-            className={`${
-              offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''
-            } block text-center`}
-          >
-            {day.date()}
-          </span>
+          <div className={`flex items-center justify-center`}>
+            <div className={`flex h-7 w-7 items-center justify-center ${todayCircle} mt-1`}>
+              <span
+                className={`${
+                  offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''
+                } block text-center text-sm`}
+              >
+                {day.date()}
+              </span>
+            </div>
+          </div>
           {dayBlocks}
         </div>
       )
