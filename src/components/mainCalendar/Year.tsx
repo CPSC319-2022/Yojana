@@ -49,7 +49,7 @@ export const Year = () => {
       return (
         <div
           className={`tile truncate px-0.5 ${
-            isCurrentDate ? 'bg-emerald-300' : isWeekend ? 'bg-slate-100' : 'bg-white'
+            isCurrentDate ? 'bg-emerald-200' : isWeekend ? 'bg-slate-100' : 'bg-white'
           }`}
           key={`${yearNum}-${monthNum}-${day.date()}`}
         >
