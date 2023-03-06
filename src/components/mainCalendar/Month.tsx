@@ -67,7 +67,7 @@ export const Month = (props: MonthProps) => {
       }
 
       const isToday = dayjs().isSame(day, 'day')
-      const todayCircle = isToday ? 'rounded-full bg-emerald-300' : ''
+      const todayCircle = isToday ? 'rounded-full bg-emerald-200' : ''
 
       return (
         <div
