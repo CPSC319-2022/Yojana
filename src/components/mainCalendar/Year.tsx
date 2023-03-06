@@ -56,7 +56,11 @@ export const Year = () => {
       const isCurrentDate = day.toISOString().slice(0, 10) === currentDate.toISOString().slice(0, 10)
 
       if (!isSelectingDates) {
-        backgroundColor = isWeekend ? 'bg-slate-100' : 'bg-white'
+        if (isCurrentDate) {
+          backgroundColor = 'bg-emerald-200'
+        } else {
+          backgroundColor = isWeekend ? 'bg-slate-100' : 'bg-white'
+        }
       } else {
         if (isWeekend && selected?.isSelected) {
           backgroundColor = 'bg-emerald-200'
@@ -64,12 +68,11 @@ export const Year = () => {
           backgroundColor = 'bg-slate-100'
         } else if (selected?.isSelected) {
           backgroundColor = 'bg-emerald-100'
-        } else if (isCurrentDate) {
-          backgroundColor = 'bg-emerald-200'
         } else {
           backgroundColor = 'bg-white'
         }
       }
+      console.log(backgroundColor)
 
       return (
         <div
