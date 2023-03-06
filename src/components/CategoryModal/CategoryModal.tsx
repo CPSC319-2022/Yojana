@@ -90,7 +90,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const onSubmit: SubmitHandler<Schema> = async ({ name, color, description, repeating }, icon) => {
+  const onSubmit: SubmitHandler<Schema> = async ({ name, color, icon, description, repeating }) => {
     if (!session) {
       console.error('No session found')
       return
@@ -224,7 +224,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           </div>
           <div className='mb-8'>
             <label className='mb-2 block'>Icon</label>
-            <IconPicker control={control} name='icon' rules={{ required: true }} />
+            <IconPicker control={control} name='icon' />
           </div>
           <div className='mb-4'>
             <Disclosure>

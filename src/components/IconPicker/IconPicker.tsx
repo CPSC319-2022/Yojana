@@ -10,31 +10,46 @@ interface IconPickerProps {
 export const IconPicker = ({ control, name, rules }: IconPickerProps) => {
   // Add Unicode icons to the picker
   const iconPickerIcons = [
-    '⌚',
-    '☕',
-    '⛳',
-    '✍',
-    '🌎',
-    '🎂',
-    '🎤',
-    '💲',
+    '☎',
+    '←',
+    '→',
+    '↑',
+    '↓',
+    '↺',
+    '➤',
     '🖂',
     '🗁',
     '🗫',
-    '🥇',
-    '🦺',
-    '🚁',
-    '💼',
-    '🏢',
-    '📈',
-    '💻',
-    '📱',
-    '📧',
-    '📅',
-    '📌',
-    '🗂️',
-    '📎',
-    '📝'
+    '€',
+    '☼',
+    '⊕',
+    '☐',
+    '⚐',
+    '⛟',
+    '✎',
+    '✕',
+    '✳',
+    '❖',
+    '⛏',
+    '🎞',
+    '🏳',
+    '🕶',
+    '🖨',
+    '🗣',
+    '🗺',
+    '¬',
+    '•',
+    '🕯',
+    '＄',
+    '✈',
+    '◯',
+    '⬡',
+    '^',
+    '◇',
+    '_',
+    '( )',
+    '⌋',
+    '☁'
   ]
 
   const [selectedIcon, setSelectedIcon] = useState('')
@@ -56,10 +71,11 @@ export const IconPicker = ({ control, name, rules }: IconPickerProps) => {
             style={{
               display: 'inline-block',
               cursor: 'pointer',
-              fontSize: '20px',
+              fontSize: '25px',
               borderRadius: '50%',
               textAlign: 'center',
-              backgroundColor: selectedIcon === icon ? '#D1FAE5' : 'white'
+              backgroundColor: selectedIcon === icon ? '#D1FAE5' : 'white',
+              margin: '10px'
             }}
             onClick={() => {
               setSelectedIcon(icon)
