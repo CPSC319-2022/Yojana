@@ -70,7 +70,6 @@ export const Year = () => {
           backgroundColor = 'bg-white'
         }
       }
-      console.log(backgroundColor)
 
       return (
         <div
