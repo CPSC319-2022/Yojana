@@ -50,11 +50,9 @@ export const Year = () => {
       const day = monthStartDate.add(dateOffset, 'days')
       const isWeekend = day.day() === 0 || day.day() === 6
       const selected = yearSelected?.[monthNum]?.[day.date()]
+      const isCurrentDate = day.isSame(dayjs(), 'day')
 
       let backgroundColor
-      const currentDate = new Date(Date.UTC(dayjs().year(), dayjs().month(), dayjs().date()))
-      const isCurrentDate = day.toISOString().slice(0, 10) === currentDate.toISOString().slice(0, 10)
-
       if (!isSelectingDates) {
         if (isCurrentDate) {
           backgroundColor = 'bg-emerald-200'
