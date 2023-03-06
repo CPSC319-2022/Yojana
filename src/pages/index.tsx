@@ -4,20 +4,35 @@ import { NavBar } from '@/components/navBar'
 import { SideBar } from '@/components/sideBar/'
 import { CalendarInterval } from '@/constants/enums'
 import { getCategories } from '@/prisma/queries'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setAppData } from '@/redux/reducers/AppDataReducer'
+import { getIsSelectingDates, resetSelectedDates, setIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import { setDate, setInterval } from '@/redux/reducers/MainCalendarReducer'
 import { wrapper } from '@/redux/store'
 import { getCookies, setCookie } from 'cookies-next'
 import dayjs from 'dayjs'
 import { GetServerSideProps } from 'next'
-import { useState } from 'react'
+import { getServerSession, Session } from 'next-auth'
+import { useEffect, useState } from 'react'
+import { authOptions } from './api/auth/[...nextauth]'
 
 interface CalendarProps {
   sidebarOpenInitial: boolean
+  session: Session
 }
 
-const Calendar = ({ sidebarOpenInitial }: CalendarProps) => {
+const Calendar = ({ sidebarOpenInitial, session }: CalendarProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(sidebarOpenInitial)
+  const dispatch = useAppDispatch()
+  const isSelectingDates = useAppSelector((state) => getIsSelectingDates(state))
+
+  // reset selected dates when sidebar is closed while in date selection mode
+  useEffect(() => {
+    if (!sidebarOpen && isSelectingDates) {
+      dispatch(resetSelectedDates())
+      dispatch(setIsSelectingDates(false))
+    }
+  }, [dispatch, isSelectingDates, sidebarOpen])
 
   return (
     <main>
@@ -32,7 +47,7 @@ const Calendar = ({ sidebarOpenInitial }: CalendarProps) => {
               sidebarOpen ? 'w-1/5 translate-x-0 pr-2' : 'w-0 -translate-x-full'
             } overflow-visible transition-all`}
           >
-            {sidebarOpen && <SideBar />}
+            {sidebarOpen && <SideBar session={session} />}
           </div>
           <div className={`${sidebarOpen ? 'w-4/5' : 'w-full'} flex flex-col transition-all`}>
             <MainCalendar />
@@ -85,7 +100,12 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     })
 
     store.dispatch(setAppData(appDate))
-    return { props: { sidebarOpenInitial } }
+    return {
+      props: {
+        sidebarOpenInitial,
+        session: await getServerSession(req, res, authOptions)
+      }
+    }
   }
 })
 

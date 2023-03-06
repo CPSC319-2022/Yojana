@@ -1,11 +1,16 @@
 import { CategoryModal } from '@/components/CategoryModal'
+import { Session } from 'next-auth'
 import { CategoriesMenu } from './CategoriesMenu'
 
-export const SideBar = () => {
+interface Props {
+  session: Session
+}
+
+export const SideBar = ({ session }: Props) => {
   return (
     <div className='pt-2'>
-      <CategoryModal method='POST' id={-1} callBack={() => {}} />
-      <CategoriesMenu />
+      {session.user.isAdmin && <CategoryModal method='POST' id={-1} callBack={() => {}} />}
+      <CategoriesMenu session={session} />
     </div>
   )
 }

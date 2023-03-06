@@ -1,14 +1,26 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useController } from 'react-hook-form'
 
 interface DayOfWeekPickerProps {
   control: any
   name: string
   rules?: any
-  picked?: any
+  selectedDays?: DayOfWeek
+  setSelectedDays: React.Dispatch<React.SetStateAction<DayOfWeek>>
+  updateState?: (cron: string) => void
 }
 
-export const DayOfWeekPicker = ({ control, name, rules, picked }: DayOfWeekPickerProps) => {
+const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
+export type DayOfWeek = typeof daysOfWeek
+
+export const DayOfWeekPicker = ({
+  control,
+  name,
+  rules,
+  selectedDays = [],
+  setSelectedDays,
+  updateState = () => {}
+}: DayOfWeekPickerProps) => {
   const {
     field: { onChange }
   } = useController({
@@ -16,9 +28,6 @@ export const DayOfWeekPicker = ({ control, name, rules, picked }: DayOfWeekPicke
     control: control,
     rules: rules
   })
-
-  const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
-  const [selectedDays, setSelectedDays] = useState<typeof daysOfWeek>(picked)
 
   const handleDayChange = (day: string) => {
     const cronexpr = '0 0 * * '
@@ -33,8 +42,10 @@ export const DayOfWeekPicker = ({ control, name, rules, picked }: DayOfWeekPicke
 
     if (days.length !== 0) {
       onChange(cronexpr + days.join(','))
+      updateState(cronexpr + days.join(','))
     } else {
       onChange('')
+      updateState('')
     }
   }
 

@@ -1,9 +1,14 @@
 import { useCallback } from 'react'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
-import { useAppSelector } from '@/redux/hooks'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
 import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
 import dayjs from 'dayjs'
+import {
+  getIsSelectingDates,
+  getPrevCurrNextMonthSelectedDates,
+  toggleIndividualDate
+} from '@/redux/reducers/DateSelectorReducer'
 
 interface MonthProps {
   monthOffset: number
@@ -14,6 +19,7 @@ export const Month = (props: MonthProps) => {
   const monthView = useAppSelector(isMonthInterval)
   const stateDate = useAppSelector(getDate)
   const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
+  const isSelectingDates = useAppSelector(getIsSelectingDates)
 
   const targetDate = referenceDate.add(props.monthOffset, 'month')
   const monthStartDate = targetDate.startOf('month')
@@ -22,32 +28,60 @@ export const Month = (props: MonthProps) => {
 
   const categoryMap = useAppSelector(getCategoryMap)
   const { prevMonth, currMonth, nextMonth } = useAppSelector((state) => getPrevCurrNextMonth(state, targetDate))
+  const { prevMonthSelected, currMonthSelected, nextMonthSelected } = useAppSelector((state) =>
+    getPrevCurrNextMonthSelectedDates(state, targetDate)
+  )
+
+  const dispatch = useAppDispatch()
 
   const renderDay = useCallback(
     (firstDateOfWeek: number, dayNum: number) => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
       const day = monthStartDate.add(offsetFromMonthStart, 'days')
-      let entriesOnDay
-      if (offsetFromMonthStart < 0) {
-        entriesOnDay = prevMonth?.[day.date()]
-      } else if (offsetFromMonthStart >= daysInMonth) {
-        entriesOnDay = nextMonth?.[day.date()]
-      } else {
-        entriesOnDay = currMonth?.[day.date()]
-      }
-      const dayBlocks = entriesOnDay?.map((entry, key) => {
-        const category = categoryMap[entry.categoryId]
-        if (category.show) {
-          return <CategoryBlock color={category.color} label={category.name} icon={category.icon} key={key} />
+      let dayBlocks: (JSX.Element | undefined)[] = []
+      let selected: { isSelected: boolean; isRepeating: boolean } = { isSelected: false, isRepeating: false }
+      if (!isSelectingDates) {
+        let entriesOnDay
+        if (offsetFromMonthStart < 0) {
+          entriesOnDay = prevMonth?.[day.date()]
+        } else if (offsetFromMonthStart >= daysInMonth) {
+          entriesOnDay = nextMonth?.[day.date()]
+        } else {
+          entriesOnDay = currMonth?.[day.date()]
         }
-      })
+
+        dayBlocks = entriesOnDay?.map((entry, key) => {
+          const category = categoryMap[entry.categoryId]
+          if (category.show) {
+            return <CategoryBlock color={category.color} label={category.name} icon={category.icon} key={key} />
+          }
+        })
+      } else {
+        if (offsetFromMonthStart < 0) {
+          selected = prevMonthSelected?.[day.date()]
+        } else if (offsetFromMonthStart >= daysInMonth) {
+          selected = nextMonthSelected?.[day.date()]
+        } else {
+          selected = currMonthSelected?.[day.date()]
+        }
+      }
 
       const currentDate = new Date(Date.UTC(dayjs().year(), dayjs().month(), dayjs().date()))
       const isCurrentDate = day.toISOString().slice(0, 10) === currentDate.toISOString().slice(0, 10)
       const todayCircle = isCurrentDate ? 'rounded-full bg-emerald-300' : ''
 
       return (
-        <div className={`tile overflow-y-auto bg-white pr-0.5 pl-0.5`} key={day.date()}>
+        <div
+          className={`tile overflow-y-auto ${selected?.isSelected ? 'bg-emerald-100' : 'bg-white'} px-0.5 ${
+            isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''
+          } `}
+          key={day.date()}
+          onClick={() => {
+            if (!selected || !selected?.isRepeating) {
+              dispatch(toggleIndividualDate(day))
+            }
+          }}
+        >
           <div className={`flex items-center justify-center`}>
             <div className={`flex h-7 w-7 items-center justify-center ${todayCircle}`}>
               <span
@@ -63,7 +97,19 @@ export const Month = (props: MonthProps) => {
         </div>
       )
     },
-    [categoryMap, currMonth, daysInMonth, monthStartDate, nextMonth, prevMonth]
+    [
+      monthStartDate,
+      isSelectingDates,
+      daysInMonth,
+      prevMonth,
+      nextMonth,
+      currMonth,
+      categoryMap,
+      prevMonthSelected,
+      nextMonthSelected,
+      currMonthSelected,
+      dispatch
+    ]
   )
 
   // monthOffset is the offset of the Sunday from the beginning of the month.
