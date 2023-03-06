@@ -66,9 +66,8 @@ export const Month = (props: MonthProps) => {
         }
       }
 
-      const currentDate = new Date(Date.UTC(dayjs().year(), dayjs().month(), dayjs().date()))
-      const isCurrentDate = day.toISOString().slice(0, 10) === currentDate.toISOString().slice(0, 10)
-      const todayCircle = isCurrentDate ? 'rounded-full bg-emerald-300' : ''
+      const isToday = dayjs().isSame(day, 'day')
+      const todayCircle = isToday ? 'rounded-full bg-emerald-300' : ''
 
       return (
         <div
