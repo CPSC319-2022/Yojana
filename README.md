@@ -9,6 +9,7 @@ Yojana is a calendar app made using Next.js.
 - [MySQL 8](https://dev.mysql.com/downloads/mysql/)
 - [MySQL Shell](https://dev.mysql.com/downloads/shell/)
 - [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
+- [Docker](https://docs.docker.com/get-docker/)
 - [Node](https://nodejs.org/) - the current version of Node used is in [`.nvmrc`](.nvmrc).
 - [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/)
 - [nvm](https://github.com/nvm-sh/nvm) (optional) - to ensure the correct version of Node is used. Take a look
@@ -48,9 +49,9 @@ See [this](https://www.prisma.io/dataguide/mysql) for more information on intera
 
 ### Environment Variables
 
-You will need to create a `.env` file in the root directory of the project with your environment variables.
+You will need to create a `.env` and a `.env.test` file in the root directory of the project with your environment variables.
 
-You can use the `.env.example` file present in the root directory as a template.
+You can use the `.env.example` and `.env.test.example` files present in the root directory as templates.
 
 ### Setting up Database using Prisma
 
@@ -82,8 +83,14 @@ yarn build
 # start the app in production mode (after building)
 yarn start
 
-# run tests
+# run unit tests
 yarn test
+
+# run e2e tests
+yarn test:e2e
+
+# run e2e tests in headless mode (no browser window)
+yarn test:e2e:headless
 
 # generate coverage report for tests
 yarn test:coverage
@@ -114,6 +121,12 @@ yarn prisma:format
 
 # manually seed database
 yarn prisma:seed
+
+# create docker container for MySQL
+yarn docker:up
+
+# delete docker container for MySQL
+yarn docker:down
 ```
 
 ### Testing
@@ -136,12 +149,43 @@ yarn test:coverage
 
 This will generate a coverage report in the `coverage` directory.
 
+### E2E Tests
+
+We use [Cypress](https://www.cypress.io/) to write E2E tests.
+
+```bash
+# run tests
+yarn test:e2e
+```
+
+You can run the tests in headless mode (no browser window) by running the following command:
+
+```bash
+# run tests in headless mode
+yarn test:e2e:headless
+```
+
+We use Docker to run a MySQL container for our E2E tests. The container is automatically started when you run the E2E tests.
+
+To manually start the container and delete the container when you are done, you can use the following commands:
+
+```bash
+# start container
+yarn docker:up
+
+# delete container
+yarn docker:down
+```
+
+Click [here](./docker-compose.yml) to see the configuration for the MySQL container.
+
 ### GitHub Actions
 
 We use the following GitHub Actions to automate our workflow:
 
 - [CI](https://github.com/CPSC319-2022/Yojana/actions/workflows/CI.yml)
-  - **Test:** runs unit tests and generates a coverage report.
+  - **Unit Tests:** runs unit tests and generates a coverage report.
+  - **E2E Tests:** runs E2E tests.
   - **Format:** formats files using Prettier. Make sure to pull the latest changes before making changes to your local
     branch to avoid merge conflicts.
 
@@ -183,21 +227,3 @@ using [Azure Active Directory](https://azure.microsoft.com/en-us/products/active
 We use [Vercel](https://vercel.com/) to deploy our [Next.js app](https://vercel.com/solutions/nextjs).
 
 Visit [this](https://yojana-main.vercel.app/) link to see the latest deployed version of the app.
-
-## Links
-
-- [React](https://reactjs.org)
-- [Next.js](https://nextjs.org/)
-- [Prisma](https://www.prisma.io/)
-- [Azure](https://azure.microsoft.com/)
-- [MySQL](https://www.mysql.com/)
-- [Redux](https://redux.js.org/)
-- [Redux Toolkit](https://redux-toolkit.js.org/)
-- [NextAuth.js](https://next-auth.js.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Jest](https://jestjs.io/)
-- [React Testing Library](https://testing-library.com)
-
-## Credits
-
-This project was bootstrapped with [create-next-app](https://nextjs.org/docs/api-reference/create-next-app)
