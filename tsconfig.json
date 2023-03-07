@@ -22,8 +22,9 @@
       "@/tests/*": ["./__tests__/*"],
       "@/public/*": ["./public/*"],
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["cypress", "node"]
   },
   "include": ["next-env.d.ts", "types/**/*.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "**/*.test.ts"]
+  "exclude": ["node_modules", "./cypress.config.ts"]
 }
