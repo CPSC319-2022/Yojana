@@ -55,6 +55,9 @@ jobs:
       - name: Run End-to-End Tests
         run: yarn test:e2e:headless
 
+      - name: Destroy Docker Container
+        run: yarn run docker:down
+
   format:
     runs-on: ubuntu-latest
 
