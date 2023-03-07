@@ -24,6 +24,7 @@ export const CategoriesMenu = ({ session }: Props) => {
         ${!disable && 'hover:bg-slate-100'} 
         ${keepFocus === calEvent.id ? 'bg-slate-100' : ''}`}
         key={`category-item-${key}`}
+        id={`category-item-${key}`}
       >
         <Checkbox
           icon={calEvent.icon}
@@ -40,7 +41,7 @@ export const CategoriesMenu = ({ session }: Props) => {
         )}
       </div>
     ))
-  }, [categories, dispatch, keepFocus])
+  }, [categories, disable, dispatch, keepFocus, session.user.isAdmin])
   return (
     <div className='mt-4'>
       <h3 className='truncate pl-5 text-lg'>Categories</h3>
