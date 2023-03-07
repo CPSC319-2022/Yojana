@@ -1,5 +1,5 @@
 Cypress.Commands.add('login', (type: 'admin' | 'pleb') => {
-  cy.setCookie('next-auth.session-token', Cypress.env('session-token')[type])
+  cy.setCookie('next-auth.session-token', Cypress.env(`${type}_token`.toUpperCase()))
 })
 
 declare global {
