@@ -54,11 +54,7 @@ export const Year = () => {
 
       let backgroundColor
       if (!isSelectingDates) {
-        if (isToday) {
-          backgroundColor = 'bg-emerald-200'
-        } else {
-          backgroundColor = isWeekend ? 'bg-slate-100' : 'bg-white'
-        }
+        backgroundColor = isWeekend ? 'bg-slate-100' : 'bg-white'
       } else {
         if (isWeekend && selected?.isSelected) {
           backgroundColor = 'bg-emerald-200'
@@ -75,7 +71,7 @@ export const Year = () => {
         <div
           className={`tile truncate px-0.5 ${backgroundColor} ${
             isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''
-          }`}
+          } ${!isSelectingDates && isToday ? 'shadow-[inset_0_0_8px_rgba(0,0,0,0.6)] shadow-emerald-300' : ''}`}
           key={`${yearNum}-${monthNum}-${day.date()}`}
           onClick={() => {
             if (!selected || !selected?.isRepeating) {
@@ -101,25 +97,20 @@ export const Year = () => {
         days.push(renderDay(monthStartDate, offset, monthNum))
       }
 
-      return <div className='box-border'>{days}</div>
+      return <div className='box-border divide-y divide-slate-200'>{days}</div>
     },
     [renderDay]
   )
 
   const renderDateNums = useMemo(() => {
-    return Array.from(Array(32).keys()).map((dateNum) => {
-      if (dateNum === 0)
-        return (
-          <div className={'sticky top-0 bg-slate-100 text-transparent'} key={dateNum}>
-            .
-          </div>
-        )
+    const dateNums = Array.from(Array(31).keys()).map((dateNum) => {
       return (
-        <div className={'px-1'} key={dateNum}>
-          {dateNum}
+        <div className={'px-1'} key={dateNum + 1}>
+          {dateNum + 1}
         </div>
       )
     })
+    return <div className='divide-y divide-slate-200'>{dateNums}</div>
   }, [])
 
   const months = useMemo(() => {
@@ -135,7 +126,10 @@ export const Year = () => {
     return Array.from(Array(3).keys()).map((groupNum) => {
       return (
         <div className={'inline-flex w-full'} key={'group-' + groupNum}>
-          <div className={'min-w-min bg-white'}>{renderDateNums}</div>
+          <div className={'min-w-min bg-white'}>
+            <h3 className='sticky top-0 bg-slate-100 text-center text-slate-400'>&nbsp;</h3>
+            {renderDateNums}
+          </div>
           <div className={'grid grow grid-cols-4 gap-0.5'}>
             {twelveMonths[groupNum * 4]}
             {twelveMonths[groupNum * 4 + 1]}
