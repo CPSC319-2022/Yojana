@@ -28,6 +28,8 @@ yarn-error.log*
 # env files
 .env*.local
 .env
+.env.test
+cypress.env.json
 
 # vercel
 .vercel
@@ -42,3 +44,8 @@ next-env.d.ts
 
 # eslint
 .eslintcache
+
+# cypress
+/cypress/videos
+/cypress/screenshots
+cypress/logs

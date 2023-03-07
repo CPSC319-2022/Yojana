@@ -213,6 +213,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             ? 'mt-4 ml-5 truncate'
             : `group flex w-full items-center rounded-md px-2 py-2 hover:bg-slate-100`
         }
+        buttonId={method === 'POST' ? 'create-category-btn' : 'edit-category-btn'}
         overrideDefaultButtonStyle={method !== 'POST'}
         closeParent={callBack}
         isMinimized={isMinimized}
