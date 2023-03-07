@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  db:
+    image: mysql:latest
+    restart: always
+    container_name: end-to-end-tests
+    ports:
+      - '3307:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: yojanadb-e2e

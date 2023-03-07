@@ -77,7 +77,7 @@ const generateRandomDates = (start: Date, end: Date, n: number, category: string
 
 // seed the database
 const seed = async () => {
-  const promises = []
+  let promises: any[] = []
   // create users
   promises.push(
     ...data.map((user) => {
@@ -91,6 +91,10 @@ const seed = async () => {
       })
     })
   )
+
+  await Promise.all(promises)
+
+  promises = []
 
   // create categories and dates
   data.forEach((user) => {

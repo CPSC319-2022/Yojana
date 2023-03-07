@@ -25,6 +25,7 @@ interface ModalProps {
   bodyPadding?: string
   closeWhenClickOutside?: boolean
   buttonClassName?: string
+  buttonId?: string
   showCloseBtn?: boolean
   overrideDefaultButtonStyle?: boolean
   closeParent?: () => void
@@ -48,6 +49,7 @@ export const Modal = ({
   handle,
   bounds,
   buttonClassName,
+  buttonId,
   showCloseBtn = true,
   overrideDefaultButtonStyle = false,
   closeParent,
@@ -61,6 +63,7 @@ export const Modal = ({
       <div>
         <Button
           text={buttonText}
+          id={buttonId}
           onClick={() => {
             setIsOpen(true)
             buttonText === 'Create Category' && dispatch(resetSelectedDates())
