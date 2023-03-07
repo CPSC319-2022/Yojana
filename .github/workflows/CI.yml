@@ -44,13 +44,6 @@ jobs:
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Setup MySQL
-        uses: mirromutth/mysql-action@v1.1
-        with:
-          host port: 3307
-          mysql database: 'yojanadb-e2e'
-          mysql root password: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-
       - name: 'Create .env.test file'
         run: |
           echo "${{ secrets.ENV_TEST }}" > .env.test
