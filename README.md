@@ -149,7 +149,7 @@ yarn test:coverage
 
 This will generate a coverage report in the `coverage` directory.
 
-### E2E Tests
+#### E2E Tests
 
 We use [Cypress](https://www.cypress.io/) to write E2E tests.
 
