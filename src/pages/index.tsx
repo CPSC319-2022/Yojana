@@ -20,11 +20,13 @@ interface CalendarProps {
   sidebarOpenInitial: boolean
   session: Session
   yearViewPref: boolean
+  gridViewPref: boolean
 }
 
-const Calendar = ({ sidebarOpenInitial, session, yearViewPref }: CalendarProps) => {
+const Calendar = ({ sidebarOpenInitial, session, yearViewPref, gridViewPref }: CalendarProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(sidebarOpenInitial)
   const [prefScroll, setPrefScroll] = useState(yearViewPref)
+  const [prefGrid, setPrefGrid] = useState(gridViewPref)
   const dispatch = useAppDispatch()
   const isSelectingDates = useAppSelector((state) => getIsSelectingDates(state))
 
@@ -46,6 +48,8 @@ const Calendar = ({ sidebarOpenInitial, session, yearViewPref }: CalendarProps) 
             setSidebarOpen={setSidebarOpen}
             prefScroll={prefScroll}
             setPrefScroll={setPrefScroll}
+            prefGrid={prefGrid}
+            setPrefGrid={setPrefGrid}
           />
         </div>
         <div className='border-box z-0 flex h-[90vh] w-full flex-row'>
@@ -95,8 +99,17 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     if (cookies['yojana.yearViewPref'] === undefined) {
       setCookie('yojana.yearViewPref', true, { req, res })
     } else {
-      // if sidebar cookie is defined, set yearViewPref to the value of the cookie
+      // if yearViewPref cookie is defined, set yearViewPref to the value of the cookie
       yearViewPref = cookies['yojana.yearViewPref'] === 'true'
+    }
+
+    // set cookie for gridViewPref
+    let gridViewPref = true
+    if (cookies['yojana.gridViewPref'] === undefined) {
+      setCookie('yojana.gridViewPref', true, { req, res })
+    } else {
+      // if gridViewPref cookie is defined, set gridViewPref to the value of the cookie
+      gridViewPref = cookies['yojana.gridViewPref'] === 'true'
     }
 
     // make query to database to get categories
@@ -120,6 +133,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
       props: {
         sidebarOpenInitial,
         yearViewPref,
+        gridViewPref,
         session: await getServerSession(req, res, authOptions)
       }
     }

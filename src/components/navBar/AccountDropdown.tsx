@@ -1,15 +1,15 @@
-import { Dropdown, Modal } from '@/components/common'
-import { Switch } from '@headlessui/react'
-import { setCookie } from 'cookies-next'
+import { Dropdown, Modal, Toggle } from '@/components/common'
 import { signOut, useSession } from 'next-auth/react'
 import { useState } from 'react'
 
 interface AccountDropdownProps {
   prefScroll: boolean
   setPrefScroll: (value: boolean) => void
+  prefGrid: boolean
+  setPrefGrid: (value: boolean) => void
 }
 
-export const AccountDropdown = ({ prefScroll, setPrefScroll }: AccountDropdownProps) => {
+export const AccountDropdown = ({ prefScroll, setPrefScroll, prefGrid, setPrefGrid }: AccountDropdownProps) => {
   const { data: session } = useSession()
   const name = session?.user.name || ''
 
@@ -54,24 +54,19 @@ export const AccountDropdown = ({ prefScroll, setPrefScroll }: AccountDropdownPr
         showCloseBtn={true}
         overrideDefaultButtonStyle={true}
       >
-        <div className='space-between mt-2 inline-flex p-3'>
-          <div className='w-[12vw] text-lg'>{prefScroll ? 'Scroll' : 'Expanded'}</div>
-          <Switch
-            checked={prefScroll}
-            onChange={() => {
-              setPrefScroll(!prefScroll)
-              setCookie('yojana.yearViewPref', !prefScroll)
-            }}
-            className={`${prefScroll ? 'bg-emerald-700' : 'bg-emerald-400'}
-          relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
-          >
-            <span className='sr-only'>Use setting</span>
-            <span
-              aria-hidden='true'
-              className={`${prefScroll ? 'translate-x-9' : 'translate-x-0'}
-            pointer-events-none inline-block h-[34px] w-[34px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
-            />
-          </Switch>
+        <div className='mt-2 inline-grid p-3'>
+          <Toggle
+            textToToggle={['Scroll', 'Expanded']}
+            cookieName='yojana.yearViewPref'
+            preference={prefScroll}
+            setPreference={setPrefScroll}
+          />
+          <Toggle
+            textToToggle={['Horizontal Grid', 'No Grid']}
+            cookieName='yojana.gridViewPref'
+            preference={prefGrid}
+            setPreference={setPrefGrid}
+          />
         </div>
       </Modal>
     </div>
