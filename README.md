@@ -202,7 +202,7 @@ pre-commit hooks. This ensures that our code is formatted correctly before we co
 We use the Prettier with [prettier-plugin-tailwindcss](https://github.com/tailwindlabs/prettier-plugin-tailwindcss) to
 format our code. Please ensure that you have the following configuration in your settings:
 
-![](https://user-images.githubusercontent.com/39626451/215233714-16225c53-9012-4e5e-a8ed-ea4016cd0e24.png)
+![](https://user-images.githubusercontent.com/39626451/223469221-ce89d37e-9ca4-44f3-93cf-96bd52d0cde2.png)
 
 Alternatively, you can use to following scripts to manually format your code:
 
