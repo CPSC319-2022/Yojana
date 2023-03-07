@@ -71,7 +71,7 @@ export const Year = () => {
         <div
           className={`tile truncate px-0.5 ${backgroundColor} ${
             isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''
-          } ${!isSelectingDates && isToday ? 'shadow-[inset_0_0_8px_rgba(0,0,0,0.6)] shadow-emerald-300' : ''}`}
+          } ${!isSelectingDates && isToday ? 'shadow-[inset_0_0_1px_2px] shadow-emerald-300' : ''}`}
           key={`${yearNum}-${monthNum}-${day.date()}`}
           onClick={() => {
             if (!selected || !selected?.isRepeating) {

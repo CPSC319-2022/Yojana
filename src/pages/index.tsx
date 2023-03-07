@@ -38,7 +38,6 @@ const Calendar = ({ sidebarOpenInitial, session, yearViewPref }: CalendarProps) 
 
   return (
     <main>
-      {/* {prefScroll ? "true" : "false"} */}
       <Alert />
       <div className='flex h-screen w-full flex-col bg-white text-slate-800'>
         <div className='z-10'>
