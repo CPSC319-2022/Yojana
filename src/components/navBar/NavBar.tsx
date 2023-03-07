@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { AccountViewDropdown } from './AccountDropdown'
-import { CalViewDropdown } from './CalViewDropdown'
+import { Button } from '@/components/common'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import {
   decrementDate,
   getDate,
@@ -9,17 +8,20 @@ import {
   isYearInterval,
   jumpToToday
 } from '@/redux/reducers/MainCalendarReducer'
-import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { Button } from '@/components/common'
-import { useRouter } from 'next/router'
 import { setCookie } from 'cookies-next'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { AccountDropdown } from './AccountDropdown'
+import { CalViewDropdown } from './CalViewDropdown'
 
 interface NavBarProps {
   sidebarOpen: boolean
   setSidebarOpen: (value: boolean) => void
+  prefScroll: boolean
+  setPrefScroll: (value: boolean) => void
 }
 
-export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
+export const NavBar = ({ sidebarOpen, setSidebarOpen, prefScroll, setPrefScroll }: NavBarProps) => {
   const dispatch = useAppDispatch()
   const targetDate = useAppSelector(getDate)
   const yearView = useAppSelector(isYearInterval)
@@ -67,7 +69,7 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
         <h4 className='flex-none text-center text-lg'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
       </div>
       <CalViewDropdown />
-      <AccountViewDropdown />
+      <AccountDropdown prefScroll={prefScroll} setPrefScroll={setPrefScroll} />
     </div>
   )
 }

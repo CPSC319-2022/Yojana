@@ -19,10 +19,12 @@ import { authOptions } from './api/auth/[...nextauth]'
 interface CalendarProps {
   sidebarOpenInitial: boolean
   session: Session
+  yearViewPref: boolean
 }
 
-const Calendar = ({ sidebarOpenInitial, session }: CalendarProps) => {
+const Calendar = ({ sidebarOpenInitial, session, yearViewPref }: CalendarProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(sidebarOpenInitial)
+  const [prefScroll, setPrefScroll] = useState(yearViewPref)
   const dispatch = useAppDispatch()
   const isSelectingDates = useAppSelector((state) => getIsSelectingDates(state))
 
@@ -36,10 +38,16 @@ const Calendar = ({ sidebarOpenInitial, session }: CalendarProps) => {
 
   return (
     <main>
+      {/* {prefScroll ? "true" : "false"} */}
       <Alert />
       <div className='flex h-screen w-full flex-col bg-white text-slate-800'>
         <div className='z-10'>
-          <NavBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <NavBar
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+            prefScroll={prefScroll}
+            setPrefScroll={setPrefScroll}
+          />
         </div>
         <div className='border-box z-0 flex h-[90vh] w-full flex-row'>
           <div
@@ -83,6 +91,15 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
       sidebarOpenInitial = cookies['yojana.sidebar-open'] === 'true'
     }
 
+    // set cookie for yearViewPref
+    let yearViewPref = true
+    if (cookies['yojana.yearViewPref'] === undefined) {
+      setCookie('yojana.yearViewPref', true, { req, res })
+    } else {
+      // if sidebar cookie is defined, set yearViewPref to the value of the cookie
+      yearViewPref = cookies['yojana.yearViewPref'] === 'true'
+    }
+
     // make query to database to get categories
     const categories = await getCategories()
     // add show property to each category based on cookie value
@@ -103,6 +120,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     return {
       props: {
         sidebarOpenInitial,
+        yearViewPref,
         session: await getServerSession(req, res, authOptions)
       }
     }

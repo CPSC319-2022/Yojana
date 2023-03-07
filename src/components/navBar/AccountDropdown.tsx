@@ -1,14 +1,19 @@
 import { Dropdown, Modal } from '@/components/common'
 import { Switch } from '@headlessui/react'
+import { setCookie } from 'cookies-next'
 import { signOut, useSession } from 'next-auth/react'
 import { useState } from 'react'
 
-export const AccountViewDropdown = () => {
+interface AccountDropdownProps {
+  prefScroll: boolean
+  setPrefScroll: (value: boolean) => void
+}
+
+export const AccountDropdown = ({ prefScroll, setPrefScroll }: AccountDropdownProps) => {
   const { data: session } = useSession()
   const name = session?.user.name || ''
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [prefScroll, setPrefScroll] = useState(true)
 
   return (
     <div>
@@ -53,7 +58,10 @@ export const AccountViewDropdown = () => {
           <div className='w-[12vw] text-lg'>{prefScroll ? 'Scroll' : 'Expanded'}</div>
           <Switch
             checked={prefScroll}
-            onChange={setPrefScroll}
+            onChange={() => {
+              setPrefScroll(!prefScroll)
+              setCookie('yojana.yearViewPref', !prefScroll)
+            }}
             className={`${prefScroll ? 'bg-emerald-700' : 'bg-emerald-400'}
           relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
           >
