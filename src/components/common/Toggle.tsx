@@ -1,5 +1,7 @@
 import { Switch } from '@headlessui/react'
 import { setCookie } from 'cookies-next'
+import { useAppDispatch } from '@/redux/hooks'
+import { setDate, setInterval, setGridPreferences, setYearPreferences } from '@/redux/reducers/MainCalendarReducer'
 
 interface ToggleProps {
   textToToggle: string[]
@@ -15,6 +17,7 @@ export const Toggle = ({
   preference,
   setPreference
 }: ToggleProps) => {
+  const dispatch = useAppDispatch()
   return (
     <div className='space-between mt-2 inline-flex p-3'>
       <div className={className}>{preference ? textToToggle[0] : textToToggle[1]}</div>
@@ -23,6 +26,9 @@ export const Toggle = ({
         onChange={() => {
           setPreference(!preference)
           setCookie(cookieName, !preference)
+          cookieName === 'yojana.yearViewPref'
+            ? dispatch(setYearPreferences(!preference))
+            : dispatch(setGridPreferences(!preference))
         }}
         className={`${preference ? 'bg-emerald-700' : 'bg-emerald-400'}
         relative inline-flex h-[38px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}

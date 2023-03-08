@@ -7,7 +7,7 @@ import { getCategories } from '@/prisma/queries'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setAppData } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates, resetSelectedDates, setIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
-import { setDate, setInterval } from '@/redux/reducers/MainCalendarReducer'
+import { setDate, setInterval, setGridPreferences, setYearPreferences } from '@/redux/reducers/MainCalendarReducer'
 import { wrapper } from '@/redux/store'
 import { getCookies, setCookie } from 'cookies-next'
 import dayjs from 'dayjs'
@@ -102,6 +102,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
       // if yearViewPref cookie is defined, set yearViewPref to the value of the cookie
       yearViewPref = cookies['yojana.yearViewPref'] === 'true'
     }
+    store.dispatch(setYearPreferences(yearViewPref))
 
     // set cookie for gridViewPref
     let gridViewPref = true
@@ -111,6 +112,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
       // if gridViewPref cookie is defined, set gridViewPref to the value of the cookie
       gridViewPref = cookies['yojana.gridViewPref'] === 'true'
     }
+    store.dispatch(setGridPreferences(gridViewPref))
 
     // make query to database to get categories
     const categories = await getCategories()

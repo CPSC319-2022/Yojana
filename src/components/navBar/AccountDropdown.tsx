@@ -56,7 +56,7 @@ export const AccountDropdown = ({ prefScroll, setPrefScroll, prefGrid, setPrefGr
       >
         <div className='mt-2 inline-grid p-3'>
           <Toggle
-            textToToggle={['Scroll', 'Expanded']}
+            textToToggle={['Expanded', 'Scroll']}
             cookieName='yojana.yearViewPref'
             preference={prefScroll}
             setPreference={setPrefScroll}

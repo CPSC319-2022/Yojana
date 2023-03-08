@@ -1,9 +1,9 @@
-import React, { useCallback, useMemo } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getYear } from '@/redux/reducers/AppDataReducer'
-import { getDate } from '@/redux/reducers/MainCalendarReducer'
-import dayjs, { Dayjs } from 'dayjs'
 import { getIsSelectingDates, getYearSelectedDates, toggleIndividualDate } from '@/redux/reducers/DateSelectorReducer'
+import { getDate, getGridPreference, getYearPreference } from '@/redux/reducers/MainCalendarReducer'
+import dayjs, { Dayjs } from 'dayjs'
+import { useCallback, useMemo } from 'react'
 
 export const Year = () => {
   const stateDate = useAppSelector(getDate)
@@ -11,6 +11,8 @@ export const Year = () => {
   const entriesInYear = useAppSelector((state) => getYear(state, stateDate))
   const isSelectingDates = useAppSelector(getIsSelectingDates)
   const yearSelected = useAppSelector((state) => getYearSelectedDates(state, stateDate))
+  const gridViewPref = useAppSelector(getGridPreference)
+  const yearViewPref = useAppSelector(getYearPreference)
 
   const yearStartDate = dayjs(stateDate).startOf('year')
   const yearNum = yearStartDate.get('year')
@@ -69,9 +71,10 @@ export const Year = () => {
 
       return (
         <div
-          className={`tile truncate px-0.5 ${backgroundColor} ${
+          className={`tile px-0.5 ${backgroundColor} ${
             isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''
-          } ${!isSelectingDates && isToday ? 'shadow-[inset_0_0_1px_2px] shadow-emerald-300' : ''}`}
+          } ${!isSelectingDates && isToday ? 'shadow-[inset_0_0_1px_2px] shadow-emerald-300' : ''}
+            ${yearViewPref ? 'truncate' : 'flex overflow-x-scroll'}`}
           key={`${yearNum}-${monthNum}-${day.date()}`}
           onClick={() => {
             if (!selected || !selected?.isRepeating) {
@@ -97,7 +100,14 @@ export const Year = () => {
         days.push(renderDay(monthStartDate, offset, monthNum))
       }
 
-      return <div className='box-border divide-y divide-slate-200'>{days}</div>
+      return (
+        <div
+          className={`box-border 
+        ${gridViewPref ? 'divide-y divide-slate-200' : ''} `}
+        >
+          {days}
+        </div>
+      )
     },
     [renderDay]
   )
