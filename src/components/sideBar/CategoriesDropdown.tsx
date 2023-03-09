@@ -58,6 +58,7 @@ const HoverDropdown = ({
             iconName={iconName}
             onClick={handleButtonClick}
             className={buttonClassName}
+            id={`category-dropdown-${id}`}
             overrideDefaultStyle={overrideDefaultButtonStyle}
           />
           <Transition
