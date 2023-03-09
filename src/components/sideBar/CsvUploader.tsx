@@ -3,7 +3,7 @@ import { useDropzone } from 'react-dropzone'
 import { BsFillFileEarmarkBarGraphFill } from 'react-icons/bs'
 import csv from 'csv-parser'
 import { Button } from '@/components/common'
-import { Entry } from '@prisma/client'
+import { BatchResponse } from '@/types/prisma'
 
 interface CsvEntry {
   Category: string
@@ -14,7 +14,7 @@ interface EntryMap {
   [key: string]: string[]
 }
 
-export const CsvUploader = ({ onSuccess }: { onSuccess: (createdEntries?: Entry[], error?: string) => void }) => {
+export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchResponse, error?: string) => void }) => {
   const [csvFileName, setCsvFileName] = useState('')
   const [csvEntries, setCsvEntries] = useState<CsvEntry[]>([])
 
@@ -52,7 +52,7 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (createdEntries?: Entry[
         }
       }
     } catch (error) {
-      onSuccess([], 'make sure your csv file is formatted correctly')
+      onSuccess({ createdEntries: [], appData: [] }, 'make sure your csv file is formatted correctly')
       return
     }
 
@@ -64,11 +64,10 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (createdEntries?: Entry[
         },
         body: JSON.stringify(entryMap)
       })
-
-      const data = await response.json()
-      onSuccess(data.createdEntries, undefined)
+      const res = await response.json()
+      onSuccess(res, undefined)
     } catch (error) {
-      console.error(error)
+      console.log('error', error)
       onSuccess(undefined, "couldn't add entries")
     }
   }

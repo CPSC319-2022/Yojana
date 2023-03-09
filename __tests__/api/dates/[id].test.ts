@@ -30,7 +30,6 @@ describe('/api/dates/[id]', () => {
       jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
 
       const mock_entry: Entry = {
-        isRepeating: false,
         id: idToDelete,
         date: new Date(),
         categoryId: 10,

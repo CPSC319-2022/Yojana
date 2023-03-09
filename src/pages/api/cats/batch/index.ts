@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '@/prisma/prismadb'
 import { getToken } from 'next-auth/jwt'
+import { getCategories } from '@/prisma/queries'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
@@ -53,7 +54,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }))
       }
     })
-    let response = { createdEntries: addedEntries }
+    let appData = await getCategories()
+    const response = {
+      appData: appData,
+      createdEntries: addedEntries
+    }
     return res.status(201).json(response)
   } catch (error) {
     console.log(error)

@@ -3,20 +3,44 @@ import { Modal } from '@/components/common'
 import { useAppDispatch } from '@/redux/hooks'
 import { CsvUploader } from '@/components/sideBar'
 import { setAlert } from '@/redux/reducers/AlertReducer'
-import { addEntriesBatch } from '@/redux/reducers/AppDataReducer'
-import { Entry } from '@prisma/client'
+import { setAppData } from '@/redux/reducers/AppDataReducer'
+import { BatchResponse, CategoryFull } from '@/types/prisma'
+import { getCookies, setCookie } from 'cookies-next'
+
+export const setCategoryShow = (categories: CategoryFull[]) => {
+  const cookies = getCookies()
+
+  return categories.map((category: CategoryFull) => {
+    let show = true
+    const key = `yojana.show-category-${category.id}`
+    if (cookies[key] === undefined) {
+      // if cookie is undefined, set it to true
+      setCookie(key, 'true')
+    } else {
+      // if cookie is defined, set show to the value of the cookie
+      show = cookies[key] === 'true'
+    }
+    return { ...category, show: show }
+  })
+}
 
 export const CsvModal = () => {
   const dispatch = useAppDispatch()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleUploadSuccess = (createdEntries?: Entry[], error?: string) => {
+  const handleUploadSuccess = (response?: BatchResponse, error?: string) => {
+    console.log('entered handleUploadSuccess')
+    const createdEntries = response?.createdEntries
+    const categories = response?.appData
+    console.log('response', response)
+    console.log('error', error)
     setIsModalOpen(false)
     if (error) {
       dispatch(setAlert({ message: `There was an error processing your request: ${error}`, type: 'error', show: true }))
     } else {
-      dispatch(addEntriesBatch(createdEntries!))
+      const appData = setCategoryShow(categories!)
+      dispatch(setAppData(appData))
       dispatch(
         setAlert({ message: `successfully added ${createdEntries?.length} entries`, type: 'success', show: true })
       )
@@ -36,11 +60,10 @@ export const CsvModal = () => {
         buttonClassName='ml-3'
         showCloseBtn={false}
         bodyPadding='p-6'
-        minWidth='30vw'
       >
         <div className='flex h-full w-full flex-col'>
           <h3 className='mb-2 text-lg'>Import from CSV</h3>
-          <p className='text-sm'>
+          <div className='text-sm'>
             Upload a CSV file with the following format: <br />
             <table className='mb-6 mt-3 w-full table-auto'>
               <thead>
@@ -66,7 +89,7 @@ export const CsvModal = () => {
                 </tr>
               </tbody>
             </table>
-          </p>
+          </div>
           <CsvUploader onSuccess={handleUploadSuccess} />
         </div>
       </Modal>
