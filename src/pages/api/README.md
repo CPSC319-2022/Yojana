@@ -271,7 +271,7 @@ delete:
 ```yaml
 post:
   body:
-    entryMap: { <category-name>: <date> }
+    entryMap: { <category-name>: [<dates, iso string>] }
   responses:
     201:
       description: batch of entries added to categories
