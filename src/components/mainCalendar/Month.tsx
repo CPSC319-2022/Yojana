@@ -119,7 +119,7 @@ export const Month = (props: MonthProps) => {
       })
       return (
         <div
-          className={(numWeeks === 5 ? 'h-1/5' : 'h-1/6') + ' ' + 'grid h-1/5 grid-cols-7 gap-0.5 pt-0.5'}
+          className={(numWeeks === 5 ? 'h-1/5' : 'h-1/6') + ' ' + 'grid h-1/5 grid-cols-7 gap-px pt-0.5'}
           key={firstDateOfWeek}
         >
           {generatedDays}
