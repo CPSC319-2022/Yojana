@@ -57,9 +57,10 @@ export const CsvModal = () => {
         buttonClassName='ml-3'
         showCloseBtn={false}
         bodyPadding='p-6'
+        minWidth='35vw'
       >
         <div className='flex h-full w-full flex-col'>
-          <h3 className='mb-2 text-lg'>Import from CSV</h3>
+          <h3 className='mb-2 text-lg font-medium'>Import from CSV</h3>
           <div className='text-sm'>
             Upload a CSV file with the following format: <br />
             <table className='mb-6 mt-3 w-full table-auto'>
