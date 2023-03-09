@@ -74,7 +74,7 @@ export const Year = () => {
           className={`tile px-0.5 ${backgroundColor} ${
             isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''
           } ${!isSelectingDates && isToday ? 'shadow-[inset_0_0_1px_2px] shadow-emerald-300' : ''}
-            ${yearViewPref ? 'truncate' : 'flex overflow-x-scroll'}`}
+            ${yearViewPref ? 'grid' : 'flex overflow-x-scroll'}`}
           key={`${yearNum}-${monthNum}-${day.date()}`}
           onClick={() => {
             if (!selected || !selected?.isRepeating) {
@@ -82,6 +82,7 @@ export const Year = () => {
             }
           }}
         >
+          12345678912345
           {renderDayCategories(day, monthNum)}
         </div>
       )
@@ -102,8 +103,8 @@ export const Year = () => {
 
       return (
         <div
-          className={`box-border 
-        ${gridViewPref ? 'divide-y divide-slate-200' : ''} `}
+          className={`box-border divide-y 
+        ${gridViewPref ? 'divide-slate-200' : 'divide-white'} `}
         >
           {days}
         </div>
