@@ -146,7 +146,7 @@ export const Year = () => {
   const months = useMemo(() => {
     return (
       <div
-        className={`box-border grid grow grid-cols-[2.5%_7.5%_7.5%_7.5%_7.5%_2.5%_7.5%_7.5%_7.5%_7.5%_2.5%_7.5%_7.5%_7.5%_7.5%] gap-x-0.5 divide-y 
+        className={`box-border grid grow grid-cols-[2.5%_7.5%_7.5%_7.5%_7.5%_2.5%_7.5%_7.5%_7.5%_7.5%_2.5%_7.5%_7.5%_7.5%_7.5%] gap-x-px divide-y 
         ${gridViewPref ? 'divide-slate-300' : 'divide-transparent'}`}
       >
         <>
