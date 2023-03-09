@@ -136,7 +136,7 @@ export const Year = () => {
       return (
         <div className={'inline-flex w-full'} key={'group-' + groupNum}>
           <div className={'min-w-min bg-white'}>{renderDateNums}</div>
-          <div className={'grid grow grid-cols-4 gap-0.5'}>
+          <div className={'grid grow grid-cols-4 gap-px'}>
             {twelveMonths[groupNum * 4]}
             {twelveMonths[groupNum * 4 + 1]}
             {twelveMonths[groupNum * 4 + 2]}
@@ -149,7 +149,7 @@ export const Year = () => {
 
   return (
     <div className='grow bg-slate-200'>
-      <div className={'box-border grid h-full grow grid-cols-3 gap-0.5'}>{months}</div>
+      <div className={'box-border grid h-full grow grid-cols-3 gap-px'}>{months}</div>
     </div>
   )
 }
