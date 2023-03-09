@@ -74,7 +74,7 @@ export const Year = () => {
           className={`tile px-0.5 ${backgroundColor} ${
             isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''
           } ${!isSelectingDates && isToday ? 'shadow-[inset_0_0_1px_2px] shadow-emerald-300' : ''}
-            ${yearViewPref ? 'grid' : 'flex overflow-x-scroll'}`}
+            ${yearViewPref ? 'inline-flow break-all' : 'flex overflow-x-scroll'}`}
           key={`${yearNum}-${monthNum}-${day.date()}`}
           onClick={() => {
             if (!selected || !selected?.isRepeating) {
@@ -121,7 +121,11 @@ export const Year = () => {
         </div>
       )
     })
-    return <div className='divide-y divide-slate-200'>{dateNums}</div>
+    return (
+      <div className={`divide-y divide-slate-200 ${yearViewPref ? 'inline-flow break-all' : 'flex overflow-x-scroll'}`}>
+        {dateNums}
+      </div>
+    )
   }, [])
 
   const months = useMemo(() => {
@@ -137,11 +141,11 @@ export const Year = () => {
     return Array.from(Array(3).keys()).map((groupNum) => {
       return (
         <div className={'inline-flex w-full'} key={'group-' + groupNum}>
-          <div className={'min-w-min bg-white'}>
-            <h3 className='sticky top-0 bg-slate-100 text-center text-slate-400'>&nbsp;</h3>
-            {renderDateNums}
-          </div>
-          <div className={'grid grow grid-cols-4 gap-0.5'}>
+          <div className={'grid grow grid-cols-5 gap-0.5'}>
+            <div className={`min-w-min bg-white`}>
+              <h3 className='sticky top-0 bg-slate-100 text-center text-slate-400'>&nbsp;</h3>
+              {renderDateNums}
+            </div>
             {twelveMonths[groupNum * 4]}
             {twelveMonths[groupNum * 4 + 1]}
             {twelveMonths[groupNum * 4 + 2]}
