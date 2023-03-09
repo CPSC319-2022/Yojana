@@ -194,7 +194,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   return (
     <>
       <Modal
-        buttonText={method === 'POST' ? 'Create Category' : 'Edit'}
+        buttonText={method === 'POST' ? 'Create' : 'Edit'}
         title={method === 'POST' ? 'Create Category' : 'Edit Category'}
         isOpen={isModalOpen}
         setIsOpen={(open) => {
@@ -209,9 +209,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         handle={'create-category-modal-handle'}
         bounds={'create-category-modal-wrapper'}
         buttonClassName={
-          method === 'POST'
-            ? 'mt-4 ml-5 truncate'
-            : `group flex w-full items-center rounded-md px-2 py-2 hover:bg-slate-100`
+          method === 'POST' ? 'truncate' : `group flex w-full items-center rounded-md px-2 py-2 hover:bg-slate-100`
         }
         buttonId={method === 'POST' ? 'create-category-btn' : 'edit-category-btn'}
         overrideDefaultButtonStyle={method !== 'POST'}
@@ -228,7 +226,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             <label className='mb-2 block'>Name</label>
             <input
               placeholder='Enter a name for the category'
-              className='focus:shadow-outline w-full appearance-none rounded-md border py-2 px-3 leading-tight text-gray-700 shadow invalid:border-red-500 invalid:bg-red-50 invalid:text-red-500 invalid:placeholder-red-500 focus:outline-none'
+              className='focus:shadow-outline w-full appearance-none rounded-md border py-2 px-3 leading-tight text-slate-700 shadow invalid:border-red-500 invalid:bg-red-50 invalid:text-red-500 invalid:placeholder-red-500 focus:outline-none'
               {...register('name')}
             />
           </div>
@@ -236,7 +234,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             <label className='mb-2 block'>Description</label>
             <textarea
               placeholder='Enter a description for the category'
-              className='focus:shadow-outline w-full appearance-none rounded-md border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none'
+              className='focus:shadow-outline w-full appearance-none rounded-md border py-2 px-3 leading-tight text-slate-700 shadow focus:outline-none'
               {...register('description')}
             />
           </div>
