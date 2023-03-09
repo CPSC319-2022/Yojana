@@ -94,7 +94,7 @@ describe('/api/cats/batch', () => {
       await batch(req, res)
 
       expect(res._getStatusCode()).toBe(201)
-      expect(res._getData()).toBe(JSON.stringify({ createdEntries: expectedResponse }))
+      expect(res._getData()).toBe(JSON.stringify({ appData: mockValidCats, createdEntries: expectedResponse }))
     })
 
     it('should return a 500 status code when batch add fails', async () => {

@@ -34,13 +34,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
   try {
     await prisma.entry.createMany({
-      data: entriesToAdd.map(
-        ({ date, isRepeating = false, categoryId }: { date: Date; isRepeating?: boolean; categoryId?: number }) => ({
-          date: date,
-          isRepeating: isRepeating,
-          categoryId: categoryId!
-        })
-      )
+      data: entriesToAdd.map(({ date, isRepeating, categoryId }) => ({
+        date: date,
+        isRepeating: isRepeating,
+        categoryId: categoryId!
+      }))
     })
     const entriesToFind = entriesToAdd.map((entry) => {
       return { date: entry.date, categoryId: entry.categoryId }
