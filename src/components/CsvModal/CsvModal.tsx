@@ -30,11 +30,8 @@ export const CsvModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleUploadSuccess = (response?: BatchResponse, error?: string) => {
-    console.log('entered handleUploadSuccess')
     const createdEntries = response?.createdEntries
     const categories = response?.appData
-    console.log('response', response)
-    console.log('error', error)
     setIsModalOpen(false)
     if (error) {
       dispatch(setAlert({ message: `There was an error processing your request: ${error}`, type: 'error', show: true }))

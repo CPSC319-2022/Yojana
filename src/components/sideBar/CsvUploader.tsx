@@ -67,7 +67,6 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchRespons
       const res = await response.json()
       onSuccess(res, undefined)
     } catch (error) {
-      console.log('error', error)
       onSuccess(undefined, "couldn't add entries")
     }
   }
