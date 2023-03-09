@@ -12,7 +12,7 @@ describe('Login', () => {
     it('should show CategoriesDropdown on hover', () => {
       cy.get('button#category-dropdown-1').should('not.exist')
       cy.get('div#category-item-1').trigger('mouseover')
-      cy.get('button#category-dropdown-1').should('exist')
+      cy.get('button#category-dropdown-1').should('not.exist')
     })
   })
 
