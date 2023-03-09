@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { BsFillFileEarmarkBarGraphFill } from 'react-icons/bs'
+import { FiletypeCsv } from 'react-bootstrap-icons'
 import csv from 'csv-parser'
 import { Button } from '@/components/common'
 import { BatchResponse } from '@/types/prisma'
@@ -80,7 +80,7 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchRespons
         <div className='flex h-48 w-full cursor-pointer items-center justify-center rounded-lg'>
           <div className='text-center'>
             <div className='mb-6 flex items-center'>
-              <BsFillFileEarmarkBarGraphFill className='text-green-500' size={18} />
+              <FiletypeCsv className='text-green-500' size={18} />
               <p className='ml-2 text-slate-600'>Uploaded: {csvFileName}</p>
             </div>
             <div className='flex space-x-4'>

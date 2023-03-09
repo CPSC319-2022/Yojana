@@ -50,7 +50,6 @@
     "react-draggable": "^4.4.5",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.43.1",
-    "react-icons": "^4.8.0",
     "react-nanny": "^2.15.0",
     "react-redux": "^8.0.5",
     "wcag-contrast": "^3.0.0",
