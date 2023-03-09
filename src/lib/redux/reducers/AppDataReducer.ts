@@ -54,10 +54,12 @@ const appDataSlice = createSlice({
       _addEntriesToEntryMap(state.entryMap, action.payload.entries, action.payload.id)
     },
     updateCategory: (state, action: PayloadAction<CategoryFullState>) => {
-      setCookie(`yojana.show-category-${action.payload.id}`, action.payload.show)
       const index = state.data.findIndex((cat) => cat.id === action.payload.id)
       // update data
+      const previousShow = state.data[index].show
+      setCookie(`yojana.show-category-${action.payload.id}`, state.data[index].show)
       state.data[index] = action.payload
+      state.data[index].show = previousShow
       // update EntryMap
       state.entryMap = _createEntryMap(state.data)
     },

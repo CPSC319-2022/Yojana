@@ -1,16 +1,16 @@
 import { CategoryModal } from '@/components/CategoryModal'
+import { Session } from 'next-auth'
 import { CategoriesMenu } from './CategoriesMenu'
 
-import { CsvModal } from '@/components/CsvModal'
+interface Props {
+  session: Session
+}
 
-export const SideBar = () => {
+export const SideBar = ({ session }: Props) => {
   return (
-    <div className='mt-4 pt-2 pl-1'>
-      <div className='flex flex-row px-4'>
-        <CategoryModal method='POST' id={-1} callBack={() => {}} />
-        <CsvModal />
-      </div>
-      <CategoriesMenu />
+    <div className='pt-2'>
+      {session.user.isAdmin && <CategoryModal method='POST' id={-1} callBack={() => {}} />}
+      <CategoriesMenu session={session} />
     </div>
   )
 }

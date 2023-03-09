@@ -1,9 +1,10 @@
 import { CategoryModal } from '@/components/CategoryModal'
 import { Button } from '@/components/common'
 import { DeleteCategoryModal } from '@/components/DeleteCategoryModal'
+import { useAppSelector } from '@/redux/hooks'
+import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import { Popover, Transition } from '@headlessui/react'
-import { Fragment, Dispatch } from 'react'
-import { BsThreeDotsVertical } from 'react-icons/bs'
+import { Dispatch, Fragment } from 'react'
 import { DropdownProps } from '../common/Dropdown'
 
 export const CategoriesDropdown = (props: {
@@ -12,16 +13,17 @@ export const CategoriesDropdown = (props: {
   keepOpen: boolean
 }) => {
   const { id, setKeepFocus, keepOpen } = props
+  const disable = useAppSelector(getIsSelectingDates)
 
   return (
     <HoverDropdown
-      Icon={BsThreeDotsVertical}
+      iconName='ThreeDotsVertical'
       id={id}
       menuItems={[]}
       overrideDefaultButtonStyle={true}
-      buttonClassName={`z-0 focus:outline-none cursor-pointer group-hover:text-slate-500 ${
-        keepOpen ? 'text-slate-500' : 'text-white'
-      }`}
+      buttonClassName={`z-0 focus:outline-none cursor-pointer 
+      ${!disable && 'group-hover:text-slate-500'} 
+      ${keepOpen ? 'text-slate-500' : 'text-white'}`}
       setKeepFocus={setKeepFocus}
       keepPanelOpen={keepOpen}
     />
@@ -31,7 +33,7 @@ export const CategoriesDropdown = (props: {
 const HoverDropdown = ({
   text,
   id,
-  Icon,
+  iconName,
   containerClassName = '',
   buttonClassName,
   overrideDefaultButtonStyle,
@@ -41,21 +43,22 @@ const HoverDropdown = ({
   const handleButtonClick = () => {
     keepPanelOpen ? handleClosePopover() : setKeepFocus?.(Number(id))
   }
-
   const handleClosePopover = () => {
     setKeepFocus && setKeepFocus(-1)
   }
-
+  const disable = useAppSelector(getIsSelectingDates)
   return (
     <div className={containerClassName}>
       <Popover as='div' className='relative inline-block text-left'>
         <>
           <Popover.Button
             as={Button}
+            disabled={disable}
             text={text}
-            Icon={Icon}
+            iconName={iconName}
             onClick={handleButtonClick}
             className={buttonClassName}
+            id={`category-dropdown-${id}`}
             overrideDefaultStyle={overrideDefaultButtonStyle}
           />
           <Transition
@@ -69,10 +72,11 @@ const HoverDropdown = ({
             leaveTo='transform opacity-0 scale-95'
           >
             <Popover.Panel
-              className='w-42 absolute left-0 z-10 mt-2 w-28 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'
+              className={`w-42 absolute left-0 z-10 mt-2 w-28 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none
+              ${disable ? 'visibility: collapse' : ''}`}
               static
             >
-              <div className='px-1 py-1'>
+              <div className={`px-1 py-1 `}>
                 <CategoryModal method='PUT' id={Number(id)} callBack={handleClosePopover} />
                 <DeleteCategoryModal id={Number(id)} onClose={handleClosePopover} />
               </div>

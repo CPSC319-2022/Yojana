@@ -1,10 +1,9 @@
-import '@/styles/globals.css'
-import React from 'react'
-import Head from 'next/head'
 import { wrapper } from '@/redux/store'
-import { Provider } from 'react-redux'
+import '@/styles/globals.css'
 import { SessionProvider } from 'next-auth/react'
 import { AppProps } from 'next/app'
+import Head from 'next/head'
+import { Provider } from 'react-redux'
 
 const App = ({ Component, ...rest }: AppProps) => {
   const { store, props } = wrapper.useWrappedStore(rest)

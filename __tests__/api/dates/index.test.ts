@@ -30,7 +30,7 @@ describe('/api/dates', () => {
           id: 1,
           date: new Date(),
           categoryId: 1,
-          isRepeating: false
+          isRepeating: true
         },
         {
           id: 2,
