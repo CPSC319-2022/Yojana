@@ -42,10 +42,6 @@ const appDataSlice = createSlice({
       // update EntryMap
       state.entryMap = _createEntryMap(action.payload)
     },
-    addEntriesBatch: (state, action: PayloadAction<Entry[]>) => {
-      // update data
-      _addEntriesToEntryMapBatch(state.entryMap, action.payload)
-    },
     addCategory: (state, action: PayloadAction<CategoryFullState>) => {
       setCookie(`yojana.show-category-${action.payload.id}`, action.payload.show)
       // update data
@@ -123,38 +119,7 @@ const _addEntriesToEntryMap = (entryMap: EntryMap, entries: EntryWithoutCategory
   return entryMap
 }
 
-const _addEntriesToEntryMapBatch = (entryMap: EntryMap, entries: Entry[]) => {
-  entries.forEach((entry) => {
-    // TODO: Fix this hack to get the correct date, ignore timezones
-    const date = dayjs(entry.date).add(1, 'day')
-    const year = date.year() // 2023
-    const month = date.month() // 0-11
-    const day = date.date() // 1-31
-    // create year if it doesn't exist
-    if (!entryMap[year]) {
-      entryMap[year] = {}
-    }
-    // create month if it doesn't exist
-    if (!entryMap[year][month]) {
-      entryMap[year][month] = {}
-    }
-    // create day if it doesn't exist
-    if (!entryMap[year][month][day]) {
-      entryMap[year][month][day] = []
-    }
-    // add entry to day
-    entryMap[year][month][day].push({
-      id: entry.id,
-      date: entry.date,
-      isRepeating: entry.isRepeating,
-      categoryId: entry.categoryId
-    })
-  })
-  return entryMap
-}
-
-export const { setAppData, addEntriesBatch, addCategory, updateCategory, toggleCategory, deleteCategory } =
-  appDataSlice.actions
+export const { setAppData, addCategory, updateCategory, toggleCategory, deleteCategory } = appDataSlice.actions
 
 export const getCategory = (state: State, id: number) => {
   const index = state.appData.data.findIndex((cat) => cat.id === id)
