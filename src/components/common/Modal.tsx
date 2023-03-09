@@ -19,6 +19,7 @@ interface ModalProps {
   bounds?: string | { left: number; top: number; right: number; bottom: number }
   maxWidth?: string
   maxHeight?: string
+  minWidth?: string
   draggable?: boolean
   direction?: 'top' | 'bottom'
   closeBtn?: boolean
@@ -42,6 +43,7 @@ export const Modal = ({
   setIsMinimized = () => {},
   maxWidth = '50vw',
   maxHeight = '90vh',
+  minWidth,
   draggable = false,
   direction,
   closeBtn = true,
@@ -53,6 +55,7 @@ export const Modal = ({
   showCloseBtn = true,
   overrideDefaultButtonStyle = false,
   closeParent,
+  bodyPadding = 'px-6 pb-6 pt-3',
   minimizedButtonText
 }: ModalProps) => {
   const directionClass = direction ? `absolute ${direction}-0 my-10` : ''
@@ -102,7 +105,7 @@ export const Modal = ({
                 {!isMinimized ? (
                   <Dialog.Panel
                     className={`${directionClass} w-full max-w-md transform overflow-y-auto rounded-md bg-white text-left align-middle shadow-modal transition-all`}
-                    style={{ maxWidth: maxWidth, maxHeight: maxHeight }}
+                    style={{ maxWidth: maxWidth, maxHeight: maxHeight, minWidth: minWidth }}
                   >
                     {showCloseBtn && (
                       <div id={handle} className={`w-full bg-slate-100 ${!isMinimized ? 'cursor-move' : ''}`}>
@@ -132,9 +135,9 @@ export const Modal = ({
                         )}
                       </div>
                     )}
-                    <div className='px-6 pb-6 pt-3'>
+                    <div className={bodyPadding}>
                       {title && (
-                        <Dialog.Title as='h3' className='text-lg font-medium leading-6 text-gray-900'>
+                        <Dialog.Title as='h3' className='text-lg font-medium leading-6 text-slate-900'>
                           {title}
                         </Dialog.Title>
                       )}
