@@ -218,7 +218,7 @@ yarn format:check # to check if your code is formatted correctly
 - Do **NOT** push directly to `main`. Always create a new branch and make a PR.
 - Always squash and merge PRs to `main` to keep the commit history clean.
 
-## Deployment
+## Deploy ment
 
 We use [Azure](https://azure.microsoft.com/) to deploy
 our [MySQL database](https://azure.microsoft.com/en-us/products/mysql) and to authenticate users
