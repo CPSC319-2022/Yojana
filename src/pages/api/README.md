@@ -274,7 +274,8 @@ post:
     201:
       description: batch of entries added to categories
       object:
-        entriesAdded: int
+        createdEntries: Entry[]
+        appData: CategoryFull[]
     401:
       description: user is not authorized to delete category
       text: Unauthorized
