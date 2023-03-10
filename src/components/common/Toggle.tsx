@@ -1,7 +1,7 @@
+import { useAppDispatch } from '@/redux/hooks'
+import { setGridPreferences, setYearPreferences } from '@/redux/reducers/MainCalendarReducer'
 import { Switch } from '@headlessui/react'
 import { setCookie } from 'cookies-next'
-import { useAppDispatch } from '@/redux/hooks'
-import { setDate, setInterval, setGridPreferences, setYearPreferences } from '@/redux/reducers/MainCalendarReducer'
 
 interface ToggleProps {
   textToToggle: string[]
