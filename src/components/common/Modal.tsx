@@ -145,7 +145,7 @@ export const Modal = ({
                     </div>
                   </Dialog.Panel>
                 ) : (
-                  <Button text={minimizedButtonText} onClick={() => setIsMinimized(false)} />
+                  <Button text={minimizedButtonText} onClick={() => setIsMinimized(false)} className='animate-pulse' />
                 )}
               </Transition.Child>
             </div>
