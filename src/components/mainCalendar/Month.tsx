@@ -71,9 +71,9 @@ export const Month = (props: MonthProps) => {
 
       return (
         <div
-          className={`tile overflow-y-auto ${selected?.isSelected ? 'bg-emerald-100' : 'bg-white'} px-0.5 ${
-            isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''
-          } `}
+          className={`tile overflow-y-auto ${selected?.isSelected ? 'bg-emerald-100' : 'bg-white'} ${
+            isSelectingDates && !selected?.isSelected ? 'hover:ring-2 hover:ring-inset hover:ring-emerald-200' : ''
+          } px-0.5 ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} `}
           key={day.date()}
           onClick={() => {
             if (!selected || !selected?.isRepeating) {
