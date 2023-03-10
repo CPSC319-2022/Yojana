@@ -56,6 +56,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     currentRepeatingDays.splice(currentRepeatingDays.indexOf(''), 1)
   }
   const [selectedDaysOfTheWeek, setSelectedDaysOfTheWeek] = useState<DayOfWeek>(currentRepeatingDays || [])
+  const [currentCron, setCurrentCron] = useState<string>('')
   const selectedDates = useAppSelector(getSelectedDates)
   const [dirtyDates, setDirtyDates] = useState(false)
   const getInitialDates = (dates: EntryWithoutCategoryId[], isRepeating: boolean) => {
@@ -273,6 +274,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                                 const startDate = getValues('repeating.startDate')
                                 const endDate = getValues('repeating.endDate')
                                 dispatch(setRepeatingDates(generateDatesFromCron(cron, startDate, endDate)))
+                                setCurrentCron(cron)
                               }}
                             />
                           </Tabs.Content>
@@ -305,6 +307,9 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
               text={method === 'POST' ? 'Add Dates' : 'Update Dates'}
               className='mr-3'
               onClick={() => {
+                const startDate = getValues('repeating.startDate')
+                const endDate = getValues('repeating.endDate')
+                dispatch(setRepeatingDates(generateDatesFromCron(currentCron, startDate, endDate)))
                 setIsMinimized(true)
                 dispatch(setIsSelectingDates(true))
                 setDirtyDates(true)
@@ -314,7 +319,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
               type='submit'
               disabled={isSubmitting || (method === 'PUT' && !isDirty && !dirtyDates)}
               text={method === 'POST' ? 'Create' : 'Update'}
-              onClick={handleSubmit(onSubmit)}
+              onClick={() => {
+                const startDate = getValues('repeating.startDate')
+                const endDate = getValues('repeating.endDate')
+                dispatch(setRepeatingDates(generateDatesFromCron(currentCron, startDate, endDate)))
+                handleSubmit(onSubmit)
+              }}
             />
           </div>
         </form>

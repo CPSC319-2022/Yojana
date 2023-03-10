@@ -1,14 +1,14 @@
-import { useCallback } from 'react'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
-import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
-import dayjs from 'dayjs'
 import {
   getIsSelectingDates,
   getPrevCurrNextMonthSelectedDates,
   toggleIndividualDate
 } from '@/redux/reducers/DateSelectorReducer'
+import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
+import dayjs from 'dayjs'
+import { useCallback } from 'react'
 
 interface MonthProps {
   monthOffset: number
@@ -119,7 +119,7 @@ export const Month = (props: MonthProps) => {
       })
       return (
         <div
-          className={(numWeeks === 5 ? 'h-1/5' : 'h-1/6') + ' ' + 'grid h-1/5 grid-cols-7 gap-px pt-0.5'}
+          className={(numWeeks === 6 ? 'h-1/6' : 'h-1/5') + ' ' + 'grid h-1/5 grid-cols-7 gap-px pt-0.5'}
           key={firstDateOfWeek}
         >
           {generatedDays}
@@ -131,7 +131,8 @@ export const Month = (props: MonthProps) => {
 
   const generateWeeks = useCallback(() => {
     const weeks = []
-    for (let i = 0 - monthStartDate.day(); i < daysInMonth; i += 7) {
+    const target = numWeeks > 4 ? daysInMonth : daysInMonth + 7
+    for (let i = 0 - monthStartDate.day(); i < target; i += 7) {
       weeks.push(renderWeek(i))
     }
     return <div className={`${monthView ? 'h-[95%]' : 'h-[90%]'}`}>{weeks}</div>
