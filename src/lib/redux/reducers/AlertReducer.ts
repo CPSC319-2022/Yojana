@@ -39,7 +39,7 @@ const alertSlice = createSlice({
         }
 
         if (action.payload.showOnce !== undefined) {
-          setCookie(`yojana.show-${action.payload.cookieName}-alert`, action.payload.showOnce)
+          setCookie(`yojana.show-${action.payload.cookieName}-alert`, !action.payload.showOnce)
         }
       }
 
