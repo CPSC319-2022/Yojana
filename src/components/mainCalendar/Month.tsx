@@ -67,7 +67,7 @@ export const Month = (props: MonthProps) => {
       }
 
       const isToday = dayjs().isSame(day, 'day')
-      const todayCircle = isToday ? 'rounded-full bg-emerald-200' : ''
+      const todayCircle = isToday && !isSelectingDates ? 'rounded-full bg-emerald-200' : ''
 
       const notCurrentMonth = offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth
 
