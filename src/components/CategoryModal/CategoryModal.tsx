@@ -311,7 +311,9 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                   setAlert({
                     message: 'Select the dates you want to add to this category by clicking on them.',
                     type: 'info',
-                    show: true
+                    show: true,
+                    showOnce: true,
+                    cookieName: 'select-dates-alert'
                   })
                 )
                 setDirtyDates(true)

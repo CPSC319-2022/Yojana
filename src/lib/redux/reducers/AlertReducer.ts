@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import tcolors from 'tailwindcss/colors'
 import { HYDRATE } from 'next-redux-wrapper'
+import { getCookie, setCookie } from 'cookies-next'
 
 interface State {
   alert: Alert
@@ -9,9 +10,11 @@ interface State {
 interface Alert {
   message: string
   type: string
+  show: boolean
   textColor?: string
   backgroundColor?: string
-  show: boolean
+  showOnce?: boolean
+  cookieName?: string
 }
 
 const initialState = {
@@ -19,7 +22,9 @@ const initialState = {
   show: false,
   type: 'default',
   textColor: '',
-  backgroundColor: ''
+  backgroundColor: '',
+  showOnce: false,
+  cookieName: ''
 }
 
 const alertSlice = createSlice({
@@ -27,6 +32,17 @@ const alertSlice = createSlice({
   initialState,
   reducers: {
     setAlert: (state, action: PayloadAction<Alert>) => {
+      if (action.payload.cookieName) {
+        const show = getCookie(`yojana.show-${action.payload.cookieName}-alert`)
+        if (show === false) {
+          return
+        }
+
+        if (action.payload.showOnce !== undefined) {
+          setCookie(`yojana.show-${action.payload.cookieName}-alert`, action.payload.showOnce)
+        }
+      }
+
       state.message = action.payload.message
       state.type = action.payload.type
       state.show = action.payload.show
