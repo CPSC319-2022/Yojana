@@ -7,7 +7,7 @@ import { getCategories } from '@/prisma/queries'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setAppData } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates, resetSelectedDates, setIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
-import { setDate, setInterval } from '@/redux/reducers/MainCalendarReducer'
+import { setDate, setInterval, setGridPreferences, setYearPreferences } from '@/redux/reducers/MainCalendarReducer'
 import { wrapper } from '@/redux/store'
 import { getCookies, setCookie } from 'cookies-next'
 import dayjs from 'dayjs'
@@ -19,10 +19,14 @@ import { authOptions } from './api/auth/[...nextauth]'
 interface CalendarProps {
   sidebarOpenInitial: boolean
   session: Session
+  yearViewPref: boolean
+  gridViewPref: boolean
 }
 
-const Calendar = ({ sidebarOpenInitial, session }: CalendarProps) => {
+const Calendar = ({ sidebarOpenInitial, session, yearViewPref, gridViewPref }: CalendarProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(sidebarOpenInitial)
+  const [prefScroll, setPrefScroll] = useState(yearViewPref)
+  const [prefGrid, setPrefGrid] = useState(gridViewPref)
   const dispatch = useAppDispatch()
   const isSelectingDates = useAppSelector((state) => getIsSelectingDates(state))
 
@@ -39,7 +43,14 @@ const Calendar = ({ sidebarOpenInitial, session }: CalendarProps) => {
       <Alert />
       <div className='flex h-screen w-full flex-col bg-white text-slate-800'>
         <div className='z-10'>
-          <NavBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <NavBar
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+            prefScroll={prefScroll}
+            setPrefScroll={setPrefScroll}
+            prefGrid={prefGrid}
+            setPrefGrid={setPrefGrid}
+          />
         </div>
         <div className='border-box z-0 flex h-[90vh] w-full flex-row'>
           <div
@@ -83,6 +94,26 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
       sidebarOpenInitial = cookies['yojana.sidebar-open'] === 'true'
     }
 
+    // set cookie for yearViewPref
+    let yearViewPref = true
+    if (cookies['yojana.yearViewPref'] === undefined) {
+      setCookie('yojana.yearViewPref', true, { req, res })
+    } else {
+      // if yearViewPref cookie is defined, set yearViewPref to the value of the cookie
+      yearViewPref = cookies['yojana.yearViewPref'] === 'true'
+    }
+    store.dispatch(setYearPreferences(yearViewPref))
+
+    // set cookie for gridViewPref
+    let gridViewPref = true
+    if (cookies['yojana.gridViewPref'] === undefined) {
+      setCookie('yojana.gridViewPref', true, { req, res })
+    } else {
+      // if gridViewPref cookie is defined, set gridViewPref to the value of the cookie
+      gridViewPref = cookies['yojana.gridViewPref'] === 'true'
+    }
+    store.dispatch(setGridPreferences(gridViewPref))
+
     // make query to database to get categories
     const categories = await getCategories()
     // add show property to each category based on cookie value
@@ -103,6 +134,8 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     return {
       props: {
         sidebarOpenInitial,
+        yearViewPref,
+        gridViewPref,
         session: await getServerSession(req, res, authOptions)
       }
     }

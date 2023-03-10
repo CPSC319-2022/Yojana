@@ -1,9 +1,9 @@
-import React, { useCallback, useMemo } from 'react'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getYear } from '@/redux/reducers/AppDataReducer'
-import { getDate } from '@/redux/reducers/MainCalendarReducer'
-import dayjs, { Dayjs } from 'dayjs'
 import { getIsSelectingDates, getYearSelectedDates, toggleIndividualDate } from '@/redux/reducers/DateSelectorReducer'
+import { getDate, getGridPreference, getYearPreference } from '@/redux/reducers/MainCalendarReducer'
+import dayjs, { Dayjs } from 'dayjs'
+import { useCallback, useMemo } from 'react'
 
 export const Year = () => {
   const stateDate = useAppSelector(getDate)
@@ -11,6 +11,8 @@ export const Year = () => {
   const entriesInYear = useAppSelector((state) => getYear(state, stateDate))
   const isSelectingDates = useAppSelector(getIsSelectingDates)
   const yearSelected = useAppSelector((state) => getYearSelectedDates(state, stateDate))
+  const gridViewPref = useAppSelector(getGridPreference)
+  const yearViewPref = useAppSelector(getYearPreference)
 
   const yearStartDate = dayjs(stateDate).startOf('year')
   const yearNum = yearStartDate.get('year')
@@ -45,111 +47,115 @@ export const Year = () => {
     [categoryMap, entriesInYear, isSelectingDates]
   )
 
-  const renderDay = useCallback(
-    (monthStartDate: Dayjs, dateOffset: number, monthNum: number) => {
-      const day = monthStartDate.add(dateOffset, 'days')
-      const isWeekend = day.day() === 0 || day.day() === 6
-      const selected = yearSelected?.[monthNum]?.[day.date()]
-      const isToday = day.isSame(dayjs(), 'day')
-
-      let backgroundColor
+  const getDateBackgroundColour = useCallback(
+    (isWeekend: boolean, isToday: boolean, isSelected?: boolean) => {
       if (!isSelectingDates) {
-        if (isToday) {
-          backgroundColor = 'bg-emerald-200'
-        } else {
-          backgroundColor = isWeekend ? 'bg-slate-100' : 'bg-white'
-        }
+        return isWeekend ? 'bg-slate-100' : 'bg-white'
       } else {
-        if (isWeekend && selected?.isSelected) {
-          backgroundColor = 'bg-emerald-200'
+        if (isWeekend && isSelected) {
+          return 'bg-emerald-200'
         } else if (isWeekend) {
-          backgroundColor = 'bg-slate-100'
-        } else if (selected?.isSelected) {
-          backgroundColor = 'bg-emerald-100'
+          return 'bg-slate-100'
+        } else if (isSelected) {
+          return 'bg-emerald-100'
         } else {
-          backgroundColor = 'bg-white'
+          return 'bg-white'
         }
       }
+    },
+    [isSelectingDates]
+  )
+
+  const onDayClicked = useCallback(
+    (day: Dayjs, isNotSelectedNorRepeating: boolean) => {
+      if (isNotSelectedNorRepeating) {
+        dispatch(toggleIndividualDate(day))
+      }
+    },
+    [dispatch]
+  )
+
+  const renderDay = useCallback(
+    (monthNum: number, dateOffset: number) => {
+      const monthStartDate = dayjs(yearStartDate).add(monthNum, 'month')
+      if (monthStartDate.daysInMonth() <= dateOffset) {
+        return <span key={`${yearNum}-${monthNum}-${dateOffset}`}>&nbsp;</span>
+      }
+
+      const day = monthStartDate.add(dateOffset, 'days')
+      const isToday = day.isSame(dayjs(), 'day')
+      const isWeekend = day.day() === 0 || day.day() === 6
+      const selected = yearSelected?.[monthNum]?.[day.date()]
+      const backgroundColor = getDateBackgroundColour(isWeekend, isToday, selected?.isSelected)
 
       return (
         <div
-          className={`tile truncate px-0.5 ${backgroundColor} ${
-            isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''
-          }`}
-          key={`${yearNum}-${monthNum}-${day.date()}`}
-          onClick={() => {
-            if (!selected || !selected?.isRepeating) {
-              dispatch(toggleIndividualDate(day))
-            }
-          }}
+          className={`tile px-0.5 
+            ${backgroundColor} 
+            ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} 
+            ${!isSelectingDates && isToday ? 'ring-2 ring-inset ring-emerald-300' : ''}
+            ${yearViewPref ? 'inline-flow break-all' : 'flex overflow-x-scroll'}`}
+          key={`${yearNum}-${monthNum}-${dateOffset}`}
+          onClick={() => onDayClicked(day, !selected || !selected?.isRepeating)}
         >
           {renderDayCategories(day, monthNum)}
         </div>
       )
     },
-    [dispatch, isSelectingDates, renderDayCategories, yearNum, yearSelected]
+    [
+      getDateBackgroundColour,
+      isSelectingDates,
+      onDayClicked,
+      renderDayCategories,
+      yearNum,
+      yearSelected,
+      yearStartDate,
+      yearViewPref
+    ]
   )
 
-  const generateMonth = useCallback(
-    (monthStartDate: Dayjs) => {
-      const daysInMonth = monthStartDate.daysInMonth()
-      const monthNum = monthStartDate.get('month')
-
-      const days = []
-
-      for (let offset = 0; offset < daysInMonth; offset++) {
-        days.push(renderDay(monthStartDate, offset, monthNum))
-      }
-
-      return <div className='box-border'>{days}</div>
-    },
-    [renderDay]
-  )
-
-  const renderDateNums = useMemo(() => {
-    return Array.from(Array(32).keys()).map((dateNum) => {
-      if (dateNum === 0)
-        return (
-          <div className={'sticky top-0 bg-slate-100 text-transparent'} key={dateNum}>
-            .
-          </div>
-        )
-      return (
-        <div className={'px-1'} key={dateNum}>
-          {dateNum}
-        </div>
-      )
-    })
-  }, [])
-
-  const months = useMemo(() => {
-    const twelveMonths = Array.from(Array(12).keys()).map((monthNum) => {
+  const monthHeaders = useMemo(() => {
+    return Array.from(Array(15).keys()).map((columnNum) => {
+      const monthNum = columnNum - Math.ceil(columnNum / 5)
       const monthStartDate = dayjs(yearStartDate).add(monthNum, 'month')
       return (
-        <div className='bg-white' key={`${yearNum}-${monthNum}`}>
-          <h3 className='sticky top-0 bg-slate-100 text-center text-slate-400'>{monthStartDate.format('MMM')}</h3>
-          {generateMonth(monthStartDate)}
-        </div>
+        <h3 className='sticky top-0 bg-slate-100 text-center text-slate-400' key={`col-${columnNum}-header`}>
+          {columnNum % 5 === 0 ? '\u00A0' : monthStartDate.format('MMM')}
+        </h3>
       )
     })
-    return Array.from(Array(3).keys()).map((groupNum) => {
-      return (
-        <div className={'inline-flex w-full'} key={'group-' + groupNum}>
-          <div className={'min-w-min bg-white'}>{renderDateNums}</div>
-          <div className={'grid grow grid-cols-4 gap-px'}>
-            {twelveMonths[groupNum * 4]}
-            {twelveMonths[groupNum * 4 + 1]}
-            {twelveMonths[groupNum * 4 + 2]}
-            {twelveMonths[groupNum * 4 + 3]}
-          </div>
-        </div>
-      )
-    })
-  }, [generateMonth, renderDateNums, yearNum, yearStartDate])
+  }, [yearStartDate])
 
-  return (
-    <div className='grow bg-slate-200'>
-      <div className={'box-border grid h-full grow grid-cols-3 gap-px'}>{months}</div>
-    </div>
-  )
+  const days = useMemo(() => {
+    return Array.from(Array(31).keys()).map((dateNum) => {
+      return Array.from(Array(15).keys()).map((columnNum) => {
+        if (columnNum % 5 === 0) {
+          return (
+            <div className={'bg-white px-1'} key={`${columnNum}-${dateNum + 1}`}>
+              {dateNum + 1}
+            </div>
+          )
+        }
+
+        const monthNum = columnNum - Math.ceil(columnNum / 5)
+        return renderDay(monthNum, dateNum)
+      })
+    })
+  }, [renderDay])
+
+  const months = useMemo(() => {
+    return (
+      <div
+        className={`box-border grid grow grid-cols-[2.5%_7.6125%_7.6125%_7.6125%_7.6125%_2.5%_7.6125%_7.6125%_7.6125%_7.6125%_2.5%_7.6125%_7.6125%_7.6125%_7.6125%] divide-x divide-y border-b bg-slate-300 
+        ${gridViewPref ? 'divide-slate-300' : 'divide-transparent'}`}
+      >
+        <>
+          {monthHeaders}
+          {days}
+        </>
+      </div>
+    )
+  }, [days, gridViewPref, monthHeaders])
+
+  return <div className='grow bg-white'>{months}</div>
 }
