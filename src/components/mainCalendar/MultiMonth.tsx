@@ -19,7 +19,7 @@ export const MultiMonth = () => {
 
   return (
     <div className='grow'>
-      <div className={'box-border grid h-full grow grid-cols-2 gap-4'}>{months}</div>
+      <div className={'box-border grid h-full grow grid-cols-2 gap-x-4'}>{months}</div>
     </div>
   )
 }
