@@ -42,19 +42,19 @@ export const AccountDropdown = ({ prefScroll, setPrefScroll, prefGrid, setPrefGr
       />
       <Modal
         buttonText=''
-        title='Pick Your Preferences'
+        title='Preferences'
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
         maxWidth={'40vw'}
         draggable={true}
         closeWhenClickOutside={false}
-        handle={'delete-category-modal-handle'}
-        bounds={'delete-category-modal-wrapper'}
+        handle={'preferences-modal-handle'}
+        bounds={'preferences-modal-wrapper'}
         buttonClassName={`group flex w-full items-center rounded-md hover:bg-slate-100`}
         showCloseBtn={true}
         overrideDefaultButtonStyle={true}
       >
-        <div className='mt-2 inline-grid p-3'>
+        <div className='mt-2 inline-grid'>
           <Toggle
             textToToggle={['Expanded', 'Scroll']}
             cookieName='yojana.yearViewPref'
