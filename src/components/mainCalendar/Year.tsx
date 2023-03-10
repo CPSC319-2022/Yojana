@@ -93,7 +93,7 @@ export const Year = () => {
           className={`tile px-0.5 
             ${backgroundColor} 
             ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} 
-            ${!isSelectingDates && isToday ? 'shadow-[inset_0_0_1px_2px] shadow-emerald-300' : ''}
+            ${!isSelectingDates && isToday ? 'ring-2 ring-inset ring-emerald-300' : ''}
             ${yearViewPref ? 'inline-flow break-all' : 'flex overflow-x-scroll'}`}
           key={`${yearNum}-${monthNum}-${dateOffset}`}
           onClick={() => onDayClicked(day, !selected || !selected?.isRepeating)}
