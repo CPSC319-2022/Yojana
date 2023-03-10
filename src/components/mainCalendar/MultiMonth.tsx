@@ -12,7 +12,7 @@ export const MultiMonth = () => {
     return (
       <div key={monthNum}>
         <h3 className='text-base'>{dayjs(targetDate).add(monthNum, 'month').format('MMMM')}</h3>
-        <Month className='h-[38vh]' monthOffset={monthNum} key={monthNum}></Month>
+        <Month className='h-[41vh]' monthOffset={monthNum} key={monthNum}></Month>
       </div>
     )
   })
