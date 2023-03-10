@@ -48,16 +48,16 @@ export const Year = () => {
   )
 
   const getDateBackgroundColour = useCallback(
-    (isWeekend: boolean, isToday: boolean, isSelected?: boolean) => {
+    (isWeekend: boolean, isToday: boolean, isSelected?: boolean, isRepeating?: boolean) => {
       if (!isSelectingDates) {
         return isWeekend ? 'bg-slate-100' : 'bg-white'
       } else {
         if (isWeekend && isSelected) {
-          return 'bg-emerald-200'
+          return isRepeating ? 'bg-emerald-500' : 'bg-emerald-200'
         } else if (isWeekend) {
           return 'bg-slate-100'
         } else if (isSelected) {
-          return 'bg-emerald-100'
+          return isRepeating ? 'bg-emerald-400' : 'bg-emerald-100'
         } else {
           return 'bg-white'
         }
@@ -86,7 +86,7 @@ export const Year = () => {
       const isToday = day.isSame(dayjs(), 'day')
       const isWeekend = day.day() === 0 || day.day() === 6
       const selected = yearSelected?.[monthNum]?.[day.date()]
-      const backgroundColor = getDateBackgroundColour(isWeekend, isToday, selected?.isSelected)
+      const backgroundColor = getDateBackgroundColour(isWeekend, isToday, selected?.isSelected, selected?.isRepeating)
 
       return (
         <div
