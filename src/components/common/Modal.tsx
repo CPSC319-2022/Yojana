@@ -87,6 +87,7 @@ export const Modal = ({
           onClose={() => {
             if (closeWhenClickOutside) {
               setIsOpen(false)
+              closeParent?.()
             }
           }}
         >
