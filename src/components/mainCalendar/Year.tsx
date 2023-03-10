@@ -53,11 +53,11 @@ export const Year = () => {
         return isWeekend ? 'bg-slate-100' : 'bg-white'
       } else {
         if (isWeekend && isSelected) {
-          return isRepeating ? 'bg-emerald-500' : 'bg-emerald-200'
+          return isRepeating ? 'bg-slate-400' : 'bg-emerald-200'
         } else if (isWeekend) {
           return 'bg-slate-100'
         } else if (isSelected) {
-          return isRepeating ? 'bg-emerald-400' : 'bg-emerald-100'
+          return isRepeating ? 'bg-slate-400' : 'bg-emerald-100'
         } else {
           return 'bg-white'
         }
