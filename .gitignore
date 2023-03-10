@@ -48,3 +48,4 @@ next-env.d.ts
 /cypress/videos
 /cypress/screenshots
 cypress/logs
+cypress/downloads
