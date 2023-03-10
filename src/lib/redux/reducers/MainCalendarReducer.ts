@@ -8,12 +8,16 @@ interface State {
   mainCalendar: {
     interval: CalendarInterval
     date: number
+    gridPreferences: boolean
+    yearPreferences: boolean
   }
 }
 
 const initialState = {
   interval: CalendarInterval.YEAR,
-  date: dayjs().unix()
+  date: dayjs().unix(),
+  gridPreferences: true,
+  yearPreferences: true
 }
 
 const mainCalendarSlice = createSlice({
@@ -34,6 +38,12 @@ const mainCalendarSlice = createSlice({
     },
     jumpToToday: (state) => {
       state.date = dayjs().unix()
+    },
+    setGridPreferences: (state, action: PayloadAction<boolean>) => {
+      state.gridPreferences = action.payload
+    },
+    setYearPreferences: (state, action: PayloadAction<boolean>) => {
+      state.yearPreferences = action.payload
     }
   },
   extraReducers: {
@@ -46,9 +56,23 @@ const mainCalendarSlice = createSlice({
   }
 })
 
-export const { setInterval, decrementDate, setDate, incrementDate, jumpToToday } = mainCalendarSlice.actions
+export const {
+  setInterval,
+  decrementDate,
+  setDate,
+  incrementDate,
+  jumpToToday,
+  setGridPreferences,
+  setYearPreferences
+} = mainCalendarSlice.actions
 export const getInterval = (state: State) => state.mainCalendar.interval
 export const isYearInterval = (state: State) => state.mainCalendar.interval === CalendarInterval.YEAR
 export const isMonthInterval = (state: State) => state.mainCalendar.interval === CalendarInterval.MONTH
 export const getDate = (state: State) => dayjs.unix(state.mainCalendar.date)
 export const mainCalendarReducer = mainCalendarSlice.reducer
+export const getGridPreference = (state: State) => {
+  return state.mainCalendar.gridPreferences
+}
+export const getYearPreference = (state: State) => {
+  return state.mainCalendar.yearPreferences
+}
