@@ -69,7 +69,7 @@ export const Modal = ({
           id={buttonId}
           onClick={() => {
             setIsOpen(true)
-            buttonText === 'Create Category' && dispatch(resetSelectedDates())
+            title === 'Create Category' && dispatch(resetSelectedDates())
           }}
           className={buttonClassName}
           overrideDefaultStyle={overrideDefaultButtonStyle}
