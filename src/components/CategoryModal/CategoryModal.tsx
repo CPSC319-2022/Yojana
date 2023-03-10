@@ -302,11 +302,18 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           <div className='flex justify-end'>
             <Button
               type='button'
-              text={method === 'POST' ? 'Add Dates' : 'Update Dates'}
+              text={'Select Dates'}
               className='mr-3'
               onClick={() => {
                 setIsMinimized(true)
                 dispatch(setIsSelectingDates(true))
+                dispatch(
+                  setAlert({
+                    message: 'Select the dates you want to add to this category by clicking on them.',
+                    type: 'info',
+                    show: true
+                  })
+                )
                 setDirtyDates(true)
               }}
             />
