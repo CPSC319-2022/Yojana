@@ -67,13 +67,17 @@ export const Month = (props: MonthProps) => {
       }
 
       const isToday = dayjs().isSame(day, 'day')
-      const todayCircle = isToday ? 'rounded-full bg-emerald-200' : ''
+      const todayCircle = isToday && !isSelectingDates ? 'rounded-full bg-emerald-200' : ''
+
+      const notCurrentMonth = offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth
 
       return (
         <div
-          className={`tile overflow-y-auto ${selected?.isSelected ? 'bg-emerald-100' : 'bg-white'} px-0.5 ${
-            isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''
-          } `}
+          className={`tile overflow-y-auto ${
+            selected?.isSelected ? (selected?.isRepeating ? 'bg-slate-200' : 'bg-emerald-100') : 'bg-white'
+          } ${
+            isSelectingDates && !selected?.isSelected ? 'hover:ring-2 hover:ring-inset hover:ring-emerald-200' : ''
+          } px-0.5 ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} `}
           key={day.date()}
           onClick={() => {
             if (!selected || !selected?.isRepeating) {
@@ -83,11 +87,7 @@ export const Month = (props: MonthProps) => {
         >
           <div className={`flex items-center justify-center`}>
             <div className={`flex h-7 w-7 items-center justify-center ${todayCircle} mt-1`}>
-              <span
-                className={`${
-                  offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''
-                } block text-center text-sm`}
-              >
+              <span className={`${notCurrentMonth ? 'text-slate-400' : ''} block text-center text-sm`}>
                 {day.date()}
               </span>
             </div>
