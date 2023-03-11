@@ -21,20 +21,23 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-const generateICal = (categories: CategoryFull[]) => {
+export const generateICal = (categories: CategoryFull[]) => {
   const calendar = ical({ name: 'Yojana Calendar' })
-  categories.forEach(({ entries, name, description, creator }) => {
-    entries.forEach(({ date }) => {
-      calendar.createEvent({
-        start: dayjs(date).toDate(),
-        allDay: true,
-        summary: name,
-        description: description,
-        categories: [{ name: name }],
-        organizer: { name: creator.name, email: creator.email }
+  if (categories) {
+    categories.forEach(({ entries, name, description, creator }) => {
+      entries.forEach(({ date }) => {
+        console.log(categories)
+        calendar.createEvent({
+          start: dayjs(date).toDate(),
+          allDay: true,
+          summary: name,
+          description: description,
+          categories: [{ name: name }],
+          organizer: { name: creator.name, email: creator.email }
+        })
       })
     })
-  })
+  }
   return calendar
 }
 
