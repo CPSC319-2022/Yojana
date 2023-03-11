@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import tcolors from 'tailwindcss/colors'
 import { HYDRATE } from 'next-redux-wrapper'
-import { getCookie, setCookie } from 'cookies-next'
+import { getCookie } from 'cookies-next'
+import { setCookieMaxAge } from '@/utils/cookies'
 
 interface State {
   alert: Alert
@@ -39,7 +40,7 @@ const alertSlice = createSlice({
         }
 
         if (action.payload.showOnce !== undefined) {
-          setCookie(`yojana.show-${action.payload.cookieName}-alert`, !action.payload.showOnce)
+          setCookieMaxAge(`yojana.show-${action.payload.cookieName}-alert`, !action.payload.showOnce)
         }
       }
 

@@ -1,7 +1,7 @@
 import { useAppDispatch } from '@/redux/hooks'
 import { setGridPreferences, setYearPreferences } from '@/redux/reducers/MainCalendarReducer'
 import { Switch } from '@headlessui/react'
-import { setCookie } from 'cookies-next'
+import { setCookieMaxAge } from '@/utils/cookies'
 
 interface ToggleProps {
   textToToggle: string[]
@@ -26,7 +26,7 @@ export const Toggle = ({
         name={cookieName}
         onChange={() => {
           setPreference(!preference)
-          setCookie(cookieName, !preference)
+          setCookieMaxAge(cookieName, !preference)
           cookieName === 'yojana.yearViewPref'
             ? dispatch(setYearPreferences(!preference))
             : dispatch(setGridPreferences(!preference))
