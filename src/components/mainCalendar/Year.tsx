@@ -48,16 +48,14 @@ export const Year = () => {
   )
 
   const getDateBackgroundColour = useCallback(
-    (isWeekend: boolean, isToday: boolean, isSelected?: boolean) => {
+    (isWeekend: boolean, isToday: boolean, isSelected?: boolean, isRepeating?: boolean) => {
       if (!isSelectingDates) {
         return isWeekend ? 'bg-slate-100' : 'bg-white'
       } else {
         if (isWeekend && isSelected) {
-          return 'bg-emerald-200'
-        } else if (isWeekend) {
-          return 'bg-slate-100'
+          return isRepeating ? 'bg-slate-200' : 'bg-emerald-200'
         } else if (isSelected) {
-          return 'bg-emerald-100'
+          return isRepeating ? 'bg-slate-200' : 'bg-emerald-100'
         } else {
           return 'bg-white'
         }
@@ -86,13 +84,14 @@ export const Year = () => {
       const isToday = day.isSame(dayjs(), 'day')
       const isWeekend = day.day() === 0 || day.day() === 6
       const selected = yearSelected?.[monthNum]?.[day.date()]
-      const backgroundColor = getDateBackgroundColour(isWeekend, isToday, selected?.isSelected)
+      const backgroundColor = getDateBackgroundColour(isWeekend, isToday, selected?.isSelected, selected?.isRepeating)
 
       return (
         <div
           className={`tile px-0.5 
             ${backgroundColor} 
             ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} 
+            ${isSelectingDates && !selected?.isSelected ? 'hover:ring-2 hover:ring-inset hover:ring-emerald-200' : ''}
             ${!isSelectingDates && isToday ? 'ring-2 ring-inset ring-emerald-300' : ''}
             ${yearViewPref ? 'inline-flow break-all' : 'flex overflow-x-scroll'}`}
           key={`${yearNum}-${monthNum}-${dateOffset}`}
@@ -146,8 +145,8 @@ export const Year = () => {
   const months = useMemo(() => {
     return (
       <div
-        className={`box-border grid grow grid-cols-[2.5%_7.6125%_7.6125%_7.6125%_7.6125%_2.5%_7.6125%_7.6125%_7.6125%_7.6125%_2.5%_7.6125%_7.6125%_7.6125%_7.6125%] divide-x divide-y border-b bg-slate-300 
-        ${gridViewPref ? 'divide-slate-300' : 'divide-transparent'}`}
+        className={`box-border grid grow grid-cols-[2.5%_7.7%_7.7%_7.7%_7.7%_2.5%_7.7%_7.7%_7.7%_7.7%_2.5%_7.7%_7.7%_7.7%_7.7%] divide-x divide-y border-b bg-slate-300 
+        ${gridViewPref ? '' : 'divide-transparent'}`}
       >
         <>
           {monthHeaders}
