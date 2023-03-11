@@ -74,7 +74,7 @@ export const Month = (props: MonthProps) => {
       return (
         <div
           className={`tile overflow-y-auto ${
-            selected?.isSelected ? (selected?.isRepeating ? 'bg-slate-200' : 'bg-emerald-100') : 'bg-white'
+            selected?.isSelected ? (selected?.isRepeating ? 'bg-slate-100' : 'bg-emerald-100') : 'bg-white'
           } ${
             isSelectingDates && !selected?.isSelected ? 'hover:ring-2 hover:ring-inset hover:ring-emerald-200' : ''
           } px-0.5 ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} `}
