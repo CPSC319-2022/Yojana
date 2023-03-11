@@ -1,7 +1,8 @@
 import { ClientSafeProvider, getProviders, getSession, LiteralUnion, signIn } from 'next-auth/react'
 import { BuiltInProviderType } from 'next-auth/providers'
-import { SiMicrosoftazure } from 'react-icons/si'
 import { DEFAULT_CALLBACK_URL } from '@/constants/constants'
+import Image from 'next/image'
+import azure from '@/public/azure.svg'
 
 interface LoginProps {
   providers: Record<LiteralUnion<BuiltInProviderType>, ClientSafeProvider>
@@ -16,11 +17,12 @@ export const Login = ({ providers, callbackUrl }: LoginProps) => {
           provider.id === 'azure-ad' && (
             <div key={provider.name}>
               <button
+                id='azure-ad-btn'
                 className='flex items-center rounded-lg bg-gradient-to-r from-azure-300  to-azure-400 py-2 px-4 font-medium text-white hover:from-azure-400 hover:to-azure-500'
                 onClick={() => signIn(provider.id, { callbackUrl: callbackUrl })}
               >
                 Sign in with {provider.name}
-                <SiMicrosoftazure className='ml-2 text-lg' />
+                <Image height={20} width={20} src={azure} alt='Azure' className='ml-2' />
               </button>
             </div>
           )

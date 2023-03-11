@@ -265,3 +265,28 @@ delete:
       description: internal error
       text: There was an error deleting the category
 ```
+
+## /api/cats/batch
+
+```yaml
+post:
+  body:
+    object:
+      key: category name
+      value: array of dates
+  responses:
+    201:
+      description: batch of entries added to categories
+      object:
+        createdEntries: Entry[]
+        appData: CategoryFull[]
+    401:
+      description: user is not authorized to delete category
+      text: Unauthorized
+    405:
+      description: Invalid HTTP method
+      text: Method Not Allowed
+    500:
+      description: internal error
+      text: Internal Server Error
+```
