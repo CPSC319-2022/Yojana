@@ -34,14 +34,16 @@ export const AccountDropdown = ({ prefScroll, setPrefScroll, prefGrid, setPrefGr
             }
           },
           {
+            key: 'Export Calendar',
+            label: 'Export Calendar',
+            onClick: () => {
+              window.open('/api/dates/export', '_blank')
+            }
+          },
+          {
             key: 'Logout',
             label: 'Logout',
             onClick: () => signOut()
-          },
-          {
-            key: 'Export iCal',
-            label: 'Export iCal',
-            onClick: () => iCalendarLink()
           }
         ]}
       />
@@ -76,16 +78,4 @@ export const AccountDropdown = ({ prefScroll, setPrefScroll, prefGrid, setPrefGr
       </Modal>
     </div>
   )
-}
-
-function iCalendarLink() {
-  fetch('/api/dates/ical')
-    .then((response) => response.text())
-    .then(() => {
-      window.open('http://127.0.0.1:8080/')
-      // do something with the iCal data
-    })
-    .catch((error) => {
-      console.error('Error:', error)
-    })
 }
