@@ -106,6 +106,7 @@ export const AccountDropdown = () => {
                         monthCategoryAppearance.value === 'icons' ? 'banners' : 'icons'
                       )
                     }}
+                    disabled
                   />
                 </div>
               </Accordion.Body>

@@ -5,9 +5,17 @@ interface ToggleProps {
   name: string
   preference: boolean
   onChange: () => void
+  disabled?: boolean
   className?: string
 }
-export const Toggle = ({ textToToggle, name, className = 'w-full', preference, onChange }: ToggleProps) => {
+export const Toggle = ({
+  textToToggle,
+  name,
+  className = 'w-full',
+  preference,
+  onChange,
+  disabled = false
+}: ToggleProps) => {
   return (
     <div className='space-between mt-2 inline-flex'>
       <div className={className}>{preference ? textToToggle[0] : textToToggle[1]}</div>
@@ -15,8 +23,9 @@ export const Toggle = ({ textToToggle, name, className = 'w-full', preference, o
         checked={preference}
         name={name}
         onChange={onChange}
-        className={`${preference ? 'bg-emerald-500' : 'bg-emerald-300'}
+        className={`${disabled ? 'cursor-auto bg-slate-200' : preference ? 'bg-emerald-500' : 'bg-emerald-300'}
         relative inline-flex h-[20px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+        disabled={disabled}
       >
         <span className='sr-only'>Use setting</span>
         <span

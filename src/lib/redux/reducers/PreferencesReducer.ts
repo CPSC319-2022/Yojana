@@ -31,7 +31,7 @@ export const defaultPreferences = {
     cookieName: 'yojana.year-show-grid-preference'
   },
   monthCategoryAppearance: {
-    value: 'icons' as MonthCategoryAppearance,
+    value: 'banners' as MonthCategoryAppearance,
     cookieName: 'yojana.month-category-appearance-preference'
   }
 }
