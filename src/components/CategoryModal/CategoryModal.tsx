@@ -338,6 +338,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                 setDirtyDates(true)
               }}
             />
+            {getValues('repeating.startDate') + ' ' + getValues('repeating.endDate')}
             <Button
               type='submit'
               disabled={isSubmitting || (method === 'PUT' && !isDirty && !dirtyDates)}
