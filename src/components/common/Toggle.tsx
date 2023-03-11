@@ -24,7 +24,11 @@ export const Toggle = ({
         name={name}
         onChange={onChange}
         className={`${
-          disabled ? 'cursor-auto bg-slate-200' : 'cursor-pointer ' + preference ? 'bg-emerald-500' : 'bg-emerald-300'
+          disabled
+            ? 'cursor-auto bg-slate-200'
+            : preference
+            ? 'cursor-pointer bg-emerald-500'
+            : 'cursor-pointer bg-emerald-300'
         }
         relative inline-flex h-[20px] w-[40px] shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
         disabled={disabled}
