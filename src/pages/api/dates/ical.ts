@@ -29,29 +29,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 function generateICal(categories: any) {
   const icalendar = ical({ name: 'yojana' })
-  const eventDataArray: { start: Date; end: Date; summary: any; location: any; description: any }[] = []
-  categories.forEach(
-    (category: {
-      startDate: string | number | Date
-      endDate: string | number | Date
-      name: any
-      description: any
-      cron: any
-    }) => {
-      console.log(category.startDate)
+  const allEventData: any[] = []
+  categories.forEach((category: { name: any; description: any; entries: any; cron: any }) => {
+    const dates = category.entries
+    dates.forEach((entry: { date: any }) => {
       const eventData = {
-        start: new Date(category.startDate),
-        end: new Date(category.endDate),
+        start: entry.date,
+        end: entry.date,
         summary: category.name,
         location: category.description,
         description: category.cron
       }
-      eventDataArray.push(eventData)
-    }
-  )
-  eventDataArray.forEach((eventData) => {
-    console.log(eventData.summary)
-    console.log(eventData.start)
+      allEventData.push(eventData)
+    })
+  })
+
+  allEventData.forEach((eventData) => {
     icalendar.createEvent({
       start: eventData.start,
       end: eventData.end,
