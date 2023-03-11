@@ -5,7 +5,8 @@ import { CsvUploader } from '@/components/sideBar'
 import { setAlert } from '@/redux/reducers/AlertReducer'
 import { setAppData } from '@/redux/reducers/AppDataReducer'
 import { BatchResponse, CategoryFull } from '@/types/prisma'
-import { getCookies, setCookie } from 'cookies-next'
+import { getCookies } from 'cookies-next'
+import { setCookieMaxAge } from '@/utils/cookies'
 
 export const setCategoryShow = (categories: CategoryFull[]) => {
   const cookies = getCookies()
@@ -15,7 +16,7 @@ export const setCategoryShow = (categories: CategoryFull[]) => {
     const key = `yojana.show-category-${category.id}`
     if (cookies[key] === undefined) {
       // if cookie is undefined, set it to true
-      setCookie(key, 'true')
+      setCookieMaxAge(key, 'true')
     } else {
       // if cookie is defined, set show to the value of the cookie
       show = cookies[key] === 'true'
