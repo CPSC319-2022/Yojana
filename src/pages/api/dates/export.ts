@@ -27,7 +27,7 @@ const generateICal = (categories: CategoryFull[]) => {
   categories.forEach(({ entries, name, description, creator }) => {
     entries.forEach(({ date }) => {
       calendar.createEvent({
-        start: dayjs(date).startOf('day').toDate(),
+        start: dayjs(date).toDate(),
         allDay: true,
         summary: name,
         description: description,
