@@ -15,7 +15,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const calendar = generateICal(await getCategories())
       res.setHeader('Content-Type', 'text/calendar')
       res.setHeader('Content-Disposition', 'attachment; filename=yojana.ics')
-      res.setHeader('Content-Length', calendar.toString().length)
       return res.status(200).send(calendar.toString())
     default:
       return res.status(405).send('Method Not Allowed')
