@@ -51,7 +51,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const { data: session } = useSession()
   const dispatch = useAppDispatch()
   const currentState = useAppSelector((state) => getCategory(state, id))
-  const currentRepeatingDays = id != -1 ? currentState?.cron?.split(' ').at(-1)?.split(',') : []
+  const currentRepeatingDays = method === 'PUT' ? currentState?.cron?.split(' ').at(-1)?.split(',') : []
   // remove empty string from array
   if (currentRepeatingDays?.includes('')) {
     currentRepeatingDays.splice(currentRepeatingDays.indexOf(''), 1)
@@ -151,7 +151,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         description: description,
         color: color,
         creatorId: session.user.id,
-        cron: repeating.cron ? repeating.cron : undefined,
+        cron: repeating.cron ? repeating.cron : method === 'PUT' ? currentCron : undefined,
         startDate: repeating.cron ? repeating.startDate : undefined,
         endDate: repeating.cron ? repeating.endDate : undefined,
         dates: [...newDates],
