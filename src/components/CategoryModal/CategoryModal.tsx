@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setAlert } from '@/redux/reducers/AlertReducer'
 import { addCategory, getCategory, updateCategory } from '@/redux/reducers/AppDataReducer'
 import {
+  cancelDateSelection,
   getSelectedDates,
   resetSelectedDates,
   setIndividualDates,
@@ -193,6 +194,11 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     callBack()
   }
 
+  const setIsMinimizedCallback = (minimized: boolean) => {
+    setIsMinimized(minimized)
+    dispatch(setIsSelectingDates(minimized))
+  }
+
   return (
     <>
       <Modal
@@ -217,12 +223,22 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         overrideDefaultButtonStyle={method !== 'POST'}
         closeParent={callBack}
         isMinimized={isMinimized}
-        setIsMinimized={(minimized) => {
-          setIsMinimized(minimized)
-          dispatch(setIsSelectingDates(minimized))
-        }}
-        minimizedButtonText='Save Dates'
+        setIsMinimized={setIsMinimizedCallback}
       >
+        <Modal.Minimized>
+          <button
+            type='button'
+            className='mr-3 inline-flex animate-pulse justify-center rounded-md border border-transparent bg-slate-100 py-2 px-4 text-slate-900 enabled:hover:bg-slate-200 disabled:opacity-75'
+            onClick={() => {
+              setIsMinimizedCallback(false)
+              dispatch(cancelDateSelection())
+            }}
+          >
+            Cancel
+          </button>
+          <Button text='Save' onClick={() => setIsMinimizedCallback(false)} className='animate-pulse' />
+        </Modal.Minimized>
+
         <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
           <div className='mb-4'>
             <label className='mb-2 block'>Name</label>
@@ -302,7 +318,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           <div className='flex justify-end'>
             <Button
               type='button'
-              text={method === 'POST' ? 'Add Dates' : 'Update Dates'}
+              text={'Select Dates'}
               className='mr-3'
               onClick={() => {
                 const startDate = getValues('repeating.startDate')
@@ -310,6 +326,15 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                 dispatch(setRepeatingDates(generateDatesFromCron(currentCron, startDate, endDate)))
                 setIsMinimized(true)
                 dispatch(setIsSelectingDates(true))
+                dispatch(
+                  setAlert({
+                    message: 'Select the dates you want to add to this category by clicking on them.',
+                    type: 'info',
+                    show: true,
+                    showOnce: true,
+                    cookieName: 'select-dates-alert'
+                  })
+                )
                 setDirtyDates(true)
               }}
             />

@@ -7,14 +7,15 @@ import { getCategories } from '@/prisma/queries'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setAppData } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates, resetSelectedDates, setIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
-import { setDate, setInterval, setGridPreferences, setYearPreferences } from '@/redux/reducers/MainCalendarReducer'
+import { setDate, setGridPreferences, setInterval, setYearPreferences } from '@/redux/reducers/MainCalendarReducer'
 import { wrapper } from '@/redux/store'
-import { getCookies, setCookie } from 'cookies-next'
+import { getCookies } from 'cookies-next'
 import dayjs from 'dayjs'
 import { GetServerSideProps } from 'next'
 import { getServerSession, Session } from 'next-auth'
 import { useEffect, useState } from 'react'
 import { authOptions } from './api/auth/[...nextauth]'
+import { setCookieMaxAge } from '@/utils/cookies'
 
 interface CalendarProps {
   sidebarOpenInitial: boolean
@@ -88,7 +89,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     // if sidebar cookie is undefined, set it to true
     let sidebarOpenInitial = true
     if (cookies['yojana.sidebar-open'] === undefined) {
-      setCookie('yojana.sidebar-open', true, { req, res })
+      setCookieMaxAge('yojana.sidebar-open', true, { req, res })
     } else {
       // if sidebar cookie is defined, set sidebarOpenInitial to the value of the cookie
       sidebarOpenInitial = cookies['yojana.sidebar-open'] === 'true'
@@ -97,7 +98,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     // set cookie for yearViewPref
     let yearViewPref = true
     if (cookies['yojana.yearViewPref'] === undefined) {
-      setCookie('yojana.yearViewPref', true, { req, res })
+      setCookieMaxAge('yojana.yearViewPref', true, { req, res })
     } else {
       // if yearViewPref cookie is defined, set yearViewPref to the value of the cookie
       yearViewPref = cookies['yojana.yearViewPref'] === 'true'
@@ -107,7 +108,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     // set cookie for gridViewPref
     let gridViewPref = true
     if (cookies['yojana.gridViewPref'] === undefined) {
-      setCookie('yojana.gridViewPref', true, { req, res })
+      setCookieMaxAge('yojana.gridViewPref', true, { req, res })
     } else {
       // if gridViewPref cookie is defined, set gridViewPref to the value of the cookie
       gridViewPref = cookies['yojana.gridViewPref'] === 'true'
@@ -122,7 +123,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
       const key = `yojana.show-category-${category.id}`
       if (cookies[key] === undefined) {
         // if cookie is undefined, set it to true
-        setCookie(key, 'true', { req, res })
+        setCookieMaxAge(key, 'true', { req, res })
       } else {
         // if cookie is defined, set show to the value of the cookie
         show = cookies[key] === 'true'
