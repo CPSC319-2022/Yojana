@@ -66,15 +66,12 @@ export const AccountDropdown = () => {
               <Accordion.Body>
                 <div className='mt-2 flex flex-col space-y-2'>
                   <Toggle
-                    textToToggle={['Overflow: Expanded', 'Overflow: Scroll']}
+                    textToToggle={['Overflow: Expand', 'Overflow: Scroll']}
                     name={yearOverflow.cookieName}
-                    preference={yearOverflow.value === 'expanded'}
+                    preference={yearOverflow.value === 'expand'}
                     onChange={() => {
-                      dispatch(setYearOverflow(yearOverflow.value === 'expanded' ? 'scroll' : 'expanded'))
-                      setCookieMaxAge(
-                        yearOverflow.cookieName,
-                        yearOverflow.value === 'expanded' ? 'scroll' : 'expanded'
-                      )
+                      dispatch(setYearOverflow(yearOverflow.value === 'expand' ? 'scroll' : 'expand'))
+                      setCookieMaxAge(yearOverflow.cookieName, yearOverflow.value === 'expand' ? 'scroll' : 'expand')
                     }}
                   />
                   <Toggle

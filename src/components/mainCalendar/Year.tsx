@@ -93,7 +93,7 @@ export const Year = () => {
             ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} 
             ${isSelectingDates && !selected?.isSelected ? 'hover:ring-2 hover:ring-inset hover:ring-emerald-200' : ''}
             ${!isSelectingDates && isToday ? 'ring-2 ring-inset ring-emerald-300' : ''}
-            ${preferences.yearOverflow.value === 'expanded' ? 'inline-flow break-all' : 'flex overflow-x-scroll'}`}
+            ${preferences.yearOverflow.value === 'expand' ? 'inline-flow break-all' : 'flex overflow-x-scroll'}`}
           key={`${yearNum}-${monthNum}-${dateOffset}`}
           onClick={() => onDayClicked(day, !selected || !selected?.isRepeating)}
         >

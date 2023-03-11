@@ -98,7 +98,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
 
     // set cookie for yearOverflow
     const yearOverflowCookie = cookies[yearOverflow.cookieName]
-    if (yearOverflowCookie === undefined || (yearOverflowCookie !== 'expanded' && yearOverflowCookie !== 'scroll')) {
+    if (yearOverflowCookie === undefined || (yearOverflowCookie !== 'expand' && yearOverflowCookie !== 'scroll')) {
       // if yearOverflow cookie is undefined or invalid, set it to the default value
       setCookieMaxAge(yearOverflow.cookieName, yearOverflow.value, { req, res })
     } else {
