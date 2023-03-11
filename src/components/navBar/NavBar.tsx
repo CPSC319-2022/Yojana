@@ -8,11 +8,11 @@ import {
   isYearInterval,
   jumpToToday
 } from '@/redux/reducers/MainCalendarReducer'
-import { setCookie } from 'cookies-next'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { AccountDropdown } from './AccountDropdown'
 import { CalViewDropdown } from './CalViewDropdown'
+import { setCookieMaxAge } from '@/utils/cookies'
 
 interface NavBarProps {
   sidebarOpen: boolean
@@ -65,7 +65,7 @@ export const NavBar = ({
           text='&#9776;'
           onClick={() => {
             setSidebarOpen(!sidebarOpen)
-            setCookie(`yojana.sidebar-open`, !sidebarOpen)
+            setCookieMaxAge(`yojana.sidebar-open`, !sidebarOpen)
           }}
           className='mr-5 px-3 pt-0.5 pb-2 text-2xl'
         />
