@@ -30,7 +30,7 @@ const AccordionItem = ({ children, defaultOpen = true }: { children: React.React
             <span>{header}</span>
             <Icon iconName='ChevronUp' className={`${open ? 'rotate-180 transform' : ''} h-5 w-5`} />
           </Disclosure.Button>
-          <Disclosure.Panel className='px-4 pb-2 text-sm text-slate-500'>{body}</Disclosure.Panel>
+          <Disclosure.Panel className='px-4 pb-2 text-sm text-slate-600'>{body}</Disclosure.Panel>
         </>
       )}
     </Disclosure>
