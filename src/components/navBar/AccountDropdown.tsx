@@ -57,7 +57,7 @@ export const AccountDropdown = () => {
         buttonClassName={`group flex w-full items-center rounded-md hover:bg-slate-100`}
         showCloseBtn={true}
         overrideDefaultButtonStyle={true}
-        bodyPadding='px-4 pb-3 pt-3'
+        bodyPadding='px-4 pb-4 pt-3'
       >
         <div className='mt-2'>
           <Accordion>
