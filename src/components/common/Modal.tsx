@@ -6,6 +6,7 @@ import { getIsSelectingDates, resetSelectedDates } from '@/redux/reducers/DateSe
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, ReactNode, useRef } from 'react'
 import Draggable from 'react-draggable'
+import { getChildByType, removeChildrenByType } from 'react-nanny'
 
 interface ModalProps {
   buttonText: string
@@ -30,17 +31,15 @@ interface ModalProps {
   showCloseBtn?: boolean
   overrideDefaultButtonStyle?: boolean
   closeParent?: () => void
-  minimizedButtonText?: string
 }
 
 export const Modal = ({
-  children: body,
+  children,
   buttonText,
   title,
   isOpen,
   setIsOpen,
   isMinimized = false,
-  setIsMinimized = () => {},
   maxWidth = '50vw',
   maxHeight = '90vh',
   minWidth,
@@ -55,12 +54,14 @@ export const Modal = ({
   showCloseBtn = true,
   overrideDefaultButtonStyle = false,
   closeParent,
-  bodyPadding = 'px-6 pb-6 pt-3',
-  minimizedButtonText
+  bodyPadding = 'px-6 pb-6 pt-3'
 }: ModalProps) => {
   const directionClass = direction ? `absolute ${direction}-0 my-10` : ''
   const disable = useAppSelector(getIsSelectingDates)
   const dispatch = useAppDispatch()
+  const minimized = getChildByType(children, Minimized)
+  const body = removeChildrenByType(children, Minimized)
+
   return (
     <>
       <div>
@@ -69,7 +70,7 @@ export const Modal = ({
           id={buttonId}
           onClick={() => {
             setIsOpen(true)
-            buttonText === 'Create Category' && dispatch(resetSelectedDates())
+            title === 'Create Category' && dispatch(resetSelectedDates())
           }}
           className={buttonClassName}
           overrideDefaultStyle={overrideDefaultButtonStyle}
@@ -111,26 +112,16 @@ export const Modal = ({
                       <div id={handle} className={`w-full bg-slate-100 ${!isMinimized ? 'cursor-move' : ''}`}>
                         {closeBtn && (
                           <div className='flex justify-end'>
-                            {isMinimized ? (
-                              <button
-                                type='button'
-                                className='rotate-45 px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
-                                onClick={() => setIsMinimized(false)}
-                              >
-                                ×
-                              </button>
-                            ) : (
-                              <button
-                                type='button'
-                                className='px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
-                                onClick={() => {
-                                  setIsOpen(false)
-                                  closeParent?.()
-                                }}
-                              >
-                                ×
-                              </button>
-                            )}
+                            <button
+                              type='button'
+                              className='px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
+                              onClick={() => {
+                                setIsOpen(false)
+                                closeParent?.()
+                              }}
+                            >
+                              ×
+                            </button>
                           </div>
                         )}
                       </div>
@@ -145,7 +136,7 @@ export const Modal = ({
                     </div>
                   </Dialog.Panel>
                 ) : (
-                  <Button text={minimizedButtonText} onClick={() => setIsMinimized(false)} />
+                  <>{minimized}</>
                 )}
               </Transition.Child>
             </div>
@@ -155,6 +146,12 @@ export const Modal = ({
     </>
   )
 }
+
+const Minimized = ({ children }: { children: ReactNode }) => {
+  return <>{children}</>
+}
+
+Modal.Minimized = Minimized
 
 interface DraggableDialogProps {
   children: ReactNode
