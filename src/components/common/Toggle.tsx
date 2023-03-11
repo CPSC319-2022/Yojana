@@ -23,8 +23,10 @@ export const Toggle = ({
         checked={preference}
         name={name}
         onChange={onChange}
-        className={`${disabled ? 'cursor-auto bg-slate-200' : preference ? 'bg-emerald-500' : 'bg-emerald-300'}
-        relative inline-flex h-[20px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+        className={`${
+          disabled ? 'cursor-auto bg-slate-200' : 'cursor-pointer ' + preference ? 'bg-emerald-500' : 'bg-emerald-300'
+        }
+        relative inline-flex h-[20px] w-[40px] shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
         disabled={disabled}
       >
         <span className='sr-only'>Use setting</span>
