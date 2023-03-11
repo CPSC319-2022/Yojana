@@ -16,12 +16,15 @@ import { BsChevronUp } from 'react-icons/bs'
 import dayjs from 'dayjs'
 import { generateDatesFromCron } from '@/utils/dates'
 import { setAlert } from '@/redux/reducers/AlertReducer'
+import bootstrapIcons from 'react-bootstrap-icons'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
   description: z.string().trim().max(191).optional(),
   color: z.string().refine((color) => /^#[0-9A-F]{6}$/i.test(color), { message: 'Invalid color' }),
-  icon: z.string().refine((icon) => /^[\u{0000}-\u{10FFFF}]+$/u.test(icon), { message: 'Invalid icon' }),
+  //  icon: z.string().refine((icon) => /^[\u{0000}-\u{10FFFF}]+$/u.test(icon), { message: 'Invalid icon' }),
+  icon: z.string().refine((icon) => bootstrapIcons.hasOwnProperty(icon), { message: 'Invalid icon' }),
+
   repeating: z
     .object({
       cron: z.string().optional(),
@@ -162,7 +165,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       reset(() => ({
         name: '',
         description: '',
-        icon: '🖂',
+        icon: 'bi bi-envelope-fill',
         color: randomColor(),
         repeating: {
           cron: undefined,
