@@ -146,7 +146,7 @@ export const Year = () => {
     return (
       <div
         className={`box-border grid grow grid-cols-[2.5%_7.7%_7.7%_7.7%_7.7%_2.5%_7.7%_7.7%_7.7%_7.7%_2.5%_7.7%_7.7%_7.7%_7.7%] divide-x divide-y border-b bg-slate-300 
-        ${gridViewPref ? 'divide-slate-300' : 'divide-transparent'}`}
+        ${gridViewPref ? '' : 'divide-transparent'}`}
       >
         <>
           {monthHeaders}
