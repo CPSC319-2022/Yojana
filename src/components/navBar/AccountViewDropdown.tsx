@@ -20,8 +20,25 @@ export const AccountViewDropdown = () => {
           key: 'User',
           label: name,
           onClick: () => {}
+        },
+        {
+          key: 'Export iCal',
+          label: 'Export iCal',
+          onClick: () => iCalendarLink()
         }
       ]}
     />
   )
+}
+
+function iCalendarLink() {
+  fetch('/api/dates/ical')
+    .then((response) => response.text())
+    .then(() => {
+      window.open('http://127.0.0.1:8080/')
+      // do something with the iCal data
+    })
+    .catch((error) => {
+      console.error('Error:', error)
+    })
 }
