@@ -1,37 +1,21 @@
-import { useAppDispatch } from '@/redux/hooks'
-import { setGridPreferences, setYearPreferences } from '@/redux/reducers/MainCalendarReducer'
 import { Switch } from '@headlessui/react'
-import { setCookieMaxAge } from '@/utils/cookies'
 
 interface ToggleProps {
   textToToggle: string[]
-  cookieName: string
-  className?: string
+  name: string
   preference: boolean
-  setPreference: (value: boolean) => void
+  onChange: () => void
+  className?: string
 }
-export const Toggle = ({
-  textToToggle,
-  cookieName,
-  className = 'w-[12vw]',
-  preference,
-  setPreference
-}: ToggleProps) => {
-  const dispatch = useAppDispatch()
+export const Toggle = ({ textToToggle, name, className = 'w-full', preference, onChange }: ToggleProps) => {
   return (
     <div className='space-between mt-2 inline-flex'>
       <div className={className}>{preference ? textToToggle[0] : textToToggle[1]}</div>
       <Switch
         checked={preference}
-        name={cookieName}
-        onChange={() => {
-          setPreference(!preference)
-          setCookieMaxAge(cookieName, !preference)
-          cookieName === 'yojana.yearViewPref'
-            ? dispatch(setYearPreferences(!preference))
-            : dispatch(setGridPreferences(!preference))
-        }}
-        className={`${preference ? 'bg-emerald-600' : 'bg-emerald-400'}
+        name={name}
+        onChange={onChange}
+        className={`${preference ? 'bg-emerald-500' : 'bg-emerald-300'}
         relative inline-flex h-[20px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
       >
         <span className='sr-only'>Use setting</span>
