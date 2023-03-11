@@ -323,7 +323,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
               onClick={() => {
                 const startDate = getValues('repeating.startDate')
                 const endDate = getValues('repeating.endDate')
-                dispatch(setRepeatingDates(generateDatesFromCron(currentCron, startDate, endDate)))
+                const cron = getValues('repeating.cron')
+                dispatch(setRepeatingDates(generateDatesFromCron(cron, startDate, endDate)))
                 setIsMinimized(true)
                 dispatch(setIsSelectingDates(true))
                 dispatch(
@@ -345,7 +346,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
               onClick={() => {
                 const startDate = getValues('repeating.startDate')
                 const endDate = getValues('repeating.endDate')
-                dispatch(setRepeatingDates(generateDatesFromCron(currentCron, startDate, endDate)))
+                const cron = getValues('repeating.cron')
+                dispatch(setRepeatingDates(generateDatesFromCron(cron, startDate, endDate)))
                 handleSubmit(onSubmit)
               }}
             />
