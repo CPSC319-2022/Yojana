@@ -35,9 +35,9 @@ export const ColorPicker = ({ control, name, rules }: ColorPickerProps) => {
   ]
   const colorPickerColors = []
   for (const c of tailwindColors) {
-    colorPickerColors.push(tcolors[c as keyof DefaultColors][200])
     colorPickerColors.push(tcolors[c as keyof DefaultColors][400])
     colorPickerColors.push(tcolors[c as keyof DefaultColors][600])
+    colorPickerColors.push(tcolors[c as keyof DefaultColors][800])
   }
 
   // Use react-hook-form's useController to get the onChange and value props
