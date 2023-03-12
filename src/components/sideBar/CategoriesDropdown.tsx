@@ -4,7 +4,7 @@ import { DeleteCategoryModal } from '@/components/DeleteCategoryModal'
 import { useAppSelector } from '@/redux/hooks'
 import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import { Popover, Transition } from '@headlessui/react'
-import { Dispatch, Fragment } from 'react'
+import { Dispatch, Fragment, useState } from 'react'
 import { DropdownProps } from '../common/Dropdown'
 
 export const CategoriesDropdown = (props: {
@@ -21,7 +21,7 @@ export const CategoriesDropdown = (props: {
       id={id}
       menuItems={[]}
       overrideDefaultButtonStyle={true}
-      buttonClassName={`z-0 focus:outline-none cursor-pointer 
+      buttonClassName={`z-0 focus:outline-none cursor-pointer
       ${!disable && 'group-hover:text-slate-500'} 
       ${keepOpen ? 'text-slate-500' : 'text-white'}`}
       setKeepFocus={setKeepFocus}
@@ -40,15 +40,25 @@ const HoverDropdown = ({
   setKeepFocus,
   keepPanelOpen
 }: DropdownProps) => {
+  const [closeWhenClickOutside, setCloseWhenClickOutside] = useState(false)
   const handleButtonClick = () => {
     keepPanelOpen ? handleClosePopover() : setKeepFocus?.(Number(id))
+    setCloseWhenClickOutside(!closeWhenClickOutside)
   }
   const handleClosePopover = () => {
     setKeepFocus && setKeepFocus(-1)
+    setCloseWhenClickOutside(false)
   }
   const disable = useAppSelector(getIsSelectingDates)
   return (
     <div className={containerClassName}>
+      {closeWhenClickOutside && (
+        <div
+          className='fixed absolute inset-0 z-10 flex h-screen w-screen bg-transparent'
+          aria-hidden='true'
+          onClick={handleClosePopover}
+        />
+      )}
       <Popover as='div' className='relative inline-block text-left'>
         <>
           <Popover.Button
@@ -73,7 +83,10 @@ const HoverDropdown = ({
           >
             <Popover.Panel
               className={`w-42 absolute left-0 z-10 mt-2 w-28 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none
-              ${disable ? 'visibility: collapse' : ''}`}
+              ${disable || !closeWhenClickOutside ? 'visibility: collapse' : ''}`}
+              onClick={() => {
+                setCloseWhenClickOutside(false)
+              }}
               static
             >
               <div className={`px-1 py-1 `}>
