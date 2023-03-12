@@ -125,6 +125,21 @@ other:
       text: Method Not Allowed
 ```
 
+## /api/dates/export
+
+```yaml
+get:
+  responses:
+    200:
+      description: generation of iCalendar file is successful
+      ICalCalendar: string
+other:
+  responses:
+    405:
+      description: invalid method
+      text: Method Not Allowed
+```
+
 ## /api/cats
 
 ```yaml
@@ -163,7 +178,7 @@ put:
     color: string
     icon: string
     isMaster: boolean
-    duplicates: Entry[]
+    toDelete: Entry[]
   responses:
     200:
       description: update existing category details by its id
@@ -264,4 +279,29 @@ delete:
     409:
       description: internal error
       text: There was an error deleting the category
+```
+
+## /api/cats/batch
+
+```yaml
+post:
+  body:
+    object:
+      key: category name
+      value: array of dates
+  responses:
+    201:
+      description: batch of entries added to categories
+      object:
+        createdEntries: Entry[]
+        appData: CategoryFull[]
+    401:
+      description: user is not authorized to delete category
+      text: Unauthorized
+    405:
+      description: Invalid HTTP method
+      text: Method Not Allowed
+    500:
+      description: internal error
+      text: Internal Server Error
 ```

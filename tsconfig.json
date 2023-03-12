@@ -20,9 +20,11 @@
       "@/prisma/*": ["./src/lib/prisma/*"],
       "@/types/*": ["./src/lib/types/*"],
       "@/tests/*": ["./__tests__/*"],
+      "@/public/*": ["./public/*"],
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["cypress", "node"]
   },
   "include": ["next-env.d.ts", "types/**/*.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "./cypress.config.ts"]
 }

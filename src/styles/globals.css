@@ -20,7 +20,7 @@ body {
   height: 100%;
 }
 
-/* IconPicker swatch size */
+/* ColorPicker swatch size */
 .compact-picker > div > span > div {
   width: 20px !important;
   height: 20px !important;
