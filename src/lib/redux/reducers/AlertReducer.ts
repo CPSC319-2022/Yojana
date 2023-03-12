@@ -14,8 +14,7 @@ interface Alert {
   show: boolean
   textColor?: string
   backgroundColor?: string
-  showOnce?: boolean
-  cookieName?: string
+  timeout?: number
 }
 
 const initialState = {
@@ -24,15 +23,14 @@ const initialState = {
   type: 'default',
   textColor: '',
   backgroundColor: '',
-  showOnce: false,
-  cookieName: ''
+  timeout: 5000
 }
 
 const alertSlice = createSlice({
   name: 'alert',
   initialState,
   reducers: {
-    setAlert: (state, action: PayloadAction<Alert>) => {
+    setAlert: (state, action: PayloadAction<Alert & { cookieName?: string; showOnce?: boolean }>) => {
       if (action.payload.cookieName) {
         const show = getCookie(`yojana.show-${action.payload.cookieName}-alert`)
         if (show === false) {
@@ -47,6 +45,7 @@ const alertSlice = createSlice({
       state.message = action.payload.message
       state.type = action.payload.type
       state.show = action.payload.show
+      state.timeout = action.payload.timeout || 5000
       switch (action.payload.type) {
         case 'success':
           state.textColor = tcolors.green[700]
