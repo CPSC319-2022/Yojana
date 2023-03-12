@@ -38,6 +38,13 @@ export const AccountDropdown = () => {
             }
           },
           {
+            key: 'Export Calendar',
+            label: 'Export Calendar',
+            onClick: () => {
+              window.open('/api/dates/export', '_blank')
+            }
+          },
+          {
             key: 'Logout',
             label: 'Logout',
             onClick: () => signOut()
