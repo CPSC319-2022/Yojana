@@ -1,9 +1,10 @@
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getYear } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates, getYearSelectedDates, toggleIndividualDate } from '@/redux/reducers/DateSelectorReducer'
-import { getDate, getGridPreference, getYearPreference } from '@/redux/reducers/MainCalendarReducer'
+import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import dayjs, { Dayjs } from 'dayjs'
 import { useCallback, useMemo } from 'react'
+import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 
 export const Year = () => {
   const stateDate = useAppSelector(getDate)
@@ -11,8 +12,7 @@ export const Year = () => {
   const entriesInYear = useAppSelector((state) => getYear(state, stateDate))
   const isSelectingDates = useAppSelector(getIsSelectingDates)
   const yearSelected = useAppSelector((state) => getYearSelectedDates(state, stateDate))
-  const gridViewPref = useAppSelector(getGridPreference)
-  const yearViewPref = useAppSelector(getYearPreference)
+  const preferences = useAppSelector(getPreferences)
 
   const yearStartDate = dayjs(stateDate).startOf('year')
   const yearNum = yearStartDate.get('year')
@@ -93,7 +93,7 @@ export const Year = () => {
             ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} 
             ${isSelectingDates && !selected?.isSelected ? 'hover:ring-2 hover:ring-inset hover:ring-emerald-200' : ''}
             ${!isSelectingDates && isToday ? 'ring-2 ring-inset ring-emerald-300' : ''}
-            ${yearViewPref ? 'inline-flow break-all' : 'flex overflow-x-scroll'}`}
+            ${preferences.yearOverflow.value === 'expand' ? 'inline-flow break-all' : 'flex overflow-x-scroll'}`}
           key={`${yearNum}-${monthNum}-${dateOffset}`}
           onClick={() => onDayClicked(day, !selected || !selected?.isRepeating)}
         >
@@ -109,7 +109,7 @@ export const Year = () => {
       yearNum,
       yearSelected,
       yearStartDate,
-      yearViewPref
+      preferences.yearOverflow.value
     ]
   )
 
@@ -146,7 +146,7 @@ export const Year = () => {
     return (
       <div
         className={`box-border grid grow grid-cols-[2.5%_7.7%_7.7%_7.7%_7.7%_2.5%_7.7%_7.7%_7.7%_7.7%_2.5%_7.7%_7.7%_7.7%_7.7%] divide-x divide-y border-b bg-slate-300 
-        ${gridViewPref ? '' : 'divide-transparent'}`}
+        ${preferences.yearShowGrid.value ? '' : 'divide-transparent'}`}
       >
         <>
           {monthHeaders}
@@ -154,7 +154,7 @@ export const Year = () => {
         </>
       </div>
     )
-  }, [days, gridViewPref, monthHeaders])
+  }, [days, preferences.yearShowGrid.value, monthHeaders])
 
   return <div className='grow bg-white'>{months}</div>
 }
