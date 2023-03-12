@@ -8,7 +8,12 @@ export const generateDatesFromCron = (
   if (!cron) return []
   const dates = []
   try {
-    const interval = parser.parseExpression(cron, { currentDate: start, endDate: end, iterator: true })
+    // set the currentDate option to the start date minus one millisecond. This will ensure that the first date generated is on or after the start date.
+    const interval = parser.parseExpression(cron, {
+      currentDate: new Date(new Date(start).getTime() - 1),
+      endDate: end,
+      iterator: true
+    })
 
     while (true) {
       try {
