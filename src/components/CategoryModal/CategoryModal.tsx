@@ -23,8 +23,7 @@ import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { IconPicker } from '@/components/IconPicker'
-import { iconPickerIcons } from '@/components/IconPicker/IconPicker'
+import { IconPicker, iconPickerIcons } from '@/components/IconPicker'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),

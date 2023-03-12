@@ -1,1 +1,1 @@
-export { IconPicker } from './IconPicker'
+export { IconPicker, iconPickerIcons } from './IconPicker'
