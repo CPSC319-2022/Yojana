@@ -34,6 +34,7 @@ export const DeleteCategoryModal = ({ id, onClose }: { id: number; onClose: () =
       maxWidth={'40vw'}
       draggable={false}
       closeWhenClickOutside={true}
+      closeParent={onClose}
       handle={'delete-category-modal-handle'}
       bounds={'delete-category-modal-wrapper'}
       buttonClassName={`group flex w-full items-center rounded-md px-2 py-2 hover:bg-slate-100`}
