@@ -154,6 +154,21 @@ other:
       text: Method Not Allowed
 ```
 
+## /api/dates/export
+
+```yaml
+get:
+  responses:
+    200:
+      description: generation of iCalendar file is successful
+      ICalCalendar: string
+other:
+  responses:
+    405:
+      description: invalid method
+      text: Method Not Allowed
+```
+
 ## /api/cats
 
 ```yaml
