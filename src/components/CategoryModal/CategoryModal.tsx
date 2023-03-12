@@ -23,11 +23,13 @@ import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
+import { IconPicker, iconPickerIcons } from '@/components/IconPicker'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
   description: z.string().trim().max(191).optional(),
   color: z.string().refine((color) => /^#[0-9A-F]{6}$/i.test(color), { message: 'Invalid color' }),
+  icon: z.string(),
   repeating: z
     .object({
       cron: z.string().optional(),
@@ -78,11 +80,16 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     //   eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const randomIcon = () => {
+    return iconPickerIcons[(Math.random() * iconPickerIcons.length) | 0]
+  }
+
   const defaultValues =
     method == 'POST'
       ? {
           name: '',
           description: '',
+          icon: randomIcon(),
           repeating: {
             cron: '',
             startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
@@ -93,6 +100,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           name: currentState?.name,
           description: currentState?.description,
           color: currentState?.color,
+          icon: currentState?.icon,
           repeating: {
             cron: currentState?.cron || '',
             startDate:
@@ -107,7 +115,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     control,
     formState: { isSubmitting, errors, isDirty },
     getValues,
-    reset
+    reset,
+    watch
   } = useForm<Schema>({
     resolver: zodResolver(schema),
     shouldUseNativeValidation: true,
@@ -116,11 +125,14 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     defaultValues: defaultValues
   })
 
+  const watchColor = watch('color')
+
   const resetForm = () => {
     reset(() => ({
       name: '',
       description: '',
       color: randomColor(),
+      icon: randomIcon(),
       repeating: {
         cron: undefined,
         startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
@@ -134,7 +146,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
 
-  const onSubmit: SubmitHandler<Schema> = async ({ name, color, description, repeating }) => {
+  const onSubmit: SubmitHandler<Schema> = async ({ name, color, icon, description, repeating }) => {
     if (!session) {
       console.error('No session found')
       return
@@ -150,6 +162,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         name: name,
         description: description,
         color: color,
+        icon: icon,
         creatorId: session.user.id,
         cron: repeating.cron ? repeating.cron : method === 'PUT' ? currentCron : undefined,
         startDate: repeating.cron ? repeating.startDate : undefined,
@@ -259,6 +272,10 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           <div className='mb-6'>
             <label className='mb-2 block'>Color</label>
             <ColorPicker control={control} name='color' rules={{ required: true }} />
+          </div>
+          <div className='mb-8'>
+            <label className='mb-2 block'>Icon</label>
+            <IconPicker control={control} name='icon' color={watchColor} rules={{ required: true }} />
           </div>
           <div className='mb-4'>
             <Disclosure>
