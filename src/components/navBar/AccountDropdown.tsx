@@ -1,7 +1,6 @@
-import { Dropdown, Modal, Toggle } from '@/components/common'
+import { Accordion, Dropdown, Modal, Toggle } from '@/components/common'
 import { signOut, useSession } from 'next-auth/react'
 import { useState } from 'react'
-import { Accordion } from '@/components/common/Accordion'
 import { setCookieMaxAge } from '@/utils/cookies'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import {
