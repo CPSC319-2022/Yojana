@@ -1,9 +1,9 @@
 import { AppData, CategoryFullState, EntryWithoutCategoryId } from '@/types/prisma'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { setCookie } from 'cookies-next'
 import dayjs, { Dayjs } from 'dayjs'
 import { Entry } from '@prisma/client'
 import { HYDRATE } from 'next-redux-wrapper'
+import { setCookieMaxAge } from '@/utils/cookies'
 
 // year: 2023
 // month: 0-11
@@ -43,7 +43,7 @@ const appDataSlice = createSlice({
       state.entryMap = _createEntryMap(action.payload)
     },
     addCategory: (state, action: PayloadAction<CategoryFullState>) => {
-      setCookie(`yojana.show-category-${action.payload.id}`, action.payload.show)
+      setCookieMaxAge(`yojana.show-category-${action.payload.id}`, action.payload.show)
       // update data
       state.data.push(action.payload)
       // add entries to EntryMap
@@ -53,7 +53,7 @@ const appDataSlice = createSlice({
       const index = state.data.findIndex((cat) => cat.id === action.payload.id)
       // update data
       const previousShow = state.data[index].show
-      setCookie(`yojana.show-category-${action.payload.id}`, state.data[index].show)
+      setCookieMaxAge(`yojana.show-category-${action.payload.id}`, state.data[index].show)
       state.data[index] = action.payload
       state.data[index].show = previousShow
       // update EntryMap
@@ -61,7 +61,7 @@ const appDataSlice = createSlice({
     },
     toggleCategory: (state, action: PayloadAction<number>) => {
       const index = state.data.findIndex((cat) => cat.id === action.payload)
-      setCookie(`yojana.show-category-${action.payload}`, !state.data[index].show)
+      setCookieMaxAge(`yojana.show-category-${action.payload}`, !state.data[index].show)
       state.data[index].show = !state.data[index].show
     },
     deleteCategory: (state, action: PayloadAction<number>) => {

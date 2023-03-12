@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setAlert } from '@/redux/reducers/AlertReducer'
 import { addCategory, getCategory, updateCategory } from '@/redux/reducers/AppDataReducer'
 import {
+  cancelDateSelection,
   getSelectedDates,
   resetSelectedDates,
   setIndividualDates,
@@ -22,11 +23,13 @@ import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
+import { IconPicker, iconPickerIcons } from '@/components/IconPicker'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
   description: z.string().trim().max(191).optional(),
   color: z.string().refine((color) => /^#[0-9A-F]{6}$/i.test(color), { message: 'Invalid color' }),
+  icon: z.string(),
   repeating: z
     .object({
       cron: z.string().optional(),
@@ -50,7 +53,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const { data: session } = useSession()
   const dispatch = useAppDispatch()
   const currentState = useAppSelector((state) => getCategory(state, id))
-  const currentRepeatingDays = id != -1 ? currentState?.cron?.split(' ').at(-1)?.split(',') : []
+  const currentRepeatingDays = method === 'PUT' ? currentState?.cron?.split(' ').at(-1)?.split(',') : []
   // remove empty string from array
   if (currentRepeatingDays?.includes('')) {
     currentRepeatingDays.splice(currentRepeatingDays.indexOf(''), 1)
@@ -58,6 +61,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const [selectedDaysOfTheWeek, setSelectedDaysOfTheWeek] = useState<DayOfWeek>(currentRepeatingDays || [])
   const selectedDates = useAppSelector(getSelectedDates)
   const [dirtyDates, setDirtyDates] = useState(false)
+  const [currentCron, setCurrentCron] = useState<string>('')
+
   const getInitialDates = (dates: EntryWithoutCategoryId[], isRepeating: boolean) => {
     return dates
       .filter((entry) => entry.isRepeating === isRepeating)
@@ -75,11 +80,16 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     //   eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const randomIcon = () => {
+    return iconPickerIcons[(Math.random() * iconPickerIcons.length) | 0]
+  }
+
   const defaultValues =
     method == 'POST'
       ? {
           name: '',
           description: '',
+          icon: randomIcon(),
           repeating: {
             cron: '',
             startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
@@ -90,6 +100,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           name: currentState?.name,
           description: currentState?.description,
           color: currentState?.color,
+          icon: currentState?.icon,
           repeating: {
             cron: currentState?.cron || '',
             startDate:
@@ -104,7 +115,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     control,
     formState: { isSubmitting, errors, isDirty },
     getValues,
-    reset
+    reset,
+    watch
   } = useForm<Schema>({
     resolver: zodResolver(schema),
     shouldUseNativeValidation: true,
@@ -113,11 +125,14 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     defaultValues: defaultValues
   })
 
+  const watchColor = watch('color')
+
   const resetForm = () => {
     reset(() => ({
       name: '',
       description: '',
       color: randomColor(),
+      icon: randomIcon(),
       repeating: {
         cron: undefined,
         startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
@@ -131,7 +146,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
 
-  const onSubmit: SubmitHandler<Schema> = async ({ name, color, description, repeating }) => {
+  const onSubmit: SubmitHandler<Schema> = async ({ name, color, icon, description, repeating }) => {
     if (!session) {
       console.error('No session found')
       return
@@ -147,8 +162,9 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         name: name,
         description: description,
         color: color,
+        icon: icon,
         creatorId: session.user.id,
-        cron: repeating.cron ? repeating.cron : undefined,
+        cron: repeating.cron ? repeating.cron : method === 'PUT' ? currentCron : undefined,
         startDate: repeating.cron ? repeating.startDate : undefined,
         endDate: repeating.cron ? repeating.endDate : undefined,
         dates: [...newDates],
@@ -191,6 +207,11 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     callBack()
   }
 
+  const setIsMinimizedCallback = (minimized: boolean) => {
+    setIsMinimized(minimized)
+    dispatch(setIsSelectingDates(minimized))
+  }
+
   return (
     <>
       <Modal
@@ -215,12 +236,22 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         overrideDefaultButtonStyle={method !== 'POST'}
         closeParent={callBack}
         isMinimized={isMinimized}
-        setIsMinimized={(minimized) => {
-          setIsMinimized(minimized)
-          dispatch(setIsSelectingDates(minimized))
-        }}
-        minimizedButtonText='Save Dates'
+        setIsMinimized={setIsMinimizedCallback}
       >
+        <Modal.Minimized>
+          <button
+            type='button'
+            className='mr-3 inline-flex animate-pulse justify-center rounded-md border border-transparent bg-slate-100 py-2 px-4 text-slate-900 enabled:hover:bg-slate-200 disabled:opacity-75'
+            onClick={() => {
+              setIsMinimizedCallback(false)
+              dispatch(cancelDateSelection())
+            }}
+          >
+            Cancel
+          </button>
+          <Button text='Save' onClick={() => setIsMinimizedCallback(false)} className='animate-pulse' />
+        </Modal.Minimized>
+
         <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
           <div className='mb-4'>
             <label className='mb-2 block'>Name</label>
@@ -241,6 +272,10 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           <div className='mb-6'>
             <label className='mb-2 block'>Color</label>
             <ColorPicker control={control} name='color' rules={{ required: true }} />
+          </div>
+          <div className='mb-8'>
+            <label className='mb-2 block'>Icon</label>
+            <IconPicker control={control} name='icon' color={watchColor} rules={{ required: true }} />
           </div>
           <div className='mb-4'>
             <Disclosure>
@@ -270,9 +305,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                               selectedDays={selectedDaysOfTheWeek}
                               setSelectedDays={setSelectedDaysOfTheWeek}
                               updateState={(cron) => {
-                                const startDate = getValues('repeating.startDate')
-                                const endDate = getValues('repeating.endDate')
-                                dispatch(setRepeatingDates(generateDatesFromCron(cron, startDate, endDate)))
+                                setCurrentCron(cron)
                               }}
                             />
                           </Tabs.Content>
@@ -302,11 +335,24 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           <div className='flex justify-end'>
             <Button
               type='button'
-              text={method === 'POST' ? 'Add Dates' : 'Update Dates'}
+              text={'Select Dates'}
               className='mr-3'
               onClick={() => {
+                const startDate = getValues('repeating.startDate')
+                const endDate = getValues('repeating.endDate')
+                const cron = getValues('repeating.cron')
+                dispatch(setRepeatingDates(generateDatesFromCron(cron, startDate, endDate)))
                 setIsMinimized(true)
                 dispatch(setIsSelectingDates(true))
+                dispatch(
+                  setAlert({
+                    message: 'Select the dates you want to add to this category by clicking on them.',
+                    type: 'info',
+                    show: true,
+                    showOnce: true,
+                    cookieName: 'select-dates-alert'
+                  })
+                )
                 setDirtyDates(true)
               }}
             />
@@ -314,7 +360,13 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
               type='submit'
               disabled={isSubmitting || (method === 'PUT' && !isDirty && !dirtyDates)}
               text={method === 'POST' ? 'Create' : 'Update'}
-              onClick={handleSubmit(onSubmit)}
+              onClick={() => {
+                const startDate = getValues('repeating.startDate')
+                const endDate = getValues('repeating.endDate')
+                const cron = getValues('repeating.cron')
+                dispatch(setRepeatingDates(generateDatesFromCron(cron, startDate, endDate)))
+                handleSubmit(onSubmit)
+              }}
             />
           </div>
         </form>

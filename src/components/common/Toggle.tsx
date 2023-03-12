@@ -1,38 +1,37 @@
-import { useAppDispatch } from '@/redux/hooks'
-import { setGridPreferences, setYearPreferences } from '@/redux/reducers/MainCalendarReducer'
 import { Switch } from '@headlessui/react'
-import { setCookie } from 'cookies-next'
 
 interface ToggleProps {
   textToToggle: string[]
-  cookieName: string
-  className?: string
+  name: string
   preference: boolean
-  setPreference: (value: boolean) => void
+  onChange: () => void
+  disabled?: boolean
+  className?: string
 }
 export const Toggle = ({
   textToToggle,
-  cookieName,
-  className = 'w-[12vw]',
+  name,
+  className = 'w-full',
   preference,
-  setPreference
+  onChange,
+  disabled = false
 }: ToggleProps) => {
-  const dispatch = useAppDispatch()
   return (
     <div className='space-between mt-2 inline-flex'>
       <div className={className}>{preference ? textToToggle[0] : textToToggle[1]}</div>
       <Switch
         checked={preference}
-        name={cookieName}
-        onChange={() => {
-          setPreference(!preference)
-          setCookie(cookieName, !preference)
-          cookieName === 'yojana.yearViewPref'
-            ? dispatch(setYearPreferences(!preference))
-            : dispatch(setGridPreferences(!preference))
-        }}
-        className={`${preference ? 'bg-emerald-600' : 'bg-emerald-400'}
-        relative inline-flex h-[20px] w-[40px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+        name={name}
+        onChange={onChange}
+        className={`${
+          disabled
+            ? 'cursor-auto bg-slate-200'
+            : preference
+            ? 'cursor-pointer bg-emerald-500'
+            : 'cursor-pointer bg-emerald-300'
+        }
+        relative inline-flex h-[20px] w-[40px] shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+        disabled={disabled}
       >
         <span className='sr-only'>Use setting</span>
         <span
