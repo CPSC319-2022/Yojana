@@ -24,6 +24,7 @@ import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { IconPicker } from '@/components/IconPicker'
+import { iconPickerIcons } from '@/components/IconPicker/IconPicker'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
@@ -80,11 +81,16 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     //   eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const randomIcon = () => {
+    return iconPickerIcons[(Math.random() * iconPickerIcons.length) | 0]
+  }
+
   const defaultValues =
     method == 'POST'
       ? {
           name: '',
           description: '',
+          icon: randomIcon(),
           repeating: {
             cron: '',
             startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
@@ -110,7 +116,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     control,
     formState: { isSubmitting, errors, isDirty },
     getValues,
-    reset
+    reset,
+    watch
   } = useForm<Schema>({
     resolver: zodResolver(schema),
     shouldUseNativeValidation: true,
@@ -119,12 +126,14 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     defaultValues: defaultValues
   })
 
+  const watchColor = watch('color')
+
   const resetForm = () => {
     reset(() => ({
       name: '',
       description: '',
       color: randomColor(),
-      icon: '',
+      icon: randomIcon(),
       repeating: {
         cron: undefined,
         startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
@@ -267,7 +276,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           </div>
           <div className='mb-8'>
             <label className='mb-2 block'>Icon</label>
-            <IconPicker control={control} name='icon' />
+            <IconPicker control={control} name='icon' color={watchColor} rules={{ required: true }} />
           </div>
           <div className='mb-4'>
             <Disclosure>

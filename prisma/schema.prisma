@@ -21,7 +21,7 @@ model Category {
   description String    @default("")
   color       String    @db.VarChar(7)
   isMaster    Boolean   @default(false)
-  icon        String    @default("") @db.VarChar(12)
+  icon        String
   cron        String?   @default("")
   startDate   DateTime? @db.Date()
   endDate     DateTime? @db.Date()

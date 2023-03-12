@@ -5,6 +5,7 @@ import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import dayjs, { Dayjs } from 'dayjs'
 import { useCallback, useMemo } from 'react'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
+import { Icon, IconName } from '@/components/common'
 
 export const Year = () => {
   const stateDate = useAppSelector(getDate)
@@ -35,7 +36,7 @@ export const Year = () => {
                     color: ${category.color};
                   }
                 `}</style>
-                {category.icon}
+                <Icon iconName={category.icon as IconName} className='inline' />
               </span>
             )
           }
