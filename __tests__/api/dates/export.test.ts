@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom'
 import { prismaMock } from '@/prisma/singleton'
 import { createRequest, createResponse } from 'node-mocks-http'
-import * as jwt from 'next-auth/jwt'
 import dates, { generateICal } from '@/pages/api/dates/export'
 import ical from 'ical-generator'
 import dayjs from 'dayjs'
@@ -13,6 +12,7 @@ const mock_body = [
     description: 'abc',
     color: '#000000',
     isMaster: false,
+    icon: 'birthday-cake',
     cron: null,
     startDate: null,
     endDate: null,
@@ -26,11 +26,9 @@ const mock_body = [
       {
         id: 1,
         date: new Date('2022-03-15T10:30:00.000Z'),
-        isRepeating: false,
-        categoryId: 1
+        isRepeating: false
       }
-    ],
-    icon: '\u1919'
+    ]
   }
 ]
 
@@ -43,15 +41,6 @@ describe('/api/dates/export', () => {
         url: '/dates/export'
       })
       const res = createResponse()
-
-      const mock_token = {
-        id: '1',
-        name: 'John Doe',
-        email: 'john.doe@ad.com',
-        isAdmin: true
-      }
-
-      jest.spyOn(jwt, 'getToken').mockResolvedValue(mock_token)
 
       prismaMock.category.findMany.mockImplementation((): any => {
         return Promise.resolve(mock_body)
