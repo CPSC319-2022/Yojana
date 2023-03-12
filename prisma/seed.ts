@@ -17,42 +17,42 @@ export const data = [
         description: 'This is the day you get paid',
         color: tcolors.emerald[500],
         isMaster: true,
-        icon: '\u0024'
+        icon: 'CurrencyDollar'
       },
       {
         name: 'Holiday',
         description: 'Statuary holidays',
         color: tcolors.red[500],
         isMaster: true,
-        icon: '\u25A3'
+        icon: 'CalendarDateFill'
       },
       {
         name: 'Work from home',
         description: 'Work from home',
         color: tcolors.sky[500],
         isMaster: true,
-        icon: '\u2b1f'
+        icon: 'HouseFill'
       },
       {
         name: 'Shareholder meeting',
         description: 'Shareholder meeting',
         color: tcolors.violet[500],
         isMaster: true,
-        icon: '\u2660'
+        icon: 'SuitSpadeFill'
       },
       {
         name: 'Vacation',
         description: 'Corporate retrieve',
         color: tcolors.slate[900],
         isMaster: true,
-        icon: '\u2708'
+        icon: 'AirplaneFill'
       },
       {
         name: 'Birthday',
         description: 'List of Birthdays',
         color: tcolors.amber[500],
         isMaster: true,
-        icon: '\uD83D\uDD6F'
+        icon: 'BalloonFill'
       }
     ]
   }
