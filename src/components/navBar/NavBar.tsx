@@ -17,20 +17,9 @@ import { setCookieMaxAge } from '@/utils/cookies'
 interface NavBarProps {
   sidebarOpen: boolean
   setSidebarOpen: (value: boolean) => void
-  prefScroll: boolean
-  setPrefScroll: (value: boolean) => void
-  prefGrid: boolean
-  setPrefGrid: (value: boolean) => void
 }
 
-export const NavBar = ({
-  sidebarOpen,
-  setSidebarOpen,
-  prefScroll,
-  setPrefScroll,
-  prefGrid,
-  setPrefGrid
-}: NavBarProps) => {
+export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
   const dispatch = useAppDispatch()
   const targetDate = useAppSelector(getDate)
   const yearView = useAppSelector(isYearInterval)
@@ -78,12 +67,7 @@ export const NavBar = ({
         <h4 className='flex-none text-center text-lg'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
       </div>
       <CalViewDropdown />
-      <AccountDropdown
-        prefScroll={prefScroll}
-        setPrefScroll={setPrefScroll}
-        prefGrid={prefGrid}
-        setPrefGrid={setPrefGrid}
-      />
+      <AccountDropdown />
     </div>
   )
 }
