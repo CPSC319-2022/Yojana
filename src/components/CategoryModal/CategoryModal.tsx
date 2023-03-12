@@ -350,7 +350,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                     type: 'info',
                     show: true,
                     showOnce: true,
-                    cookieName: 'select-dates-alert'
+                    cookieName: 'select-dates-alert',
+                    timeout: 10000
                   })
                 )
                 setDirtyDates(true)
