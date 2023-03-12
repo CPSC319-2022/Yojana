@@ -55,7 +55,14 @@ export const iconPickerIcons: IconName[] = [
   'CollectionFill',
   'GearFill',
   'Heart',
-  'HouseFill'
+  'HouseFill',
+  'BalloonFill',
+  'AirplaneFill',
+  'SuitClubFill',
+  'SuitDiamondFill',
+  'SuitHeartFill',
+  'SuitSpadeFill',
+  'CalendarDateFill'
 ]
 
 export const IconPicker = ({ control, name, color, rules }: IconPickerProps) => {
