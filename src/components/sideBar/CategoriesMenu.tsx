@@ -1,4 +1,4 @@
-import { Checkbox } from '@/components/common'
+import { Checkbox, IconName } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategories, toggleCategory } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
@@ -27,7 +27,7 @@ export const CategoriesMenu = ({ session }: Props) => {
         id={`category-item-${key}`}
       >
         <Checkbox
-          icon={calEvent.icon}
+          icon={calEvent.icon as IconName}
           label={calEvent.name}
           id={`checkbox-${key}`}
           key={`checkbox-${key}`}

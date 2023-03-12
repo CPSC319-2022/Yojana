@@ -9,6 +9,7 @@ import {
   getPrevCurrNextMonthSelectedDates,
   toggleIndividualDate
 } from '@/redux/reducers/DateSelectorReducer'
+import { IconName } from '@/components/common'
 
 interface MonthProps {
   monthOffset: number
@@ -53,7 +54,9 @@ export const Month = (props: MonthProps) => {
         dayBlocks = entriesOnDay?.map((entry, key) => {
           const category = categoryMap[entry.categoryId]
           if (category.show) {
-            return <CategoryBlock color={category.color} label={category.name} icon={category.icon} key={key} />
+            return (
+              <CategoryBlock color={category.color} label={category.name} icon={category.icon as IconName} key={key} />
+            )
           }
         })
       } else {
@@ -136,7 +139,7 @@ export const Month = (props: MonthProps) => {
       weeks.push(renderWeek(i))
     }
     return <div className={`${monthView ? 'h-[95%]' : 'h-[90%]'}`}>{weeks}</div>
-  }, [daysInMonth, monthStartDate, monthView, renderWeek])
+  }, [daysInMonth, monthStartDate, monthView, numWeeks, renderWeek])
 
   const generateDayNames = useCallback(() => {
     return (
