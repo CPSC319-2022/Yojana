@@ -4,17 +4,17 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getAlert, setShow } from '@/redux/reducers/AlertReducer'
 
 export const Alert = () => {
-  const { message, textColor, backgroundColor, type, show } = useAppSelector(getAlert)
+  const { message, textColor, backgroundColor, type, show, timeout } = useAppSelector(getAlert)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (show) {
       const timer = setTimeout(() => {
         dispatch(setShow(false))
-      }, 5000)
+      }, timeout)
       return () => clearTimeout(timer)
     }
-  }, [show, dispatch])
+  }, [show, dispatch, timeout])
 
   return (
     <Transition appear show={show} as={Fragment}>
