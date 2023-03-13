@@ -87,12 +87,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
 
   // intended strictly for initial load
   useEffect(() => {
-    const currentRepeatingDays = method === 'PUT' ? currentState?.cron?.split(' ').at(-1)?.split(',') : []
-    // remove empty string from array
-    if (currentRepeatingDays?.includes('')) {
-      currentRepeatingDays.splice(currentRepeatingDays.indexOf(''), 1)
+    if (currentState?.cron?.startsWith('0 0 * * ')) {
+      const currentRepeatingDays = method === 'PUT' ? currentState?.cron?.split(' ').at(-1)?.split(',') : []
+      // remove empty string from array
+      if (currentRepeatingDays?.includes('')) currentRepeatingDays.splice(currentRepeatingDays.indexOf(''), 1)
+      setSelectedDaysOfTheWeek(currentRepeatingDays || [])
     }
-    setSelectedDaysOfTheWeek(currentRepeatingDays || [])
     const currentMonthly = getInitialMonthlyCronState(currentState?.cron)
     currentMonthly !== MonthRecurrence.NONE ? setCurrentTabIndex(1) : setCurrentTabIndex(0)
     setSelectedMonthRecurrenceCron(currentMonthly)
@@ -271,7 +271,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       <Modal.Minimized>
         <button
           type='button'
-          className='mr-3 inline-flex animate-pulse justify-center rounded-md border border-transparent bg-slate-100 py-2 px-4 text-slate-900 enabled:hover:bg-slate-200 disabled:opacity-75'
+          className='mr-3 inline-flex animate-pulse items-center justify-center rounded-md border border-transparent bg-slate-100 py-2 px-4 text-slate-900 enabled:hover:bg-slate-200 disabled:opacity-75'
           onClick={() => {
             setIsMinimizedCallback(false)
             dispatch(cancelDateSelection())
@@ -339,7 +339,6 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           setSelectedDays={setSelectedDaysOfTheWeek}
           updateState={(cron) => {
             setCurrentTabIndex(0)
-            setSelectedMonthRecurrenceCron(MonthRecurrence.NONE)
             setCurrentCron(cron)
           }}
         />
@@ -418,7 +417,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         </Disclosure>
       </div>
     )
-  }, [errors.repeating, monthlyRecurringField, startAndEndDatesRecurringField, weeklyRecurringField])
+  }, [currentTabIndex, errors.repeating, monthlyRecurringField, startAndEndDatesRecurringField, weeklyRecurringField])
 
   const buttonsAtBottom = useMemo(() => {
     return (
@@ -426,7 +425,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         <Button
           type='button'
           text={'Select Individual Dates'}
-          className='mr-3'
+          className='mr-3 items-center'
           onClick={() => {
             const startDate = getValues('repeating.startDate')
             const endDate = getValues('repeating.endDate')
@@ -449,6 +448,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         />
         <Button
           type='submit'
+          className='items-center'
           disabled={isSubmitting || (method === 'PUT' && !isDirty && !dirtyDates)}
           text={method === 'POST' ? 'Create' : 'Update'}
           onClick={() => {
