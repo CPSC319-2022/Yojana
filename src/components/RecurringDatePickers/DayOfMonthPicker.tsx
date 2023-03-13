@@ -16,10 +16,10 @@ interface DayOfMonthPickerProps {
 
 export enum MonthRecurrence {
   NONE = 'NONE',
-  ON_DATE_Y = 'ON_DATE_Y',
-  ON_LAST_DAY = 'ON_LAST_DAY',
-  ON_YTH_XDAY = 'ON_YTH_XDAY',
-  ON_LAST_XDAY = 'ON_LAST_XDAY'
+  ON_DATE_Y = 'ON_DATE_Y', // E.g. "Monthly on day 1"
+  ON_LAST_DAY = 'ON_LAST_DAY', // E.g. "Monthly on last day of the month
+  ON_YTH_XDAY = 'ON_YTH_XDAY', // E.g. "Monthly on the fourth Sunday"
+  ON_LAST_XDAY = 'ON_LAST_XDAY' // E.g. "Monthly on the last Sunday"
 }
 export type MonthRecurrenceType = keyof typeof MonthRecurrence
 
@@ -86,7 +86,7 @@ export const DayOfMonthPicker = ({
       },
       ON_LAST_DAY: {
         key: MonthRecurrence.ON_LAST_DAY,
-        label: `Monthly on last day of month`,
+        label: `Monthly on last day of the month`,
         onClick: () => setRecurrenceType(MonthRecurrence.ON_LAST_DAY)
       },
       ON_YTH_XDAY: {
@@ -103,15 +103,16 @@ export const DayOfMonthPicker = ({
   }, [dateOfMonth, startDate, weekNum])
 
   const getMenuItems = useMemo(() => {
-    const menuItems: DropdownMenuItem[] = [availableMenuItems[MonthRecurrence.NONE]]
+    const includeItems = [MonthRecurrence.NONE, MonthRecurrence.ON_DATE_Y]
 
-    if (dateOfMonth <= 28) menuItems.push(availableMenuItems[MonthRecurrence.ON_DATE_Y])
-    if (dateOfMonth === startDate.daysInMonth()) menuItems.push(availableMenuItems[MonthRecurrence.ON_LAST_DAY])
-    if (weekNum <= 4) menuItems.push(availableMenuItems[MonthRecurrence.ON_YTH_XDAY])
-    if (dateOfMonth > startDate.daysInMonth() - 7) menuItems.push(availableMenuItems[MonthRecurrence.ON_LAST_XDAY])
+    if (dateOfMonth === startDate.daysInMonth()) includeItems.push(MonthRecurrence.ON_LAST_DAY)
+    if (weekNum <= 4) includeItems.push(MonthRecurrence.ON_YTH_XDAY)
+    if (dateOfMonth > startDate.daysInMonth() - 7) includeItems.push(MonthRecurrence.ON_LAST_XDAY)
 
-    return menuItems
-  }, [availableMenuItems, dateOfMonth, startDate, weekNum])
+    if (!includeItems.includes(MonthRecurrence[recurrenceType])) setRecurrenceType(MonthRecurrence.NONE)
+
+    return includeItems.map((item) => availableMenuItems[item])
+  }, [availableMenuItems, dateOfMonth, recurrenceType, startDate, weekNum])
 
   return (
     <div className='flex flex-wrap justify-center pt-3'>
