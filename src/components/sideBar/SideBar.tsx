@@ -7,6 +7,7 @@ import { getCategories } from '@/redux/reducers/AppDataReducer'
 import { Session } from 'next-auth'
 import { useRef } from 'react'
 import { CategoriesMenu } from './CategoriesMenu'
+import { useAppSelector } from '@/redux/hooks'
 
 interface Props {
   session: Session
