@@ -2,21 +2,24 @@ import { Button, IconName } from '@/components/common'
 import { Menu, Transition } from '@headlessui/react'
 import React, { Dispatch, Fragment } from 'react'
 
+export interface DropdownMenuItem {
+  key: string
+  label: string
+  onClick: () => void
+  props?: any
+}
+
 export interface DropdownProps {
   text?: string
   id?: number
-  menuItems: {
-    key: string
-    label: string
-    onClick: () => void
-    props?: any
-  }[]
+  menuItems: DropdownMenuItem[]
   containerClassName?: string
   buttonClassName?: string
   overrideDefaultButtonStyle?: boolean
   iconName?: IconName
   setKeepFocus?: Dispatch<React.SetStateAction<number>>
   keepPanelOpen?: boolean
+  isLarge?: boolean
 }
 
 export const Dropdown = ({
@@ -25,7 +28,8 @@ export const Dropdown = ({
   containerClassName = '',
   buttonClassName,
   overrideDefaultButtonStyle,
-  iconName = 'CaretDownFill'
+  iconName = 'CaretDownFill',
+  isLarge
 }: DropdownProps) => {
   return (
     <div className={containerClassName}>
@@ -50,12 +54,16 @@ export const Dropdown = ({
               leaveFrom='transform opacity-100 scale-100'
               leaveTo='transform opacity-0 scale-95'
             >
-              <Menu.Items className='absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+              <Menu.Items
+                className={`absolute right-0 mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none 
+                ${isLarge ? 'w-72' : 'w-56'}`}
+              >
                 <div className='px-1 py-1 '>
                   {menuItems.map((item) => (
                     <Menu.Item key={item.key}>
                       {({ active }) => (
                         <button
+                          type='button'
                           onClick={item.onClick}
                           className={`${active && 'bg-slate-100'} group flex w-full items-center rounded-md px-2 py-2`}
                         >

@@ -24,6 +24,12 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { IconPicker, iconPickerIcons } from '@/components/IconPicker'
+import {
+  DayOfMonthPicker,
+  MonthRecurrence,
+  monthRecurrenceCrons,
+  MonthRecurrenceType
+} from '@/components/RecurringDatePickers/DayOfMonthPicker'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
@@ -53,15 +59,32 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const { data: session } = useSession()
   const dispatch = useAppDispatch()
   const currentState = useAppSelector((state) => getCategory(state, id))
-  const currentRepeatingDays = method === 'PUT' ? currentState?.cron?.split(' ').at(-1)?.split(',') : []
-  // remove empty string from array
-  if (currentRepeatingDays?.includes('')) {
-    currentRepeatingDays.splice(currentRepeatingDays.indexOf(''), 1)
-  }
-  const [selectedDaysOfTheWeek, setSelectedDaysOfTheWeek] = useState<DayOfWeek>(currentRepeatingDays || [])
   const selectedDates = useAppSelector(getSelectedDates)
   const [dirtyDates, setDirtyDates] = useState(false)
   const [currentCron, setCurrentCron] = useState<string>('')
+  const [selectedDaysOfTheWeek, setSelectedDaysOfTheWeek] = useState<DayOfWeek>([])
+  const [selectedMonthRecurrenceCron, setSelectedMonthRecurrenceCron] = useState<MonthRecurrenceType>(
+    MonthRecurrence.NONE
+  )
+
+  const getInitialMonthlyCronState = useCallback((cron: string | null | undefined): MonthRecurrenceType => {
+    if (!cron) return MonthRecurrence.NONE
+    if (cron === monthRecurrenceCrons[MonthRecurrence.ON_LAST_DAY]) return MonthRecurrence.ON_LAST_DAY
+    if (cron.slice(-1) === 'L') return MonthRecurrence.ON_LAST_XDAY
+    if (cron.slice(-2, -1) === '#') return MonthRecurrence.ON_YTH_XDAY
+    if (cron.startsWith('0 0 ') && cron.endsWith(' * *')) return MonthRecurrence.ON_DATE_Y
+    return MonthRecurrence.NONE
+  }, [])
+
+  useEffect(() => {
+    const currentRepeatingDays = method === 'PUT' ? currentState?.cron?.split(' ').at(-1)?.split(',') : []
+    // remove empty string from array
+    if (currentRepeatingDays?.includes('')) {
+      currentRepeatingDays.splice(currentRepeatingDays.indexOf(''), 1)
+    }
+    setSelectedDaysOfTheWeek(currentRepeatingDays || [])
+    setSelectedMonthRecurrenceCron(getInitialMonthlyCronState(currentState?.cron))
+  }, [currentState?.cron, getInitialMonthlyCronState, method])
 
   const getInitialDates = (dates: EntryWithoutCategoryId[], isRepeating: boolean) => {
     return dates
@@ -126,6 +149,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   })
 
   const watchColor = watch('color')
+
+  const watchStartDate = watch('repeating.startDate')
 
   const resetForm = useCallback(() => {
     reset(() => ({
@@ -308,8 +333,22 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   }, [control, selectedDaysOfTheWeek])
 
   const monthlyRecurringField = useMemo(() => {
-    return <Tabs.Content>TODO</Tabs.Content>
-  }, [])
+    return (
+      <Tabs.Content>
+        <DayOfMonthPicker
+          control={control}
+          name='repeating.cron'
+          rules={{ required: false }}
+          startDate={dayjs(watchStartDate)}
+          selectedRecurrenceType={selectedMonthRecurrenceCron}
+          setSelectedRecurrenceType={setSelectedMonthRecurrenceCron}
+          updateState={(cron) => {
+            setCurrentCron(cron)
+          }}
+        />
+      </Tabs.Content>
+    )
+  }, [control, selectedMonthRecurrenceCron, watchStartDate])
 
   const startAndEndDatesRecurringField = useMemo(() => {
     return (
