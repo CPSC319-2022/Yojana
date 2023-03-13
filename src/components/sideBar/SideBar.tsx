@@ -1,12 +1,12 @@
 import { CategoryModal } from '@/components/CategoryModal'
-import { Session } from 'next-auth'
-import { CategoriesMenu } from './CategoriesMenu'
+import { Icon } from '@/components/common'
 import { CsvModal } from '@/components/CsvModal'
-import React, { useRef } from 'react'
 import { Year } from '@/components/mainCalendar/Year'
 import { PrintButton } from '@/components/printCalendar/print'
 import { getCategories } from '@/redux/reducers/AppDataReducer'
-import { Icon } from '@/components/common'
+import { Session } from 'next-auth'
+import { useRef } from 'react'
+import { CategoriesMenu } from './CategoriesMenu'
 
 interface Props {
   session: Session
@@ -16,6 +16,10 @@ export const SideBar = ({ session }: Props) => {
   const categories = useAppSelector(getCategories)
 
   const componentRef = useRef<HTMLDivElement>(null)
+
+  interface Props {
+    session: Session
+  }
 
   return (
     <div className='mt-4 pt-2 pl-1'>
