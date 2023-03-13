@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useController } from 'react-hook-form'
-import { Dropdown } from '@/components/common'
 import { Dayjs } from 'dayjs'
 import { DropdownMenuItem } from '@/components/common/Dropdown'
 
@@ -17,7 +16,7 @@ interface DayOfMonthPickerProps {
 export enum MonthRecurrence {
   NONE = 'NONE',
   ON_DATE_Y = 'ON_DATE_Y', // E.g. "Monthly on day 1"
-  ON_LAST_DAY = 'ON_LAST_DAY', // E.g. "Monthly on last day of the month
+  ON_LAST_DAY = 'ON_LAST_DAY', // E.g. "Monthly on the last day"
   ON_YTH_XDAY = 'ON_YTH_XDAY', // E.g. "Monthly on the fourth Sunday"
   ON_LAST_XDAY = 'ON_LAST_XDAY' // E.g. "Monthly on the last Sunday"
 }
@@ -86,7 +85,7 @@ export const DayOfMonthPicker = ({
       },
       ON_LAST_DAY: {
         key: MonthRecurrence.ON_LAST_DAY,
-        label: `Monthly on last day of the month`,
+        label: `Monthly on the last day`,
         onClick: () => setRecurrenceType(MonthRecurrence.ON_LAST_DAY)
       },
       ON_YTH_XDAY: {
@@ -115,8 +114,21 @@ export const DayOfMonthPicker = ({
   }, [availableMenuItems, dateOfMonth, recurrenceType, startDate, weekNum])
 
   return (
-    <div className='flex flex-wrap justify-center pt-3'>
-      <Dropdown text={availableMenuItems[selectedRecurrenceType].label} menuItems={getMenuItems} isLarge={true} />
+    <div className='flex grid grid-cols-2 flex-wrap justify-center gap-1 pt-3'>
+      {getMenuItems.map((item) => {
+        const isActive = recurrenceType === item.key
+        return (
+          <button
+            key={item.key}
+            type='button'
+            onClick={item.onClick}
+            className={`group flex w-full rounded-md px-2 py-2 text-left
+            ${isActive ? 'bg-emerald-100 hover:bg-emerald-200' : 'bg-slate-100 hover:bg-slate-200'}`}
+          >
+            {item.label}
+          </button>
+        )
+      })}
     </div>
   )
 }

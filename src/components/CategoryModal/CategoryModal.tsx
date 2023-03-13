@@ -76,6 +76,15 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     return MonthRecurrence.NONE
   }, [])
 
+  // these two have to go above the initial load useEffect to avoid overwriting the stored values
+  useEffect(() => {
+    if (selectedDaysOfTheWeek.length !== 0) setSelectedMonthRecurrenceCron(MonthRecurrence.NONE)
+  }, [selectedDaysOfTheWeek])
+  useEffect(() => {
+    if (selectedMonthRecurrenceCron !== MonthRecurrence.NONE) setSelectedDaysOfTheWeek([])
+  }, [selectedMonthRecurrenceCron])
+
+  // intended strictly for initial load
   useEffect(() => {
     const currentRepeatingDays = method === 'PUT' ? currentState?.cron?.split(' ').at(-1)?.split(',') : []
     // remove empty string from array
