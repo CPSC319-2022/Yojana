@@ -1,7 +1,7 @@
-import React, { RefObject, useCallback } from 'react'
-import { useReactToPrint } from 'react-to-print'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getPreferences, setYearOverflow } from '@/redux/reducers/PreferencesReducer'
+import React, { RefObject, useCallback } from 'react'
+import { useReactToPrint } from 'react-to-print'
 
 interface PrintButtonProps {
   contentRef: RefObject<any>
@@ -31,13 +31,12 @@ export const PrintButton: React.FC<PrintButtonProps> = ({ contentRef, className 
   })
 
   const handleClick = useCallback(() => {
-    dispatch(setYearOverflow('expand'))
     handlePrint()
   }, [dispatch, handlePrint])
 
   return (
     <button onClick={handleClick} className={className}>
-      Export to PDF
+      Export
     </button>
   )
 }

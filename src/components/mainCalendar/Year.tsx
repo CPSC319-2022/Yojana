@@ -1,13 +1,13 @@
+import { Icon, IconName } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getYear } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates, getYearSelectedDates, toggleIndividualDate } from '@/redux/reducers/DateSelectorReducer'
 import { getDate } from '@/redux/reducers/MainCalendarReducer'
+import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 import dayjs, { Dayjs } from 'dayjs'
 import { useCallback, useMemo } from 'react'
-import { getPreferences } from '@/redux/reducers/PreferencesReducer'
-import { Icon, IconName } from '@/components/common'
 
-export const Year = () => {
+export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
   const stateDate = useAppSelector(getDate)
   const categoryMap = useAppSelector(getCategoryMap)
   const entriesInYear = useAppSelector((state) => getYear(state, stateDate))
@@ -94,7 +94,11 @@ export const Year = () => {
             ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} 
             ${isSelectingDates && !selected?.isSelected ? 'hover:ring-2 hover:ring-inset hover:ring-emerald-200' : ''}
             ${!isSelectingDates && isToday ? 'ring-2 ring-inset ring-emerald-300' : ''}
-            ${preferences.yearOverflow.value === 'expand' ? 'inline-flow break-all' : 'flex overflow-x-scroll'}`}
+            ${
+              preferences.yearOverflow.value === 'expand' || getForPrinting
+                ? 'inline-flow break-all'
+                : 'flex overflow-x-scroll'
+            }`}
           key={`${yearNum}-${monthNum}-${dateOffset}`}
           onClick={() => onDayClicked(day, !selected || !selected?.isRepeating)}
         >
@@ -146,8 +150,13 @@ export const Year = () => {
   const months = useMemo(() => {
     return (
       <div
-        className={`box-border grid grow grid-cols-[2.5%_7.7%_7.7%_7.7%_7.7%_2.5%_7.7%_7.7%_7.7%_7.7%_2.5%_7.7%_7.7%_7.7%_7.7%] divide-x divide-y border-b bg-slate-300 
-        ${preferences.yearShowGrid.value ? '' : 'divide-transparent'}`}
+        className={`box-border grid grow  divide-x divide-y border-b bg-slate-300 
+        ${
+          getForPrinting
+            ? 'grid-cols-[3.25%_7.5%_7.5%_7.5%_7.5%_3.25%_7.5%_7.5%_7.5%_7.5%_3.25%_7.5%_7.5%_7.5%_7.5%]'
+            : 'grid-cols-[2.5%_7.7%_7.7%_7.7%_7.7%_2.5%_7.7%_7.7%_7.7%_7.7%_2.5%_7.7%_7.7%_7.7%_7.7%]'
+        }
+        ${preferences.yearShowGrid.value || getForPrinting ? '' : 'divide-transparent'}`}
       >
         <>
           {monthHeaders}
