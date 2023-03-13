@@ -290,13 +290,49 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     )
   }, [control, watchColor])
 
+  const weeklyRecurringField = useMemo(() => {
+    return (
+      <Tabs.Content>
+        <DayOfWeekPicker
+          control={control}
+          name='repeating.cron'
+          rules={{ required: false }}
+          selectedDays={selectedDaysOfTheWeek}
+          setSelectedDays={setSelectedDaysOfTheWeek}
+          updateState={(cron) => {
+            setCurrentCron(cron)
+          }}
+        />
+      </Tabs.Content>
+    )
+  }, [control, selectedDaysOfTheWeek])
+
+  const monthlyRecurringField = useMemo(() => {
+    return <Tabs.Content>TODO</Tabs.Content>
+  }, [])
+
+  const startAndEndDatesRecurringField = useMemo(() => {
+    return (
+      <div className='grid grid-cols-2 gap-4'>
+        <div>
+          <label className='mb-2 block text-sm'>Start Date</label>
+          <input className='cursor-pointer text-sm' type='date' {...register('repeating.startDate')} />
+        </div>
+        <div>
+          <label className='mb-2 block text-sm'>End Date</label>
+          <input className='cursor-pointer text-sm' type='date' {...register('repeating.endDate')} />
+        </div>
+      </div>
+    )
+  }, [register])
+
   const recurringDatesFields = useMemo(() => {
     return (
       <div className='mb-4'>
         <Disclosure>
           {({ open }) => (
             <>
-              <Disclosure.Button className='flex w-full justify-between rounded-lg py-2 text-left text-slate-800 focus:outline-none'>
+              <Disclosure.Button className='flex w-full justify-between rounded-lg py-2 text-left text-slate-800 hover:text-emerald-700 focus:outline-none'>
                 <span>Recurring Dates</span>
                 <Icon iconName='CaretDownFill' className={`${open ? 'rotate-180 transform' : ''} mt-0.5 h-5 w-5`} />
               </Disclosure.Button>
@@ -312,32 +348,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                   <div className='pb-5'>
                     <Tabs>
                       <Tabs.Title>Weekly</Tabs.Title>
-                      <Tabs.Content>
-                        <DayOfWeekPicker
-                          control={control}
-                          name='repeating.cron'
-                          rules={{ required: false }}
-                          selectedDays={selectedDaysOfTheWeek}
-                          setSelectedDays={setSelectedDaysOfTheWeek}
-                          updateState={(cron) => {
-                            setCurrentCron(cron)
-                          }}
-                        />
-                      </Tabs.Content>
+                      {weeklyRecurringField}
                       <Tabs.Title>Monthly</Tabs.Title>
-                      <Tabs.Content>TODO</Tabs.Content>
+                      {monthlyRecurringField}
                     </Tabs>
                   </div>
-                  <div className='grid grid-cols-2 gap-4'>
-                    <div>
-                      <label className='mb-2 block text-sm'>Start Date</label>
-                      <input className='text-sm' type='date' {...register('repeating.startDate')} />
-                    </div>
-                    <div>
-                      <label className='mb-2 block text-sm'>End Date</label>
-                      <input className='text-sm' type='date' {...register('repeating.endDate')} />
-                    </div>
-                  </div>
+                  {startAndEndDatesRecurringField}
                   {errors.repeating && <p className='mt-2 text-sm text-red-500'>{errors.repeating.message}</p>}
                 </Disclosure.Panel>
               </Transition>
@@ -346,7 +362,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         </Disclosure>
       </div>
     )
-  }, [control, errors.repeating, register, selectedDaysOfTheWeek])
+  }, [errors.repeating, monthlyRecurringField, startAndEndDatesRecurringField, weeklyRecurringField])
 
   const buttonsAtBottom = useMemo(() => {
     return (
