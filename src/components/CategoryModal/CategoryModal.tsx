@@ -66,6 +66,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const [selectedMonthRecurrenceCron, setSelectedMonthRecurrenceCron] = useState<MonthRecurrenceType>(
     MonthRecurrence.NONE
   )
+  const [currentTabIndex, setCurrentTabIndex] = useState(0)
 
   const getInitialMonthlyCronState = useCallback((cron: string | null | undefined): MonthRecurrenceType => {
     if (!cron) return MonthRecurrence.NONE
@@ -92,7 +93,9 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       currentRepeatingDays.splice(currentRepeatingDays.indexOf(''), 1)
     }
     setSelectedDaysOfTheWeek(currentRepeatingDays || [])
-    setSelectedMonthRecurrenceCron(getInitialMonthlyCronState(currentState?.cron))
+    const currentMonthly = getInitialMonthlyCronState(currentState?.cron)
+    currentMonthly !== MonthRecurrence.NONE ? setCurrentTabIndex(1) : setCurrentTabIndex(0)
+    setSelectedMonthRecurrenceCron(currentMonthly)
   }, [currentState?.cron, getInitialMonthlyCronState, method])
 
   const getInitialDates = (dates: EntryWithoutCategoryId[], isRepeating: boolean) => {
@@ -174,6 +177,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       }
     }))
     setSelectedDaysOfTheWeek([])
+    setSelectedMonthRecurrenceCron(MonthRecurrence.NONE)
     dispatch(resetSelectedDates())
   }, [dispatch, reset])
 
@@ -334,6 +338,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           selectedDays={selectedDaysOfTheWeek}
           setSelectedDays={setSelectedDaysOfTheWeek}
           updateState={(cron) => {
+            setCurrentTabIndex(0)
+            setSelectedMonthRecurrenceCron(MonthRecurrence.NONE)
             setCurrentCron(cron)
           }}
         />
@@ -352,6 +358,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           selectedRecurrenceType={selectedMonthRecurrenceCron}
           setSelectedRecurrenceType={setSelectedMonthRecurrenceCron}
           updateState={(cron) => {
+            setCurrentTabIndex(1)
             setSelectedDaysOfTheWeek([])
             setCurrentCron(cron)
           }}
@@ -395,7 +402,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
               >
                 <Disclosure.Panel className='pt-4 pb-2'>
                   <div className='pb-5'>
-                    <Tabs>
+                    <Tabs currentIndex={currentTabIndex}>
                       <Tabs.Title>Weekly</Tabs.Title>
                       {weeklyRecurringField}
                       <Tabs.Title>Monthly</Tabs.Title>
