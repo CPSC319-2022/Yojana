@@ -352,6 +352,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           selectedRecurrenceType={selectedMonthRecurrenceCron}
           setSelectedRecurrenceType={setSelectedMonthRecurrenceCron}
           updateState={(cron) => {
+            // setSelectedDaysOfTheWeek([])
             setCurrentCron(cron)
           }}
         />
