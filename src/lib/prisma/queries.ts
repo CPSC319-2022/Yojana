@@ -1,7 +1,17 @@
 import prisma from '@/prisma/prismadb'
 
-export const getCategories = async () => {
+interface GetCategoriesOptions {
+  names?: string[]
+}
+
+export const getCategories = async (options: GetCategoriesOptions = {}) => {
+  const { names = [] } = options
   const categories = await prisma.category.findMany({
+    where: {
+      name: {
+        in: names
+      }
+    },
     select: {
       id: true,
       name: true,
