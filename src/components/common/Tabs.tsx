@@ -4,7 +4,7 @@ import { Tab } from '@headlessui/react'
 import React from 'react'
 import { getChildrenByType } from 'react-nanny'
 
-export const Tabs = ({ children }: { children: React.ReactNode }) => {
+export const Tabs = ({ children, currentIndex }: { children: React.ReactNode; currentIndex: number }) => {
   const titles = getChildrenByType(children, [TabTitle])
   const contents = getChildrenByType(children, [TabContent])
   if (titles.length !== contents.length) {
@@ -13,7 +13,7 @@ export const Tabs = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className='w-full sm:px-0'>
-      <Tab.Group>
+      <Tab.Group defaultIndex={currentIndex}>
         <Tab.List className='flex space-x-1 rounded-xl bg-slate-100 p-1'>{titles.map((title) => title)}</Tab.List>
         <Tab.Panels className='mt-2'>{contents.map((pane) => pane)}</Tab.Panels>
       </Tab.Group>
