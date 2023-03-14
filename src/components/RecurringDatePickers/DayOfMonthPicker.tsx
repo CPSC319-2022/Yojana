@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useController } from 'react-hook-form'
 import { Dayjs } from 'dayjs'
 import { DropdownMenuItem } from '@/components/common/Dropdown'
@@ -64,42 +64,46 @@ export const DayOfMonthPicker = ({
     setDayOfWeek(startDate.day())
   }, [startDate])
 
-  useEffect(() => {
-    const cronString = monthRecurrenceCrons[recurrenceType]
-      .replace(weekNumReplacer, weekNum.toString())
-      .replace(dayOfWeekReplacer, dayOfWeek.toString())
-      .replace(dateOfMonthReplacer, dateOfMonth.toString())
+  const handleRecurrenceChange = useCallback(
+    (newType: MonthRecurrenceType) => {
+      const cronString = monthRecurrenceCrons[newType]
+        .replace(weekNumReplacer, weekNum.toString())
+        .replace(dayOfWeekReplacer, dayOfWeek.toString())
+        .replace(dateOfMonthReplacer, dateOfMonth.toString())
 
-    onChange(cronString)
-    updateState(cronString)
-    setSelectedRecurrenceType(recurrenceType)
-  }, [recurrenceType, dateOfMonth, dayOfWeek, onChange, setSelectedRecurrenceType, updateState, weekNum])
+      onChange(cronString)
+      updateState(cronString)
+      setRecurrenceType(newType)
+      setSelectedRecurrenceType(newType)
+    },
+    [dateOfMonth, dayOfWeek, onChange, setSelectedRecurrenceType, updateState, weekNum]
+  )
 
   const availableMenuItems: { [key in MonthRecurrenceType]: DropdownMenuItem } = useMemo(() => {
     return {
-      NONE: { key: MonthRecurrence.NONE, label: 'None', onClick: () => setRecurrenceType(MonthRecurrence.NONE) },
+      NONE: { key: MonthRecurrence.NONE, label: 'None', onClick: () => handleRecurrenceChange(MonthRecurrence.NONE) },
       ON_DATE_Y: {
         key: MonthRecurrence.ON_DATE_Y,
         label: `Monthly on day ${dateOfMonth}`,
-        onClick: () => setRecurrenceType(MonthRecurrence.ON_DATE_Y)
+        onClick: () => handleRecurrenceChange(MonthRecurrence.ON_DATE_Y)
       },
       ON_LAST_DAY: {
         key: MonthRecurrence.ON_LAST_DAY,
         label: `Monthly on the last day`,
-        onClick: () => setRecurrenceType(MonthRecurrence.ON_LAST_DAY)
+        onClick: () => handleRecurrenceChange(MonthRecurrence.ON_LAST_DAY)
       },
       ON_YTH_XDAY: {
         key: MonthRecurrence.ON_YTH_XDAY,
         label: `Monthly on the ${ordinals[weekNum - 1]} ${startDate.format('dddd')}`,
-        onClick: () => setRecurrenceType(MonthRecurrence.ON_YTH_XDAY)
+        onClick: () => handleRecurrenceChange(MonthRecurrence.ON_YTH_XDAY)
       },
       ON_LAST_XDAY: {
         key: MonthRecurrence.ON_LAST_XDAY,
         label: `Monthly on the last ${startDate.format('dddd')}`,
-        onClick: () => setRecurrenceType(MonthRecurrence.ON_LAST_XDAY)
+        onClick: () => handleRecurrenceChange(MonthRecurrence.ON_LAST_XDAY)
       }
     }
-  }, [dateOfMonth, startDate, weekNum])
+  }, [dateOfMonth, handleRecurrenceChange, startDate, weekNum])
 
   const getMenuItems = useMemo(() => {
     const includeItems = [MonthRecurrence.NONE, MonthRecurrence.ON_DATE_Y]
