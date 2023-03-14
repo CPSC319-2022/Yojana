@@ -28,12 +28,15 @@ export const SideBar = ({ session }: Props) => {
           <div ref={componentRef} className='print-content mx-2 border'>
             <div className={'center'}>Categories</div>
             <div className='category-grid'>
-              {categories.map((category) => (
-                <div key={category.id} className='category-card'>
-                  <Icon iconName={category.icon} color={category.color} className='inline' />
-                  <div className='category-name'>{category.name}</div>
-                </div>
-              ))}
+              {categories.map(
+                (category) =>
+                  category.show && (
+                    <div key={category.id} className='category-card'>
+                      <Icon iconName={category.icon} color={category.color} className='inline' />
+                      <div className='category-name'>{category.name}</div>
+                    </div>
+                  )
+              )}
             </div>
             <Year getForPrinting={true} />
           </div>
