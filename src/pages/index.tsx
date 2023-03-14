@@ -66,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     const { interval, date } = query
     // check if date query param is valid
     if (date && typeof date === 'string' && dayjs(date).isValid()) {
-      store.dispatch(setDate(dayjs(date)))
+      store.dispatch(setDate(dayjs(date).subtract(1, 'day')))
     }
     // check if interval query param is valid
     if (interval && Object.values(CalendarInterval).includes(interval as CalendarInterval)) {

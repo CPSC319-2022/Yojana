@@ -104,10 +104,11 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           repeating: {
             cron: currentState?.cron || '',
             startDate:
-              dayjs(currentState?.startDate)?.toISOString().split('T')[0] ||
-              dayjs().startOf('year').format('YYYY-MM-DD'),
+              // dayjs(currentState?.startDate)?.toISOString().split('T')[0]
+              dayjs(currentState?.startDate)?.toString().split('T')[0] || dayjs().startOf('year').format('YYYY-MM-DD'),
             endDate:
-              dayjs(currentState?.endDate)?.toISOString().split('T')[0] || dayjs().endOf('year').format('YYYY-MM-DD')
+              // dayjs(currentState?.endDate)?.toISOString().split('T')[0]
+              dayjs(currentState?.endDate)?.toString().split('T')[0] || dayjs().endOf('year').format('YYYY-MM-DD')
           }
         }
 
