@@ -2,12 +2,14 @@ import { Dropdown } from '@/components/common'
 import { signOut, useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { PreferenceModal } from '@/components/PreferenceModal'
+import { ExportModal } from '@/components/ExportModal'
 
 export const AccountDropdown = () => {
   const { data: session } = useSession()
   const name = session?.user.name || ''
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isPrefModalOpen, setIsPrefModalOpen] = useState(false)
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false)
 
   return (
     <div>
@@ -24,14 +26,14 @@ export const AccountDropdown = () => {
             key: 'Preferences',
             label: 'Preferences',
             onClick: () => {
-              setIsModalOpen(true)
+              setIsPrefModalOpen(true)
             }
           },
           {
             key: 'Export Calendar',
             label: 'Export Calendar',
             onClick: () => {
-              window.open('/api/dates/export', '_blank')
+              setIsExportModalOpen(true)
             }
           },
           {
@@ -41,7 +43,8 @@ export const AccountDropdown = () => {
           }
         ]}
       />
-      <PreferenceModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <PreferenceModal isModalOpen={isPrefModalOpen} setIsModalOpen={setIsPrefModalOpen} />
+      <ExportModal isModalOpen={isExportModalOpen} setIsModalOpen={setIsExportModalOpen} />
     </div>
   )
 }
