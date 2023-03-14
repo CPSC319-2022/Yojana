@@ -1,31 +1,36 @@
-import { useCallback } from 'react'
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
 import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
-import dayjs from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
+import { Popover, Transition } from '@headlessui/react'
+
 import {
   getIsSelectingDates,
   getPrevCurrNextMonthSelectedDates,
   toggleIndividualDate
 } from '@/redux/reducers/DateSelectorReducer'
-import { IconName } from '@/components/common'
+import { Icon, IconName } from '@/components/common'
 
 interface MonthProps {
   monthOffset: number
   className?: string
 }
 
+const CATEGORY_BLOCK_HEIGHT_PX = 28
+
 export const Month = (props: MonthProps) => {
   const monthView = useAppSelector(isMonthInterval)
   const stateDate = useAppSelector(getDate)
   const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
   const isSelectingDates = useAppSelector(getIsSelectingDates)
+  const dispatch = useAppDispatch()
 
-  const targetDate = referenceDate.add(props.monthOffset, 'month')
-  const monthStartDate = targetDate.startOf('month')
-  const daysInMonth = targetDate.daysInMonth()
-  const numWeeks = Math.ceil((daysInMonth + monthStartDate.day()) / 7)
+  const [targetDate, setTargetDate] = useState(referenceDate.add(props.monthOffset, 'month'))
+  const [monthStartDate, setMonthStartDate] = useState(targetDate.startOf('month'))
+  const [daysInMonth, setDaysInMonth] = useState(targetDate.daysInMonth())
+  const [numWeeks, setNumWeeks] = useState(Math.ceil((daysInMonth + monthStartDate.day()) / 7))
 
   const categoryMap = useAppSelector(getCategoryMap)
   const { prevMonth, currMonth, nextMonth } = useAppSelector((state) => getPrevCurrNextMonth(state, targetDate))
@@ -33,83 +38,225 @@ export const Month = (props: MonthProps) => {
     getPrevCurrNextMonthSelectedDates(state, targetDate)
   )
 
-  const dispatch = useAppDispatch()
+  const [nonOverflowElemCount, setNonOverflowElemCount] = useState(1)
+  const [nonOverflowCountKnown, setNonOverflowCountKnown] = useState(false)
+  const monthRef = useRef<HTMLDivElement>(null)
+  const categoryContainerRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (node !== null && !nonOverflowCountKnown) {
+        setNonOverflowElemCount(Math.floor(node.getBoundingClientRect().height / CATEGORY_BLOCK_HEIGHT_PX))
+        setNonOverflowCountKnown(true)
+      }
+    },
+    [nonOverflowCountKnown]
+  )
+
+  useEffect(() => {
+    const newTarget = referenceDate.add(props.monthOffset, 'month')
+    const newStart = newTarget.startOf('month')
+    const newDaysInMonth = newTarget.daysInMonth()
+
+    setTargetDate(newTarget)
+    setMonthStartDate(newStart)
+    setDaysInMonth(newDaysInMonth)
+    setNumWeeks(Math.ceil((newDaysInMonth + newStart.day()) / 7))
+  }, [props.monthOffset, referenceDate])
+
+  useEffect(() => {
+    if (!monthRef.current) return
+
+    const handleWindowSizeChange = () => setNonOverflowCountKnown(false)
+    const resizeObserver = new ResizeObserver(handleWindowSizeChange)
+    resizeObserver.observe(monthRef.current)
+    return () => resizeObserver.disconnect()
+  }, [])
+
+  useEffect(() => {
+    setNonOverflowCountKnown(false)
+  }, [numWeeks])
+
+  const getPopoverContent = useCallback(
+    (day: Dayjs, offsetFromMonthStart: number, allDayBlocks: JSX.Element[]) => {
+      return (
+        <div className='lg:grid-rows relative grid gap-1 p-2 pb-3'>
+          <span
+            className={`${
+              offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''
+            } block text-center`}
+          >
+            {day.date()}
+          </span>
+          {allDayBlocks}
+        </div>
+      )
+    },
+    [daysInMonth]
+  )
+
+  const renderPopover = useCallback(
+    (day: Dayjs, offsetFromMonthStart: number, allDayBlocks: JSX.Element[]) => {
+      const translateXClass = day.day() === 6 ? '-translate-x-32' : ''
+      const appearBelow = offsetFromMonthStart < 21
+      const translateYClass = appearBelow ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
+      const hiddenElemCount = allDayBlocks.length - nonOverflowElemCount + 1
+      return (
+        <Popover className={'mx-1 mt-1'} key={day.format('YY-MM-DD')}>
+          <Popover.Button className={'border-box flex w-full rounded-md px-1 hover:bg-slate-100'}>
+            {hiddenElemCount + ' more'}
+          </Popover.Button>
+          <Transition
+            as={Fragment}
+            enter='transition ease-out duration-200'
+            enterFrom='opacity-0'
+            enterTo='opacity-100'
+            leave='transition ease-in duration-150'
+            leaveFrom={`opacity-100 ${appearBelow ? 'translate-y-0' : ''}`}
+            leaveTo={`opacity-0 ${appearBelow ? 'translate-y-1' : ''}`}
+          >
+            <Popover.Panel className={`${translateXClass} ${translateYClass} z-100 absolute transform`}>
+              <div className='h-fit max-h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.25)]'>
+                {getPopoverContent(day, offsetFromMonthStart, allDayBlocks)}
+              </div>
+            </Popover.Panel>
+          </Transition>
+        </Popover>
+      )
+    },
+    [getPopoverContent, nonOverflowElemCount]
+  )
+
+  const getEntriesOnDay = useCallback(
+    (dateNum: number, offsetFromMonthStart: number) => {
+      if (offsetFromMonthStart < 0) {
+        return prevMonth?.[dateNum]
+      } else if (offsetFromMonthStart >= daysInMonth) {
+        return nextMonth?.[dateNum]
+      } else {
+        return currMonth?.[dateNum]
+      }
+    },
+    [currMonth, daysInMonth, nextMonth, prevMonth]
+  )
+
+  const getBannersOrIcons = useCallback(
+    (day: Dayjs, offsetFromMonthStart: number, showBanners: boolean): JSX.Element[] => {
+      if (isSelectingDates) return []
+
+      const entriesOnDay = getEntriesOnDay(day.date(), offsetFromMonthStart) || []
+      const key = day.format('YY-MM-DD')
+
+      const categories = entriesOnDay?.map((entry) => {
+        const category = categoryMap[entry.categoryId]
+        if (!category.show) return null
+        if (showBanners) {
+          return (
+            <CategoryBlock
+              color={category.color}
+              label={category.name}
+              icon={category.icon as IconName}
+              key={`${key}-${entry.categoryId}`}
+            />
+          )
+        } else {
+          return (
+            <span className={'px-0.5 font-bold'} key={`${key}-${entry.id}`}>
+              <style jsx>{`
+                * {
+                  color: ${category.color};
+                }
+              `}</style>
+              <Icon iconName={category.icon as IconName} className='inline' />
+            </span>
+          )
+        }
+      })
+
+      return categories.filter((element) => element !== null) as JSX.Element[]
+    },
+    [categoryMap, getEntriesOnDay, isSelectingDates]
+  )
+
+  const renderDateNum = useCallback(
+    (day: Dayjs, isCurrentMonth: boolean) => {
+      const isToday = dayjs().isSame(day, 'day')
+      const todayCircle = isToday && !isSelectingDates ? 'rounded-full bg-emerald-200' : ''
+      return (
+        <div className={`flex items-center justify-center`}>
+          <div className={`flex h-7 w-7 items-center justify-center ${todayCircle} mt-1`}>
+            <span className={`${isCurrentMonth ? '' : 'text-slate-400'} block text-center text-sm`}>{day.date()}</span>
+          </div>
+        </div>
+      )
+    },
+    [isSelectingDates]
+  )
+
+  const getSelectedSettings = useCallback(
+    (dateNum: number, offsetFromMonthStart: number) => {
+      if (!isSelectingDates) return { isSelected: false, isRepeating: false }
+      if (offsetFromMonthStart < 0) {
+        return prevMonthSelected?.[dateNum]
+      } else if (offsetFromMonthStart >= daysInMonth) {
+        return nextMonthSelected?.[dateNum]
+      } else {
+        return currMonthSelected?.[dateNum]
+      }
+    },
+    [currMonthSelected, daysInMonth, isSelectingDates, nextMonthSelected, prevMonthSelected]
+  )
 
   const renderDay = useCallback(
     (firstDateOfWeek: number, dayNum: number) => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
       const day = monthStartDate.add(offsetFromMonthStart, 'days')
-      let dayBlocks: (JSX.Element | undefined)[] = []
-      let selected: { isSelected: boolean; isRepeating: boolean } = { isSelected: false, isRepeating: false }
-      if (!isSelectingDates) {
-        let entriesOnDay
-        if (offsetFromMonthStart < 0) {
-          entriesOnDay = prevMonth?.[day.date()]
-        } else if (offsetFromMonthStart >= daysInMonth) {
-          entriesOnDay = nextMonth?.[day.date()]
-        } else {
-          entriesOnDay = currMonth?.[day.date()]
-        }
 
-        dayBlocks = entriesOnDay?.map((entry, key) => {
-          const category = categoryMap[entry.categoryId]
-          if (category.show) {
-            return (
-              <CategoryBlock color={category.color} label={category.name} icon={category.icon as IconName} key={key} />
-            )
-          }
-        })
-      } else {
-        if (offsetFromMonthStart < 0) {
-          selected = prevMonthSelected?.[day.date()]
-        } else if (offsetFromMonthStart >= daysInMonth) {
-          selected = nextMonthSelected?.[day.date()]
-        } else {
-          selected = currMonthSelected?.[day.date()]
-        }
-      }
+      // make an explicit showBanners variable because we'll be adding logic to this later.
+      const showBanners = monthView // don't inline this variable.
+      const allCategoryElems = getBannersOrIcons(day, offsetFromMonthStart, showBanners) || []
 
-      const isToday = dayjs().isSame(day, 'day')
-      const todayCircle = isToday && !isSelectingDates ? 'rounded-full bg-emerald-200' : ''
+      const selected = getSelectedSettings(day.date(), offsetFromMonthStart)
+      const isCurrentMonth = offsetFromMonthStart >= 0 && offsetFromMonthStart < daysInMonth
 
-      const notCurrentMonth = offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth
+      const nonOverflowCategoryElems =
+        allCategoryElems.length > nonOverflowElemCount ? (
+          <>
+            {allCategoryElems.slice(0, nonOverflowElemCount - 1)}
+            {renderPopover(day, offsetFromMonthStart, allCategoryElems)}
+          </>
+        ) : (
+          allCategoryElems
+        )
 
       return (
         <div
-          className={`tile overflow-y-auto ${
-            selected?.isSelected ? (selected?.isRepeating ? 'bg-slate-100' : 'bg-emerald-100') : 'bg-white'
-          } ${
-            isSelectingDates && !selected?.isSelected ? 'hover:ring-2 hover:ring-inset hover:ring-emerald-200' : ''
-          } px-0.5 ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} `}
-          key={day.date()}
+          key={day.format('YY-MM-DD')}
+          className={`tile flex flex-col overflow-y-hidden px-0.5
+            ${selected?.isSelected ? 'bg-emerald-100' : 'bg-white'} 
+            ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} `}
           onClick={() => {
             if (!selected || !selected?.isRepeating) {
               dispatch(toggleIndividualDate(day))
             }
           }}
         >
-          <div className={`flex items-center justify-center`}>
-            <div className={`flex h-7 w-7 items-center justify-center ${todayCircle} mt-1`}>
-              <span className={`${notCurrentMonth ? 'text-slate-400' : ''} block text-center text-sm`}>
-                {day.date()}
-              </span>
-            </div>
+          {renderDateNum(day, isCurrentMonth)}
+          <div className='flex-grow' ref={offsetFromMonthStart === 0 ? categoryContainerRef : undefined}>
+            {nonOverflowCategoryElems}
           </div>
-          {dayBlocks}
         </div>
       )
     },
     [
       monthStartDate,
-      isSelectingDates,
+      monthView,
+      getBannersOrIcons,
+      getSelectedSettings,
       daysInMonth,
-      prevMonth,
-      nextMonth,
-      currMonth,
-      categoryMap,
-      prevMonthSelected,
-      nextMonthSelected,
-      currMonthSelected,
+      nonOverflowElemCount,
+      renderPopover,
+      isSelectingDates,
+      renderDateNum,
+      categoryContainerRef,
       dispatch
     ]
   )
@@ -154,7 +301,10 @@ export const Month = (props: MonthProps) => {
   }, [])
 
   return (
-    <div className={props.className + ' ' + 'box-border bg-slate-100' + ' ' + (monthView ? 'h-full' : '')}>
+    <div
+      ref={monthRef}
+      className={props.className + ' ' + 'box-border bg-slate-100' + ' ' + (monthView ? 'h-full' : '')}
+    >
       {generateDayNames()}
       {generateWeeks()}
     </div>
