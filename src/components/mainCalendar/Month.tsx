@@ -12,7 +12,6 @@ import {
   toggleIndividualDate
 } from '@/redux/reducers/DateSelectorReducer'
 import { Icon, IconName } from '@/components/common'
-import { Entry } from '@prisma/client'
 
 interface MonthProps {
   monthOffset: number
@@ -131,8 +130,11 @@ export const Month = (props: MonthProps) => {
   )
 
   const getBannersOrIcons = useCallback(
-    (entriesOnDay: Entry[], key: string, showBanners: boolean): JSX.Element[] => {
+    (day: Dayjs, offsetFromMonthStart: number, showBanners: boolean): JSX.Element[] => {
       if (isSelectingDates) return []
+
+      const entriesOnDay = getEntriesOnDay(day.date(), offsetFromMonthStart) || []
+      const key = day.format('YY-MM-DD')
 
       const categories = entriesOnDay?.map((entry) => {
         const category = categoryMap[entry.categoryId]
@@ -159,9 +161,10 @@ export const Month = (props: MonthProps) => {
           )
         }
       })
+
       return categories.filter((element) => element !== null) as JSX.Element[]
     },
-    [categoryMap, isSelectingDates]
+    [categoryMap, getEntriesOnDay, isSelectingDates]
   )
 
   const renderDateNum = useCallback(
@@ -197,11 +200,9 @@ export const Month = (props: MonthProps) => {
     (firstDateOfWeek: number, dayNum: number) => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
       const day = monthStartDate.add(offsetFromMonthStart, 'days')
-      const key = day.format('YY-MM-DD')
 
-      const showBanners = monthView
-      const entriesOnDay = getEntriesOnDay(day.date(), offsetFromMonthStart) || []
-      const allCategoryElems = getBannersOrIcons(entriesOnDay, key, showBanners) || []
+      const showBanners = monthView // don't inline this variable. logic will be added to it later.
+      const allCategoryElems = getBannersOrIcons(day, offsetFromMonthStart, showBanners) || []
 
       const selected = getSelectedSettings(day.date(), offsetFromMonthStart)
       const isCurrentMonth = offsetFromMonthStart >= 0 && offsetFromMonthStart < daysInMonth
@@ -219,7 +220,7 @@ export const Month = (props: MonthProps) => {
       return (
         <div
           ref={offsetFromMonthStart === 0 ? myRef : undefined}
-          key={key}
+          key={day.format('YY-MM-DD')}
           className={`tile overflow-y-hidden  px-0.5
             ${selected?.isSelected ? 'bg-emerald-100' : 'bg-white'} 
             ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} `}
@@ -236,7 +237,6 @@ export const Month = (props: MonthProps) => {
     },
     [
       monthStartDate,
-      getEntriesOnDay,
       getBannersOrIcons,
       getSelectedSettings,
       daysInMonth,
