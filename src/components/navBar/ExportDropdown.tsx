@@ -149,13 +149,40 @@ export const ExportDropdown = ({
                     <Accordion.Item>
                       <Accordion.Header>Export Calendar</Accordion.Header>
                       <Accordion.Body>
-                        <button className={`group flex w-full items-center rounded-md px-2 py-2`}>
+                        <button
+                          className={`group flex w-full items-center rounded-md px-2 py-2`}
+                          onClick={() => {
+                            window.open('/api/dates/export', '_blank')
+                          }}
+                          onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
+                            e.currentTarget.classList.add('bg-slate-100')
+                          }}
+                          onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
+                            e.currentTarget.classList.remove('bg-slate-100')
+                          }}
+                        >
                           Master Calendar
                         </button>
-                        <button className={`group flex w-full items-center rounded-md px-2 py-2`}>
+                        <button
+                          className={`group flex w-full items-center rounded-md px-2 py-2`}
+                          onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
+                            e.currentTarget.classList.add('bg-slate-100')
+                          }}
+                          onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
+                            e.currentTarget.classList.remove('bg-slate-100')
+                          }}
+                        >
                           Personal Calendar
                         </button>
-                        <button className={`group flex w-full items-center rounded-md px-2 py-2`}>
+                        <button
+                          className={`group flex w-full items-center rounded-md px-2 py-2`}
+                          onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
+                            e.currentTarget.classList.add('bg-slate-100')
+                          }}
+                          onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
+                            e.currentTarget.classList.remove('bg-slate-100')
+                          }}
+                        >
                           Filtered Categories
                         </button>
                       </Accordion.Body>
