@@ -18,6 +18,8 @@ interface MonthProps {
   className?: string
 }
 
+const CATEGORY_BLOCK_HEIGHT_PX = 28
+
 export const Month = (props: MonthProps) => {
   const monthView = useAppSelector(isMonthInterval)
   const stateDate = useAppSelector(getDate)
@@ -36,10 +38,18 @@ export const Month = (props: MonthProps) => {
     getPrevCurrNextMonthSelectedDates(state, targetDate)
   )
 
-  const myRef = useRef<HTMLDivElement>(null)
-  // TODO "show more" logic not implemented yet
   const [nonOverflowElemCount, setNonOverflowElemCount] = useState(1)
   const [nonOverflowCountKnown, setNonOverflowCountKnown] = useState(false)
+  const monthRef = useRef<HTMLDivElement>(null)
+  const categoryContainerRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (node !== null && !nonOverflowCountKnown) {
+        setNonOverflowElemCount(Math.floor(node.getBoundingClientRect().height / CATEGORY_BLOCK_HEIGHT_PX))
+        setNonOverflowCountKnown(true)
+      }
+    },
+    [nonOverflowCountKnown]
+  )
 
   useEffect(() => {
     const newTarget = referenceDate.add(props.monthOffset, 'month')
@@ -53,16 +63,14 @@ export const Month = (props: MonthProps) => {
   }, [props.monthOffset, referenceDate])
 
   useEffect(() => {
-    const handleWindowSizeChange = () => setNonOverflowCountKnown(false)
+    if (!monthRef.current) return
 
-    // TODO this currently only listens for window resizes, but not other month view resizes
-    //   i.e. it can't detect when the sidebar has opened / closed.
-    //   this is an issue only when horizontal spacing matters, i.e. icons view.
-    window.addEventListener('resize', handleWindowSizeChange)
-    return () => {
-      window.removeEventListener('resize', handleWindowSizeChange)
-    }
+    const handleWindowSizeChange = () => setNonOverflowCountKnown(false)
+    const resizeObserver = new ResizeObserver(handleWindowSizeChange)
+    resizeObserver.observe(monthRef.current)
+    return () => resizeObserver.disconnect()
   }, [])
+
   useEffect(() => {
     setNonOverflowCountKnown(false)
   }, [numWeeks])
@@ -90,10 +98,11 @@ export const Month = (props: MonthProps) => {
       const translateXClass = day.day() === 6 ? '-translate-x-32' : ''
       const appearBelow = offsetFromMonthStart < 21
       const translateYClass = appearBelow ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
+      const hiddenElemCount = allDayBlocks.length - nonOverflowElemCount + 1
       return (
         <Popover className={'mx-1 mt-1'} key={day.format('YY-MM-DD')}>
           <Popover.Button className={'border-box flex w-full rounded-md px-1 hover:bg-slate-100'}>
-            {allDayBlocks.length - nonOverflowElemCount + ' more'}
+            {hiddenElemCount + ' more'}
           </Popover.Button>
           <Transition
             as={Fragment}
@@ -201,7 +210,8 @@ export const Month = (props: MonthProps) => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
       const day = monthStartDate.add(offsetFromMonthStart, 'days')
 
-      const showBanners = monthView // don't inline this variable. logic will be added to it later.
+      // make an explicit showBanners variable because we'll be adding logic to this later.
+      const showBanners = monthView // don't inline this variable.
       const allCategoryElems = getBannersOrIcons(day, offsetFromMonthStart, showBanners) || []
 
       const selected = getSelectedSettings(day.date(), offsetFromMonthStart)
@@ -210,7 +220,7 @@ export const Month = (props: MonthProps) => {
       const nonOverflowCategoryElems =
         allCategoryElems.length > nonOverflowElemCount ? (
           <>
-            {allCategoryElems.slice(0, nonOverflowElemCount)}
+            {allCategoryElems.slice(0, nonOverflowElemCount - 1)}
             {renderPopover(day, offsetFromMonthStart, allCategoryElems)}
           </>
         ) : (
@@ -219,9 +229,8 @@ export const Month = (props: MonthProps) => {
 
       return (
         <div
-          ref={offsetFromMonthStart === 0 ? myRef : undefined}
           key={day.format('YY-MM-DD')}
-          className={`tile overflow-y-hidden  px-0.5
+          className={`tile flex flex-col overflow-y-hidden px-0.5
             ${selected?.isSelected ? 'bg-emerald-100' : 'bg-white'} 
             ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} `}
           onClick={() => {
@@ -231,12 +240,15 @@ export const Month = (props: MonthProps) => {
           }}
         >
           {renderDateNum(day, isCurrentMonth)}
-          {nonOverflowCategoryElems}
+          <div className='flex-grow' ref={offsetFromMonthStart === 0 ? categoryContainerRef : undefined}>
+            {nonOverflowCategoryElems}
+          </div>
         </div>
       )
     },
     [
       monthStartDate,
+      monthView,
       getBannersOrIcons,
       getSelectedSettings,
       daysInMonth,
@@ -244,7 +256,7 @@ export const Month = (props: MonthProps) => {
       renderPopover,
       isSelectingDates,
       renderDateNum,
-      monthView,
+      categoryContainerRef,
       dispatch
     ]
   )
@@ -289,7 +301,10 @@ export const Month = (props: MonthProps) => {
   }, [])
 
   return (
-    <div className={props.className + ' ' + 'box-border bg-slate-100' + ' ' + (monthView ? 'h-full' : '')}>
+    <div
+      ref={monthRef}
+      className={props.className + ' ' + 'box-border bg-slate-100' + ' ' + (monthView ? 'h-full' : '')}
+    >
       {generateDayNames()}
       {generateWeeks()}
     </div>
