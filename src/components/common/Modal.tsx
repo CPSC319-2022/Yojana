@@ -110,7 +110,10 @@ export const Modal = ({
                     style={{ maxWidth: maxWidth, maxHeight: maxHeight, minWidth: minWidth }}
                   >
                     {showCloseBtn && (
-                      <div id={handle} className={`w-full bg-slate-100 ${!isMinimized ? 'cursor-move' : ''}`}>
+                      <div
+                        id={handle}
+                        className={`sticky top-0 z-20 w-full bg-slate-100 ${!isMinimized ? 'cursor-move' : ''}`}
+                      >
                         {closeBtn && (
                           <div className='flex justify-end'>
                             <button
