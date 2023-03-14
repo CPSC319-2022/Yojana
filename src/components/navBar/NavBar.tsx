@@ -9,10 +9,11 @@ import {
   jumpToToday
 } from '@/redux/reducers/MainCalendarReducer'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import { AccountDropdown } from './AccountDropdown'
+import React, { useEffect, useState } from 'react'
 import { CalViewDropdown } from './CalViewDropdown'
 import { setCookieMaxAge } from '@/utils/cookies'
+import { ExportDropdown } from '@/components/navBar/ExportDropdown'
+import { AccountDropdown } from '@/components/navBar/AccountDropdown'
 
 interface NavBarProps {
   sidebarOpen: boolean
@@ -68,6 +69,7 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
       </div>
       <CalViewDropdown />
       <AccountDropdown />
+      <ExportDropdown text={'Export'} menuItems={[]} />
     </div>
   )
 }
