@@ -1,15 +1,16 @@
-import { useCallback } from 'react'
+import { IconName } from '@/components/common'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
-import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
-import dayjs from 'dayjs'
 import {
   getIsSelectingDates,
   getPrevCurrNextMonthSelectedDates,
   toggleIndividualDate
 } from '@/redux/reducers/DateSelectorReducer'
-import { IconName } from '@/components/common'
+import { getDate, isMonthInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
+import dayjsTZ from '@/utils/timezonedDayjs'
+import dayjs from 'dayjs'
+import { useCallback } from 'react'
 
 interface MonthProps {
   monthOffset: number
@@ -19,7 +20,7 @@ interface MonthProps {
 export const Month = (props: MonthProps) => {
   const monthView = useAppSelector(isMonthInterval)
   const stateDate = useAppSelector(getDate)
-  const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
+  const referenceDate = useAppSelector(isYearInterval) ? dayjsTZ(stateDate).startOf('year') : stateDate
   const isSelectingDates = useAppSelector(getIsSelectingDates)
 
   const targetDate = referenceDate.add(props.monthOffset, 'month')

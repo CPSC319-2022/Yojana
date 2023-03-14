@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
-import dayjs, { Dayjs } from 'dayjs'
+import { Dayjs } from 'dayjs'
+import dayjsTZ from '@/utils/timezonedDayjs'
 import { cloneDeep, merge } from 'lodash'
 
 // year: 2023
@@ -52,7 +53,7 @@ const dateSelectorSlice = createSlice({
       state.individualDates = {}
       _addNewDates(state.individualDates, action.payload)
     },
-    toggleIndividualDate: (state, action: PayloadAction<dayjs.Dayjs>) => {
+    toggleIndividualDate: (state, action: PayloadAction<Dayjs>) => {
       const year = action.payload.year()
       const month = action.payload.month()
       const day = action.payload.date()
@@ -93,7 +94,7 @@ const dateSelectorSlice = createSlice({
 
 const _addNewDates = (selectedDates: DateSelectionMap, dates: { date: string | Date; isRepeating: boolean }[]) => {
   dates.forEach(({ date, isRepeating }) => {
-    const d = dayjs(date)
+    const d = dayjsTZ(date)
     const year = d.year()
     const month = d.month()
     const day = d.date()

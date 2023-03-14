@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { CalendarInterval } from '@/constants/enums'
-import dayjs, { Dayjs } from 'dayjs'
+import { Dayjs } from 'dayjs'
+import dayjsTZ from '@/utils/timezonedDayjs'
+import dayjs from 'dayjs'
 import { intervalToNumMonths } from '@/utils/month'
 import { HYDRATE } from 'next-redux-wrapper'
 

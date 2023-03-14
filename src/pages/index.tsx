@@ -8,15 +8,15 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setAppData } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates, resetSelectedDates, setIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import { setDate, setInterval } from '@/redux/reducers/MainCalendarReducer'
+import { defaultPreferences, setYearOverflow, setYearShowGrid } from '@/redux/reducers/PreferencesReducer'
 import { wrapper } from '@/redux/store'
+import { setCookieMaxAge } from '@/utils/cookies'
+import dayjsTZ from '@/utils/timezonedDayjs'
 import { getCookies } from 'cookies-next'
-import dayjs from 'dayjs'
 import { GetServerSideProps } from 'next'
 import { getServerSession, Session } from 'next-auth'
 import { useEffect, useState } from 'react'
 import { authOptions } from './api/auth/[...nextauth]'
-import { setCookieMaxAge } from '@/utils/cookies'
-import { defaultPreferences, setYearOverflow, setYearShowGrid } from '@/redux/reducers/PreferencesReducer'
 
 interface CalendarProps {
   sidebarOpenInitial: boolean
@@ -65,8 +65,8 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
   return async ({ req, res, query }) => {
     const { interval, date } = query
     // check if date query param is valid
-    if (date && typeof date === 'string' && dayjs(date).isValid()) {
-      store.dispatch(setDate(dayjs(date).subtract(1, 'day')))
+    if (date && typeof date === 'string' && dayjsTZ(date).isValid()) {
+      store.dispatch(setDate(dayjsTZ(date)))
     }
     // check if interval query param is valid
     if (interval && Object.values(CalendarInterval).includes(interval as CalendarInterval)) {

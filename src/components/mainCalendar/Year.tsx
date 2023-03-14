@@ -3,6 +3,7 @@ import { getCategoryMap, getYear } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates, getYearSelectedDates, toggleIndividualDate } from '@/redux/reducers/DateSelectorReducer'
 import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import dayjs, { Dayjs } from 'dayjs'
+import dayjsTZ from '@/utils/timezonedDayjs'
 import { useCallback, useMemo } from 'react'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 import { Icon, IconName } from '@/components/common'
@@ -15,7 +16,7 @@ export const Year = () => {
   const yearSelected = useAppSelector((state) => getYearSelectedDates(state, stateDate))
   const preferences = useAppSelector(getPreferences)
 
-  const yearStartDate = dayjs(stateDate).startOf('year')
+  const yearStartDate = dayjsTZ(stateDate).startOf('year')
   const yearNum = yearStartDate.get('year')
 
   const dispatch = useAppDispatch()
@@ -76,7 +77,7 @@ export const Year = () => {
 
   const renderDay = useCallback(
     (monthNum: number, dateOffset: number) => {
-      const monthStartDate = dayjs(yearStartDate).add(monthNum, 'month')
+      const monthStartDate = dayjsTZ(yearStartDate).add(monthNum, 'month')
       if (monthStartDate.daysInMonth() <= dateOffset) {
         return <span key={`${yearNum}-${monthNum}-${dateOffset}`}>&nbsp;</span>
       }
@@ -117,7 +118,7 @@ export const Year = () => {
   const monthHeaders = useMemo(() => {
     return Array.from(Array(15).keys()).map((columnNum) => {
       const monthNum = columnNum - Math.ceil(columnNum / 5)
-      const monthStartDate = dayjs(yearStartDate).add(monthNum, 'month')
+      const monthStartDate = dayjsTZ(yearStartDate).add(monthNum, 'month')
       return (
         <h3 className='sticky top-0 bg-slate-100 text-center text-slate-400' key={`col-${columnNum}-header`}>
           {columnNum % 5 === 0 ? '\u00A0' : monthStartDate.format('MMM')}

@@ -1,8 +1,8 @@
 import prisma from '@/prisma/prismadb'
 import { getCategories } from '@/prisma/queries'
-import dayjs from 'dayjs'
-import type { NextApiRequest, NextApiResponse } from 'next'
+import dayjsTZ from '@/utils/timezonedDayjs'
 import { Entry } from '@prisma/client'
+import type { NextApiRequest, NextApiResponse } from 'next'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
@@ -35,13 +35,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               isMaster: req.body.isMaster,
               icon: req.body.icon,
               cron: req.body.cron,
-              startDate: req.body.startDate ? dayjs(req.body.startDate).toISOString() : null,
-              endDate: req.body.endDate ? dayjs(req.body.endDate).toISOString() : null,
+              startDate: req.body.startDate ? dayjsTZ(req.body.startDate).toISOString() : null,
+              endDate: req.body.endDate ? dayjsTZ(req.body.endDate).toISOString() : null,
               entries: {
                 createMany: {
                   data: req.body.dates.map(
                     ({ date, isRepeating = false }: { date: string; isRepeating?: boolean }) => ({
-                      date: dayjs(date).toISOString(),
+                      date: dayjsTZ(date).toISOString(),
                       isRepeating: isRepeating
                     })
                   ),
@@ -72,12 +72,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             creatorId: req.body.creatorId,
             icon: req.body.icon,
             cron: req.body.cron,
-            startDate: req.body.startDate ? dayjs(req.body.startDate).toISOString() : null,
-            endDate: req.body.endDate ? dayjs(req.body.endDate).toISOString() : null,
+            startDate: req.body.startDate ? dayjsTZ(req.body.startDate).toISOString() : null,
+            endDate: req.body.endDate ? dayjsTZ(req.body.endDate).toISOString() : null,
             entries: {
               createMany: {
                 data: req.body.dates.map(({ date, isRepeating = false }: { date: string; isRepeating?: boolean }) => ({
-                  date: dayjs(date).toISOString(),
+                  date: dayjsTZ(date).toISOString(),
                   isRepeating: isRepeating
                 })),
                 skipDuplicates: true

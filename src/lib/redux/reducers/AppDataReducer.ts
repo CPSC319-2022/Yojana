@@ -1,6 +1,7 @@
 import { AppData, CategoryFullState, EntryWithoutCategoryId } from '@/types/prisma'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import dayjs, { Dayjs } from 'dayjs'
+import { Dayjs } from 'dayjs'
+import dayjsTZ from '@/utils/timezonedDayjs'
 import { Entry } from '@prisma/client'
 import { HYDRATE } from 'next-redux-wrapper'
 import { setCookieMaxAge } from '@/utils/cookies'
@@ -92,7 +93,7 @@ const _createEntryMap = (data: AppData) => {
 const _addEntriesToEntryMap = (entryMap: EntryMap, entries: EntryWithoutCategoryId[], categoryId: number) => {
   entries.forEach((entry) => {
     // TODO: Fix this hack to get the correct date, ignore timezones
-    const date = dayjs(entry.date).add(1, 'day')
+    const date = dayjsTZ(entry.date)
     const year = date.year() // 2023
     const month = date.month() // 0-11
     const day = date.date() // 1-31
