@@ -6,7 +6,7 @@ interface GetCategoriesOptions {
 
 export const getCategories = async (options: GetCategoriesOptions = {}) => {
   const { names = [] } = options
-  const categories = await prisma.category.findMany({
+  return await prisma.category.findMany({
     where: {
       name: {
         in: names
@@ -26,5 +26,4 @@ export const getCategories = async (options: GetCategoriesOptions = {}) => {
       icon: true
     }
   })
-  return categories
 }
