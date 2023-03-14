@@ -83,6 +83,7 @@ export const ExportDropdown = ({
                           className={`group flex w-full items-center rounded-md px-2 py-2`}
                           onClick={() => {
                             window.open(`/api/dates/export`, '_blank')
+                            close()
                           }}
                           onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
                             e.currentTarget.classList.add('bg-slate-100')
@@ -95,6 +96,9 @@ export const ExportDropdown = ({
                         </button>
                         <button
                           className={`group flex w-full items-center rounded-md px-2 py-2`}
+                          onClick={() => {
+                            close()
+                          }}
                           onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
                             e.currentTarget.classList.add('bg-slate-100')
                           }}
@@ -108,6 +112,7 @@ export const ExportDropdown = ({
                           className={`group flex w-full items-center rounded-md px-2 py-2`}
                           onClick={() => {
                             window.open(`/api/dates/export?categories=${categoriesWithShowTrue}`, '_blank')
+                            close()
                           }}
                           onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
                             e.currentTarget.classList.add('bg-slate-100')
