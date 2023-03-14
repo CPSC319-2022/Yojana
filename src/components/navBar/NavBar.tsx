@@ -68,8 +68,8 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
         <h4 className='flex-none text-center text-lg'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
       </div>
       <CalViewDropdown />
-      <AccountDropdown />
       <ExportDropdown text={'Export'} menuItems={[]} />
+      <AccountDropdown />
     </div>
   )
 }
