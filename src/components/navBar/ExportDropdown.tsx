@@ -9,6 +9,8 @@ import {
   setYearShowGrid
 } from '@/redux/reducers/PreferencesReducer'
 import { setCookieMaxAge } from '@/utils/cookies'
+import { CategoryState } from '@/types/prisma'
+import { getCategories } from '@/redux/reducers/AppDataReducer'
 
 export interface DropdownProps {
   text?: string
@@ -38,6 +40,11 @@ export const ExportDropdown = ({
   const [isModalOpen, setIsModalOpen] = useState(false)
   const dispatch = useAppDispatch()
   const { yearShowGrid, yearOverflow, monthCategoryAppearance } = useAppSelector(getPreferences)
+  const categories: CategoryState[] = useAppSelector(getCategories)
+  const categoriesWithShowTrue = categories
+    .filter((category) => category.show)
+    .map((category) => category.name)
+    .join(',')
   return (
     <div className={containerClassName}>
       <Modal
@@ -152,7 +159,7 @@ export const ExportDropdown = ({
                         <button
                           className={`group flex w-full items-center rounded-md px-2 py-2`}
                           onClick={() => {
-                            window.open('/api/dates/export', '_blank')
+                            window.open(`/api/dates/export`, '_blank')
                           }}
                           onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
                             e.currentTarget.classList.add('bg-slate-100')
@@ -176,6 +183,9 @@ export const ExportDropdown = ({
                         </button>
                         <button
                           className={`group flex w-full items-center rounded-md px-2 py-2`}
+                          onClick={() => {
+                            window.open(`/api/dates/export?categories=${categoriesWithShowTrue}`, '_blank')
+                          }}
                           onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
                             e.currentTarget.classList.add('bg-slate-100')
                           }}

@@ -7,7 +7,8 @@ import dayjs from 'dayjs'
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case 'GET':
-      const calendar = generateICal(await getCategories())
+      const categories = (req.query.categories as string)?.split(',')
+      const calendar = generateICal(await getCategories(categories))
       res.setHeader('Content-Type', 'text/calendar')
       res.setHeader('Content-Disposition', 'attachment; filename=yojana.ics')
       return res.status(200).send(calendar.toString())
