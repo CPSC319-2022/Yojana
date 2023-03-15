@@ -26,8 +26,8 @@ export const SideBar = ({ session }: Props) => {
         <CsvModal />
         <span style={{ display: 'none' }}>
           <div ref={componentRef} className='mx-2 h-auto w-auto overflow-visible border'>
-            <div className='my-[2%] ml-[45%] font-[bolder]'>Categories</div>
-            <div className='grid grid-cols-[repeat(6,1fr)] gap-4'>
+            <div className='my-[1%] ml-[45%] font-[bolder]'>Categories</div>
+            <div className='grid grid-cols-[repeat(6,1fr)] gap-1'>
               {categories.map(
                 (category) =>
                   category.show && (
@@ -38,7 +38,7 @@ export const SideBar = ({ session }: Props) => {
                   )
               )}
             </div>
-            <div style={{ marginTop: '10px', fontSize: '28px' }} className='text-center font-bold'>
+            <div style={{ marginTop: '5px', fontSize: '28px' }} className='text-center font-bold'>
               {yearNum}
             </div>
             <Year getForPrinting={true} />
