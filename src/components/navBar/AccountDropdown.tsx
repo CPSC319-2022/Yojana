@@ -8,30 +8,37 @@ import { PreferenceModal } from '@/components/PreferenceModal'
 
 export const AccountDropdown = () => {
   const { data: session } = useSession()
-  const name = session?.user.name || ''
+  const userName = session?.user.name || ''
+  const userID = session?.user.id || ''
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const categories: CategoryState[] = useAppSelector(getCategories)
   const categoriesWithShowTrue = categories
     .filter((category) => category.show)
-    .map((category) => category.name)
+    .map((category) => category.id)
     .join(',')
 
   return (
     <div>
       <Dropdown text='Account' containerClassName='w-[12vw]'>
-        <Dropdown.Button key='User' label={name} onClick={() => {}} />
+        <Dropdown.Button key='User' label={userName} onClick={() => {}} />
         <Dropdown.Button key='Preferences' label='Preferences' onClick={() => setIsModalOpen(true)} />
         <Dropdown.Accordion title='Export Calendar'>
           <Dropdown.Button
             key='Master Calendar'
             label='Master Calendar'
             onClick={() => {
-              window.open(`/api/dates/export`, '_blank')
+              window.open(`/api/dates/export?master=true`, '_blank')
             }}
           />
-          <Dropdown.Button key='Personal Calendar' label='Personal Calendar' onClick={() => {}} />
+          <Dropdown.Button
+            key='Personal Calendar'
+            label='Personal Calendar'
+            onClick={() => {
+              window.open(`/api/dates/export?master=false&userID=${userID}`, '_blank')
+            }}
+          />
           <Dropdown.Button
             key='Filtered Categories'
             label='Filtered Categories'

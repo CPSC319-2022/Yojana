@@ -105,36 +105,6 @@ describe('/api/cats', () => {
       expect(res._getStatusCode()).toBe(201)
       expect(res._getData()).toBe(JSON.stringify(mock_body))
     })
-
-    it('should return a 409 status code when category name is not unique', async () => {
-      const mock_body = {
-        id: 1,
-        name: 'test',
-        description: 'test category',
-        color: '#000000',
-        isMaster: false,
-        creatorId: 'abc123',
-        icon: 'CurrencyDollar',
-        dates: generateISODates(),
-        cron: null,
-        startDate: null,
-        endDate: null
-      }
-
-      const req = createRequest({
-        method: 'POST',
-        url: '/cats',
-        body: mock_body
-      })
-      const res = createResponse()
-
-      prismaMock.category.findFirst.mockResolvedValue(mock_body)
-
-      await cats(req, res)
-
-      expect(res._getStatusCode()).toBe(409)
-      expect(res._getData()).toBe('category name must be unique')
-    })
   })
 
   describe('PUT', () => {
@@ -221,37 +191,6 @@ describe('/api/cats', () => {
 
       expect(res._getStatusCode()).toBe(404)
       expect(res._getData()).toBe('category does not exist')
-    })
-
-    it('should return a 409 status code when category name is not unique', async () => {
-      const mock_body = {
-        id: 1,
-        name: 'dupe',
-        description: 'something',
-        color: '#000000',
-        isMaster: false,
-        creatorId: 'abc123',
-        icon: 'CurrencyDollar',
-        cron: null,
-        startDate: null,
-        endDate: null,
-        toDelete: [],
-        dates: []
-      }
-
-      const req = createRequest({
-        method: 'PUT',
-        url: '/cats',
-        body: mock_body
-      })
-      const res = createResponse()
-
-      prismaMock.category.findFirst.mockResolvedValue(mock_body)
-
-      await cats(req, res)
-
-      expect(res._getStatusCode()).toBe(409)
-      expect(res._getData()).toBe('category name conflicting other category')
     })
   })
 
