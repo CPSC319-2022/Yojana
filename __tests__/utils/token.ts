@@ -3,7 +3,7 @@ import { JWT } from 'next-auth/jwt'
 import { createRequest } from 'node-mocks-http'
 
 // all fields besides id and isAdmin are optional
-export type MockToken = Partial<JWT> & { id: string; isAdmin: boolean }
+type MockToken = Partial<JWT> & { id: string; isAdmin: boolean }
 
 export const mockToken = ({ id, isAdmin, name = 'John Doe', email = 'john.doe@yojana.com' }: MockToken) => {
   // mock getToken from next-auth/jwt
