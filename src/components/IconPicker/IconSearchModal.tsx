@@ -60,7 +60,7 @@ export const IconSearchModal = ({ buttonClassName, control, name, color, rules }
               --tw-ring-color: ${color};
             }
           `}</style>
-          <div className={`p-2 ${value === icon ? 'ring-2' : ''}`}>
+          <div className={`p-2 hover:bg-slate-100 ${value === icon ? 'ring-2' : ''}`}>
             <div className='flex items-center justify-center'>
               <Icon iconName={icon} color={color} />
             </div>

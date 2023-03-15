@@ -110,6 +110,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         }
       })
   }
+
   useEffect(() => {
     dispatch(setIndividualDates(getInitialDates(currentState?.entries || [], false)))
     dispatch(setRepeatingDates(getInitialDates(currentState?.entries || [], true)))
