@@ -8,7 +8,7 @@ import { getCategories } from '@/redux/reducers/AppDataReducer'
 import { Session } from 'next-auth'
 import { useRef } from 'react'
 import { CategoriesMenu } from './CategoriesMenu'
-import { yearNum } from '@/components/mainCalendar/Year'
+import { getDate } from '@/redux/reducers/MainCalendarReducer'
 
 interface Props {
   session: Session
@@ -17,6 +17,7 @@ interface Props {
 export const SideBar = ({ session }: Props) => {
   const categories = useAppSelector(getCategories)
 
+  const stateDate = useAppSelector(getDate).year()
   const componentRef = useRef<HTMLDivElement>(null)
 
   return (
@@ -39,7 +40,7 @@ export const SideBar = ({ session }: Props) => {
               )}
             </div>
             <div style={{ marginTop: '5px', fontSize: '28px' }} className='text-center font-bold'>
-              {yearNum}
+              {stateDate}
             </div>
             <Year getForPrinting={true} />
           </div>
