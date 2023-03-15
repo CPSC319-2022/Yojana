@@ -9,26 +9,10 @@ export const CalViewDropdown = () => {
   const activeCalView = useAppSelector(getInterval)
 
   return (
-    <Dropdown
-      text={activeCalView}
-      containerClassName='w-[12vw]'
-      menuItems={[
-        {
-          key: CalendarInterval.MONTH,
-          label: CalendarInterval.MONTH,
-          onClick: () => dispatch(setInterval(CalendarInterval.MONTH))
-        },
-        {
-          key: CalendarInterval.FOUR_MONTHS,
-          label: CalendarInterval.FOUR_MONTHS,
-          onClick: () => dispatch(setInterval(CalendarInterval.FOUR_MONTHS))
-        },
-        {
-          key: CalendarInterval.YEAR,
-          label: CalendarInterval.YEAR,
-          onClick: () => dispatch(setInterval(CalendarInterval.YEAR))
-        }
-      ]}
-    />
+    <Dropdown text={activeCalView} containerClassName='w-[12vw]'>
+      {[CalendarInterval.MONTH, CalendarInterval.FOUR_MONTHS, CalendarInterval.YEAR].map((interval) => (
+        <Dropdown.Button key={interval} label={interval} onClick={() => dispatch(setInterval(interval))} />
+      ))}
+    </Dropdown>
   )
 }

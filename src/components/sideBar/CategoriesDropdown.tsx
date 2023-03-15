@@ -19,7 +19,6 @@ export const CategoriesDropdown = (props: {
     <HoverDropdown
       iconName='ThreeDotsVertical'
       id={id}
-      menuItems={[]}
       overrideDefaultButtonStyle={true}
       buttonClassName={`z-0 focus:outline-none cursor-pointer
       ${!disable && 'group-hover:text-slate-500'} 
@@ -28,6 +27,11 @@ export const CategoriesDropdown = (props: {
       keepPanelOpen={keepOpen}
     />
   )
+}
+
+interface HoverDropdownProps extends DropdownProps {
+  setKeepFocus: Dispatch<React.SetStateAction<number>>
+  keepPanelOpen: boolean
 }
 
 const HoverDropdown = ({
@@ -39,7 +43,7 @@ const HoverDropdown = ({
   overrideDefaultButtonStyle,
   setKeepFocus,
   keepPanelOpen
-}: DropdownProps) => {
+}: HoverDropdownProps) => {
   const [closeWhenClickOutside, setCloseWhenClickOutside] = useState(false)
   const handleButtonClick = () => {
     keepPanelOpen ? handleClosePopover() : setKeepFocus?.(Number(id))
@@ -89,7 +93,7 @@ const HoverDropdown = ({
               }}
               static
             >
-              <div className={`px-1 py-1 `}>
+              <div className='space-y-1 px-1 py-1'>
                 <CategoryModal method='PUT' id={Number(id)} callBack={handleClosePopover} />
                 <DeleteCategoryModal id={Number(id)} onClose={handleClosePopover} />
               </div>

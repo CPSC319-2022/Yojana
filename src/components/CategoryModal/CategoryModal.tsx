@@ -205,6 +205,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           color: color,
           icon: icon,
           creatorId: session.user.id,
+          isMaster: session.user.isAdmin,
           cron: repeating.cron ? repeating.cron : method === 'PUT' ? currentCron : undefined,
           startDate: repeating.cron ? repeating.startDate : undefined,
           endDate: repeating.cron ? repeating.endDate : undefined,

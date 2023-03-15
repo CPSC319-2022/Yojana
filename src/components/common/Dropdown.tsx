@@ -1,34 +1,27 @@
-import { Button, IconName } from '@/components/common'
-import { Menu, Transition } from '@headlessui/react'
-import React, { Dispatch, Fragment } from 'react'
-
-export interface DropdownMenuItem {
-  key: string
-  label: string
-  onClick: () => void
-  props?: any
-}
+import { Button, Icon, IconName } from '@/components/common'
+import { Disclosure, Menu, Transition } from '@headlessui/react'
+import React, { Fragment } from 'react'
+import { getChildrenByType } from 'react-nanny'
 
 export interface DropdownProps {
   text?: string
   id?: number
-  menuItems: DropdownMenuItem[]
   containerClassName?: string
   buttonClassName?: string
   overrideDefaultButtonStyle?: boolean
   iconName?: IconName
-  setKeepFocus?: Dispatch<React.SetStateAction<number>>
-  keepPanelOpen?: boolean
+  children?: React.ReactNode
 }
 
 export const Dropdown = ({
   text,
-  menuItems,
   containerClassName = '',
   buttonClassName,
   overrideDefaultButtonStyle,
-  iconName = 'CaretDownFill'
+  iconName = 'CaretDownFill',
+  children
 }: DropdownProps) => {
+  const dropdownChildren = getChildrenByType(children, [Dropdown.Button, Dropdown.Accordion])
   return (
     <div className={containerClassName}>
       <Menu as='div' className='relative inline-block text-left'>
@@ -56,21 +49,7 @@ export const Dropdown = ({
                 className={`absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none 
                 `}
               >
-                <div className='px-1 py-1 '>
-                  {menuItems.map((item) => (
-                    <Menu.Item key={item.key}>
-                      {({ active }) => (
-                        <button
-                          type='button'
-                          onClick={item.onClick}
-                          className={`${active && 'bg-slate-100'} group flex w-full items-center rounded-md px-2 py-2`}
-                        >
-                          {item.label}
-                        </button>
-                      )}
-                    </Menu.Item>
-                  ))}
-                </div>
+                <div className='space-y-1 px-1 py-1'>{dropdownChildren}</div>
               </Menu.Items>
             </Transition>
           </>
@@ -79,3 +58,53 @@ export const Dropdown = ({
     </div>
   )
 }
+
+const DropdownButton = ({
+  key,
+  label,
+  onClick,
+  disabled = false
+}: {
+  key: string
+  label: string
+  onClick: () => void
+  disabled?: boolean
+}) => {
+  return (
+    <Menu.Item key={key}>
+      {({ active }) => (
+        <button
+          type='button'
+          onClick={onClick}
+          className={`${active && 'bg-slate-100'} group flex w-full items-center rounded-md px-4 py-2 ${
+            disabled && 'text-slate-400'
+          }`}
+          disabled={disabled}
+        >
+          {label}
+        </button>
+      )}
+    </Menu.Item>
+  )
+}
+Dropdown.Button = DropdownButton
+
+const DropdownAccordion = ({ title, children }: { title: string; children: React.ReactNode }) => {
+  const accordionItems = getChildrenByType(children, [DropdownButton])
+  return (
+    <div className='w-full'>
+      <Disclosure>
+        {({ open }) => (
+          <>
+            <Disclosure.Button className='group mb-1 flex w-full items-center justify-between space-y-1 rounded-md px-4 py-2 hover:bg-slate-100'>
+              <span>{title}</span>
+              <Icon iconName='ChevronUp' className={`${open ? 'rotate-180 transform' : ''} h-5 w-5`} />
+            </Disclosure.Button>
+            <Disclosure.Panel className='space-y-1 text-sm'>{accordionItems}</Disclosure.Panel>
+          </>
+        )}
+      </Disclosure>
+    </div>
+  )
+}
+Dropdown.Accordion = DropdownAccordion

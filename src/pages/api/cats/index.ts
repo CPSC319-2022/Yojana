@@ -10,12 +10,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const categories = await getCategories()
       return res.status(200).json(categories)
     case 'PUT':
-      const nameExists = await prisma.category.findFirst({
-        where: { name: req.body.name, NOT: { id: req.body.id } }
-      })
-      if (nameExists) {
-        return res.status(409).send('category name conflicting other category')
-      }
       try {
         const [, editedCategory] = await prisma.$transaction([
           prisma.entry.deleteMany({
@@ -59,39 +53,32 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(404).send('category does not exist')
       }
     case 'POST':
-      const categoryExists = await prisma.category.findFirst({
-        where: { name: req.body.name }
-      })
-      if (!categoryExists) {
-        const new_category = await prisma.category.create({
-          data: {
-            name: req.body.name,
-            description: req.body.description,
-            color: req.body.color,
-            isMaster: req.body.isMaster,
-            creatorId: req.body.creatorId,
-            icon: req.body.icon,
-            cron: req.body.cron,
-            startDate: req.body.startDate ? dayjs(req.body.startDate).toISOString() : null,
-            endDate: req.body.endDate ? dayjs(req.body.endDate).toISOString() : null,
-            entries: {
-              createMany: {
-                data: req.body.dates.map(({ date, isRepeating = false }: { date: string; isRepeating?: boolean }) => ({
-                  date: dayjs(date).toISOString(),
-                  isRepeating: isRepeating
-                })),
-                skipDuplicates: true
-              }
+      const new_category = await prisma.category.create({
+        data: {
+          name: req.body.name,
+          description: req.body.description,
+          color: req.body.color,
+          isMaster: req.body.isMaster,
+          creatorId: req.body.creatorId,
+          icon: req.body.icon,
+          cron: req.body.cron,
+          startDate: req.body.startDate ? dayjs(req.body.startDate).toISOString() : null,
+          endDate: req.body.endDate ? dayjs(req.body.endDate).toISOString() : null,
+          entries: {
+            createMany: {
+              data: req.body.dates.map(({ date, isRepeating = false }: { date: string; isRepeating?: boolean }) => ({
+                date: dayjs(date).toISOString(),
+                isRepeating: isRepeating
+              })),
+              skipDuplicates: true
             }
-          },
-          include: {
-            entries: true
           }
-        })
-        return res.status(201).json(new_category)
-      } else {
-        return res.status(409).send('category name must be unique')
-      }
+        },
+        include: {
+          entries: true
+        }
+      })
+      return res.status(201).json(new_category)
     default:
       return res.status(405).send('Method Not Allowed')
   }
