@@ -19,7 +19,6 @@ export const CategoriesDropdown = (props: {
     <HoverDropdown
       iconName='ThreeDotsVertical'
       id={id}
-      menuItems={[]}
       overrideDefaultButtonStyle={true}
       buttonClassName={`z-0 focus:outline-none cursor-pointer
       ${!disable && 'group-hover:text-slate-500'} 

@@ -12,7 +12,6 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { CalViewDropdown } from './CalViewDropdown'
 import { setCookieMaxAge } from '@/utils/cookies'
-import { ExportDropdown } from '@/components/navBar/ExportDropdown'
 import { AccountDropdown } from '@/components/navBar/AccountDropdown'
 
 interface NavBarProps {
@@ -68,7 +67,6 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
         <h4 className='flex-none text-center text-lg'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
       </div>
       <CalViewDropdown />
-      <ExportDropdown text={'Export'} menuItems={[]} />
       <AccountDropdown />
     </div>
   )
