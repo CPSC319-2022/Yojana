@@ -8,6 +8,7 @@ import { getCategories } from '@/redux/reducers/AppDataReducer'
 import { Session } from 'next-auth'
 import { useRef } from 'react'
 import { CategoriesMenu } from './CategoriesMenu'
+import { yearNum } from '@/components/mainCalendar/Year'
 
 interface Props {
   session: Session
@@ -23,7 +24,6 @@ export const SideBar = ({ session }: Props) => {
       <div className='flex flex-row px-4'>
         {session.user.isAdmin && <CategoryModal method='POST' id={-1} callBack={() => {}} />}
         <CsvModal />
-
         <span style={{ display: 'none' }}>
           <div ref={componentRef} className='print-content mx-2 border'>
             <div className={'center'}>Categories</div>
@@ -37,6 +37,9 @@ export const SideBar = ({ session }: Props) => {
                     </div>
                   )
               )}
+            </div>
+            <div style={{ marginTop: '10px', fontSize: '28px' }} className='text-center font-bold'>
+              {yearNum}
             </div>
             <Year getForPrinting={true} />
           </div>

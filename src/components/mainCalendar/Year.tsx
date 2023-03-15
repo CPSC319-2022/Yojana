@@ -7,6 +7,9 @@ import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 import dayjs, { Dayjs } from 'dayjs'
 import { useCallback, useMemo } from 'react'
 
+export const yearStartDate = dayjs().startOf('year')
+export const yearNum = yearStartDate.get('year')
+
 export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
   const stateDate = useAppSelector(getDate)
   const categoryMap = useAppSelector(getCategoryMap)
@@ -14,9 +17,6 @@ export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
   const isSelectingDates = useAppSelector(getIsSelectingDates)
   const yearSelected = useAppSelector((state) => getYearSelectedDates(state, stateDate))
   const preferences = useAppSelector(getPreferences)
-
-  const yearStartDate = dayjs(stateDate).startOf('year')
-  const yearNum = yearStartDate.get('year')
 
   const dispatch = useAppDispatch()
 
@@ -107,6 +107,7 @@ export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
       )
     },
     [
+      getForPrinting,
       getDateBackgroundColour,
       isSelectingDates,
       onDayClicked,
@@ -164,7 +165,6 @@ export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
         </>
       </div>
     )
-  }, [days, preferences.yearShowGrid.value, monthHeaders])
-
+  }, [getForPrinting, days, preferences.yearShowGrid.value, monthHeaders])
   return <div className='grow bg-white'>{months}</div>
 }
