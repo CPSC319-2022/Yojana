@@ -10,21 +10,9 @@ export const CalViewDropdown = () => {
 
   return (
     <Dropdown text={activeCalView} containerClassName='w-[12vw]'>
-      <Dropdown.Button
-        key={CalendarInterval.MONTH}
-        label={CalendarInterval.MONTH}
-        onClick={() => dispatch(setInterval(CalendarInterval.MONTH))}
-      />
-      <Dropdown.Button
-        key={CalendarInterval.FOUR_MONTHS}
-        label={CalendarInterval.FOUR_MONTHS}
-        onClick={() => dispatch(setInterval(CalendarInterval.FOUR_MONTHS))}
-      />
-      <Dropdown.Button
-        key={CalendarInterval.YEAR}
-        label={CalendarInterval.YEAR}
-        onClick={() => dispatch(setInterval(CalendarInterval.YEAR))}
-      />
+      {[CalendarInterval.MONTH, CalendarInterval.FOUR_MONTHS, CalendarInterval.YEAR].map((interval) => (
+        <Dropdown.Button key={interval} label={interval} onClick={() => dispatch(setInterval(interval))} />
+      ))}
     </Dropdown>
   )
 }
