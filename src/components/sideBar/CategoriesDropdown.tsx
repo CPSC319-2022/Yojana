@@ -29,6 +29,11 @@ export const CategoriesDropdown = (props: {
   )
 }
 
+interface HoverDropdownProps extends DropdownProps {
+  setKeepFocus: Dispatch<React.SetStateAction<number>>
+  keepPanelOpen: boolean
+}
+
 const HoverDropdown = ({
   text,
   id,
@@ -38,7 +43,7 @@ const HoverDropdown = ({
   overrideDefaultButtonStyle,
   setKeepFocus,
   keepPanelOpen
-}: DropdownProps) => {
+}: HoverDropdownProps) => {
   const [closeWhenClickOutside, setCloseWhenClickOutside] = useState(false)
   const handleButtonClick = () => {
     keepPanelOpen ? handleClosePopover() : setKeepFocus?.(Number(id))

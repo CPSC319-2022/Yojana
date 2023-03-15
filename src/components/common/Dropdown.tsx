@@ -1,6 +1,6 @@
 import { Button, Icon, IconName } from '@/components/common'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import React, { Dispatch, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { getChildrenByType } from 'react-nanny'
 
 export interface DropdownProps {
@@ -10,8 +10,6 @@ export interface DropdownProps {
   buttonClassName?: string
   overrideDefaultButtonStyle?: boolean
   iconName?: IconName
-  setKeepFocus?: Dispatch<React.SetStateAction<number>>
-  keepPanelOpen?: boolean
   children?: React.ReactNode
 }
 
