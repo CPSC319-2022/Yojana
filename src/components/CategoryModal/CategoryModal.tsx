@@ -30,6 +30,7 @@ import {
   monthRecurrenceCrons,
   MonthRecurrenceType
 } from '@/components/RecurringDatePickers/DayOfMonthPicker'
+import { IconSearchModal } from '@/components/IconPicker/IconSearchModal'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
@@ -322,7 +323,16 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const iconPickerField = useMemo(() => {
     return (
       <div className='mb-8'>
-        <label className='mb-2 block'>Icon</label>
+        <label className='mb-2 block'>
+          Icon
+          <IconSearchModal
+            buttonClassName='ml-2 inline-block text-xs'
+            control={control}
+            name='icon'
+            color={watchColor}
+            rules={{ required: true }}
+          />
+        </label>
         <IconPicker control={control} name='icon' color={watchColor} rules={{ required: true }} />
       </div>
     )
