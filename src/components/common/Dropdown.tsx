@@ -59,14 +59,27 @@ export const Dropdown = ({
   )
 }
 
-const DropdownButton = ({ key, label, onClick }: { key: string; label: string; onClick: () => void }) => {
+const DropdownButton = ({
+  key,
+  label,
+  onClick,
+  disabled = false
+}: {
+  key: string
+  label: string
+  onClick: () => void
+  disabled?: boolean
+}) => {
   return (
     <Menu.Item key={key}>
       {({ active }) => (
         <button
           type='button'
           onClick={onClick}
-          className={`${active && 'bg-slate-100'} group flex w-full items-center rounded-md px-4 py-2`}
+          className={`${active && 'bg-slate-100'} group flex w-full items-center rounded-md px-4 py-2 ${
+            disabled && 'bg-slate-100 text-slate-400'
+          }`}
+          disabled={disabled}
         >
           {label}
         </button>

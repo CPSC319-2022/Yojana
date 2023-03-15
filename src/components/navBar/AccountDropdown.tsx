@@ -38,6 +38,7 @@ export const AccountDropdown = () => {
             onClick={() => {
               window.open(`/api/dates/export?master=false&userID=${userID}`, '_blank')
             }}
+            disabled
           />
           <Dropdown.Button
             key='Filtered Categories'
