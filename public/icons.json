@@ -1445,40 +1445,6 @@
       "tags": ["camera", "video"]
     }
   ],
-  "other": [
-    {
-      "name": "Alexa",
-      "tags": []
-    },
-    {
-      "name": "Boxes",
-      "tags": ["cube"]
-    },
-    {
-      "name": "ChevronExpand",
-      "tags": []
-    },
-    {
-      "name": "FiletypePpt",
-      "tags": []
-    },
-    {
-      "name": "FiletypeXls",
-      "tags": []
-    },
-    {
-      "name": "Pass",
-      "tags": []
-    },
-    {
-      "name": "PassFill",
-      "tags": []
-    },
-    {
-      "name": "Vinyl",
-      "tags": ["audio", "music", "record"]
-    }
-  ],
   "Graphics": [
     {
       "name": "AlignBottom",
@@ -7997,6 +7963,40 @@
     {
       "name": "Plugin",
       "tags": ["addon", "software"]
+    }
+  ],
+  "other": [
+    {
+      "name": "Alexa",
+      "tags": []
+    },
+    {
+      "name": "Boxes",
+      "tags": ["cube"]
+    },
+    {
+      "name": "ChevronExpand",
+      "tags": []
+    },
+    {
+      "name": "FiletypePpt",
+      "tags": []
+    },
+    {
+      "name": "FiletypeXls",
+      "tags": []
+    },
+    {
+      "name": "Pass",
+      "tags": []
+    },
+    {
+      "name": "PassFill",
+      "tags": []
+    },
+    {
+      "name": "Vinyl",
+      "tags": ["audio", "music", "record"]
     }
   ]
 }
