@@ -19,7 +19,7 @@ export const Login = ({ providers, callbackUrl }: LoginProps) => {
               <button
                 id='azure-ad-btn'
                 className='flex items-center rounded-lg bg-gradient-to-r from-azure-300  to-azure-400 py-2 px-4 font-medium text-white hover:from-azure-400 hover:to-azure-500'
-                onClick={() => signIn(provider.id, { callbackUrl: callbackUrl })}
+                onClick={() => signIn(provider.id, { callbackUrl: callbackUrl }, { prompt: 'login' })}
               >
                 Sign in with {provider.name}
                 <Image height={20} width={20} src={azure} alt='Azure' className='ml-2' />
