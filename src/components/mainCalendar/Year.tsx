@@ -21,7 +21,7 @@ export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
   const dispatch = useAppDispatch()
 
   const renderDayCategories = useCallback(
-    (day: Dayjs, monthNum: number) => {
+    (day: Dayjs, monthNum: number, key: number) => {
       let icons: (JSX.Element | undefined)[] = []
 
       if (!isSelectingDates) {
@@ -42,7 +42,7 @@ export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
           }
         })
       }
-      icons.push(<span key={`${monthNum}-${day.get('day')}`}>&nbsp;</span>)
+      icons.push(<span key={`${monthNum}-${key}`}>&nbsp;</span>)
       return icons
     },
     [categoryMap, entriesInYear, isSelectingDates]
@@ -102,7 +102,7 @@ export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
           key={`${yearNum}-${monthNum}-${dateOffset}`}
           onClick={() => onDayClicked(day, !selected || !selected?.isRepeating)}
         >
-          {renderDayCategories(day, monthNum)}
+          {renderDayCategories(day, monthNum, dateOffset)}
         </div>
       )
     },
