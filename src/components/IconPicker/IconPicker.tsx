@@ -80,9 +80,14 @@ export const IconPicker = ({ control, name, color, rules }: IconPickerProps) => 
       {iconPickerIcons.map((icon) => (
         <span
           key={icon}
-          className={`m-1 p-2 hover:bg-slate-100 ${value === icon ? 'ring-2 ring-emerald-500' : ''}`}
+          className={`m-1 p-2 hover:bg-slate-100 ${value === icon ? 'ring-2' : ''}`}
           onClick={() => onChange(icon)}
         >
+          <style jsx>{`
+            span {
+              --tw-ring-color: ${color};
+            }
+          `}</style>
           <Icon iconName={icon} color={color} />
         </span>
       ))}
