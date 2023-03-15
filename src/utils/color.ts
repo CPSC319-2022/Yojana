@@ -8,7 +8,7 @@ export const getTextColor = (bgColor: string) => {
 }
 
 // generate a random hex color
-// 16777215 is the max value for a hex color (#ffffff)
+// https://stackoverflow.com/a/5092846/8488681
 export const randomColor = () => {
-  return '#' + Math.floor(Math.random() * 16777215).toString(16)
+  return '#' + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0')
 }

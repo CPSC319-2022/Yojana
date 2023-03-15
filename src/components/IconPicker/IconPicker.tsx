@@ -1,5 +1,5 @@
 import { useController } from 'react-hook-form'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Icon, IconName } from '@/components/common'
 
 interface IconPickerProps {
@@ -12,7 +12,6 @@ interface IconPickerProps {
 // List of icons to display in the icon picker
 export const iconPickerIcons: IconName[] = [
   'ChatFill',
-  'X',
   'PencilFill',
   'Truck',
   'TelephoneFill',
@@ -21,7 +20,6 @@ export const iconPickerIcons: IconName[] = [
   'ArrowUp',
   'ArrowDown',
   'ArrowClockwise',
-  'PlayFill',
   'EnvelopeFill',
   'FolderFill',
   'VolumeUpFill',
@@ -75,9 +73,17 @@ export const IconPicker = ({ control, name, color, rules }: IconPickerProps) => 
     rules: rules
   })
 
+  const [icons, setIcons] = React.useState<IconName[]>(iconPickerIcons)
+
+  useEffect(() => {
+    if (!icons.includes(value)) {
+      setIcons([value, ...icons])
+    }
+  }, [value])
+
   return (
     <div className='flex flex-wrap justify-center shadow-md'>
-      {iconPickerIcons.map((icon) => (
+      {icons.map((icon) => (
         <span
           key={icon}
           className={`m-1 p-2 hover:bg-slate-100 ${value === icon ? 'ring-2' : ''}`}
