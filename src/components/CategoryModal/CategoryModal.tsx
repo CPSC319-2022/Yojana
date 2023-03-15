@@ -484,7 +484,6 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             resetForm()
           }
         }}
-        maxWidth={'40vw'}
         draggable={true}
         closeWhenClickOutside={false}
         handle={'create-category-modal-handle'}
