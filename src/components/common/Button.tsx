@@ -14,7 +14,7 @@ export const Button = forwardRef(
       text = '',
       iconName,
       onClick,
-      type,
+      type = 'button',
       disabled = false,
       className = '',
       id = '',

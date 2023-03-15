@@ -23,7 +23,7 @@ export const CategoryBlock = ({ color, label, icon }: CategoryBlockProps) => {
       <div
         aria-label={label}
         className={
-          'event-block mx-1 mt-1 mt-1 min-h-[1vh] overflow-x-hidden whitespace-nowrap rounded-md px-1.5 ' +
+          'event-block mx-1 mt-1 min-h-[1vh] overflow-x-hidden whitespace-nowrap rounded-md px-1.5 ' +
           getTextColor(color)
         }
       >
