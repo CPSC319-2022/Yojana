@@ -93,7 +93,7 @@ const HoverDropdown = ({
               }}
               static
             >
-              <div className={`px-1 py-1 `}>
+              <div className='space-y-1 px-1 py-1'>
                 <CategoryModal method='PUT' id={Number(id)} callBack={handleClosePopover} />
                 <DeleteCategoryModal id={Number(id)} onClose={handleClosePopover} />
               </div>

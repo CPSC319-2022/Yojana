@@ -49,7 +49,7 @@ export const Dropdown = ({
                 className={`absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none 
                 `}
               >
-                <div className='px-1 py-1 '>{dropdownChildren}</div>
+                <div className='space-y-1 px-1 py-1'>{dropdownChildren}</div>
               </Menu.Items>
             </Transition>
           </>
@@ -96,11 +96,11 @@ const DropdownAccordion = ({ title, children }: { title: string; children: React
       <Disclosure>
         {({ open }) => (
           <>
-            <Disclosure.Button className='group flex w-full items-center justify-between rounded-md px-4 py-2 hover:bg-slate-100'>
+            <Disclosure.Button className='group mb-1 flex w-full items-center justify-between space-y-1 rounded-md px-4 py-2 hover:bg-slate-100'>
               <span>{title}</span>
               <Icon iconName='ChevronUp' className={`${open ? 'rotate-180 transform' : ''} h-5 w-5`} />
             </Disclosure.Button>
-            <Disclosure.Panel className='text-sm'>{accordionItems}</Disclosure.Panel>
+            <Disclosure.Panel className='space-y-1 text-sm'>{accordionItems}</Disclosure.Panel>
           </>
         )}
       </Disclosure>
