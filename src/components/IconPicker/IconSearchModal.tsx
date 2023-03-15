@@ -151,9 +151,9 @@ export const IconSearchModal = ({ buttonClassName, control, name, color, rules }
             </div>
             <div className='flex grow'>
               {inputValue ? (
-                <div className='grow overflow-y-scroll'>{searchIcons}</div>
+                <div className='grow overflow-y-scroll p-1'>{searchIcons}</div>
               ) : (
-                <Tab.Panels className='grow overflow-y-scroll'>
+                <Tab.Panels className='grow overflow-y-scroll p-1'>
                   {Object.entries(icons).map(([category, icon]) => (
                     <Tab.Panel key={category}>
                       <div className='grid grid-cols-5 gap-1'>{icon.map(({ name }) => renderIcon(name))}</div>
