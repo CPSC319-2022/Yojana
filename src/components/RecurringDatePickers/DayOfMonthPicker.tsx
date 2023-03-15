@@ -118,7 +118,7 @@ export const DayOfMonthPicker = ({
   }, [availableMenuItems, dateOfMonth, recurrenceType, startDate, weekNum])
 
   return (
-    <div className='flex grid grid-cols-2 flex-wrap justify-center gap-3 pt-3'>
+    <div className='mx-4 mt-3 flex grid grid-cols-2 flex-wrap justify-center gap-3 pt-3'>
       {getMenuItems.map((item) => {
         const isActive = recurrenceType === item.key
         return (
