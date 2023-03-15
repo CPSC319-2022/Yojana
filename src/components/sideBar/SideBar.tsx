@@ -25,15 +25,15 @@ export const SideBar = ({ session }: Props) => {
         {session.user.isAdmin && <CategoryModal method='POST' id={-1} callBack={() => {}} />}
         <CsvModal />
         <span style={{ display: 'none' }}>
-          <div ref={componentRef} className='print-content mx-2 border'>
-            <div className={'center'}>Categories</div>
-            <div className='category-grid'>
+          <div ref={componentRef} className='mx-2 h-auto w-auto overflow-visible border'>
+            <div className='my-[2%] ml-[45%] font-[bolder]'>Categories</div>
+            <div className='grid grid-cols-[repeat(6,1fr)] gap-4'>
               {categories.map(
                 (category) =>
                   category.show && (
-                    <div key={category.id} className='category-card'>
+                    <div key={category.id} className='bg-white text-center'>
                       <Icon iconName={category.icon} color={category.color} className='inline' />
-                      <div className='category-name'>{category.name}</div>
+                      <div>{category.name}</div>
                     </div>
                   )
               )}

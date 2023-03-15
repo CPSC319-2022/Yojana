@@ -19,8 +19,8 @@ export const PrintButton: React.FC<PrintButtonProps> = ({ contentRef, className 
     },
     pageStyle: `
       @page {
-        size: auto;
-        year-overflow: expand;
+        size: A4;
+        margin: 0;
       }
       @media print {
         body {
