@@ -96,7 +96,7 @@ const DropdownAccordion = ({ title, children }: { title: string; children: React
       <Disclosure>
         {({ open }) => (
           <>
-            <Disclosure.Button className='group flex w-full items-center justify-between rounded-md bg-emerald-100 px-4 py-2 text-emerald-900 hover:bg-emerald-200'>
+            <Disclosure.Button className='group flex w-full items-center justify-between rounded-md px-4 py-2 text-emerald-900 hover:bg-slate-100'>
               <span>{title}</span>
               <Icon iconName='ChevronUp' className={`${open ? 'rotate-180 transform' : ''} h-5 w-5`} />
             </Disclosure.Button>
