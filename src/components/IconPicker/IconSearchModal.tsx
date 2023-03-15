@@ -116,7 +116,7 @@ export const IconSearchModal = ({ buttonClassName, control, name, color, rules }
       bodyPadding=''
       scrollable={false}
     >
-      <div className='h-[75vh] p-4'>
+      <div className='h-[80vh] p-4'>
         <div className='flex'>
           <input
             placeholder='Start typing to search...'
@@ -127,7 +127,7 @@ export const IconSearchModal = ({ buttonClassName, control, name, color, rules }
             }}
           />
         </div>
-        <div className='flex h-full pt-4'>
+        <div className='flex h-[94%] pt-4'>
           <Tab.Group vertical>
             <div className='flex'>
               <div className='overflow-y-scroll'>
@@ -150,19 +150,17 @@ export const IconSearchModal = ({ buttonClassName, control, name, color, rules }
               </div>
             </div>
             <div className='flex grow'>
-              <div className='grow overflow-y-scroll'>
-                {inputValue ? (
-                  searchIcons
-                ) : (
-                  <Tab.Panels>
-                    {Object.entries(icons).map(([category, icon]) => (
-                      <Tab.Panel key={category}>
-                        <div className='grid grid-cols-5 gap-4'>{icon.map(({ name }) => renderIcon(name))}</div>
-                      </Tab.Panel>
-                    ))}
-                  </Tab.Panels>
-                )}
-              </div>
+              {inputValue ? (
+                <div className='grow overflow-y-scroll'>{searchIcons}</div>
+              ) : (
+                <Tab.Panels className='grow overflow-y-scroll'>
+                  {Object.entries(icons).map(([category, icon]) => (
+                    <Tab.Panel key={category}>
+                      <div className='grid grid-cols-5 gap-1'>{icon.map(({ name }) => renderIcon(name))}</div>
+                    </Tab.Panel>
+                  ))}
+                </Tab.Panels>
+              )}
             </div>
           </Tab.Group>
         </div>
