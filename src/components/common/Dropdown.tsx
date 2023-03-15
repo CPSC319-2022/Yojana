@@ -76,13 +76,8 @@ const DropdownButton = ({ key, label, onClick }: { key: string; label: string; o
 }
 Dropdown.Button = DropdownButton
 
-const DropdownAccordion = ({
-  title,
-  menuItems
-}: {
-  title: string
-  menuItems: { key: string; label: string; onClick: () => void }[]
-}) => {
+const DropdownAccordion = ({ title, children }: { title: string; children: React.ReactNode }) => {
+  const accordionItems = getChildrenByType(children, [DropdownButton])
   return (
     <div className='w-full'>
       <Disclosure>
@@ -92,11 +87,7 @@ const DropdownAccordion = ({
               <span>{title}</span>
               <Icon iconName='ChevronUp' className={`${open ? 'rotate-180 transform' : ''} h-5 w-5`} />
             </Disclosure.Button>
-            <Disclosure.Panel className='text-sm'>
-              {menuItems.map(({ key, label, onClick }) => {
-                return <DropdownButton key={key} label={label} onClick={onClick} />
-              })}
-            </Disclosure.Panel>
+            <Disclosure.Panel className='text-sm'>{accordionItems}</Disclosure.Panel>
           </>
         )}
       </Disclosure>
