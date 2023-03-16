@@ -101,7 +101,7 @@ export const IconSearchModal = ({ buttonClassName, control, name, color, rules }
     <Modal
       buttonText=''
       title=''
-      buttonIcon='BoxArrowUpRight'
+      buttonIcon='Search'
       isOpen={isOpen}
       setIsOpen={setIOpen}
       draggable={false}
