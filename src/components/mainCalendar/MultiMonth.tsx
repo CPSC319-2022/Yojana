@@ -14,7 +14,7 @@ export const MultiMonth = () => {
   const quarterlyMonths = Array.from(Array(intervalToNumMonths(activeCalView)).keys()).map((monthNum) => {
     return (
       <div key={monthNum} className='flex flex-row items-center py-1'>
-        <h3 className='w-32 pl-2 text-lg font-semibold'>{dayjs(targetDate).add(monthNum, 'month').format('MMMM')}</h3>
+        <h3 className='w-1/6 pl-2 text-lg font-medium'>{dayjs(targetDate).add(monthNum, 'month').format('MMMM')}</h3>
         <Month className='h-full flex-grow' monthOffset={monthNum} key={monthNum}></Month>
       </div>
     )
