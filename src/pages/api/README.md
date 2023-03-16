@@ -54,7 +54,7 @@ get:
       description: no id, id is not a string
       text: Bad Request
     401:
-      description: user is not an admin
+      description: user is not admin
       text: Unauthorized
     404:
       description: user id not found
