@@ -285,7 +285,7 @@ export const Month = (props: MonthProps) => {
       return (
         <div
           key={day.format('YY-MM-DD')}
-          className={`tile flex px-0.5 ${isMonthView ? 'flex-col' : 'flex-row'}
+          className={`tile flex overflow-hidden px-0.5 ${isMonthView ? 'flex-col' : 'flex-row'}
             ${getDayBackgroundColor(selected?.isSelected, day.day())} 
             ${isQuarterlyView ? 'items-center' : ''}
             ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} `}
