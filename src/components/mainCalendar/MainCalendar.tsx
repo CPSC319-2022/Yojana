@@ -15,6 +15,8 @@ export const MainCalendar = () => {
         return <Year />
       case CalendarInterval.FOUR_MONTHS:
         return <MultiMonth />
+      case CalendarInterval.QUARTERLY:
+        return <MultiMonth />
       default:
         return <Month monthOffset={0} />
     }
