@@ -282,10 +282,10 @@ export const Month = (props: MonthProps) => {
   const getDayBackgroundColor = useCallback(
     (isSelected: boolean | undefined, dayOfWeek: number) => {
       if (isSelected) return 'bg-emerald-100'
-      if (isMonthView || isSelectingDates || (dayOfWeek < 6 && dayOfWeek > 0)) return 'bg-white'
+      if (isSelectingDates || (dayOfWeek < 6 && dayOfWeek > 0)) return 'bg-white'
       return 'bg-slate-100'
     },
-    [isMonthView, isSelectingDates]
+    [isSelectingDates]
   )
 
   const renderDay = useCallback(
@@ -365,7 +365,7 @@ export const Month = (props: MonthProps) => {
     return (
       <div className='grid grid-cols-7'>
         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((letter, index) => (
-          <span className='tile text-m text-center text-slate-400' key={index}>
+          <span className='tile text-m text-center text-slate-500' key={index}>
             {letter}
           </span>
         ))}
@@ -374,10 +374,7 @@ export const Month = (props: MonthProps) => {
   }, [])
 
   return (
-    <div
-      ref={monthRef}
-      className={props.className + ' ' + 'box-border' + ' ' + (isMonthView ? 'h-full bg-slate-100' : 'bg-slate-200')}
-    >
+    <div ref={monthRef} className={`box-border bg-slate-200 ${isMonthView ? 'h-full' : ''} ${props.className}`}>
       {isMonthView && generateDayNames}
       {generateWeeks()}
     </div>
