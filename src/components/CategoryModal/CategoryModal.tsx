@@ -325,7 +325,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const iconPickerField = useMemo(() => {
     return (
       <div className='mb-8'>
-        <label className='mb-2 block'>
+        <label className='mb-2 block flex w-full items-center'>
           Icon
           <IconSearchModal
             buttonClassName='ml-2 inline-block text-xs'
@@ -334,6 +334,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             color={watchColor}
             rules={{ required: true }}
           />
+          <div className='ml-3 mr-3 h-5 max-w-full flex-1 rounded-2xl border border-black hover:cursor-pointer'></div>
         </label>
         <IconPicker control={control} name='icon' color={watchColor} rules={{ required: true }} />
       </div>
