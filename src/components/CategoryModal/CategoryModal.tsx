@@ -1,6 +1,6 @@
-import { ColorPicker } from '@/components/ColorPicker'
+import { ColorPicker } from './ColorPicker'
 import { Button, Icon, Modal, Tabs } from '@/components/common'
-import { DayOfWeek, DayOfWeekPicker } from '@/components/RecurringDatePickers/DayOfWeekPicker'
+import { DayOfWeek, DayOfWeekPicker } from './DayOfWeekPicker'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setAlert } from '@/redux/reducers/AlertReducer'
 import { addCategory, getCategory, updateCategory } from '@/redux/reducers/AppDataReducer'
@@ -23,14 +23,9 @@ import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { IconPicker, iconPickerIcons } from '@/components/IconPicker'
-import {
-  DayOfMonthPicker,
-  MonthRecurrence,
-  monthRecurrenceCrons,
-  MonthRecurrenceType
-} from '@/components/RecurringDatePickers/DayOfMonthPicker'
-import { IconSearchModal } from '@/components/IconPicker/IconSearchModal'
+import { IconPicker, iconPickerIcons } from './IconPicker'
+import { DayOfMonthPicker, MonthRecurrence, monthRecurrenceCrons, MonthRecurrenceType } from './DayOfMonthPicker'
+import { IconSearchModal } from './IconSearchModal'
 import CategoryTypePicker from '@/components/CategoryModal/CategoryTypePicker'
 
 const schema = z.object({
