@@ -49,14 +49,14 @@ export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
   )
 
   const getDateBackgroundColour = useCallback(
-    (isWeekend: boolean, isToday: boolean, isSelected?: boolean, isRepeating?: boolean) => {
+    (isWeekend: boolean, isToday: boolean, isSelected?: boolean, isRecurring?: boolean) => {
       if (!isSelectingDates) {
         return isWeekend ? 'bg-slate-100' : 'bg-white'
       } else {
         if (isWeekend && isSelected) {
-          return isRepeating ? 'bg-slate-100' : 'bg-emerald-200'
+          return isRecurring ? 'bg-slate-100' : 'bg-emerald-200'
         } else if (isSelected) {
-          return isRepeating ? 'bg-slate-100' : 'bg-emerald-100'
+          return isRecurring ? 'bg-slate-100' : 'bg-emerald-100'
         } else {
           return 'bg-white'
         }
@@ -85,13 +85,13 @@ export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
       const isToday = day.isSame(dayjs(), 'day')
       const isWeekend = day.day() === 0 || day.day() === 6
       const selected = yearSelected?.[monthNum]?.[day.date()]
-      const backgroundColor = getDateBackgroundColour(isWeekend, isToday, selected?.isSelected, selected?.isRepeating)
+      const backgroundColor = getDateBackgroundColour(isWeekend, isToday, selected?.isSelected, selected?.isRecurring)
 
       return (
         <div
           className={`tile px-0.5 
             ${backgroundColor} 
-            ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} 
+            ${isSelectingDates && !selected?.isRecurring ? 'cursor-pointer' : ''} 
             ${isSelectingDates && !selected?.isSelected ? 'hover:ring-2 hover:ring-inset hover:ring-emerald-200' : ''}
             ${!isSelectingDates && isToday ? 'ring-2 ring-inset ring-emerald-300' : ''}
             ${
@@ -100,7 +100,7 @@ export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
                 : 'flex overflow-x-scroll'
             }`}
           key={`${yearNum}-${monthNum}-${dateOffset}`}
-          onClick={() => onDayClicked(day, !selected || !selected?.isRepeating)}
+          onClick={() => onDayClicked(day, !selected || !selected?.isRecurring)}
         >
           {renderDayCategories(day, monthNum, dateOffset)}
         </div>

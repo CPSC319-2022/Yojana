@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useController } from 'react-hook-form'
 import { Dayjs } from 'dayjs'
-import { DropdownMenuItem } from '@/components/common/Dropdown'
 
 interface DayOfMonthPickerProps {
   control: any
@@ -79,7 +78,7 @@ export const DayOfMonthPicker = ({
     [dateOfMonth, dayOfWeek, onChange, setSelectedRecurrenceType, updateState, weekNum]
   )
 
-  const availableMenuItems: { [key in MonthRecurrenceType]: DropdownMenuItem } = useMemo(() => {
+  const availableMenuItems = useMemo(() => {
     return {
       NONE: { key: MonthRecurrence.NONE, label: 'None', onClick: () => handleRecurrenceChange(MonthRecurrence.NONE) },
       ON_DATE_Y: {
@@ -118,7 +117,7 @@ export const DayOfMonthPicker = ({
   }, [availableMenuItems, dateOfMonth, recurrenceType, startDate, weekNum])
 
   return (
-    <div className='flex grid grid-cols-2 flex-wrap justify-center gap-3 pt-3'>
+    <div className='mx-4 mt-3 flex grid grid-cols-2 flex-wrap justify-center gap-3 pt-3'>
       {getMenuItems.map((item) => {
         const isActive = recurrenceType === item.key
         return (

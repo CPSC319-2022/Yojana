@@ -1,6 +1,6 @@
 // Adapted from: https://headlessui.com/react/dialog
 
-import { Button } from '@/components/common'
+import { Button, IconName } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getIsSelectingDates, resetSelectedDates } from '@/redux/reducers/DateSelectorReducer'
 import { Dialog, Transition } from '@headlessui/react'
@@ -10,6 +10,7 @@ import { getChildByType, removeChildrenByType } from 'react-nanny'
 
 interface ModalProps {
   buttonText: string
+  buttonIcon?: IconName
   title?: string
   children: ReactNode
   isOpen: boolean
@@ -31,11 +32,13 @@ interface ModalProps {
   showCloseBtn?: boolean
   overrideDefaultButtonStyle?: boolean
   closeParent?: () => void
+  scrollable?: boolean
 }
 
 export const Modal = ({
   children,
   buttonText,
+  buttonIcon,
   title,
   isOpen,
   setIsOpen,
@@ -54,7 +57,8 @@ export const Modal = ({
   showCloseBtn = true,
   overrideDefaultButtonStyle = false,
   closeParent,
-  bodyPadding = 'px-6 pb-6 pt-3'
+  bodyPadding = 'px-6 pb-6 pt-3',
+  scrollable = true
 }: ModalProps) => {
   const directionClass = direction ? `absolute ${direction}-0 my-10` : ''
   const disable = useAppSelector(getIsSelectingDates)
@@ -64,19 +68,18 @@ export const Modal = ({
 
   return (
     <>
-      <div>
-        <Button
-          text={buttonText}
-          id={buttonId}
-          onClick={() => {
-            setIsOpen(true)
-            title === 'Create Category' && dispatch(resetSelectedDates())
-          }}
-          className={buttonClassName}
-          overrideDefaultStyle={overrideDefaultButtonStyle}
-          disabled={disable}
-        />
-      </div>
+      <Button
+        text={buttonText}
+        iconName={buttonIcon}
+        id={buttonId}
+        onClick={() => {
+          setIsOpen(true)
+          title === 'Create Category' && dispatch(resetSelectedDates())
+        }}
+        className={buttonClassName}
+        overrideDefaultStyle={overrideDefaultButtonStyle}
+        disabled={disable}
+      />
 
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
@@ -106,7 +109,9 @@ export const Modal = ({
               >
                 {!isMinimized ? (
                   <Dialog.Panel
-                    className={`${directionClass} w-full max-w-md transform overflow-y-auto rounded-md bg-white text-left align-middle shadow-modal transition-all`}
+                    className={`${directionClass} w-full max-w-md transform ${
+                      scrollable ? 'overflow-y-auto' : 'overflow-y-hidden'
+                    } rounded-md bg-white text-left align-middle shadow-modal transition-all`}
                     style={{ maxWidth: maxWidth, maxHeight: maxHeight, minWidth: minWidth }}
                   >
                     {showCloseBtn && (

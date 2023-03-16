@@ -101,7 +101,7 @@ export const Month = (props: MonthProps) => {
       const hiddenElemCount = allDayBlocks.length - nonOverflowElemCount + 1
       return (
         <Popover className={'mx-1 mt-1'} key={day.format('YY-MM-DD')}>
-          <Popover.Button className={'border-box flex w-full rounded-md px-1 hover:bg-slate-100'}>
+          <Popover.Button className={'border-box flex w-full rounded-md px-1 hover:bg-slate-100 focus:outline-none'}>
             {hiddenElemCount + ' more'}
           </Popover.Button>
           <Transition
@@ -114,7 +114,14 @@ export const Month = (props: MonthProps) => {
             leaveTo={`opacity-0 ${appearBelow ? 'translate-y-1' : ''}`}
           >
             <Popover.Panel className={`${translateXClass} ${translateYClass} z-100 absolute transform`}>
-              <div className='h-fit max-h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white drop-shadow-[0_0_15px_rgba(0,0,0,0.25)]'>
+              <style jsx>{`
+                div {
+                  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+                  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+                  -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+                }
+              `}</style>
+              <div className='h-fit max-h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white'>
                 {getPopoverContent(day, offsetFromMonthStart, allDayBlocks)}
               </div>
             </Popover.Panel>
@@ -193,7 +200,7 @@ export const Month = (props: MonthProps) => {
 
   const getSelectedSettings = useCallback(
     (dateNum: number, offsetFromMonthStart: number) => {
-      if (!isSelectingDates) return { isSelected: false, isRepeating: false }
+      if (!isSelectingDates) return { isSelected: false, isRecurring: false }
       if (offsetFromMonthStart < 0) {
         return prevMonthSelected?.[dateNum]
       } else if (offsetFromMonthStart >= daysInMonth) {
@@ -232,9 +239,9 @@ export const Month = (props: MonthProps) => {
           key={day.format('YY-MM-DD')}
           className={`tile flex flex-col overflow-y-hidden px-0.5
             ${selected?.isSelected ? 'bg-emerald-100' : 'bg-white'} 
-            ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} `}
+            ${isSelectingDates && !selected?.isRecurring ? 'cursor-pointer' : ''} `}
           onClick={() => {
-            if (!selected || !selected?.isRepeating) {
+            if (!selected || !selected?.isRecurring) {
               dispatch(toggleIndividualDate(day))
             }
           }}

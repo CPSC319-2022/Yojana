@@ -130,6 +130,10 @@ other:
 
 ```yaml
 get:
+  query:
+    master?: boolean
+    userID?: string
+    categories?: string (comma separated) # "1,2,3"
   responses:
     200:
       description: generation of iCalendar file is successful

@@ -1,6 +1,6 @@
-import { ColorPicker } from '@/components/ColorPicker'
+import { ColorPicker } from './ColorPicker'
 import { Button, Icon, Modal, Tabs } from '@/components/common'
-import { DayOfWeek, DayOfWeekPicker } from '@/components/RecurringDatePickers/DayOfWeekPicker'
+import { DayOfWeek, DayOfWeekPicker } from './DayOfWeekPicker'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setAlert } from '@/redux/reducers/AlertReducer'
 import { addCategory, getCategory, updateCategory } from '@/redux/reducers/AppDataReducer'
@@ -23,19 +23,17 @@ import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { IconPicker, iconPickerIcons } from '@/components/IconPicker'
-import {
-  DayOfMonthPicker,
-  MonthRecurrence,
-  monthRecurrenceCrons,
-  MonthRecurrenceType
-} from '@/components/RecurringDatePickers/DayOfMonthPicker'
+import { IconPicker, iconPickerIcons } from './IconPicker'
+import { DayOfMonthPicker, MonthRecurrence, monthRecurrenceCrons, MonthRecurrenceType } from './DayOfMonthPicker'
+import { IconSearchModal } from './IconSearchModal'
+import CategoryTypePicker from '@/components/CategoryModal/CategoryTypePicker'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
   description: z.string().trim().max(191).optional(),
   color: z.string().refine((color) => /^#[0-9A-F]{6}$/i.test(color), { message: 'Invalid color' }),
   icon: z.string(),
+  isMaster: z.boolean().optional(),
   repeating: z
     .object({
       cron: z.string().optional(),
@@ -98,17 +96,18 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     setSelectedMonthRecurrenceCron(currentMonthly)
   }, [currentState?.cron, getInitialMonthlyCronState, method])
 
-  const getInitialDates = (dates: EntryWithoutCategoryId[], isRepeating: boolean) => {
+  const getInitialDates = (dates: EntryWithoutCategoryId[], isRecurring: boolean) => {
     return dates
-      .filter((entry) => entry.isRepeating === isRepeating)
+      .filter((entry) => entry.isRecurring === isRecurring)
       .map((entry) => {
         return {
           // TODO: Fix this hack to get the correct date, ignore timezones
           date: dayjs(entry.date).add(1, 'day').toISOString(),
-          isRepeating: isRepeating
+          isRecurring: isRecurring
         }
       })
   }
+
   useEffect(() => {
     dispatch(setIndividualDates(getInitialDates(currentState?.entries || [], false)))
     dispatch(setRepeatingDates(getInitialDates(currentState?.entries || [], true)))
@@ -129,7 +128,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             cron: '',
             startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
             endDate: dayjs().endOf('year').format('YYYY-MM-DD')
-          }
+          },
+          isMaster: false
         }
       : {
           name: currentState?.name,
@@ -141,7 +141,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             startDate:
               currentState?.startDate?.toString().split('T')[0] || dayjs().startOf('year').format('YYYY-MM-DD'),
             endDate: currentState?.endDate?.toString().split('T')[0] || dayjs().endOf('year').format('YYYY-MM-DD')
-          }
+          },
+          isMaster: currentState?.isMaster
         }
 
   const {
@@ -170,11 +171,13 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       description: '',
       color: randomColor(),
       icon: randomIcon(),
+      userType: true,
       repeating: {
         cron: undefined,
         startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
         endDate: dayjs().endOf('year').format('YYYY-MM-DD')
-      }
+      },
+      isMaster: false
     }))
     setSelectedDaysOfTheWeek([])
     setSelectedMonthRecurrenceCron(MonthRecurrence.NONE)
@@ -185,12 +188,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const [isMinimized, setIsMinimized] = useState(false)
 
   const onSubmit: SubmitHandler<Schema> = useCallback(
-    async ({ name, color, icon, description, repeating }) => {
+    async ({ name, color, icon, description, repeating, isMaster }) => {
       if (!session) {
         console.error('No session found')
         return
       }
-      const newDates = new Set<{ date: string; isRepeating: boolean }>(selectedDates)
+      const newDates = new Set<{ date: string; isRecurring: boolean }>(selectedDates)
       const response = await fetch('api/cats', {
         method: method,
         headers: {
@@ -203,6 +206,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           color: color,
           icon: icon,
           creatorId: session.user.id,
+          isMaster: isMaster,
           cron: repeating.cron ? repeating.cron : method === 'PUT' ? currentCron : undefined,
           startDate: repeating.cron ? repeating.startDate : undefined,
           endDate: repeating.cron ? repeating.endDate : undefined,
@@ -212,6 +216,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       })
       if (response.ok) {
         const data: Category & { entries: Entry[] } = await response.json()
+
         const dispatchPayload = {
           id: data.id,
           color: data.color,
@@ -321,12 +326,32 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
 
   const iconPickerField = useMemo(() => {
     return (
-      <div className='mb-8'>
-        <label className='mb-2 block'>Icon</label>
+      <div className='mb-6'>
+        <label className='mb-2 block'>
+          Icon
+          <IconSearchModal
+            buttonClassName='ml-2 inline-block text-xs'
+            control={control}
+            name='icon'
+            color={watchColor}
+            rules={{ required: true }}
+          />
+        </label>
         <IconPicker control={control} name='icon' color={watchColor} rules={{ required: true }} />
       </div>
     )
   }, [control, watchColor])
+
+  const categoryTypeField = useMemo(() => {
+    if (session?.user.isAdmin) {
+      return (
+        <div className='mb-4'>
+          <label className='mb-2 block'>Type</label>
+          <CategoryTypePicker control={control} name='isMaster' rules={{ required: true }} />
+        </div>
+      )
+    }
+  }, [control, session?.user.isAdmin])
 
   const weeklyRecurringField = useMemo(() => {
     return (
@@ -474,7 +499,6 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             resetForm()
           }
         }}
-        maxWidth={'40vw'}
         draggable={true}
         closeWhenClickOutside={false}
         handle={'create-category-modal-handle'}
@@ -494,6 +518,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           {descriptionField}
           {colorPickerField}
           {iconPickerField}
+          {categoryTypeField}
           {recurringDatesFields}
           {buttonsAtBottom}
         </form>

@@ -23,7 +23,7 @@ export const SideBar = ({ session }: Props) => {
   return (
     <div className='mt-4 pt-2 pl-1'>
       <div className='flex flex-row px-4'>
-        {session.user.isAdmin && <CategoryModal method='POST' id={-1} callBack={() => {}} />}
+        <CategoryModal method='POST' id={-1} callBack={() => {}} />
         <CsvModal />
         <span style={{ display: 'none' }}>
           <div ref={componentRef} className='mx-2 h-auto w-auto overflow-visible border'>

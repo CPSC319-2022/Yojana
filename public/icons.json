@@ -1,0 +1,8002 @@
+{
+  "Shapes": [
+    {
+      "name": "CCircle",
+      "tags": ["copyright"]
+    },
+    {
+      "name": "CCircleFill",
+      "tags": ["copyright"]
+    },
+    {
+      "name": "CSquare",
+      "tags": ["copyright"]
+    },
+    {
+      "name": "CSquareFill",
+      "tags": ["copyright"]
+    },
+    {
+      "name": "CcCircle",
+      "tags": ["creative commons"]
+    },
+    {
+      "name": "CcCircleFill",
+      "tags": ["creative commons"]
+    },
+    {
+      "name": "CcSquare",
+      "tags": ["creative commons"]
+    },
+    {
+      "name": "CcSquareFill",
+      "tags": ["creative commons"]
+    },
+    {
+      "name": "Circle",
+      "tags": ["shape"]
+    },
+    {
+      "name": "CircleFill",
+      "tags": ["shape"]
+    },
+    {
+      "name": "CircleHalf",
+      "tags": ["shape"]
+    },
+    {
+      "name": "Diamond",
+      "tags": ["shape"]
+    },
+    {
+      "name": "DiamondFill",
+      "tags": ["shape"]
+    },
+    {
+      "name": "DiamondHalf",
+      "tags": ["shape"]
+    },
+    {
+      "name": "Gem",
+      "tags": ["shape", "diamond"]
+    },
+    {
+      "name": "HCircle",
+      "tags": ["hospital", "helicopter"]
+    },
+    {
+      "name": "HCircleFill",
+      "tags": ["hospital", "helicopter"]
+    },
+    {
+      "name": "HSquare",
+      "tags": ["hospital", "helicopter"]
+    },
+    {
+      "name": "HSquareFill",
+      "tags": ["hospital", "helicopter"]
+    },
+    {
+      "name": "Heart",
+      "tags": ["love", "favorite"]
+    },
+    {
+      "name": "HeartFill",
+      "tags": ["love", "favorite"]
+    },
+    {
+      "name": "HeartHalf",
+      "tags": ["love", "favorite"]
+    },
+    {
+      "name": "Heptagon",
+      "tags": ["shape", "polygon"]
+    },
+    {
+      "name": "HeptagonFill",
+      "tags": ["shape", "polygon"]
+    },
+    {
+      "name": "HeptagonHalf",
+      "tags": ["shape", "polygon"]
+    },
+    {
+      "name": "Hexagon",
+      "tags": ["shape", "polygon"]
+    },
+    {
+      "name": "HexagonFill",
+      "tags": ["shape", "polygon"]
+    },
+    {
+      "name": "HexagonHalf",
+      "tags": ["shape", "polygon"]
+    },
+    {
+      "name": "Icon0Circle",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon0CircleFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon0Square",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon0SquareFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon1Circle",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon1CircleFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon1Square",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon1SquareFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon2Circle",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon2CircleFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon2Square",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon2SquareFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon3Circle",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon3CircleFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon3Square",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon3SquareFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon4Circle",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon4CircleFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon4Square",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon4SquareFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon5Circle",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon5CircleFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon5Square",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon5SquareFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon6Circle",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon6CircleFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon6Square",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon6SquareFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon7Circle",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon7CircleFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon7Square",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon7SquareFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon8Circle",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon8CircleFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon8Square",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon8SquareFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon9Circle",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon9CircleFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon9Square",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Icon9SquareFill",
+      "tags": ["number", "numeral"]
+    },
+    {
+      "name": "Octagon",
+      "tags": ["shape", "polygon"]
+    },
+    {
+      "name": "OctagonFill",
+      "tags": ["shape", "polygon"]
+    },
+    {
+      "name": "OctagonHalf",
+      "tags": ["shape", "polygon"]
+    },
+    {
+      "name": "PCircle",
+      "tags": ["parking"]
+    },
+    {
+      "name": "PCircleFill",
+      "tags": ["parking"]
+    },
+    {
+      "name": "PSquare",
+      "tags": ["parking"]
+    },
+    {
+      "name": "PSquareFill",
+      "tags": ["parking"]
+    },
+    {
+      "name": "Pentagon",
+      "tags": ["shape", "polygon"]
+    },
+    {
+      "name": "PentagonFill",
+      "tags": ["shape", "polygon"]
+    },
+    {
+      "name": "PentagonHalf",
+      "tags": ["shape", "polygon"]
+    },
+    {
+      "name": "RCircle",
+      "tags": ["registered", "trademark"]
+    },
+    {
+      "name": "RCircleFill",
+      "tags": ["registered", "trademark"]
+    },
+    {
+      "name": "RSquare",
+      "tags": ["registered", "trademark"]
+    },
+    {
+      "name": "RSquareFill",
+      "tags": ["registered", "trademark"]
+    },
+    {
+      "name": "Square",
+      "tags": ["shape", "rectangle"]
+    },
+    {
+      "name": "SquareFill",
+      "tags": ["shape", "rectangle"]
+    },
+    {
+      "name": "SquareHalf",
+      "tags": ["shape", "rectangle"]
+    },
+    {
+      "name": "Star",
+      "tags": ["shape", "like", "favorite"]
+    },
+    {
+      "name": "StarFill",
+      "tags": ["shape", "like", "favorite"]
+    },
+    {
+      "name": "StarHalf",
+      "tags": ["shape", "like", "favorite"]
+    },
+    {
+      "name": "Triangle",
+      "tags": ["shape"]
+    },
+    {
+      "name": "TriangleFill",
+      "tags": ["shape"]
+    },
+    {
+      "name": "TriangleHalf",
+      "tags": ["shape"]
+    }
+  ],
+  "Typography": [
+    {
+      "name": "Asterisk",
+      "tags": ["asterisks", "star"]
+    },
+    {
+      "name": "BlockquoteLeft",
+      "tags": ["text", "type"]
+    },
+    {
+      "name": "BlockquoteRight",
+      "tags": ["text", "type"]
+    },
+    {
+      "name": "BodyText",
+      "tags": ["content"]
+    },
+    {
+      "name": "BorderStyle",
+      "tags": ["borders", "wysiwyg"]
+    },
+    {
+      "name": "BorderWidth",
+      "tags": ["borders", "wysiwyg"]
+    },
+    {
+      "name": "Braces",
+      "tags": ["text", "type", "code", "developer", "development", "software"]
+    },
+    {
+      "name": "BracesAsterisk",
+      "tags": ["text", "type", "code", "developer", "development", "software"]
+    },
+    {
+      "name": "Code",
+      "tags": ["text", "type", "code", "developer", "development", "software"]
+    },
+    {
+      "name": "CodeSlash",
+      "tags": ["text", "type", "code", "developer", "development", "software"]
+    },
+    {
+      "name": "CodeSquare",
+      "tags": ["text", "type", "code", "developer", "development", "software", "preformatted"]
+    },
+    {
+      "name": "CursorText",
+      "tags": ["text", "type", "cursor"]
+    },
+    {
+      "name": "Fonts",
+      "tags": ["text", "type"]
+    },
+    {
+      "name": "Hash",
+      "tags": ["text", "type"]
+    },
+    {
+      "name": "Hr",
+      "tags": ["divider", "horizonal-rule"]
+    },
+    {
+      "name": "Icon123",
+      "tags": ["numbers"]
+    },
+    {
+      "name": "Infinity",
+      "tags": ["math", "infinite"]
+    },
+    {
+      "name": "Justify",
+      "tags": ["text", "type", "justify", "alignment"]
+    },
+    {
+      "name": "JustifyLeft",
+      "tags": ["text", "type", "justify", "alignment"]
+    },
+    {
+      "name": "JustifyRight",
+      "tags": ["text", "type", "justify", "alignment"]
+    },
+    {
+      "name": "List",
+      "tags": ["text", "type", "justify", "alignment", "menu", "hamburger"]
+    },
+    {
+      "name": "ListCheck",
+      "tags": ["text", "type", "justify", "alignment", "checklist", "done"]
+    },
+    {
+      "name": "ListColumns",
+      "tags": ["text", "type", "alignment"]
+    },
+    {
+      "name": "ListColumnsReverse",
+      "tags": ["text", "type", "alignment"]
+    },
+    {
+      "name": "ListNested",
+      "tags": ["text", "type", "alignment", "children"]
+    },
+    {
+      "name": "ListOl",
+      "tags": ["text", "type", "justify", "alignment", "ordered-list", "numbered-list", "numbered"]
+    },
+    {
+      "name": "ListStars",
+      "tags": ["text", "type", "starred"]
+    },
+    {
+      "name": "ListTask",
+      "tags": ["text", "type", "justify", "alignment", "todos", "task"]
+    },
+    {
+      "name": "ListUl",
+      "tags": ["text", "type", "justify", "alignment", "unordered-list"]
+    },
+    {
+      "name": "Paragraph",
+      "tags": ["paragraph", "text", "body", "content"]
+    },
+    {
+      "name": "Percent",
+      "tags": ["percentage", "math", "fraction"]
+    },
+    {
+      "name": "PlusSlashMinus",
+      "tags": ["difference", "add", "subtract"]
+    },
+    {
+      "name": "Quote",
+      "tags": ["blockquote", "quotes", "quotation"]
+    },
+    {
+      "name": "Regex",
+      "tags": ["text", "type", "code", "developer", "development", "software", "regular expression"]
+    },
+    {
+      "name": "Spellcheck",
+      "tags": ["spelling", "grammar"]
+    },
+    {
+      "name": "Subscript",
+      "tags": ["text", "type"]
+    },
+    {
+      "name": "Superscript",
+      "tags": ["text", "type"]
+    },
+    {
+      "name": "TextCenter",
+      "tags": ["text", "type", "justify", "alignment"]
+    },
+    {
+      "name": "TextIndentLeft",
+      "tags": ["text", "type", "justify", "alignment"]
+    },
+    {
+      "name": "TextIndentRight",
+      "tags": ["text", "type", "justify", "alignment"]
+    },
+    {
+      "name": "TextLeft",
+      "tags": ["text", "type", "justify", "alignment"]
+    },
+    {
+      "name": "TextParagraph",
+      "tags": ["text", "type", "paragraph", "copy"]
+    },
+    {
+      "name": "TextRight",
+      "tags": ["text", "type", "justify", "alignment"]
+    },
+    {
+      "name": "TextWrap",
+      "tags": ["text", "type", "word wrap"]
+    },
+    {
+      "name": "Type",
+      "tags": ["text", "type"]
+    },
+    {
+      "name": "TypeBold",
+      "tags": ["text", "type"]
+    },
+    {
+      "name": "TypeH1",
+      "tags": ["text", "type", "heading"]
+    },
+    {
+      "name": "TypeH2",
+      "tags": ["text", "type", "heading"]
+    },
+    {
+      "name": "TypeH3",
+      "tags": ["text", "type", "heading"]
+    },
+    {
+      "name": "TypeItalic",
+      "tags": ["text", "type"]
+    },
+    {
+      "name": "TypeStrikethrough",
+      "tags": ["text", "type"]
+    },
+    {
+      "name": "TypeUnderline",
+      "tags": ["text", "type"]
+    },
+    {
+      "name": "Vr",
+      "tags": ["divider", "vertical-rule"]
+    }
+  ],
+  "Data": [
+    {
+      "name": "Activity",
+      "tags": ["pulse", "heartbeat", "rhythm"]
+    },
+    {
+      "name": "BarChart",
+      "tags": ["chart", "graph", "analytics"]
+    },
+    {
+      "name": "BarChartFill",
+      "tags": ["chart", "graph", "analytics"]
+    },
+    {
+      "name": "BarChartLine",
+      "tags": ["chart", "graph", "analytics"]
+    },
+    {
+      "name": "BarChartLineFill",
+      "tags": ["chart", "graph", "analytics"]
+    },
+    {
+      "name": "BarChartSteps",
+      "tags": ["chart", "graph", "analytics"]
+    },
+    {
+      "name": "GraphDown",
+      "tags": ["chart", "graph", "analytics"]
+    },
+    {
+      "name": "GraphDownArrow",
+      "tags": ["chart", "graph", "analytics"]
+    },
+    {
+      "name": "GraphUp",
+      "tags": ["chart", "graph", "analytics"]
+    },
+    {
+      "name": "GraphUpArrow",
+      "tags": ["chart", "graph", "analytics"]
+    },
+    {
+      "name": "PieChart",
+      "tags": ["chart", "graph", "analytics"]
+    },
+    {
+      "name": "PieChartFill",
+      "tags": ["chart", "graph", "analytics"]
+    }
+  ],
+  "Transportation": [
+    {
+      "name": "Airplane",
+      "tags": ["flight", "flying", "plane", "air", "airport", "aircraft"]
+    },
+    {
+      "name": "AirplaneEngines",
+      "tags": ["flight", "flying", "plane", "air", "airport", "aircraft"]
+    },
+    {
+      "name": "AirplaneEnginesFill",
+      "tags": ["flight", "flying", "plane", "air", "airport", "aircraft"]
+    },
+    {
+      "name": "AirplaneFill",
+      "tags": ["flight", "flying", "plane", "air", "airport", "aircraft"]
+    },
+    {
+      "name": "BusFront",
+      "tags": ["public transit", "commute"]
+    },
+    {
+      "name": "BusFrontFill",
+      "tags": ["public transit", "commute"]
+    },
+    {
+      "name": "CarFront",
+      "tags": ["automobile", "automotive", "auto", "sedan", "drive", "driving"]
+    },
+    {
+      "name": "CarFrontFill",
+      "tags": ["automobile", "automotive", "auto", "sedan", "drive", "driving"]
+    },
+    {
+      "name": "EvFront",
+      "tags": ["car", "automobile", "automotive", "auto", "sedan", "drive", "driving"]
+    },
+    {
+      "name": "EvFrontFill",
+      "tags": ["car", "automobile", "automotive", "auto", "sedan", "drive", "driving"]
+    },
+    {
+      "name": "EvStation",
+      "tags": ["charging", "electric vehicle"]
+    },
+    {
+      "name": "EvStationFill",
+      "tags": ["charging", "electric vehicle"]
+    },
+    {
+      "name": "FuelPump",
+      "tags": ["gas", "petrol", "fuel", "gas station"]
+    },
+    {
+      "name": "FuelPumpDiesel",
+      "tags": ["gas", "petrol", "fuel", "gas station"]
+    },
+    {
+      "name": "FuelPumpDieselFill",
+      "tags": ["gas", "petrol", "fuel", "gas station"]
+    },
+    {
+      "name": "FuelPumpFill",
+      "tags": ["gas", "petrol", "fuel", "gas station"]
+    },
+    {
+      "name": "Scooter",
+      "tags": []
+    },
+    {
+      "name": "SignDeadEnd",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignDeadEndFill",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignDoNotEnter",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignDoNotEnterFill",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignIntersection",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignIntersectionFill",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignIntersectionSide",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignIntersectionSideFill",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignIntersectionT",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignIntersectionTFill",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignIntersectionY",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignIntersectionYFill",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignMergeLeft",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignMergeLeftFill",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignMergeRight",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignMergeRightFill",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignNoLeftTurn",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignNoLeftTurnFill",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignNoParking",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignNoParkingFill",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignNoRightTurn",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignNoRightTurnFill",
+      "tags": ["road", "driving", "directions"]
+    },
+    {
+      "name": "SignRailroad",
+      "tags": ["road", "driving", "train", "tracks"]
+    },
+    {
+      "name": "SignRailroadFill",
+      "tags": ["road", "driving", "train", "tracks"]
+    },
+    {
+      "name": "SignStop",
+      "tags": ["stop sign", "intersection", "road", "driving"]
+    },
+    {
+      "name": "SignStopFill",
+      "tags": ["stop sign", "intersection", "road", "driving"]
+    },
+    {
+      "name": "SignStopLights",
+      "tags": ["stop sign", "intersection", "road", "driving"]
+    },
+    {
+      "name": "SignStopLightsFill",
+      "tags": ["stop sign", "intersection", "road", "driving"]
+    },
+    {
+      "name": "SignTurnLeft",
+      "tags": ["road", "driving", "navigate", "navigation", "route"]
+    },
+    {
+      "name": "SignTurnLeftFill",
+      "tags": ["road", "driving", "navigate", "navigation", "route"]
+    },
+    {
+      "name": "SignTurnRight",
+      "tags": ["road", "driving", "navigate", "navigation", "route"]
+    },
+    {
+      "name": "SignTurnRightFill",
+      "tags": ["road", "driving", "navigate", "navigation", "route"]
+    },
+    {
+      "name": "SignTurnSlightLeft",
+      "tags": ["road", "driving", "navigate", "navigation", "route"]
+    },
+    {
+      "name": "SignTurnSlightLeftFill",
+      "tags": ["road", "driving", "navigate", "navigation", "route"]
+    },
+    {
+      "name": "SignTurnSlightRight",
+      "tags": ["road", "driving", "navigate", "navigation", "route"]
+    },
+    {
+      "name": "SignTurnSlightRightFill",
+      "tags": ["road", "driving", "navigate", "navigation", "route"]
+    },
+    {
+      "name": "SignYield",
+      "tags": ["road", "driving", "intersection"]
+    },
+    {
+      "name": "SignYieldFill",
+      "tags": ["road", "driving", "intersection"]
+    },
+    {
+      "name": "TaxiFront",
+      "tags": ["cab", "uber", "lyft"]
+    },
+    {
+      "name": "TaxiFrontFill",
+      "tags": ["cab", "uber", "lyft"]
+    },
+    {
+      "name": "TrainFreightFront",
+      "tags": ["transit", "public", "rail"]
+    },
+    {
+      "name": "TrainFreightFrontFill",
+      "tags": ["transit", "public", "rail"]
+    },
+    {
+      "name": "TrainFront",
+      "tags": ["transit", "public", "rail"]
+    },
+    {
+      "name": "TrainFrontFill",
+      "tags": ["transit", "public", "rail"]
+    },
+    {
+      "name": "TrainLightrailFront",
+      "tags": ["transit", "public", "rail"]
+    },
+    {
+      "name": "TrainLightrailFrontFill",
+      "tags": ["transit", "public", "rail"]
+    },
+    {
+      "name": "TruckFront",
+      "tags": ["vehicle", "shipping", "transit", "haul", "freight"]
+    },
+    {
+      "name": "TruckFrontFill",
+      "tags": ["vehicle", "shipping", "transit", "haul", "freight"]
+    }
+  ],
+  "Devices": [
+    {
+      "name": "Alarm",
+      "tags": ["alarm", "clock", "time"]
+    },
+    {
+      "name": "AlarmFill",
+      "tags": ["alarm", "clock", "time"]
+    },
+    {
+      "name": "Battery",
+      "tags": ["power", "charge"]
+    },
+    {
+      "name": "BatteryCharging",
+      "tags": ["power", "charge"]
+    },
+    {
+      "name": "BatteryFull",
+      "tags": ["power", "charge"]
+    },
+    {
+      "name": "BatteryHalf",
+      "tags": ["power", "charge"]
+    },
+    {
+      "name": "Calculator",
+      "tags": ["calculator", "math"]
+    },
+    {
+      "name": "CalculatorFill",
+      "tags": ["calculator", "math"]
+    },
+    {
+      "name": "Camera",
+      "tags": ["photos", "photography"]
+    },
+    {
+      "name": "Camera2",
+      "tags": ["photos", "photography"]
+    },
+    {
+      "name": "CameraFill",
+      "tags": ["photos", "photography"]
+    },
+    {
+      "name": "CameraReels",
+      "tags": ["av", "video", "film"]
+    },
+    {
+      "name": "CameraReelsFill",
+      "tags": ["av", "video", "film"]
+    },
+    {
+      "name": "CameraVideo",
+      "tags": ["av", "video", "film"]
+    },
+    {
+      "name": "CameraVideoFill",
+      "tags": ["av", "video", "film"]
+    },
+    {
+      "name": "CameraVideoOff",
+      "tags": ["av", "video", "film"]
+    },
+    {
+      "name": "CameraVideoOffFill",
+      "tags": ["av", "video", "film"]
+    },
+    {
+      "name": "Controller",
+      "tags": ["game", "gaming", "video-game"]
+    },
+    {
+      "name": "Cpu",
+      "tags": ["processor", "chip", "computer"]
+    },
+    {
+      "name": "CpuFill",
+      "tags": ["processor", "chip", "computer"]
+    },
+    {
+      "name": "Database",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseAdd",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseCheck",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseDash",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseDown",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseExclamation",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseFill",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseFillAdd",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseFillCheck",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseFillDash",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseFillDown",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseFillExclamation",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseFillGear",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseFillLock",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseFillSlash",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseFillUp",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseFillX",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseGear",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseLock",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseSlash",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseUp",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DatabaseX",
+      "tags": ["server", "data"]
+    },
+    {
+      "name": "DeviceHdd",
+      "tags": ["drive", "hard drive"]
+    },
+    {
+      "name": "DeviceHddFill",
+      "tags": ["drive", "hard drive"]
+    },
+    {
+      "name": "DeviceSsd",
+      "tags": ["solid state", "drive"]
+    },
+    {
+      "name": "DeviceSsdFill",
+      "tags": ["solid state", "drive"]
+    },
+    {
+      "name": "Display",
+      "tags": ["monitor", "external"]
+    },
+    {
+      "name": "DisplayFill",
+      "tags": ["monitor", "external"]
+    },
+    {
+      "name": "Displayport",
+      "tags": ["video", "input"]
+    },
+    {
+      "name": "DisplayportFill",
+      "tags": ["video", "input"]
+    },
+    {
+      "name": "Earbuds",
+      "tags": ["headphones"]
+    },
+    {
+      "name": "Ethernet",
+      "tags": ["internet", "connection", "port", "plug"]
+    },
+    {
+      "name": "GpuCard",
+      "tags": ["video", "output", "graphics"]
+    },
+    {
+      "name": "Hdd",
+      "tags": ["hard drive", "hard disk", "ssd", "drive", "server"]
+    },
+    {
+      "name": "HddFill",
+      "tags": ["hard drive", "hard disk", "ssd", "drive", "server"]
+    },
+    {
+      "name": "HddNetwork",
+      "tags": ["hard drive", "hard disk", "ssd", "drive", "server"]
+    },
+    {
+      "name": "HddNetworkFill",
+      "tags": ["hard drive", "hard disk", "ssd", "drive", "server"]
+    },
+    {
+      "name": "HddRack",
+      "tags": ["hard drive", "hard disk", "ssd", "drive", "server"]
+    },
+    {
+      "name": "HddRackFill",
+      "tags": ["hard drive", "hard disk", "ssd", "drive", "server"]
+    },
+    {
+      "name": "HddStack",
+      "tags": ["hard drive", "hard disk", "ssd", "drive", "server"]
+    },
+    {
+      "name": "HddStackFill",
+      "tags": ["hard drive", "hard disk", "ssd", "drive", "server"]
+    },
+    {
+      "name": "Hdmi",
+      "tags": ["video", "input"]
+    },
+    {
+      "name": "HdmiFill",
+      "tags": ["video", "input"]
+    },
+    {
+      "name": "Headphones",
+      "tags": ["headphones"]
+    },
+    {
+      "name": "Headset",
+      "tags": ["headphones", "microphone"]
+    },
+    {
+      "name": "HeadsetVr",
+      "tags": ["virual reality", "oculus", "hololens"]
+    },
+    {
+      "name": "Keyboard",
+      "tags": ["keyboard", "keys", "typing"]
+    },
+    {
+      "name": "KeyboardFill",
+      "tags": ["keyboard", "keys", "typing"]
+    },
+    {
+      "name": "Laptop",
+      "tags": ["computer"]
+    },
+    {
+      "name": "LaptopFill",
+      "tags": ["computer"]
+    },
+    {
+      "name": "Memory",
+      "tags": ["ram"]
+    },
+    {
+      "name": "Modem",
+      "tags": ["internet", "cable"]
+    },
+    {
+      "name": "ModemFill",
+      "tags": ["internet", "cable"]
+    },
+    {
+      "name": "Motherboard",
+      "tags": ["mobo", "computer", "hardware"]
+    },
+    {
+      "name": "MotherboardFill",
+      "tags": ["mobo", "computer", "hardware"]
+    },
+    {
+      "name": "Mouse",
+      "tags": ["mice", "input"]
+    },
+    {
+      "name": "Mouse2",
+      "tags": ["mice", "input"]
+    },
+    {
+      "name": "Mouse2Fill",
+      "tags": ["mice", "input"]
+    },
+    {
+      "name": "Mouse3",
+      "tags": ["mice", "input"]
+    },
+    {
+      "name": "Mouse3Fill",
+      "tags": ["mice", "input"]
+    },
+    {
+      "name": "MouseFill",
+      "tags": ["mice", "input"]
+    },
+    {
+      "name": "MusicPlayer",
+      "tags": ["ipod", "mp3"]
+    },
+    {
+      "name": "MusicPlayerFill",
+      "tags": ["ipod", "mp3"]
+    },
+    {
+      "name": "OpticalAudio",
+      "tags": ["port", "plug", "sound"]
+    },
+    {
+      "name": "OpticalAudioFill",
+      "tags": ["port", "plug", "sound"]
+    },
+    {
+      "name": "Pc",
+      "tags": ["computer", "workstation", "desktop"]
+    },
+    {
+      "name": "PcDisplay",
+      "tags": ["computer", "workstation", "desktop"]
+    },
+    {
+      "name": "PcDisplayHorizontal",
+      "tags": ["computer", "workstation", "desktop"]
+    },
+    {
+      "name": "PcHorizontal",
+      "tags": ["computer", "workstation", "desktop"]
+    },
+    {
+      "name": "PciCard",
+      "tags": ["card", "expansion"]
+    },
+    {
+      "name": "Phone",
+      "tags": ["mobile", "telephone"]
+    },
+    {
+      "name": "PhoneFill",
+      "tags": ["mobile", "telephone"]
+    },
+    {
+      "name": "PhoneFlip",
+      "tags": ["mobile", "telephone"]
+    },
+    {
+      "name": "PhoneLandscape",
+      "tags": ["mobile", "telephone"]
+    },
+    {
+      "name": "PhoneLandscapeFill",
+      "tags": ["mobile", "telephone"]
+    },
+    {
+      "name": "PhoneVibrate",
+      "tags": ["mobile", "telephone", "haptic"]
+    },
+    {
+      "name": "PhoneVibrateFill",
+      "tags": ["mobile", "telephone", "haptic"]
+    },
+    {
+      "name": "Printer",
+      "tags": ["print"]
+    },
+    {
+      "name": "PrinterFill",
+      "tags": ["print"]
+    },
+    {
+      "name": "Projector",
+      "tags": ["projection", "present", "screen"]
+    },
+    {
+      "name": "ProjectorFill",
+      "tags": ["projection", "present", "screen"]
+    },
+    {
+      "name": "Robot",
+      "tags": ["bot"]
+    },
+    {
+      "name": "Router",
+      "tags": ["wifi", "internet", "wireless"]
+    },
+    {
+      "name": "RouterFill",
+      "tags": ["wifi", "internet", "wireless"]
+    },
+    {
+      "name": "SdCard",
+      "tags": ["storage", "microsd", "chip", "memory"]
+    },
+    {
+      "name": "SdCardFill",
+      "tags": ["storage", "microsd", "chip", "memory"]
+    },
+    {
+      "name": "Server",
+      "tags": ["server", "network"]
+    },
+    {
+      "name": "Sim",
+      "tags": ["mobile", "carrier"]
+    },
+    {
+      "name": "SimFill",
+      "tags": ["mobile", "carrier"]
+    },
+    {
+      "name": "Smartwatch",
+      "tags": ["watch", "wearables"]
+    },
+    {
+      "name": "Speaker",
+      "tags": ["audio", "sound"]
+    },
+    {
+      "name": "SpeakerFill",
+      "tags": ["audio", "sound"]
+    },
+    {
+      "name": "Stopwatch",
+      "tags": ["time", "timer", "clock"]
+    },
+    {
+      "name": "StopwatchFill",
+      "tags": ["time", "timer", "clock"]
+    },
+    {
+      "name": "Tablet",
+      "tags": ["mobile"]
+    },
+    {
+      "name": "TabletFill",
+      "tags": ["mobile"]
+    },
+    {
+      "name": "TabletLandscape",
+      "tags": ["mobile"]
+    },
+    {
+      "name": "TabletLandscapeFill",
+      "tags": ["mobile"]
+    },
+    {
+      "name": "Thunderbolt",
+      "tags": ["plug", "port"]
+    },
+    {
+      "name": "ThunderboltFill",
+      "tags": ["plug", "port"]
+    },
+    {
+      "name": "Tv",
+      "tags": ["television", "monitor", "display"]
+    },
+    {
+      "name": "TvFill",
+      "tags": ["television", "monitor", "display"]
+    },
+    {
+      "name": "Usb",
+      "tags": []
+    },
+    {
+      "name": "UsbC",
+      "tags": ["port", "plug"]
+    },
+    {
+      "name": "UsbCFill",
+      "tags": ["port", "plug"]
+    },
+    {
+      "name": "UsbDrive",
+      "tags": ["thumb-drive"]
+    },
+    {
+      "name": "UsbDriveFill",
+      "tags": ["thumb-drive"]
+    },
+    {
+      "name": "UsbFill",
+      "tags": ["port", "plug"]
+    },
+    {
+      "name": "UsbMicro",
+      "tags": ["port", "plug"]
+    },
+    {
+      "name": "UsbMicroFill",
+      "tags": ["port", "plug"]
+    },
+    {
+      "name": "UsbMini",
+      "tags": ["port", "plug"]
+    },
+    {
+      "name": "UsbMiniFill",
+      "tags": ["port", "plug"]
+    },
+    {
+      "name": "UsbPlug",
+      "tags": []
+    },
+    {
+      "name": "UsbPlugFill",
+      "tags": []
+    },
+    {
+      "name": "UsbSymbol",
+      "tags": []
+    },
+    {
+      "name": "Watch",
+      "tags": ["wearables", "clock"]
+    },
+    {
+      "name": "Webcam",
+      "tags": ["camera", "video"]
+    },
+    {
+      "name": "WebcamFill",
+      "tags": ["camera", "video"]
+    }
+  ],
+  "Graphics": [
+    {
+      "name": "AlignBottom",
+      "tags": ["space", "align", "distribute"]
+    },
+    {
+      "name": "AlignCenter",
+      "tags": ["space", "align", "distribute"]
+    },
+    {
+      "name": "AlignEnd",
+      "tags": ["space", "align", "distribute"]
+    },
+    {
+      "name": "AlignMiddle",
+      "tags": ["space", "align", "distribute"]
+    },
+    {
+      "name": "AlignStart",
+      "tags": ["space", "align", "distribute"]
+    },
+    {
+      "name": "AlignTop",
+      "tags": ["space", "align", "distribute"]
+    },
+    {
+      "name": "Back",
+      "tags": ["backward", "layer"]
+    },
+    {
+      "name": "Bezier",
+      "tags": ["graphics", "vector", "pen"]
+    },
+    {
+      "name": "Bezier2",
+      "tags": ["graphics", "vector", "pen"]
+    },
+    {
+      "name": "BoundingBox",
+      "tags": ["text", "shape", "resize", "dimensions"]
+    },
+    {
+      "name": "BoundingBoxCircles",
+      "tags": ["text", "shape", "resize", "dimensions"]
+    },
+    {
+      "name": "CircleSquare",
+      "tags": ["graphics", "vector", "merge", "layers"]
+    },
+    {
+      "name": "Crop",
+      "tags": ["crop"]
+    },
+    {
+      "name": "Diagram2",
+      "tags": ["node", "diagram", "sitemap", "children", "org chart"]
+    },
+    {
+      "name": "Diagram2Fill",
+      "tags": ["node", "diagram", "sitemap", "children", "org chart"]
+    },
+    {
+      "name": "Diagram3",
+      "tags": ["node", "diagram", "sitemap", "children", "org chart"]
+    },
+    {
+      "name": "Diagram3Fill",
+      "tags": ["node", "diagram", "sitemap", "children", "org chart"]
+    },
+    {
+      "name": "DistributeHorizontal",
+      "tags": ["space", "align"]
+    },
+    {
+      "name": "DistributeVertical",
+      "tags": ["space", "align"]
+    },
+    {
+      "name": "Droplet",
+      "tags": ["water-drop", "paint", "ink", "liquid"]
+    },
+    {
+      "name": "DropletFill",
+      "tags": ["water-drop", "paint", "ink", "liquid"]
+    },
+    {
+      "name": "DropletHalf",
+      "tags": ["water-drop", "paint", "ink", "liquid"]
+    },
+    {
+      "name": "Easel",
+      "tags": ["paint", "draw", "art", "present"]
+    },
+    {
+      "name": "Easel2",
+      "tags": ["paint", "draw", "art", "present"]
+    },
+    {
+      "name": "Easel2Fill",
+      "tags": ["paint", "draw", "art", "present"]
+    },
+    {
+      "name": "Easel3",
+      "tags": ["paint", "draw", "art", "present"]
+    },
+    {
+      "name": "Easel3Fill",
+      "tags": ["paint", "draw", "art", "present"]
+    },
+    {
+      "name": "EaselFill",
+      "tags": ["paint", "draw", "art", "present"]
+    },
+    {
+      "name": "Eraser",
+      "tags": ["erase", "remove"]
+    },
+    {
+      "name": "EraserFill",
+      "tags": ["erase", "remove"]
+    },
+    {
+      "name": "Exclude",
+      "tags": ["graphics", "vector", "merge", "layers"]
+    },
+    {
+      "name": "Eyedropper",
+      "tags": ["color", "picker"]
+    },
+    {
+      "name": "Front",
+      "tags": ["forward", "layer"]
+    },
+    {
+      "name": "InputCursor",
+      "tags": ["textarea", "form", "input"]
+    },
+    {
+      "name": "InputCursorText",
+      "tags": ["textarea", "form", "input"]
+    },
+    {
+      "name": "Intersect",
+      "tags": ["graphics", "vector", "merge", "layers"]
+    },
+    {
+      "name": "LayerBackward",
+      "tags": ["arrange", "layers", "back"]
+    },
+    {
+      "name": "LayerForward",
+      "tags": ["arrange", "layers", "front"]
+    },
+    {
+      "name": "Layers",
+      "tags": ["perspective", "stacked"]
+    },
+    {
+      "name": "LayersFill",
+      "tags": ["perspective", "stacked"]
+    },
+    {
+      "name": "LayersHalf",
+      "tags": ["perspective", "stacked"]
+    },
+    {
+      "name": "Mask",
+      "tags": ["mask"]
+    },
+    {
+      "name": "NodeMinus",
+      "tags": ["add", "new", "node", "diagram"]
+    },
+    {
+      "name": "NodeMinusFill",
+      "tags": ["add", "new", "node", "diagram"]
+    },
+    {
+      "name": "NodePlus",
+      "tags": ["add", "new", "node", "diagram"]
+    },
+    {
+      "name": "NodePlusFill",
+      "tags": ["add", "new", "node", "diagram"]
+    },
+    {
+      "name": "PaintBucket",
+      "tags": ["color", "paint", "fill", "palette"]
+    },
+    {
+      "name": "Palette",
+      "tags": ["color", "paint", "fill", "palette"]
+    },
+    {
+      "name": "Palette2",
+      "tags": ["color", "paint", "fill", "palette"]
+    },
+    {
+      "name": "PaletteFill",
+      "tags": ["color", "paint", "fill", "palette"]
+    },
+    {
+      "name": "Rulers",
+      "tags": ["measure", "guide"]
+    },
+    {
+      "name": "Sliders",
+      "tags": ["equalizer", "settings", "preferences", "dials"]
+    },
+    {
+      "name": "Sliders2",
+      "tags": ["equalizer", "settings", "preferences", "dials"]
+    },
+    {
+      "name": "Sliders2Vertical",
+      "tags": ["equalizer", "settings", "preferences", "dials"]
+    },
+    {
+      "name": "Stack",
+      "tags": ["layers"]
+    },
+    {
+      "name": "Subtract",
+      "tags": ["graphics", "vector", "merge", "layers"]
+    },
+    {
+      "name": "SymmetryHorizontal",
+      "tags": ["align", "orientation", "mirror"]
+    },
+    {
+      "name": "SymmetryVertical",
+      "tags": ["align", "orientation", "mirror"]
+    },
+    {
+      "name": "Textarea",
+      "tags": ["text", "insert", "bounding-box"]
+    },
+    {
+      "name": "TextareaResize",
+      "tags": ["text", "form"]
+    },
+    {
+      "name": "TextareaT",
+      "tags": ["text", "insert", "bounding-box"]
+    },
+    {
+      "name": "Union",
+      "tags": ["graphics", "vector", "merge", "layers"]
+    },
+    {
+      "name": "VectorPen",
+      "tags": ["graphics", "vector", "pen"]
+    },
+    {
+      "name": "ZoomIn",
+      "tags": ["magnify", "scale"]
+    },
+    {
+      "name": "ZoomOut",
+      "tags": ["minify", "scale"]
+    }
+  ],
+  "UI and keyboard": [
+    {
+      "name": "Alt",
+      "tags": ["key", "alt", "option"]
+    },
+    {
+      "name": "Backspace",
+      "tags": ["key"]
+    },
+    {
+      "name": "BackspaceFill",
+      "tags": ["key"]
+    },
+    {
+      "name": "BackspaceReverse",
+      "tags": ["key"]
+    },
+    {
+      "name": "BackspaceReverseFill",
+      "tags": ["key"]
+    },
+    {
+      "name": "Border",
+      "tags": ["borders"]
+    },
+    {
+      "name": "BorderAll",
+      "tags": ["borders"]
+    },
+    {
+      "name": "BorderBottom",
+      "tags": ["borders"]
+    },
+    {
+      "name": "BorderCenter",
+      "tags": ["borders"]
+    },
+    {
+      "name": "BorderInner",
+      "tags": ["borders"]
+    },
+    {
+      "name": "BorderLeft",
+      "tags": ["borders"]
+    },
+    {
+      "name": "BorderMiddle",
+      "tags": ["borders"]
+    },
+    {
+      "name": "BorderOuter",
+      "tags": ["borders"]
+    },
+    {
+      "name": "BorderRight",
+      "tags": ["borders"]
+    },
+    {
+      "name": "BorderTop",
+      "tags": ["borders"]
+    },
+    {
+      "name": "BrightnessAltHigh",
+      "tags": ["brightness", "sun", "weather"]
+    },
+    {
+      "name": "BrightnessAltHighFill",
+      "tags": ["brightness", "sun", "weather"]
+    },
+    {
+      "name": "BrightnessAltLow",
+      "tags": ["brightness", "sun", "weather"]
+    },
+    {
+      "name": "BrightnessAltLowFill",
+      "tags": ["brightness", "sun", "weather"]
+    },
+    {
+      "name": "BrightnessHigh",
+      "tags": ["brightness", "sun", "weather"]
+    },
+    {
+      "name": "BrightnessHighFill",
+      "tags": ["brightness", "sun", "weather"]
+    },
+    {
+      "name": "BrightnessLow",
+      "tags": ["brightness", "sun", "weather"]
+    },
+    {
+      "name": "BrightnessLowFill",
+      "tags": ["brightness", "sun", "weather"]
+    },
+    {
+      "name": "Capslock",
+      "tags": ["key"]
+    },
+    {
+      "name": "CapslockFill",
+      "tags": ["key"]
+    },
+    {
+      "name": "Check2",
+      "tags": ["checkmark", "todo", "select", "done", "checkbox"]
+    },
+    {
+      "name": "Check2All",
+      "tags": ["checkmark", "todo", "select", "done", "checkbox"]
+    },
+    {
+      "name": "Check2Circle",
+      "tags": ["checkmark", "todo", "select", "done", "checkbox"]
+    },
+    {
+      "name": "Check2Square",
+      "tags": ["checkmark", "todo", "select", "done", "checkbox"]
+    },
+    {
+      "name": "CheckAll",
+      "tags": ["checkmark", "todo", "done", "select"]
+    },
+    {
+      "name": "Command",
+      "tags": ["key", "mac"]
+    },
+    {
+      "name": "Dot",
+      "tags": ["middot"]
+    },
+    {
+      "name": "Eject",
+      "tags": ["disc", "cd", "dvd"]
+    },
+    {
+      "name": "EjectFill",
+      "tags": ["disc", "cd", "dvd"]
+    },
+    {
+      "name": "Filter",
+      "tags": ["sort"]
+    },
+    {
+      "name": "Fullscreen",
+      "tags": ["window", "maximize"]
+    },
+    {
+      "name": "FullscreenExit",
+      "tags": ["window", "minimize"]
+    },
+    {
+      "name": "GripHorizontal",
+      "tags": ["drag", "grab"]
+    },
+    {
+      "name": "GripVertical",
+      "tags": ["drag", "grab"]
+    },
+    {
+      "name": "Link",
+      "tags": ["anchor", "hyperlink", "href"]
+    },
+    {
+      "name": "Link45deg",
+      "tags": ["anchor", "hyperlink", "href"]
+    },
+    {
+      "name": "Option",
+      "tags": ["key", "mac"]
+    },
+    {
+      "name": "Power",
+      "tags": ["off", "on"]
+    },
+    {
+      "name": "Save",
+      "tags": ["save", "floppy"]
+    },
+    {
+      "name": "Save2",
+      "tags": ["save", "floppy"]
+    },
+    {
+      "name": "Save2Fill",
+      "tags": ["save", "floppy"]
+    },
+    {
+      "name": "SaveFill",
+      "tags": ["save", "floppy"]
+    },
+    {
+      "name": "Shift",
+      "tags": ["key"]
+    },
+    {
+      "name": "ShiftFill",
+      "tags": ["key"]
+    },
+    {
+      "name": "Trash",
+      "tags": ["trash-can", "garbage", "delete", "remove"]
+    },
+    {
+      "name": "Trash2",
+      "tags": ["trash-can", "garbage", "delete", "remove"]
+    },
+    {
+      "name": "Trash2Fill",
+      "tags": ["trash-can", "garbage", "delete", "remove"]
+    },
+    {
+      "name": "Trash3",
+      "tags": ["trash-can", "garbage", "delete", "remove"]
+    },
+    {
+      "name": "Trash3Fill",
+      "tags": ["trash-can", "garbage", "delete", "remove"]
+    },
+    {
+      "name": "TrashFill",
+      "tags": ["trash-can", "garbage", "delete", "remove"]
+    },
+    {
+      "name": "ViewList",
+      "tags": ["view", "rearrange"]
+    },
+    {
+      "name": "ViewStacked",
+      "tags": ["view", "rearrange"]
+    }
+  ],
+  "Brand": [
+    {
+      "name": "Alipay",
+      "tags": ["payments"]
+    },
+    {
+      "name": "Amd",
+      "tags": ["radeon"]
+    },
+    {
+      "name": "Android",
+      "tags": ["google", "droid"]
+    },
+    {
+      "name": "Android2",
+      "tags": ["google", "droid"]
+    },
+    {
+      "name": "Apple",
+      "tags": ["aapl", "mac", "macintosh"]
+    },
+    {
+      "name": "Behance",
+      "tags": ["social"]
+    },
+    {
+      "name": "Bluetooth",
+      "tags": ["wireless"]
+    },
+    {
+      "name": "BrowserChrome",
+      "tags": ["google", "webkit", "blink"]
+    },
+    {
+      "name": "BrowserEdge",
+      "tags": ["microsoft", "webkit"]
+    },
+    {
+      "name": "BrowserFirefox",
+      "tags": ["gecko"]
+    },
+    {
+      "name": "BrowserSafari",
+      "tags": ["webkit", "apple"]
+    },
+    {
+      "name": "Discord",
+      "tags": ["social", "chat"]
+    },
+    {
+      "name": "Dribbble",
+      "tags": ["social"]
+    },
+    {
+      "name": "Dropbox",
+      "tags": ["dropbox"]
+    },
+    {
+      "name": "Facebook",
+      "tags": ["social"]
+    },
+    {
+      "name": "Git",
+      "tags": ["version control", "vcs", "github", "version"]
+    },
+    {
+      "name": "Github",
+      "tags": ["social", "microsoft"]
+    },
+    {
+      "name": "Google",
+      "tags": ["social", "search"]
+    },
+    {
+      "name": "GooglePlay",
+      "tags": ["app store", "apps", "store", "android"]
+    },
+    {
+      "name": "Instagram",
+      "tags": ["social", "chat"]
+    },
+    {
+      "name": "Line",
+      "tags": ["social"]
+    },
+    {
+      "name": "Linkedin",
+      "tags": ["social", "microsoft"]
+    },
+    {
+      "name": "Mastodon",
+      "tags": ["social"]
+    },
+    {
+      "name": "Medium",
+      "tags": ["social"]
+    },
+    {
+      "name": "Messenger",
+      "tags": ["social", "facebook", "chat"]
+    },
+    {
+      "name": "Meta",
+      "tags": ["facebook", "fb"]
+    },
+    {
+      "name": "Microsoft",
+      "tags": ["msft", "windows"]
+    },
+    {
+      "name": "MicrosoftTeams",
+      "tags": ["social", "messaging"]
+    },
+    {
+      "name": "NintendoSwitch",
+      "tags": ["gaming"]
+    },
+    {
+      "name": "Nvidia",
+      "tags": ["gpu"]
+    },
+    {
+      "name": "Paypal",
+      "tags": ["social"]
+    },
+    {
+      "name": "Pinterest",
+      "tags": ["social"]
+    },
+    {
+      "name": "Playstation",
+      "tags": ["sony", "gaming"]
+    },
+    {
+      "name": "Quora",
+      "tags": ["social"]
+    },
+    {
+      "name": "Reddit",
+      "tags": ["social"]
+    },
+    {
+      "name": "Signal",
+      "tags": ["social"]
+    },
+    {
+      "name": "SinaWeibo",
+      "tags": []
+    },
+    {
+      "name": "Skype",
+      "tags": ["social", "microsoft"]
+    },
+    {
+      "name": "Slack",
+      "tags": ["social"]
+    },
+    {
+      "name": "Snapchat",
+      "tags": ["social"]
+    },
+    {
+      "name": "Spotify",
+      "tags": ["social"]
+    },
+    {
+      "name": "StackOverflow",
+      "tags": ["social"]
+    },
+    {
+      "name": "Steam",
+      "tags": ["gaming"]
+    },
+    {
+      "name": "Strava",
+      "tags": ["social"]
+    },
+    {
+      "name": "Stripe",
+      "tags": ["payments", "commerce"]
+    },
+    {
+      "name": "Telegram",
+      "tags": ["social", "chat"]
+    },
+    {
+      "name": "TencentQq",
+      "tags": []
+    },
+    {
+      "name": "Tiktok",
+      "tags": []
+    },
+    {
+      "name": "Trello",
+      "tags": ["kanban", "board"]
+    },
+    {
+      "name": "Twitch",
+      "tags": ["social"]
+    },
+    {
+      "name": "Twitter",
+      "tags": ["social", "chat"]
+    },
+    {
+      "name": "Ubuntu",
+      "tags": ["linux", "distro"]
+    },
+    {
+      "name": "Unity",
+      "tags": ["gaming"]
+    },
+    {
+      "name": "Vimeo",
+      "tags": ["social"]
+    },
+    {
+      "name": "Wechat",
+      "tags": ["social", "messaging"]
+    },
+    {
+      "name": "Whatsapp",
+      "tags": ["social", "facebook", "chat"]
+    },
+    {
+      "name": "Wikipedia",
+      "tags": []
+    },
+    {
+      "name": "Windows",
+      "tags": ["microsoft", "msft", "windows"]
+    },
+    {
+      "name": "Wordpress",
+      "tags": ["social"]
+    },
+    {
+      "name": "Xbox",
+      "tags": ["microsoft", "gaming"]
+    },
+    {
+      "name": "Yelp",
+      "tags": ["social", "reviews"]
+    },
+    {
+      "name": "Youtube",
+      "tags": ["social", "video", "google"]
+    }
+  ],
+  "Apps": [
+    {
+      "name": "App",
+      "tags": ["app", "application", "ios", "android", "square"]
+    },
+    {
+      "name": "AppIndicator",
+      "tags": ["app", "application", "ios", "android", "notification", "square"]
+    },
+    {
+      "name": "Terminal",
+      "tags": ["command-line", "cli", "command-prompt"]
+    },
+    {
+      "name": "TerminalDash",
+      "tags": ["command-line", "cli", "command-prompt"]
+    },
+    {
+      "name": "TerminalFill",
+      "tags": ["command-line", "cli", "command-prompt"]
+    },
+    {
+      "name": "TerminalPlus",
+      "tags": ["command-line", "cli", "command-prompt"]
+    },
+    {
+      "name": "TerminalSplit",
+      "tags": ["command-line", "cli", "command-prompt"]
+    },
+    {
+      "name": "TerminalX",
+      "tags": ["command-line", "cli", "command-prompt"]
+    },
+    {
+      "name": "WindowDash",
+      "tags": ["application", "desktop", "app"]
+    },
+    {
+      "name": "WindowDesktop",
+      "tags": ["application", "desktop", "app"]
+    },
+    {
+      "name": "WindowDock",
+      "tags": ["application", "desktop", "os"]
+    },
+    {
+      "name": "WindowFullscreen",
+      "tags": ["application", "desktop", "app"]
+    },
+    {
+      "name": "WindowPlus",
+      "tags": ["application", "desktop", "app"]
+    },
+    {
+      "name": "WindowSidebar",
+      "tags": ["application", "desktop"]
+    },
+    {
+      "name": "WindowSplit",
+      "tags": ["application", "desktop", "app"]
+    },
+    {
+      "name": "WindowStack",
+      "tags": ["application", "desktop", "app", "windows"]
+    },
+    {
+      "name": "WindowX",
+      "tags": ["application", "desktop", "app"]
+    }
+  ],
+  "Files and folders": [
+    {
+      "name": "Archive",
+      "tags": ["box", "delete"]
+    },
+    {
+      "name": "ArchiveFill",
+      "tags": ["box", "delete"]
+    },
+    {
+      "name": "CardChecklist",
+      "tags": ["note", "card", "notecard"]
+    },
+    {
+      "name": "CardHeading",
+      "tags": ["note", "card", "notecard"]
+    },
+    {
+      "name": "CardImage",
+      "tags": ["note", "card", "notecard"]
+    },
+    {
+      "name": "CardList",
+      "tags": ["note", "card", "notecard"]
+    },
+    {
+      "name": "CardText",
+      "tags": ["note", "card", "notecard", "letter"]
+    },
+    {
+      "name": "File",
+      "tags": ["doc", "document"]
+    },
+    {
+      "name": "FileArrowDown",
+      "tags": ["doc", "document", "download"]
+    },
+    {
+      "name": "FileArrowDownFill",
+      "tags": ["doc", "document", "download"]
+    },
+    {
+      "name": "FileArrowUp",
+      "tags": ["doc", "document", "upload"]
+    },
+    {
+      "name": "FileArrowUpFill",
+      "tags": ["doc", "document", "upload"]
+    },
+    {
+      "name": "FileBarGraph",
+      "tags": ["doc", "document", "data", "chart"]
+    },
+    {
+      "name": "FileBarGraphFill",
+      "tags": ["doc", "document", "data", "chart"]
+    },
+    {
+      "name": "FileBinary",
+      "tags": ["doc", "document", "binary", "source"]
+    },
+    {
+      "name": "FileBinaryFill",
+      "tags": ["doc", "document", "binary", "source"]
+    },
+    {
+      "name": "FileBreak",
+      "tags": ["doc", "document", "page-break"]
+    },
+    {
+      "name": "FileBreakFill",
+      "tags": ["doc", "document", "page-break"]
+    },
+    {
+      "name": "FileCheck",
+      "tags": ["doc", "document", "check", "verified"]
+    },
+    {
+      "name": "FileCheckFill",
+      "tags": ["doc", "document", "check", "verified"]
+    },
+    {
+      "name": "FileCode",
+      "tags": ["doc", "document", "code", "development"]
+    },
+    {
+      "name": "FileCodeFill",
+      "tags": ["doc", "document", "code", "development"]
+    },
+    {
+      "name": "FileDiff",
+      "tags": ["doc", "document", "version", "development"]
+    },
+    {
+      "name": "FileDiffFill",
+      "tags": ["doc", "document", "version", "development"]
+    },
+    {
+      "name": "FileEarmark",
+      "tags": ["doc", "document"]
+    },
+    {
+      "name": "FileEarmarkArrowDown",
+      "tags": ["doc", "document", "download"]
+    },
+    {
+      "name": "FileEarmarkArrowDownFill",
+      "tags": ["doc", "document", "download"]
+    },
+    {
+      "name": "FileEarmarkArrowUp",
+      "tags": ["doc", "document", "upload"]
+    },
+    {
+      "name": "FileEarmarkArrowUpFill",
+      "tags": ["doc", "document", "upload"]
+    },
+    {
+      "name": "FileEarmarkBarGraph",
+      "tags": ["doc", "document", "data", "chart"]
+    },
+    {
+      "name": "FileEarmarkBarGraphFill",
+      "tags": ["doc", "document", "data", "chart"]
+    },
+    {
+      "name": "FileEarmarkBinary",
+      "tags": ["doc", "document", "binary", "source"]
+    },
+    {
+      "name": "FileEarmarkBinaryFill",
+      "tags": ["doc", "document", "binary", "source"]
+    },
+    {
+      "name": "FileEarmarkBreak",
+      "tags": ["doc", "document", "page-break"]
+    },
+    {
+      "name": "FileEarmarkBreakFill",
+      "tags": ["doc", "document", "page-break"]
+    },
+    {
+      "name": "FileEarmarkCheck",
+      "tags": ["doc", "document", "check", "verified"]
+    },
+    {
+      "name": "FileEarmarkCheckFill",
+      "tags": ["doc", "document", "check", "verified"]
+    },
+    {
+      "name": "FileEarmarkCode",
+      "tags": ["doc", "document", "code", "development"]
+    },
+    {
+      "name": "FileEarmarkCodeFill",
+      "tags": ["doc", "document", "code", "development"]
+    },
+    {
+      "name": "FileEarmarkDiff",
+      "tags": ["doc", "document", "version", "development"]
+    },
+    {
+      "name": "FileEarmarkDiffFill",
+      "tags": ["doc", "document", "version", "development"]
+    },
+    {
+      "name": "FileEarmarkEasel",
+      "tags": ["slides", "presentation", "powerpoint", "keynote"]
+    },
+    {
+      "name": "FileEarmarkEaselFill",
+      "tags": ["slides", "presentation", "powerpoint", "keynote"]
+    },
+    {
+      "name": "FileEarmarkExcel",
+      "tags": ["doc", "document", "spreadsheet", "excel", "table"]
+    },
+    {
+      "name": "FileEarmarkExcelFill",
+      "tags": ["doc", "document", "spreadsheet", "excel", "table"]
+    },
+    {
+      "name": "FileEarmarkFill",
+      "tags": ["doc", "document"]
+    },
+    {
+      "name": "FileEarmarkFont",
+      "tags": ["ttf", "otf"]
+    },
+    {
+      "name": "FileEarmarkFontFill",
+      "tags": ["ttf", "otf"]
+    },
+    {
+      "name": "FileEarmarkImage",
+      "tags": ["photo", "picture"]
+    },
+    {
+      "name": "FileEarmarkImageFill",
+      "tags": ["photo", "picture"]
+    },
+    {
+      "name": "FileEarmarkLock",
+      "tags": ["lock", "private", "secure"]
+    },
+    {
+      "name": "FileEarmarkLock2",
+      "tags": ["lock", "private", "secure"]
+    },
+    {
+      "name": "FileEarmarkLock2Fill",
+      "tags": ["lock", "private", "secure"]
+    },
+    {
+      "name": "FileEarmarkLockFill",
+      "tags": ["lock", "private", "secure"]
+    },
+    {
+      "name": "FileEarmarkMedical",
+      "tags": ["doc", "document", "medical", "hospital", "health"]
+    },
+    {
+      "name": "FileEarmarkMedicalFill",
+      "tags": ["doc", "document", "medical", "hospital", "health"]
+    },
+    {
+      "name": "FileEarmarkMinus",
+      "tags": ["doc", "document", "delete", "remove"]
+    },
+    {
+      "name": "FileEarmarkMinusFill",
+      "tags": ["doc", "document", "delete", "remove"]
+    },
+    {
+      "name": "FileEarmarkMusic",
+      "tags": ["doc", "document", "music", "audio", "playlist", "songs"]
+    },
+    {
+      "name": "FileEarmarkMusicFill",
+      "tags": ["doc", "document", "music", "audio", "playlist", "songs"]
+    },
+    {
+      "name": "FileEarmarkPdf",
+      "tags": ["doc", "document", "adobe", "acrobat"]
+    },
+    {
+      "name": "FileEarmarkPdfFill",
+      "tags": ["doc", "document", "adobe", "acrobat"]
+    },
+    {
+      "name": "FileEarmarkPerson",
+      "tags": ["doc", "document", "personal", "cv", "resume", "about"]
+    },
+    {
+      "name": "FileEarmarkPersonFill",
+      "tags": ["doc", "document", "personal", "cv", "resume", "about"]
+    },
+    {
+      "name": "FileEarmarkPlay",
+      "tags": ["video", "present"]
+    },
+    {
+      "name": "FileEarmarkPlayFill",
+      "tags": ["video", "present"]
+    },
+    {
+      "name": "FileEarmarkPlus",
+      "tags": ["doc", "document", "add", "new"]
+    },
+    {
+      "name": "FileEarmarkPlusFill",
+      "tags": ["doc", "document", "add", "new"]
+    },
+    {
+      "name": "FileEarmarkPost",
+      "tags": ["doc", "document", "post"]
+    },
+    {
+      "name": "FileEarmarkPostFill",
+      "tags": ["doc", "document", "post"]
+    },
+    {
+      "name": "FileEarmarkPpt",
+      "tags": ["slides", "presentation", "powerpoint", "keynote"]
+    },
+    {
+      "name": "FileEarmarkPptFill",
+      "tags": ["slides", "presentation", "powerpoint", "keynote"]
+    },
+    {
+      "name": "FileEarmarkRichtext",
+      "tags": ["text", "doc", "document"]
+    },
+    {
+      "name": "FileEarmarkRichtextFill",
+      "tags": ["text", "doc", "document"]
+    },
+    {
+      "name": "FileEarmarkRuled",
+      "tags": ["doc", "document"]
+    },
+    {
+      "name": "FileEarmarkRuledFill",
+      "tags": ["doc", "document"]
+    },
+    {
+      "name": "FileEarmarkSlides",
+      "tags": ["presentation", "keynote", "powerpoint"]
+    },
+    {
+      "name": "FileEarmarkSlidesFill",
+      "tags": ["presentation", "keynote", "powerpoint"]
+    },
+    {
+      "name": "FileEarmarkSpreadsheet",
+      "tags": ["doc", "document", "excel", "table"]
+    },
+    {
+      "name": "FileEarmarkSpreadsheetFill",
+      "tags": ["doc", "document", "excel", "table"]
+    },
+    {
+      "name": "FileEarmarkText",
+      "tags": ["doc", "document"]
+    },
+    {
+      "name": "FileEarmarkTextFill",
+      "tags": ["doc", "document"]
+    },
+    {
+      "name": "FileEarmarkWord",
+      "tags": ["doc", "document"]
+    },
+    {
+      "name": "FileEarmarkWordFill",
+      "tags": ["doc", "document"]
+    },
+    {
+      "name": "FileEarmarkX",
+      "tags": ["document", "remove", "delete"]
+    },
+    {
+      "name": "FileEarmarkXFill",
+      "tags": ["document", "remove", "delete"]
+    },
+    {
+      "name": "FileEarmarkZip",
+      "tags": ["doc", "document", "zip", "archive", "compress"]
+    },
+    {
+      "name": "FileEarmarkZipFill",
+      "tags": ["doc", "document", "zip", "archive", "compress"]
+    },
+    {
+      "name": "FileEasel",
+      "tags": ["slides", "presentation", "powerpoint", "keynote"]
+    },
+    {
+      "name": "FileEaselFill",
+      "tags": ["slides", "presentation", "powerpoint", "keynote"]
+    },
+    {
+      "name": "FileExcel",
+      "tags": ["doc", "document", "spreadsheet", "excel", "table"]
+    },
+    {
+      "name": "FileExcelFill",
+      "tags": ["doc", "document", "spreadsheet", "excel", "table"]
+    },
+    {
+      "name": "FileFill",
+      "tags": ["doc", "document"]
+    },
+    {
+      "name": "FileFont",
+      "tags": ["ttf", "otf"]
+    },
+    {
+      "name": "FileFontFill",
+      "tags": ["ttf", "otf"]
+    },
+    {
+      "name": "FileImage",
+      "tags": ["photo", "picture"]
+    },
+    {
+      "name": "FileImageFill",
+      "tags": ["photo", "picture"]
+    },
+    {
+      "name": "FileLock",
+      "tags": ["lock", "private", "secure"]
+    },
+    {
+      "name": "FileLock2",
+      "tags": ["lock", "private", "secure"]
+    },
+    {
+      "name": "FileLock2Fill",
+      "tags": ["lock", "private", "secure"]
+    },
+    {
+      "name": "FileLockFill",
+      "tags": ["lock", "private", "secure"]
+    },
+    {
+      "name": "FileMedical",
+      "tags": ["doc", "document", "medical", "hospital", "health"]
+    },
+    {
+      "name": "FileMedicalFill",
+      "tags": ["doc", "document", "medical", "hospital", "health"]
+    },
+    {
+      "name": "FileMinus",
+      "tags": ["doc", "document", "delete", "remove"]
+    },
+    {
+      "name": "FileMinusFill",
+      "tags": ["doc", "document", "delete", "remove"]
+    },
+    {
+      "name": "FileMusic",
+      "tags": ["doc", "document", "music", "audio", "playlist", "songs"]
+    },
+    {
+      "name": "FileMusicFill",
+      "tags": ["doc", "document", "music", "audio", "playlist", "songs"]
+    },
+    {
+      "name": "FilePdf",
+      "tags": ["doc", "document", "adobe", "acrobat"]
+    },
+    {
+      "name": "FilePdfFill",
+      "tags": ["doc", "document", "adobe", "acrobat"]
+    },
+    {
+      "name": "FilePerson",
+      "tags": ["doc", "document", "personal", "cv", "resume", "about"]
+    },
+    {
+      "name": "FilePersonFill",
+      "tags": ["doc", "document", "personal", "cv", "resume", "about"]
+    },
+    {
+      "name": "FilePlay",
+      "tags": ["video", "present"]
+    },
+    {
+      "name": "FilePlayFill",
+      "tags": ["video", "present"]
+    },
+    {
+      "name": "FilePlus",
+      "tags": ["doc", "document", "add", "new"]
+    },
+    {
+      "name": "FilePlusFill",
+      "tags": ["doc", "document", "add", "new"]
+    },
+    {
+      "name": "FilePost",
+      "tags": ["doc", "document", "post"]
+    },
+    {
+      "name": "FilePostFill",
+      "tags": ["doc", "document", "post"]
+    },
+    {
+      "name": "FilePpt",
+      "tags": ["slides", "presentation", "powerpoint", "keynote"]
+    },
+    {
+      "name": "FilePptFill",
+      "tags": ["slides", "presentation", "powerpoint", "keynote"]
+    },
+    {
+      "name": "FileRichtext",
+      "tags": ["doc", "document", "richtext"]
+    },
+    {
+      "name": "FileRichtextFill",
+      "tags": ["doc", "document", "richtext"]
+    },
+    {
+      "name": "FileRuled",
+      "tags": ["doc", "document"]
+    },
+    {
+      "name": "FileRuledFill",
+      "tags": ["doc", "document"]
+    },
+    {
+      "name": "FileSlides",
+      "tags": ["presentation", "keynote", "powerpoint"]
+    },
+    {
+      "name": "FileSlidesFill",
+      "tags": ["presentation", "keynote", "powerpoint"]
+    },
+    {
+      "name": "FileSpreadsheet",
+      "tags": ["doc", "document", "excel", "table"]
+    },
+    {
+      "name": "FileSpreadsheetFill",
+      "tags": ["doc", "document", "excel", "table"]
+    },
+    {
+      "name": "FileText",
+      "tags": ["doc", "document", "letter"]
+    },
+    {
+      "name": "FileTextFill",
+      "tags": ["doc", "document", "letter"]
+    },
+    {
+      "name": "FileWord",
+      "tags": ["doc", "document"]
+    },
+    {
+      "name": "FileWordFill",
+      "tags": ["doc", "document"]
+    },
+    {
+      "name": "FileX",
+      "tags": ["document", "remove", "delete"]
+    },
+    {
+      "name": "FileXFill",
+      "tags": ["document", "remove", "delete"]
+    },
+    {
+      "name": "FileZip",
+      "tags": ["doc", "document", "zip", "archive", "compress"]
+    },
+    {
+      "name": "FileZipFill",
+      "tags": ["doc", "document", "zip", "archive", "compress"]
+    },
+    {
+      "name": "Files",
+      "tags": ["doc", "document"]
+    },
+    {
+      "name": "FilesAlt",
+      "tags": ["doc", "document"]
+    },
+    {
+      "name": "FiletypeAac",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeAi",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeBmp",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeCs",
+      "tags": ["file", "file type", "extension", "code"]
+    },
+    {
+      "name": "FiletypeCss",
+      "tags": ["file", "file type", "extension", "code", "stylesheet"]
+    },
+    {
+      "name": "FiletypeCsv",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeDoc",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeDocx",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeExe",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeGif",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeHeic",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeHtml",
+      "tags": ["file", "file type", "extension", "code", "html"]
+    },
+    {
+      "name": "FiletypeJava",
+      "tags": ["file", "file type", "extension", "code", "java"]
+    },
+    {
+      "name": "FiletypeJpg",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeJs",
+      "tags": ["file", "file type", "extension", "code", "javascript"]
+    },
+    {
+      "name": "FiletypeJson",
+      "tags": ["file", "file type", "extension", "code", "javascript"]
+    },
+    {
+      "name": "FiletypeJsx",
+      "tags": ["file", "file type", "extension", "code", "javascript", "react"]
+    },
+    {
+      "name": "FiletypeKey",
+      "tags": ["file", "file type", "extension", "keynote"]
+    },
+    {
+      "name": "FiletypeM4p",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeMd",
+      "tags": ["file", "file type", "extension", "code", "markdown"]
+    },
+    {
+      "name": "FiletypeMdx",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeMov",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeMp3",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeMp4",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeOtf",
+      "tags": ["file", "file type", "extension", "font", "type"]
+    },
+    {
+      "name": "FiletypePdf",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypePhp",
+      "tags": ["file", "file type", "extension", "code"]
+    },
+    {
+      "name": "FiletypePng",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypePptx",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypePsd",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypePy",
+      "tags": ["file", "file type", "extension", "code", "python"]
+    },
+    {
+      "name": "FiletypeRaw",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeRb",
+      "tags": ["file", "file type", "extension", "code", "ruby"]
+    },
+    {
+      "name": "FiletypeSass",
+      "tags": ["file", "file type", "extension", "code", "css", "stylesheet"]
+    },
+    {
+      "name": "FiletypeScss",
+      "tags": ["file", "file type", "extension", "code", "css", "stylesheet"]
+    },
+    {
+      "name": "FiletypeSh",
+      "tags": ["file", "file type", "extension", "code", "shell"]
+    },
+    {
+      "name": "FiletypeSql",
+      "tags": ["file", "file type", "extension", "mysql"]
+    },
+    {
+      "name": "FiletypeSvg",
+      "tags": ["file", "file type", "extension", "code"]
+    },
+    {
+      "name": "FiletypeTiff",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeTsx",
+      "tags": ["file", "file type", "extension", "code", "typescript"]
+    },
+    {
+      "name": "FiletypeTtf",
+      "tags": ["file", "file type", "extension", "font", "type"]
+    },
+    {
+      "name": "FiletypeTxt",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeWav",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeWoff",
+      "tags": ["file", "file type", "extension", "font", "type"]
+    },
+    {
+      "name": "FiletypeXlsx",
+      "tags": ["file", "file type", "extension"]
+    },
+    {
+      "name": "FiletypeXml",
+      "tags": ["file", "file type", "extension", "code"]
+    },
+    {
+      "name": "FiletypeYml",
+      "tags": ["file", "file type", "extension", "code", "yaml"]
+    },
+    {
+      "name": "Folder",
+      "tags": ["directory"]
+    },
+    {
+      "name": "Folder2",
+      "tags": ["directory"]
+    },
+    {
+      "name": "Folder2Open",
+      "tags": ["directory"]
+    },
+    {
+      "name": "FolderCheck",
+      "tags": ["directory", "check", "verified"]
+    },
+    {
+      "name": "FolderFill",
+      "tags": ["directory"]
+    },
+    {
+      "name": "FolderMinus",
+      "tags": ["directory", "delete", "remove"]
+    },
+    {
+      "name": "FolderPlus",
+      "tags": ["directory", "delete", "add", "new"]
+    },
+    {
+      "name": "FolderSymlink",
+      "tags": ["directory", "symbolic-link"]
+    },
+    {
+      "name": "FolderSymlinkFill",
+      "tags": ["directory", "symbolic-link"]
+    },
+    {
+      "name": "FolderX",
+      "tags": ["directory", "remove", "delete"]
+    },
+    {
+      "name": "Image",
+      "tags": ["picture", "photo"]
+    },
+    {
+      "name": "ImageAlt",
+      "tags": ["picture", "photo"]
+    },
+    {
+      "name": "ImageFill",
+      "tags": ["picture", "photo"]
+    },
+    {
+      "name": "Images",
+      "tags": ["picture", "photo"]
+    },
+    {
+      "name": "Journal",
+      "tags": ["file", "folder", "journal", "notebook"]
+    },
+    {
+      "name": "JournalAlbum",
+      "tags": ["file", "folder", "journal", "notebook"]
+    },
+    {
+      "name": "JournalArrowDown",
+      "tags": ["file", "folder", "journal", "notebook"]
+    },
+    {
+      "name": "JournalArrowUp",
+      "tags": ["file", "folder", "journal", "notebook"]
+    },
+    {
+      "name": "JournalBookmark",
+      "tags": ["file", "folder", "journal", "notebook"]
+    },
+    {
+      "name": "JournalBookmarkFill",
+      "tags": ["file", "folder", "journal", "notebook"]
+    },
+    {
+      "name": "JournalCheck",
+      "tags": ["file", "folder", "journal", "notebook"]
+    },
+    {
+      "name": "JournalCode",
+      "tags": ["file", "folder", "journal", "notebook"]
+    },
+    {
+      "name": "JournalMedical",
+      "tags": ["file", "folder", "journal", "notebook"]
+    },
+    {
+      "name": "JournalMinus",
+      "tags": ["file", "folder", "journal", "notebook"]
+    },
+    {
+      "name": "JournalPlus",
+      "tags": ["file", "folder", "journal", "notebook"]
+    },
+    {
+      "name": "JournalRichtext",
+      "tags": ["file", "folder", "journal", "notebook"]
+    },
+    {
+      "name": "JournalText",
+      "tags": ["file", "folder", "journal", "notebook"]
+    },
+    {
+      "name": "JournalX",
+      "tags": ["file", "folder", "journal", "notebook", "remove", "delete"]
+    },
+    {
+      "name": "Journals",
+      "tags": ["file", "folder", "journal", "notebook"]
+    },
+    {
+      "name": "Table",
+      "tags": ["spreadsheet"]
+    }
+  ],
+  "Arrows": [
+    {
+      "name": "Arrow90degDown",
+      "tags": ["arrow", "right-angle"]
+    },
+    {
+      "name": "Arrow90degLeft",
+      "tags": ["arrow", "right-angle"]
+    },
+    {
+      "name": "Arrow90degRight",
+      "tags": ["arrow", "right-angle"]
+    },
+    {
+      "name": "Arrow90degUp",
+      "tags": ["arrow", "right-angle"]
+    },
+    {
+      "name": "ArrowBarDown",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowBarLeft",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowBarRight",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowBarUp",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowClockwise",
+      "tags": ["arrow", "right", "spin", "turn", "around", "round", "rotate", "refresh", "reload", "redo"]
+    },
+    {
+      "name": "ArrowCounterclockwise",
+      "tags": ["arrow", "left", "spin", "turn", "around", "round", "rotate", "undo"]
+    },
+    {
+      "name": "ArrowDown",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowDownLeft",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowDownRight",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowDownShort",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowDownUp",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowLeft",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowLeftRight",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowLeftShort",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowRepeat",
+      "tags": ["arrow", "spin", "turn", "around", "round", "rotate", "sync"]
+    },
+    {
+      "name": "ArrowReturnLeft",
+      "tags": ["arrow", "return"]
+    },
+    {
+      "name": "ArrowReturnRight",
+      "tags": ["arrow", "return"]
+    },
+    {
+      "name": "ArrowRight",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowRightShort",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowThroughHeart",
+      "tags": ["cupid", "love", "valentine"]
+    },
+    {
+      "name": "ArrowThroughHeartFill",
+      "tags": ["cupid", "love", "valentine"]
+    },
+    {
+      "name": "ArrowUp",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowUpLeft",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowUpRight",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowUpShort",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowsAngleContract",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowsAngleExpand",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowsCollapse",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowsExpand",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowsFullscreen",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "ArrowsMove",
+      "tags": ["arrow", "cursor", "move"]
+    },
+    {
+      "name": "Recycle",
+      "tags": ["recyling", "trash"]
+    },
+    {
+      "name": "Shuffle",
+      "tags": ["shuffle", "random"]
+    }
+  ],
+  "Shape Arrows": [
+    {
+      "name": "ArrowDownCircle",
+      "tags": ["arrow", "circle"]
+    },
+    {
+      "name": "ArrowDownCircleFill",
+      "tags": ["arrow", "circle"]
+    },
+    {
+      "name": "ArrowDownLeftCircle",
+      "tags": ["arrow", "circle"]
+    },
+    {
+      "name": "ArrowDownLeftCircleFill",
+      "tags": ["arrow", "circle"]
+    },
+    {
+      "name": "ArrowDownLeftSquare",
+      "tags": ["arrow", "square"]
+    },
+    {
+      "name": "ArrowDownLeftSquareFill",
+      "tags": ["arrow", "square"]
+    },
+    {
+      "name": "ArrowDownRightCircle",
+      "tags": ["arrow", "circle"]
+    },
+    {
+      "name": "ArrowDownRightCircleFill",
+      "tags": ["arrow", "circle"]
+    },
+    {
+      "name": "ArrowDownRightSquare",
+      "tags": ["arrow", "square"]
+    },
+    {
+      "name": "ArrowDownRightSquareFill",
+      "tags": ["arrow", "square"]
+    },
+    {
+      "name": "ArrowDownSquare",
+      "tags": ["arrow", "square"]
+    },
+    {
+      "name": "ArrowDownSquareFill",
+      "tags": ["arrow", "square"]
+    },
+    {
+      "name": "ArrowLeftCircle",
+      "tags": ["arrow", "circle"]
+    },
+    {
+      "name": "ArrowLeftCircleFill",
+      "tags": ["arrow", "circle"]
+    },
+    {
+      "name": "ArrowLeftSquare",
+      "tags": ["arrow", "square"]
+    },
+    {
+      "name": "ArrowLeftSquareFill",
+      "tags": ["arrow", "square"]
+    },
+    {
+      "name": "ArrowRightCircle",
+      "tags": ["arrow", "circle"]
+    },
+    {
+      "name": "ArrowRightCircleFill",
+      "tags": ["arrow", "circle"]
+    },
+    {
+      "name": "ArrowRightSquare",
+      "tags": ["arrow", "square"]
+    },
+    {
+      "name": "ArrowRightSquareFill",
+      "tags": ["arrow", "square"]
+    },
+    {
+      "name": "ArrowUpCircle",
+      "tags": ["arrow", "circle"]
+    },
+    {
+      "name": "ArrowUpCircleFill",
+      "tags": ["arrow", "circle"]
+    },
+    {
+      "name": "ArrowUpLeftCircle",
+      "tags": ["arrow", "circle"]
+    },
+    {
+      "name": "ArrowUpLeftCircleFill",
+      "tags": ["arrow", "circle"]
+    },
+    {
+      "name": "ArrowUpLeftSquare",
+      "tags": ["arrow", "square"]
+    },
+    {
+      "name": "ArrowUpLeftSquareFill",
+      "tags": ["arrow", "square"]
+    },
+    {
+      "name": "ArrowUpRightCircle",
+      "tags": ["arrow", "circle"]
+    },
+    {
+      "name": "ArrowUpRightCircleFill",
+      "tags": ["arrow", "circle"]
+    },
+    {
+      "name": "ArrowUpRightSquare",
+      "tags": ["arrow", "square"]
+    },
+    {
+      "name": "ArrowUpRightSquareFill",
+      "tags": ["arrow", "square"]
+    },
+    {
+      "name": "ArrowUpSquare",
+      "tags": ["arrow", "square"]
+    },
+    {
+      "name": "ArrowUpSquareFill",
+      "tags": ["arrow", "square"]
+    }
+  ],
+  "Love": [
+    {
+      "name": "ArrowThroughHeart",
+      "tags": ["cupid", "love", "valentine"]
+    },
+    {
+      "name": "ArrowThroughHeartFill",
+      "tags": ["cupid", "love", "valentine"]
+    },
+    {
+      "name": "BalloonHeart",
+      "tags": ["birthday", "valentine", "love"]
+    },
+    {
+      "name": "BalloonHeartFill",
+      "tags": ["birthday", "valentine", "love"]
+    },
+    {
+      "name": "Box2Fill",
+      "tags": ["cardboard", "package", "cube"]
+    },
+    {
+      "name": "Box2Heart",
+      "tags": ["cardboard", "package", "cube", "gift", "valentine", "love"]
+    },
+    {
+      "name": "Box2HeartFill",
+      "tags": ["cardboard", "package", "cube", "gift", "valentine", "love"]
+    },
+    {
+      "name": "Calendar2Heart",
+      "tags": ["date", "time", "month", "valentine", "date"]
+    },
+    {
+      "name": "Calendar2HeartFill",
+      "tags": ["date", "time", "month", "valentine", "date"]
+    },
+    {
+      "name": "CalendarHeart",
+      "tags": ["date", "time", "month", "valentine", "date"]
+    },
+    {
+      "name": "CalendarHeartFill",
+      "tags": ["date", "time", "month", "valentine", "date"]
+    },
+    {
+      "name": "ChatHeart",
+      "tags": ["chat bubble", "text", "message", "valentine", "romance"]
+    },
+    {
+      "name": "ChatHeartFill",
+      "tags": ["chat bubble", "text", "message", "valentine", "romance"]
+    },
+    {
+      "name": "ChatLeftHeart",
+      "tags": ["chat bubble", "text", "message", "valentine", "romance"]
+    },
+    {
+      "name": "ChatLeftHeartFill",
+      "tags": ["chat bubble", "text", "message", "valentine", "romance"]
+    },
+    {
+      "name": "ChatRightHeart",
+      "tags": ["chat bubble", "text", "message", "valentine", "romance"]
+    },
+    {
+      "name": "ChatRightHeartFill",
+      "tags": ["chat bubble", "text", "message", "valentine", "romance"]
+    },
+    {
+      "name": "ChatSquareHeart",
+      "tags": ["chat bubble", "text", "message", "valentine", "romance"]
+    },
+    {
+      "name": "ChatSquareHeartFill",
+      "tags": ["chat bubble", "text", "message", "valentine", "romance"]
+    },
+    {
+      "name": "HeartArrow",
+      "tags": ["romance", "cupid", "valentine"]
+    },
+    {
+      "name": "Heartbreak",
+      "tags": ["love", "valentine", "romance"]
+    },
+    {
+      "name": "HeartbreakFill",
+      "tags": ["love", "valentine", "romance"]
+    },
+    {
+      "name": "Hearts",
+      "tags": ["romance", "valentine"]
+    },
+    {
+      "name": "PostageHeart",
+      "tags": ["mail", "stamp", "love", "valentine", "romance"]
+    },
+    {
+      "name": "PostageHeartFill",
+      "tags": ["mail", "stamp", "love", "valentine", "romance"]
+    },
+    {
+      "name": "PostcardHeart",
+      "tags": ["mail", "letter", "love", "valentine", "romance"]
+    },
+    {
+      "name": "PostcardHeartFill",
+      "tags": ["mail", "letter", "love", "valentine", "romance"]
+    },
+    {
+      "name": "SearchHeart",
+      "tags": ["magnifying-glass", "look", "love", "romance", "valentine"]
+    },
+    {
+      "name": "SearchHeartFill",
+      "tags": ["magnifying-glass", "look", "love", "romance", "valentine"]
+    },
+    {
+      "name": "Valentine",
+      "tags": ["love", "romance", "valentine"]
+    },
+    {
+      "name": "Valentine2",
+      "tags": ["love", "romance", "valentine"]
+    }
+  ],
+  "Media": [
+    {
+      "name": "AspectRatio",
+      "tags": ["size", "resize", "crop", "dimensions"]
+    },
+    {
+      "name": "AspectRatioFill",
+      "tags": ["size", "resize", "crop", "dimensions"]
+    },
+    {
+      "name": "Cassette",
+      "tags": ["tape", "music", "audio"]
+    },
+    {
+      "name": "CassetteFill",
+      "tags": ["tape", "music", "audio"]
+    },
+    {
+      "name": "Cast",
+      "tags": ["airplay", "project", "stream", "display"]
+    },
+    {
+      "name": "Collection",
+      "tags": ["library", "group"]
+    },
+    {
+      "name": "CollectionFill",
+      "tags": ["library", "group"]
+    },
+    {
+      "name": "CollectionPlay",
+      "tags": ["library", "group", "play"]
+    },
+    {
+      "name": "CollectionPlayFill",
+      "tags": ["library", "group", "play"]
+    },
+    {
+      "name": "Disc",
+      "tags": ["cd", "compact disc", "bluray", "dvd"]
+    },
+    {
+      "name": "DiscFill",
+      "tags": ["cd", "compact disc", "bluray", "dvd"]
+    },
+    {
+      "name": "FastForward",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "FastForwardBtn",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "FastForwardBtnFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "FastForwardCircle",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "FastForwardCircleFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "FastForwardFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "Film",
+      "tags": ["video", "movie"]
+    },
+    {
+      "name": "Mic",
+      "tags": ["audio", "video", "av", "sound", "input", "microphone"]
+    },
+    {
+      "name": "MicFill",
+      "tags": ["audio", "video", "av", "sound", "input", "microphone"]
+    },
+    {
+      "name": "MicMute",
+      "tags": ["audio", "video", "av", "sound", "input", "microphone"]
+    },
+    {
+      "name": "MicMuteFill",
+      "tags": ["audio", "video", "av", "sound", "input", "microphone"]
+    },
+    {
+      "name": "MusicNote",
+      "tags": ["music", "notes", "audio", "sound"]
+    },
+    {
+      "name": "MusicNoteBeamed",
+      "tags": ["music", "notes", "audio", "sound"]
+    },
+    {
+      "name": "MusicNoteList",
+      "tags": ["music", "notes", "audio", "sound", "playlist", "library"]
+    },
+    {
+      "name": "Pause",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "PauseBtn",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "PauseBtnFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "PauseCircle",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "PauseCircleFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "PauseFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "Pip",
+      "tags": ["picture", "tv", "television", "display", "nested"]
+    },
+    {
+      "name": "PipFill",
+      "tags": ["picture", "tv", "television", "display", "nested"]
+    },
+    {
+      "name": "Play",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "PlayBtn",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "PlayBtnFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "PlayCircle",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "PlayCircleFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "PlayFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "Record",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "Record2",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "Record2Fill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "RecordBtn",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "RecordBtnFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "RecordCircle",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "RecordCircleFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "RecordFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "Repeat",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "Repeat1",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "Rewind",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "RewindBtn",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "RewindBtnFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "RewindCircle",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "RewindCircleFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "RewindFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipBackward",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipBackwardBtn",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipBackwardBtnFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipBackwardCircle",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipBackwardCircleFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipBackwardFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipEnd",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipEndBtn",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipEndBtnFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipEndCircle",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipEndCircleFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipEndFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipForward",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipForwardBtn",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipForwardBtnFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipForwardCircle",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipForwardCircleFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipForwardFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipStart",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipStartBtn",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipStartBtnFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipStartCircle",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipStartCircleFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "SkipStartFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "Soundwave",
+      "tags": ["audio", "sound", "wave"]
+    },
+    {
+      "name": "Stop",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "StopBtn",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "StopBtnFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "StopCircle",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "StopCircleFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "StopFill",
+      "tags": ["audio", "video", "av"]
+    },
+    {
+      "name": "VinylFill",
+      "tags": ["audio", "music", "record"]
+    },
+    {
+      "name": "VolumeDown",
+      "tags": ["audio", "video", "av", "sound"]
+    },
+    {
+      "name": "VolumeDownFill",
+      "tags": ["audio", "video", "av", "sound"]
+    },
+    {
+      "name": "VolumeMute",
+      "tags": ["audio", "video", "av", "sound"]
+    },
+    {
+      "name": "VolumeMuteFill",
+      "tags": ["audio", "video", "av", "sound"]
+    },
+    {
+      "name": "VolumeOff",
+      "tags": ["audio", "video", "av", "sound"]
+    },
+    {
+      "name": "VolumeOffFill",
+      "tags": ["audio", "video", "av", "sound"]
+    },
+    {
+      "name": "VolumeUp",
+      "tags": ["audio", "video", "av", "sound"]
+    },
+    {
+      "name": "VolumeUpFill",
+      "tags": ["audio", "video", "av", "sound"]
+    }
+  ],
+  "Real world": [
+    {
+      "name": "Award",
+      "tags": ["prize", "rosette"]
+    },
+    {
+      "name": "AwardFill",
+      "tags": ["prize", "rosette"]
+    },
+    {
+      "name": "Bicycle",
+      "tags": ["bike", "riding", "bicycling"]
+    },
+    {
+      "name": "Binoculars",
+      "tags": ["distance", "view", "search"]
+    },
+    {
+      "name": "BinocularsFill",
+      "tags": ["distance", "view", "search"]
+    },
+    {
+      "name": "Book",
+      "tags": ["novel", "read", "magazine"]
+    },
+    {
+      "name": "BookFill",
+      "tags": ["novel", "read", "magazine"]
+    },
+    {
+      "name": "BookHalf",
+      "tags": ["novel", "read", "magazine"]
+    },
+    {
+      "name": "Bookshelf",
+      "tags": ["shelf"]
+    },
+    {
+      "name": "Box",
+      "tags": ["cardboard", "package", "cube"]
+    },
+    {
+      "name": "BoxFill",
+      "tags": ["cardboard", "package"]
+    },
+    {
+      "name": "BoxSeam",
+      "tags": ["cardboard", "package"]
+    },
+    {
+      "name": "BoxSeamFill",
+      "tags": ["cardboard", "package"]
+    },
+    {
+      "name": "Bricks",
+      "tags": ["wall", "firewall"]
+    },
+    {
+      "name": "Briefcase",
+      "tags": ["business", "bag", "baggage"]
+    },
+    {
+      "name": "BriefcaseFill",
+      "tags": ["business", "bag", "baggage"]
+    },
+    {
+      "name": "Bug",
+      "tags": ["insect", "error"]
+    },
+    {
+      "name": "BugFill",
+      "tags": ["insect", "error"]
+    },
+    {
+      "name": "Clipboard",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "Clipboard2",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "Clipboard2Check",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "Clipboard2CheckFill",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "Clipboard2Data",
+      "tags": ["copy", "paste", "data", "analytics", "graph", "chart"]
+    },
+    {
+      "name": "Clipboard2DataFill",
+      "tags": ["copy", "paste", "data", "analytics", "graph", "chart"]
+    },
+    {
+      "name": "Clipboard2Fill",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "Clipboard2Heart",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "Clipboard2HeartFill",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "Clipboard2Minus",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "Clipboard2MinusFill",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "Clipboard2Plus",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "Clipboard2PlusFill",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "Clipboard2Pulse",
+      "tags": ["copy", "paste", "heartrate"]
+    },
+    {
+      "name": "Clipboard2PulseFill",
+      "tags": ["copy", "paste", "heartrate"]
+    },
+    {
+      "name": "Clipboard2X",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "Clipboard2XFill",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "ClipboardCheck",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "ClipboardCheckFill",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "ClipboardData",
+      "tags": ["copy", "paste", "data", "analytics", "graph", "chart"]
+    },
+    {
+      "name": "ClipboardDataFill",
+      "tags": ["copy", "paste", "data", "analytics", "graph", "chart"]
+    },
+    {
+      "name": "ClipboardFill",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "ClipboardHeart",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "ClipboardHeartFill",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "ClipboardMinus",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "ClipboardMinusFill",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "ClipboardPlus",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "ClipboardPlusFill",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "ClipboardPulse",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "ClipboardX",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "ClipboardXFill",
+      "tags": ["copy", "paste"]
+    },
+    {
+      "name": "Cone",
+      "tags": ["construction", "warning", "safety"]
+    },
+    {
+      "name": "ConeStriped",
+      "tags": ["construction", "warning", "safety"]
+    },
+    {
+      "name": "CreditCard",
+      "tags": ["debit", "card", "payment"]
+    },
+    {
+      "name": "CreditCard2Back",
+      "tags": ["debit", "card", "payment"]
+    },
+    {
+      "name": "CreditCard2BackFill",
+      "tags": ["debit", "card", "payment"]
+    },
+    {
+      "name": "CreditCard2Front",
+      "tags": ["debit", "card", "payment"]
+    },
+    {
+      "name": "CreditCard2FrontFill",
+      "tags": ["debit", "card", "payment"]
+    },
+    {
+      "name": "CreditCardFill",
+      "tags": ["debit", "card", "payment"]
+    },
+    {
+      "name": "Cup",
+      "tags": ["mug"]
+    },
+    {
+      "name": "CupFill",
+      "tags": ["mug"]
+    },
+    {
+      "name": "CupHot",
+      "tags": ["mug", "steam", "coffee", "tea"]
+    },
+    {
+      "name": "CupHotFill",
+      "tags": ["mug", "steam", "coffee", "tea"]
+    },
+    {
+      "name": "CupStraw",
+      "tags": ["mug", "glass", "drink"]
+    },
+    {
+      "name": "DoorClosed",
+      "tags": ["door", "logout", "signout"]
+    },
+    {
+      "name": "DoorClosedFill",
+      "tags": ["door", "logout", "signout"]
+    },
+    {
+      "name": "DoorOpen",
+      "tags": ["door", "login", "signin"]
+    },
+    {
+      "name": "DoorOpenFill",
+      "tags": ["door", "login", "signin"]
+    },
+    {
+      "name": "Egg",
+      "tags": ["food"]
+    },
+    {
+      "name": "EggFill",
+      "tags": ["food"]
+    },
+    {
+      "name": "EggFried",
+      "tags": ["food"]
+    },
+    {
+      "name": "Eye",
+      "tags": ["eyeball", "look", "see"]
+    },
+    {
+      "name": "EyeFill",
+      "tags": ["eyeball", "look", "see"]
+    },
+    {
+      "name": "EyeSlash",
+      "tags": ["eyeball", "look", "see"]
+    },
+    {
+      "name": "EyeSlashFill",
+      "tags": ["eyeball", "look", "see"]
+    },
+    {
+      "name": "Eyeglasses",
+      "tags": ["eyeball", "look", "see", "glasses", "reading"]
+    },
+    {
+      "name": "Fire",
+      "tags": ["burning", "smoke"]
+    },
+    {
+      "name": "Flower1",
+      "tags": ["plant", "bloom", "flower"]
+    },
+    {
+      "name": "Flower2",
+      "tags": ["plant", "bloom", "flower"]
+    },
+    {
+      "name": "Flower3",
+      "tags": ["plant", "bloom", "flower"]
+    },
+    {
+      "name": "Funnel",
+      "tags": ["sort", "filter"]
+    },
+    {
+      "name": "FunnelFill",
+      "tags": ["sort", "filter"]
+    },
+    {
+      "name": "Gift",
+      "tags": ["present", "gift"]
+    },
+    {
+      "name": "GiftFill",
+      "tags": ["present", "gift"]
+    },
+    {
+      "name": "Handbag",
+      "tags": ["purse", "tote"]
+    },
+    {
+      "name": "HandbagFill",
+      "tags": ["purse", "tote"]
+    },
+    {
+      "name": "Hourglass",
+      "tags": ["time", "history", "wait", "sand", "clock"]
+    },
+    {
+      "name": "HourglassBottom",
+      "tags": ["time", "history", "wait", "sand", "clock"]
+    },
+    {
+      "name": "HourglassSplit",
+      "tags": ["time", "history", "wait", "sand", "clock"]
+    },
+    {
+      "name": "HourglassTop",
+      "tags": ["time", "history", "wait", "sand", "clock"]
+    },
+    {
+      "name": "House",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseAdd",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseAddFill",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseCheck",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseCheckFill",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseDash",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseDashFill",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseDoor",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseDoorFill",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseDown",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseDownFill",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseExclamation",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseExclamationFill",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseFill",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseGear",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseGearFill",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseHeart",
+      "tags": ["home", "love", "romance"]
+    },
+    {
+      "name": "HouseHeartFill",
+      "tags": ["home", "love", "romance"]
+    },
+    {
+      "name": "HouseLock",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseLockFill",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseSlash",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseSlashFill",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseUp",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseUpFill",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseX",
+      "tags": ["home"]
+    },
+    {
+      "name": "HouseXFill",
+      "tags": ["home"]
+    },
+    {
+      "name": "Houses",
+      "tags": ["home"]
+    },
+    {
+      "name": "HousesFill",
+      "tags": ["home"]
+    },
+    {
+      "name": "Key",
+      "tags": ["lock", "secure"]
+    },
+    {
+      "name": "KeyFill",
+      "tags": ["lock", "secure"]
+    },
+    {
+      "name": "Ladder",
+      "tags": ["climb", "ladder"]
+    },
+    {
+      "name": "Lamp",
+      "tags": ["light", "lamp"]
+    },
+    {
+      "name": "LampFill",
+      "tags": ["light", "lamp"]
+    },
+    {
+      "name": "LifePreserver",
+      "tags": ["lifesaver", "water"]
+    },
+    {
+      "name": "Lightbulb",
+      "tags": ["lights", "lamp"]
+    },
+    {
+      "name": "LightbulbFill",
+      "tags": ["lights", "lamp"]
+    },
+    {
+      "name": "LightbulbOff",
+      "tags": ["lights", "lamp"]
+    },
+    {
+      "name": "LightbulbOffFill",
+      "tags": ["lights", "lamp"]
+    },
+    {
+      "name": "Mailbox",
+      "tags": ["post", "postal", "postbox", "letterbox"]
+    },
+    {
+      "name": "Mailbox2",
+      "tags": ["post", "postal", "postbox", "letterbox"]
+    },
+    {
+      "name": "Megaphone",
+      "tags": ["loudspeaker", "announcement"]
+    },
+    {
+      "name": "MegaphoneFill",
+      "tags": ["loudspeaker", "announcement"]
+    },
+    {
+      "name": "Minecart",
+      "tags": ["mining", "cart"]
+    },
+    {
+      "name": "MinecartLoaded",
+      "tags": ["mining", "cart"]
+    },
+    {
+      "name": "Moon",
+      "tags": ["lunar", "weather", "night"]
+    },
+    {
+      "name": "Newspaper",
+      "tags": ["news", "paper"]
+    },
+    {
+      "name": "Outlet",
+      "tags": ["plug", "power"]
+    },
+    {
+      "name": "Paperclip",
+      "tags": ["attachment"]
+    },
+    {
+      "name": "Pin",
+      "tags": ["pushpin", "thumbtack"]
+    },
+    {
+      "name": "PinAngle",
+      "tags": ["pushpin", "thumbtack"]
+    },
+    {
+      "name": "PinAngleFill",
+      "tags": ["pushpin", "thumbtack"]
+    },
+    {
+      "name": "PinFill",
+      "tags": ["pushpin", "thumbtack"]
+    },
+    {
+      "name": "Plug",
+      "tags": ["power", "outlet"]
+    },
+    {
+      "name": "PlugFill",
+      "tags": ["power", "outlet"]
+    },
+    {
+      "name": "Rocket",
+      "tags": ["ship", "rocketship", "spaceship"]
+    },
+    {
+      "name": "RocketFill",
+      "tags": ["ship", "rocketship", "spaceship"]
+    },
+    {
+      "name": "RocketTakeoff",
+      "tags": ["ship", "rocketship", "spaceship", "launch"]
+    },
+    {
+      "name": "RocketTakeoffFill",
+      "tags": ["ship", "rocketship", "spaceship", "launch"]
+    },
+    {
+      "name": "Safe",
+      "tags": ["vault", "bank", "finance"]
+    },
+    {
+      "name": "Safe2",
+      "tags": ["vault", "bank", "finance"]
+    },
+    {
+      "name": "Safe2Fill",
+      "tags": ["vault", "bank", "finance"]
+    },
+    {
+      "name": "SafeFill",
+      "tags": ["vault", "bank", "finance"]
+    },
+    {
+      "name": "Scissors",
+      "tags": ["cut", "shears"]
+    },
+    {
+      "name": "Signpost",
+      "tags": ["milestone", "sign", "road sign", "street sign", "directions"]
+    },
+    {
+      "name": "Signpost2",
+      "tags": ["milestone", "sign", "road sign", "street sign", "directions"]
+    },
+    {
+      "name": "Signpost2Fill",
+      "tags": ["milestone", "sign", "road sign", "street sign", "directions"]
+    },
+    {
+      "name": "SignpostFill",
+      "tags": ["milestone", "sign", "road sign", "street sign", "directions"]
+    },
+    {
+      "name": "SignpostSplit",
+      "tags": ["milestone", "sign", "road sign", "street sign", "directions"]
+    },
+    {
+      "name": "SignpostSplitFill",
+      "tags": ["milestone", "sign", "road sign", "street sign", "directions"]
+    },
+    {
+      "name": "Speedometer",
+      "tags": ["speed", "tachometer", "dashboard"]
+    },
+    {
+      "name": "Speedometer2",
+      "tags": ["speed", "tachometer", "dashboard"]
+    },
+    {
+      "name": "Stickies",
+      "tags": ["postit", "note", "sticky"]
+    },
+    {
+      "name": "StickiesFill",
+      "tags": ["postit", "note", "sticky"]
+    },
+    {
+      "name": "Sticky",
+      "tags": ["postit", "note", "sticky"]
+    },
+    {
+      "name": "StickyFill",
+      "tags": ["postit", "note", "sticky"]
+    },
+    {
+      "name": "Stoplights",
+      "tags": ["traffic", "lights", "intersection"]
+    },
+    {
+      "name": "StoplightsFill",
+      "tags": ["traffic", "lights", "intersection"]
+    },
+    {
+      "name": "Sunglasses",
+      "tags": ["shades", "cool", "aviators"]
+    },
+    {
+      "name": "Tag",
+      "tags": ["price", "category", "taxonomy", "label"]
+    },
+    {
+      "name": "TagFill",
+      "tags": ["price", "category", "taxonomy", "label"]
+    },
+    {
+      "name": "Tags",
+      "tags": ["price", "category", "taxonomy", "label"]
+    },
+    {
+      "name": "TagsFill",
+      "tags": ["price", "category", "taxonomy", "label"]
+    },
+    {
+      "name": "Thermometer",
+      "tags": ["temperature", "weather"]
+    },
+    {
+      "name": "Tree",
+      "tags": ["tree", "forrest"]
+    },
+    {
+      "name": "TreeFill",
+      "tags": ["tree", "forrest"]
+    },
+    {
+      "name": "Trophy",
+      "tags": ["prize", "winning"]
+    },
+    {
+      "name": "TrophyFill",
+      "tags": ["prize", "winning"]
+    }
+  ],
+  "Communications": [
+    {
+      "name": "At",
+      "tags": ["mention", "sign"]
+    },
+    {
+      "name": "Bell",
+      "tags": ["notification", "clock"]
+    },
+    {
+      "name": "BellFill",
+      "tags": ["notification", "clock"]
+    },
+    {
+      "name": "BellSlash",
+      "tags": ["notification", "silenced", "clock"]
+    },
+    {
+      "name": "BellSlashFill",
+      "tags": ["notification", "silenced", "clock"]
+    },
+    {
+      "name": "Broadcast",
+      "tags": ["radio", "radio wave", "amplify", "wavelength"]
+    },
+    {
+      "name": "BroadcastPin",
+      "tags": ["radio", "radio wave", "amplify", "wavelength"]
+    },
+    {
+      "name": "Chat",
+      "tags": ["chat bubble", "text", "message"]
+    },
+    {
+      "name": "ChatDots",
+      "tags": ["chat bubble", "text", "message", "typing"]
+    },
+    {
+      "name": "ChatDotsFill",
+      "tags": ["chat bubble", "text", "message", "typing"]
+    },
+    {
+      "name": "ChatFill",
+      "tags": ["chat bubble", "text", "message"]
+    },
+    {
+      "name": "ChatHeart",
+      "tags": ["chat bubble", "text", "message", "valentine", "romance"]
+    },
+    {
+      "name": "ChatHeartFill",
+      "tags": ["chat bubble", "text", "message", "valentine", "romance"]
+    },
+    {
+      "name": "ChatLeft",
+      "tags": ["chat bubble", "text", "message"]
+    },
+    {
+      "name": "ChatLeftDots",
+      "tags": ["chat bubble", "text", "message", "typing"]
+    },
+    {
+      "name": "ChatLeftDotsFill",
+      "tags": ["chat bubble", "text", "message", "typing"]
+    },
+    {
+      "name": "ChatLeftFill",
+      "tags": ["chat bubble", "text", "message"]
+    },
+    {
+      "name": "ChatLeftHeart",
+      "tags": ["chat bubble", "text", "message", "valentine", "romance"]
+    },
+    {
+      "name": "ChatLeftHeartFill",
+      "tags": ["chat bubble", "text", "message", "valentine", "romance"]
+    },
+    {
+      "name": "ChatLeftQuote",
+      "tags": ["chat bubble", "text", "message", "quote"]
+    },
+    {
+      "name": "ChatLeftQuoteFill",
+      "tags": ["chat bubble", "text", "message", "quote"]
+    },
+    {
+      "name": "ChatLeftText",
+      "tags": ["chat bubble", "text", "message"]
+    },
+    {
+      "name": "ChatLeftTextFill",
+      "tags": ["chat bubble", "text", "message"]
+    },
+    {
+      "name": "ChatQuote",
+      "tags": ["chat bubble", "text", "message", "quote"]
+    },
+    {
+      "name": "ChatQuoteFill",
+      "tags": ["chat bubble", "text", "message", "quote"]
+    },
+    {
+      "name": "ChatRight",
+      "tags": ["chat bubble", "text", "message"]
+    },
+    {
+      "name": "ChatRightDots",
+      "tags": ["chat bubble", "text", "message", "typing"]
+    },
+    {
+      "name": "ChatRightDotsFill",
+      "tags": ["chat bubble", "text", "message", "typing"]
+    },
+    {
+      "name": "ChatRightFill",
+      "tags": ["chat bubble", "text", "message"]
+    },
+    {
+      "name": "ChatRightHeart",
+      "tags": ["chat bubble", "text", "message", "valentine", "romance"]
+    },
+    {
+      "name": "ChatRightHeartFill",
+      "tags": ["chat bubble", "text", "message", "valentine", "romance"]
+    },
+    {
+      "name": "ChatRightQuote",
+      "tags": ["chat bubble", "text", "message", "quote"]
+    },
+    {
+      "name": "ChatRightQuoteFill",
+      "tags": ["chat bubble", "text", "message", "quote"]
+    },
+    {
+      "name": "ChatRightText",
+      "tags": ["chat bubble", "text", "message"]
+    },
+    {
+      "name": "ChatRightTextFill",
+      "tags": ["chat bubble", "text", "message"]
+    },
+    {
+      "name": "ChatSquare",
+      "tags": ["chat bubble", "text", "message"]
+    },
+    {
+      "name": "ChatSquareDots",
+      "tags": ["chat bubble", "text", "message", "typing"]
+    },
+    {
+      "name": "ChatSquareDotsFill",
+      "tags": ["chat bubble", "text", "message", "typing"]
+    },
+    {
+      "name": "ChatSquareFill",
+      "tags": ["chat bubble", "text", "message"]
+    },
+    {
+      "name": "ChatSquareHeart",
+      "tags": ["chat bubble", "text", "message", "valentine", "romance"]
+    },
+    {
+      "name": "ChatSquareHeartFill",
+      "tags": ["chat bubble", "text", "message", "valentine", "romance"]
+    },
+    {
+      "name": "ChatSquareQuote",
+      "tags": ["chat bubble", "text", "message", "quote"]
+    },
+    {
+      "name": "ChatSquareQuoteFill",
+      "tags": ["chat bubble", "text", "message", "quote"]
+    },
+    {
+      "name": "ChatSquareText",
+      "tags": ["chat bubble", "text", "message"]
+    },
+    {
+      "name": "ChatSquareTextFill",
+      "tags": ["chat bubble", "text", "message"]
+    },
+    {
+      "name": "ChatText",
+      "tags": ["chat bubble", "text", "message"]
+    },
+    {
+      "name": "ChatTextFill",
+      "tags": ["chat bubble", "text", "message"]
+    },
+    {
+      "name": "Envelope",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopeAt",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopeAtFill",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopeCheck",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopeCheckFill",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopeDash",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopeDashFill",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopeExclamation",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopeExclamationFill",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopeFill",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopeHeart",
+      "tags": ["email", "message", "mail", "letter", "love", "valentine", "romance"]
+    },
+    {
+      "name": "EnvelopeHeartFill",
+      "tags": ["email", "message", "mail", "letter", "love", "valentine", "romance"]
+    },
+    {
+      "name": "EnvelopeOpen",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopeOpenFill",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopeOpenHeart",
+      "tags": ["email", "message", "mail", "letter", "love", "valentine", "romance"]
+    },
+    {
+      "name": "EnvelopeOpenHeartFill",
+      "tags": ["email", "message", "mail", "letter", "love", "valentine", "romance"]
+    },
+    {
+      "name": "EnvelopePaper",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopePaperFill",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopePaperHeart",
+      "tags": ["email", "message", "mail", "letter", "love", "valentine", "romance"]
+    },
+    {
+      "name": "EnvelopePaperHeartFill",
+      "tags": ["email", "message", "mail", "letter", "love", "valentine", "romance"]
+    },
+    {
+      "name": "EnvelopePlus",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopePlusFill",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopeSlash",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopeSlashFill",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopeX",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "EnvelopeXFill",
+      "tags": ["email", "message", "mail", "letter"]
+    },
+    {
+      "name": "Flag",
+      "tags": ["report"]
+    },
+    {
+      "name": "FlagFill",
+      "tags": ["report"]
+    },
+    {
+      "name": "Forward",
+      "tags": ["mail", "email"]
+    },
+    {
+      "name": "ForwardFill",
+      "tags": ["mail", "email"]
+    },
+    {
+      "name": "Globe",
+      "tags": ["world", "translate", "global", "international"]
+    },
+    {
+      "name": "Globe2",
+      "tags": ["world", "translate", "global", "international"]
+    },
+    {
+      "name": "Inbox",
+      "tags": ["mail", "email", "letter tray"]
+    },
+    {
+      "name": "InboxFill",
+      "tags": ["mail", "email", "letter tray"]
+    },
+    {
+      "name": "Inboxes",
+      "tags": ["mail", "email", "letter tray"]
+    },
+    {
+      "name": "InboxesFill",
+      "tags": ["mail", "email", "letter tray"]
+    },
+    {
+      "name": "QrCode",
+      "tags": ["scan"]
+    },
+    {
+      "name": "QrCodeScan",
+      "tags": ["scan"]
+    },
+    {
+      "name": "Reception0",
+      "tags": ["reception", "cellphone", "mobile", "carrier", "network", "signal"]
+    },
+    {
+      "name": "Reception1",
+      "tags": ["reception", "cellphone", "mobile", "carrier", "network", "signal"]
+    },
+    {
+      "name": "Reception2",
+      "tags": ["reception", "cellphone", "mobile", "carrier", "network", "signal"]
+    },
+    {
+      "name": "Reception3",
+      "tags": ["reception", "cellphone", "mobile", "carrier", "network", "signal"]
+    },
+    {
+      "name": "Reception4",
+      "tags": ["reception", "cellphone", "mobile", "carrier", "network", "signal"]
+    },
+    {
+      "name": "Reply",
+      "tags": ["mail", "email"]
+    },
+    {
+      "name": "ReplyAll",
+      "tags": ["mail", "email"]
+    },
+    {
+      "name": "ReplyAllFill",
+      "tags": ["mail", "email"]
+    },
+    {
+      "name": "ReplyFill",
+      "tags": ["mail", "email"]
+    },
+    {
+      "name": "Rss",
+      "tags": ["atom", "feed", "xml"]
+    },
+    {
+      "name": "RssFill",
+      "tags": ["atom", "feed", "xml"]
+    },
+    {
+      "name": "Search",
+      "tags": ["magnifying-glass", "look"]
+    },
+    {
+      "name": "SearchHeart",
+      "tags": ["magnifying-glass", "look", "love", "romance", "valentine"]
+    },
+    {
+      "name": "SearchHeartFill",
+      "tags": ["magnifying-glass", "look", "love", "romance", "valentine"]
+    },
+    {
+      "name": "Send",
+      "tags": ["message", "sending", "sent"]
+    },
+    {
+      "name": "SendCheck",
+      "tags": ["message", "sending", "sent"]
+    },
+    {
+      "name": "SendCheckFill",
+      "tags": ["message", "sending", "sent"]
+    },
+    {
+      "name": "SendDash",
+      "tags": ["message", "sending", "sent"]
+    },
+    {
+      "name": "SendDashFill",
+      "tags": ["message", "sending", "sent"]
+    },
+    {
+      "name": "SendExclamation",
+      "tags": ["message", "sending", "sent"]
+    },
+    {
+      "name": "SendExclamationFill",
+      "tags": ["message", "sending", "sent"]
+    },
+    {
+      "name": "SendFill",
+      "tags": ["message", "sending", "sent"]
+    },
+    {
+      "name": "SendPlus",
+      "tags": ["message", "sending", "sent"]
+    },
+    {
+      "name": "SendPlusFill",
+      "tags": ["message", "sending", "sent"]
+    },
+    {
+      "name": "SendSlash",
+      "tags": ["message", "sending", "sent"]
+    },
+    {
+      "name": "SendSlashFill",
+      "tags": ["message", "sending", "sent"]
+    },
+    {
+      "name": "SendX",
+      "tags": ["message", "sending", "sent"]
+    },
+    {
+      "name": "SendXFill",
+      "tags": ["message", "sending", "sent"]
+    },
+    {
+      "name": "Share",
+      "tags": ["share", "link"]
+    },
+    {
+      "name": "ShareFill",
+      "tags": ["share", "link"]
+    },
+    {
+      "name": "Telephone",
+      "tags": ["telephone", "phone", "call"]
+    },
+    {
+      "name": "TelephoneFill",
+      "tags": ["telephone", "phone", "call"]
+    },
+    {
+      "name": "TelephoneForward",
+      "tags": ["telephone", "phone", "call"]
+    },
+    {
+      "name": "TelephoneForwardFill",
+      "tags": ["telephone", "phone", "call"]
+    },
+    {
+      "name": "TelephoneInbound",
+      "tags": ["telephone", "phone", "call"]
+    },
+    {
+      "name": "TelephoneInboundFill",
+      "tags": ["telephone", "phone", "call"]
+    },
+    {
+      "name": "TelephoneMinus",
+      "tags": ["telephone", "phone", "call"]
+    },
+    {
+      "name": "TelephoneMinusFill",
+      "tags": ["telephone", "phone", "call"]
+    },
+    {
+      "name": "TelephoneOutbound",
+      "tags": ["telephone", "phone", "call"]
+    },
+    {
+      "name": "TelephoneOutboundFill",
+      "tags": ["telephone", "phone", "call"]
+    },
+    {
+      "name": "TelephonePlus",
+      "tags": ["telephone", "phone", "call"]
+    },
+    {
+      "name": "TelephonePlusFill",
+      "tags": ["telephone", "phone", "call"]
+    },
+    {
+      "name": "TelephoneX",
+      "tags": ["telephone", "phone", "call"]
+    },
+    {
+      "name": "TelephoneXFill",
+      "tags": ["telephone", "phone", "call"]
+    },
+    {
+      "name": "Translate",
+      "tags": ["translation", "languages", "language"]
+    },
+    {
+      "name": "Voicemail",
+      "tags": ["voicemail", "message", "telephone"]
+    },
+    {
+      "name": "Wifi",
+      "tags": ["internet", "network", "wireless"]
+    },
+    {
+      "name": "Wifi1",
+      "tags": ["internet", "network", "wireless"]
+    },
+    {
+      "name": "Wifi2",
+      "tags": ["internet", "network", "wireless"]
+    },
+    {
+      "name": "WifiOff",
+      "tags": ["internet", "network", "wireless"]
+    }
+  ],
+  "Badges": [
+    {
+      "name": "Badge3d",
+      "tags": ["3d", "display", "dimension"]
+    },
+    {
+      "name": "Badge3dFill",
+      "tags": ["3d", "display", "dimension"]
+    },
+    {
+      "name": "Badge4k",
+      "tags": ["4k", "display", "resolution", "retina"]
+    },
+    {
+      "name": "Badge4kFill",
+      "tags": ["4k", "display", "resolution", "retina"]
+    },
+    {
+      "name": "Badge8k",
+      "tags": ["4k", "display", "resolution", "retina"]
+    },
+    {
+      "name": "Badge8kFill",
+      "tags": ["4k", "display", "resolution", "retina"]
+    },
+    {
+      "name": "BadgeAd",
+      "tags": ["advertisement"]
+    },
+    {
+      "name": "BadgeAdFill",
+      "tags": ["advertisement"]
+    },
+    {
+      "name": "BadgeAr",
+      "tags": ["augmented", "reality", "ar"]
+    },
+    {
+      "name": "BadgeArFill",
+      "tags": ["augmented", "reality", "ar"]
+    },
+    {
+      "name": "BadgeCc",
+      "tags": ["closed captioning"]
+    },
+    {
+      "name": "BadgeCcFill",
+      "tags": ["closed captioning"]
+    },
+    {
+      "name": "BadgeHd",
+      "tags": ["display", "resolution", "high definition"]
+    },
+    {
+      "name": "BadgeHdFill",
+      "tags": ["display", "resolution", "high definition"]
+    },
+    {
+      "name": "BadgeSd",
+      "tags": ["display", "resolution", "standard definition"]
+    },
+    {
+      "name": "BadgeSdFill",
+      "tags": ["display", "resolution", "standard definition"]
+    },
+    {
+      "name": "BadgeTm",
+      "tags": ["trademark"]
+    },
+    {
+      "name": "BadgeTmFill",
+      "tags": ["trademark"]
+    },
+    {
+      "name": "BadgeVo",
+      "tags": ["voiceover", "accessibility"]
+    },
+    {
+      "name": "BadgeVoFill",
+      "tags": ["voiceover", "accessibility"]
+    },
+    {
+      "name": "BadgeVr",
+      "tags": ["virtual", "reality", "vr"]
+    },
+    {
+      "name": "BadgeVrFill",
+      "tags": ["virtual", "reality", "vr"]
+    },
+    {
+      "name": "BadgeWc",
+      "tags": ["wash closet", "wc"]
+    },
+    {
+      "name": "BadgeWcFill",
+      "tags": ["wash closet", "wc"]
+    },
+    {
+      "name": "Explicit",
+      "tags": []
+    },
+    {
+      "name": "ExplicitFill",
+      "tags": []
+    },
+    {
+      "name": "Markdown",
+      "tags": ["markdown", "md", "content", "writing"]
+    },
+    {
+      "name": "MarkdownFill",
+      "tags": ["markdown", "md", "content", "writing"]
+    },
+    {
+      "name": "PatchCheck",
+      "tags": ["verified", "checkmark", "certified"]
+    },
+    {
+      "name": "PatchCheckFill",
+      "tags": ["verified", "checkmark", "certified"]
+    },
+    {
+      "name": "PatchExclamation",
+      "tags": ["excited", "certified"]
+    },
+    {
+      "name": "PatchExclamationFill",
+      "tags": ["excited", "certified"]
+    },
+    {
+      "name": "PatchMinus",
+      "tags": []
+    },
+    {
+      "name": "PatchMinusFill",
+      "tags": []
+    },
+    {
+      "name": "PatchPlus",
+      "tags": []
+    },
+    {
+      "name": "PatchPlusFill",
+      "tags": []
+    },
+    {
+      "name": "PatchQuestion",
+      "tags": []
+    },
+    {
+      "name": "PatchQuestionFill",
+      "tags": []
+    }
+  ],
+  "Commerce": [
+    {
+      "name": "Bag",
+      "tags": ["shopping", "cart", "purchase", "buy"]
+    },
+    {
+      "name": "BagCheck",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "BagCheckFill",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "BagDash",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "BagDashFill",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "BagFill",
+      "tags": ["shopping", "cart", "purchase", "buy"]
+    },
+    {
+      "name": "BagHeart",
+      "tags": ["shopping", "cart", "purchase", "buy", "valentine", "love"]
+    },
+    {
+      "name": "BagHeartFill",
+      "tags": ["shopping", "cart", "purchase", "buy", "valentine", "love"]
+    },
+    {
+      "name": "BagPlus",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "BagPlusFill",
+      "tags": ["shopping", "add", "cart", "basket", "bag"]
+    },
+    {
+      "name": "BagX",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "BagXFill",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "Bank",
+      "tags": ["money", "finance", "banking", "market", "temple"]
+    },
+    {
+      "name": "Bank2",
+      "tags": ["money", "finance", "banking", "market", "temple"]
+    },
+    {
+      "name": "Basket",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "Basket2",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "Basket2Fill",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "Basket3",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "Basket3Fill",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "BasketFill",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "Cart",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "Cart2",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "Cart3",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "Cart4",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "CartCheck",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "CartCheckFill",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "CartDash",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "CartDashFill",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "CartFill",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "CartPlus",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "CartPlusFill",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "CartX",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "CartXFill",
+      "tags": ["shopping", "checkout", "check", "cart", "basket", "bag"]
+    },
+    {
+      "name": "Cash",
+      "tags": ["money", "bills", "funds", "wallet", "currency"]
+    },
+    {
+      "name": "CashCoin",
+      "tags": ["money", "finance", "banking", "currency"]
+    },
+    {
+      "name": "CashStack",
+      "tags": ["money", "bills", "funds", "wallet", "currency"]
+    },
+    {
+      "name": "Coin",
+      "tags": ["money", "finance", "banking", "currency"]
+    },
+    {
+      "name": "CurrencyBitcoin",
+      "tags": ["money", "finance", "crypto"]
+    },
+    {
+      "name": "CurrencyDollar",
+      "tags": ["money", "finance", "usd"]
+    },
+    {
+      "name": "CurrencyEuro",
+      "tags": ["money", "finance"]
+    },
+    {
+      "name": "CurrencyExchange",
+      "tags": ["money", "finance"]
+    },
+    {
+      "name": "CurrencyPound",
+      "tags": ["money", "finance"]
+    },
+    {
+      "name": "CurrencyRupee",
+      "tags": ["money", "finance"]
+    },
+    {
+      "name": "CurrencyYen",
+      "tags": ["money", "finance"]
+    },
+    {
+      "name": "PiggyBank",
+      "tags": ["money", "finance", "banking", "savings"]
+    },
+    {
+      "name": "PiggyBankFill",
+      "tags": ["money", "finance", "banking", "savings"]
+    },
+    {
+      "name": "Receipt",
+      "tags": ["receipt", "invoice", "sale", "purchase", "bill"]
+    },
+    {
+      "name": "ReceiptCutoff",
+      "tags": ["receipt", "invoice", "sale", "purchase", "bill"]
+    },
+    {
+      "name": "Shop",
+      "tags": ["shop", "store", "market", "marketplace", "shopping", "retail"]
+    },
+    {
+      "name": "ShopWindow",
+      "tags": ["shop", "store", "market", "marketplace", "shopping", "retail"]
+    },
+    {
+      "name": "Truck",
+      "tags": ["trucking", "shipping", "shipment", "transport", "deliver", "delivery"]
+    },
+    {
+      "name": "TruckFlatbed",
+      "tags": ["trucking", "shipping", "shipment", "transport", "deliver", "delivery"]
+    },
+    {
+      "name": "Upc",
+      "tags": ["purchase", "barcode"]
+    },
+    {
+      "name": "UpcScan",
+      "tags": ["purchase", "barcode"]
+    },
+    {
+      "name": "Wallet",
+      "tags": ["cards", "money", "funds", "cash", "payment"]
+    },
+    {
+      "name": "Wallet2",
+      "tags": ["cards", "money", "funds", "cash", "payment"]
+    },
+    {
+      "name": "WalletFill",
+      "tags": ["cards", "money", "funds", "cash", "payment"]
+    }
+  ],
+  "Real World": [
+    {
+      "name": "Balloon",
+      "tags": ["birthday"]
+    },
+    {
+      "name": "BalloonFill",
+      "tags": ["birthday"]
+    },
+    {
+      "name": "BalloonHeart",
+      "tags": ["birthday", "valentine", "love"]
+    },
+    {
+      "name": "BalloonHeartFill",
+      "tags": ["birthday", "valentine", "love"]
+    },
+    {
+      "name": "Bandaid",
+      "tags": ["bandage", "health"]
+    },
+    {
+      "name": "BandaidFill",
+      "tags": ["bandage", "health"]
+    },
+    {
+      "name": "Boombox",
+      "tags": ["music"]
+    },
+    {
+      "name": "BoomboxFill",
+      "tags": ["music"]
+    },
+    {
+      "name": "Box2",
+      "tags": ["cardboard", "package", "cube"]
+    },
+    {
+      "name": "Box2Fill",
+      "tags": ["cardboard", "package", "cube"]
+    },
+    {
+      "name": "Box2Heart",
+      "tags": ["cardboard", "package", "cube", "gift", "valentine", "love"]
+    },
+    {
+      "name": "Box2HeartFill",
+      "tags": ["cardboard", "package", "cube", "gift", "valentine", "love"]
+    },
+    {
+      "name": "Ear",
+      "tags": ["hearing", "sound", "listen"]
+    },
+    {
+      "name": "EarFill",
+      "tags": ["hearing", "sound", "listen"]
+    },
+    {
+      "name": "Fan",
+      "tags": ["fan", "vent", "airflow"]
+    },
+    {
+      "name": "Hypnotize",
+      "tags": ["hypnosis", "sleepy"]
+    },
+    {
+      "name": "Magic",
+      "tags": ["magic stick"]
+    },
+    {
+      "name": "Magnet",
+      "tags": ["magnetic"]
+    },
+    {
+      "name": "MagnetFill",
+      "tags": ["magnetic"]
+    },
+    {
+      "name": "Mortarboard",
+      "tags": ["graduation", "cap"]
+    },
+    {
+      "name": "MortarboardFill",
+      "tags": ["graduation", "cap"]
+    },
+    {
+      "name": "Postage",
+      "tags": ["stamp", "shipping"]
+    },
+    {
+      "name": "PostageFill",
+      "tags": ["mail", "stamp", "shipping"]
+    },
+    {
+      "name": "PostageHeart",
+      "tags": ["mail", "stamp", "love", "valentine", "romance"]
+    },
+    {
+      "name": "PostageHeartFill",
+      "tags": ["mail", "stamp", "love", "valentine", "romance"]
+    },
+    {
+      "name": "Postcard",
+      "tags": ["mail", "letter"]
+    },
+    {
+      "name": "PostcardFill",
+      "tags": ["mail", "letter"]
+    },
+    {
+      "name": "PostcardHeart",
+      "tags": ["mail", "letter", "love", "valentine", "romance"]
+    },
+    {
+      "name": "PostcardHeartFill",
+      "tags": ["mail", "letter", "love", "valentine", "romance"]
+    },
+    {
+      "name": "Radioactive",
+      "tags": ["radiation", "nuclear", "danger"]
+    },
+    {
+      "name": "Ticket",
+      "tags": ["tickets", "admission"]
+    },
+    {
+      "name": "TicketDetailed",
+      "tags": ["tickets", "admission"]
+    },
+    {
+      "name": "TicketDetailedFill",
+      "tags": ["tickets", "admission"]
+    },
+    {
+      "name": "TicketFill",
+      "tags": ["tickets", "admission"]
+    },
+    {
+      "name": "TicketPerforated",
+      "tags": ["tickets", "admission"]
+    },
+    {
+      "name": "TicketPerforatedFill",
+      "tags": ["tickets", "admission"]
+    },
+    {
+      "name": "YinYang",
+      "tags": ["peace"]
+    }
+  ],
+  "Miscellaneous": [
+    {
+      "name": "Bookmark",
+      "tags": ["reading", "book", "label", "tag", "category"]
+    },
+    {
+      "name": "BookmarkCheck",
+      "tags": ["reading", "book", "label", "tag", "category"]
+    },
+    {
+      "name": "BookmarkCheckFill",
+      "tags": ["reading", "book", "label", "tag", "category"]
+    },
+    {
+      "name": "BookmarkDash",
+      "tags": ["reading", "book", "label", "tag", "category"]
+    },
+    {
+      "name": "BookmarkDashFill",
+      "tags": ["reading", "book", "label", "tag", "category"]
+    },
+    {
+      "name": "BookmarkFill",
+      "tags": ["reading", "book", "label", "tag", "category"]
+    },
+    {
+      "name": "BookmarkHeart",
+      "tags": ["reading", "book", "label", "tag", "category"]
+    },
+    {
+      "name": "BookmarkHeartFill",
+      "tags": ["reading", "book", "label", "tag", "category"]
+    },
+    {
+      "name": "BookmarkPlus",
+      "tags": ["reading", "book", "label", "tag", "category"]
+    },
+    {
+      "name": "BookmarkPlusFill",
+      "tags": ["reading", "book", "label", "tag", "category"]
+    },
+    {
+      "name": "BookmarkStar",
+      "tags": ["reading", "book", "label", "tag", "category"]
+    },
+    {
+      "name": "BookmarkStarFill",
+      "tags": ["reading", "book", "label", "tag", "category"]
+    },
+    {
+      "name": "BookmarkX",
+      "tags": ["reading", "book", "label", "tag", "category"]
+    },
+    {
+      "name": "BookmarkXFill",
+      "tags": ["reading", "book", "label", "tag", "category"]
+    },
+    {
+      "name": "Bookmarks",
+      "tags": ["reading", "book", "label", "tag", "category"]
+    },
+    {
+      "name": "BookmarksFill",
+      "tags": ["reading", "book", "label", "tag", "category"]
+    },
+    {
+      "name": "Clock",
+      "tags": ["time"]
+    },
+    {
+      "name": "ClockFill",
+      "tags": ["time"]
+    },
+    {
+      "name": "ClockHistory",
+      "tags": ["time", "history"]
+    },
+    {
+      "name": "Download",
+      "tags": ["arrow", "network", "save"]
+    },
+    {
+      "name": "Incognito",
+      "tags": ["private", "investigator", "secret"]
+    },
+    {
+      "name": "Kanban",
+      "tags": ["board", "project-management"]
+    },
+    {
+      "name": "KanbanFill",
+      "tags": ["board", "project-management"]
+    },
+    {
+      "name": "LightningCharge",
+      "tags": ["weather", "storm", "thunder", "bolt"]
+    },
+    {
+      "name": "LightningChargeFill",
+      "tags": ["weather", "storm", "thunder", "bolt"]
+    },
+    {
+      "name": "Peace",
+      "tags": ["peace", "love"]
+    },
+    {
+      "name": "PeaceFill",
+      "tags": ["peace", "love"]
+    },
+    {
+      "name": "Puzzle",
+      "tags": ["puzzle", "piece"]
+    },
+    {
+      "name": "PuzzleFill",
+      "tags": ["puzzle", "piece"]
+    },
+    {
+      "name": "Upload",
+      "tags": ["arrow", "network"]
+    }
+  ],
+  "Box arrows": [
+    {
+      "name": "BoxArrowDown",
+      "tags": ["arrow", "download", "save"]
+    },
+    {
+      "name": "BoxArrowDownLeft",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "BoxArrowDownRight",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "BoxArrowInDown",
+      "tags": ["arrow", "upload"]
+    },
+    {
+      "name": "BoxArrowInDownLeft",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "BoxArrowInDownRight",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "BoxArrowInLeft",
+      "tags": ["arrow", "login", "signin", "enter"]
+    },
+    {
+      "name": "BoxArrowInRight",
+      "tags": ["arrow", "login", "signin", "enter"]
+    },
+    {
+      "name": "BoxArrowInUp",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "BoxArrowInUpLeft",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "BoxArrowInUpRight",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "BoxArrowLeft",
+      "tags": ["arrow", "logout", "signout", "exit"]
+    },
+    {
+      "name": "BoxArrowRight",
+      "tags": ["arrow", "logout", "signout", "exit"]
+    },
+    {
+      "name": "BoxArrowUp",
+      "tags": ["arrow"]
+    },
+    {
+      "name": "BoxArrowUpLeft",
+      "tags": ["arrow", "external link"]
+    },
+    {
+      "name": "BoxArrowUpRight",
+      "tags": ["arrow", "external link"]
+    }
+  ],
+  "Tools": [
+    {
+      "name": "Brush",
+      "tags": ["paint", "art"]
+    },
+    {
+      "name": "BrushFill",
+      "tags": ["paint", "art"]
+    },
+    {
+      "name": "Bucket",
+      "tags": ["tool", "pail"]
+    },
+    {
+      "name": "BucketFill",
+      "tags": ["tool", "pail"]
+    },
+    {
+      "name": "Gear",
+      "tags": ["tool", "settings", "preferences"]
+    },
+    {
+      "name": "GearFill",
+      "tags": ["tool", "settings", "preferences"]
+    },
+    {
+      "name": "GearWide",
+      "tags": ["tool", "settings", "preferences"]
+    },
+    {
+      "name": "GearWideConnected",
+      "tags": ["tool", "settings", "preferences"]
+    },
+    {
+      "name": "Hammer",
+      "tags": ["tool"]
+    },
+    {
+      "name": "Nut",
+      "tags": ["nut", "bolt", "hexagon", "tools"]
+    },
+    {
+      "name": "NutFill",
+      "tags": ["nut", "bolt", "hexagon", "tools"]
+    },
+    {
+      "name": "Pen",
+      "tags": ["edit", "write", "ballpoint"]
+    },
+    {
+      "name": "PenFill",
+      "tags": ["edit", "write", "ballpoint"]
+    },
+    {
+      "name": "Pencil",
+      "tags": ["edit", "write"]
+    },
+    {
+      "name": "PencilFill",
+      "tags": ["edit", "write"]
+    },
+    {
+      "name": "PencilSquare",
+      "tags": ["edit", "write"]
+    },
+    {
+      "name": "Screwdriver",
+      "tags": ["tool"]
+    },
+    {
+      "name": "Tools",
+      "tags": ["tool", "wrench", "screwdriver"]
+    },
+    {
+      "name": "Wrench",
+      "tags": ["tool"]
+    },
+    {
+      "name": "WrenchAdjustable",
+      "tags": ["tool"]
+    },
+    {
+      "name": "WrenchAdjustableCircle",
+      "tags": ["tool"]
+    },
+    {
+      "name": "WrenchAdjustableCircleFill",
+      "tags": ["tool"]
+    }
+  ],
+  "Buildings": [
+    {
+      "name": "Building",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingAdd",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingCheck",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingDash",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingDown",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingExclamation",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingFill",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingFillAdd",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingFillCheck",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingFillDash",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingFillDown",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingFillExclamation",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingFillGear",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingFillLock",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingFillSlash",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingFillUp",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingFillX",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingGear",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingLock",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingSlash",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingUp",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingX",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "Buildings",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    },
+    {
+      "name": "BuildingsFill",
+      "tags": ["company", "enterprise", "organization", "office", "business"]
+    }
+  ],
+  "Geo": [
+    {
+      "name": "Bullseye",
+      "tags": ["target"]
+    },
+    {
+      "name": "Compass",
+      "tags": ["direction", "map", "location"]
+    },
+    {
+      "name": "CompassFill",
+      "tags": ["direction", "map", "location"]
+    },
+    {
+      "name": "Cursor",
+      "tags": ["pointer"]
+    },
+    {
+      "name": "CursorFill",
+      "tags": ["pointer"]
+    },
+    {
+      "name": "Geo",
+      "tags": ["geography", "map", "pin", "location"]
+    },
+    {
+      "name": "GeoAlt",
+      "tags": ["geography", "map", "pin", "location"]
+    },
+    {
+      "name": "GeoAltFill",
+      "tags": ["geography", "map", "pin", "location"]
+    },
+    {
+      "name": "GeoFill",
+      "tags": ["geography", "map", "pin", "location"]
+    },
+    {
+      "name": "GlobeAmericas",
+      "tags": ["geography", "earth", "world", "map"]
+    },
+    {
+      "name": "GlobeAsiaAustralia",
+      "tags": ["geography", "earth", "world", "map"]
+    },
+    {
+      "name": "GlobeCentralSouthAsia",
+      "tags": ["geography", "earth", "world", "map"]
+    },
+    {
+      "name": "GlobeEuropeAfrica",
+      "tags": ["geography", "earth", "world", "map"]
+    },
+    {
+      "name": "Map",
+      "tags": ["geography", "directions", "location"]
+    },
+    {
+      "name": "MapFill",
+      "tags": ["geography", "directions", "location"]
+    },
+    {
+      "name": "PinMap",
+      "tags": ["geography", "map", "pin", "location"]
+    },
+    {
+      "name": "PinMapFill",
+      "tags": ["geography", "map", "pin", "location"]
+    }
+  ],
+  "Date and time": [
+    {
+      "name": "Calendar",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar2",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar2Check",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar2CheckFill",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar2Date",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar2DateFill",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar2Day",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar2DayFill",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar2Event",
+      "tags": ["date", "time", "event", "invite"]
+    },
+    {
+      "name": "Calendar2EventFill",
+      "tags": ["date", "time", "event", "invite"]
+    },
+    {
+      "name": "Calendar2Fill",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar2Heart",
+      "tags": ["date", "time", "month", "valentine", "date"]
+    },
+    {
+      "name": "Calendar2HeartFill",
+      "tags": ["date", "time", "month", "valentine", "date"]
+    },
+    {
+      "name": "Calendar2Minus",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar2MinusFill",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar2Month",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar2MonthFill",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar2Plus",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar2PlusFill",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar2Range",
+      "tags": ["dates", "timeline", "duration"]
+    },
+    {
+      "name": "Calendar2RangeFill",
+      "tags": ["dates", "timeline", "duration"]
+    },
+    {
+      "name": "Calendar2Week",
+      "tags": ["dates", "timeline", "duration", "week"]
+    },
+    {
+      "name": "Calendar2WeekFill",
+      "tags": ["dates", "timeline", "duration", "week"]
+    },
+    {
+      "name": "Calendar2X",
+      "tags": ["date", "time", "month", "remove", "delete"]
+    },
+    {
+      "name": "Calendar2XFill",
+      "tags": ["date", "time", "month", "remove", "delete"]
+    },
+    {
+      "name": "Calendar3",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar3Event",
+      "tags": ["date", "time", "event", "invite"]
+    },
+    {
+      "name": "Calendar3EventFill",
+      "tags": ["date", "time", "event", "invite"]
+    },
+    {
+      "name": "Calendar3Fill",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar3Range",
+      "tags": ["dates", "timeline", "duration"]
+    },
+    {
+      "name": "Calendar3RangeFill",
+      "tags": ["dates", "timeline", "duration"]
+    },
+    {
+      "name": "Calendar3Week",
+      "tags": ["dates", "timeline", "duration", "week"]
+    },
+    {
+      "name": "Calendar3WeekFill",
+      "tags": ["dates", "timeline", "duration", "week"]
+    },
+    {
+      "name": "Calendar4",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "Calendar4Event",
+      "tags": ["date", "time", "event", "invite"]
+    },
+    {
+      "name": "Calendar4Range",
+      "tags": ["dates", "timeline", "duration"]
+    },
+    {
+      "name": "Calendar4Week",
+      "tags": ["dates", "timeline", "duration", "week"]
+    },
+    {
+      "name": "CalendarCheck",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "CalendarCheckFill",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "CalendarDate",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "CalendarDateFill",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "CalendarDay",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "CalendarDayFill",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "CalendarEvent",
+      "tags": ["date", "time", "event", "invite"]
+    },
+    {
+      "name": "CalendarEventFill",
+      "tags": ["date", "time", "event", "invite"]
+    },
+    {
+      "name": "CalendarFill",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "CalendarHeart",
+      "tags": ["date", "time", "month", "valentine", "date"]
+    },
+    {
+      "name": "CalendarHeartFill",
+      "tags": ["date", "time", "month", "valentine", "date"]
+    },
+    {
+      "name": "CalendarMinus",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "CalendarMinusFill",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "CalendarMonth",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "CalendarMonthFill",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "CalendarPlus",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "CalendarPlusFill",
+      "tags": ["date", "time", "month"]
+    },
+    {
+      "name": "CalendarRange",
+      "tags": ["dates", "timeline", "duration"]
+    },
+    {
+      "name": "CalendarRangeFill",
+      "tags": ["dates", "timeline", "duration"]
+    },
+    {
+      "name": "CalendarWeek",
+      "tags": ["dates", "timeline", "duration", "week"]
+    },
+    {
+      "name": "CalendarWeekFill",
+      "tags": ["dates", "timeline", "duration", "week"]
+    },
+    {
+      "name": "CalendarX",
+      "tags": ["date", "time", "month", "remove", "delete"]
+    },
+    {
+      "name": "CalendarXFill",
+      "tags": ["date", "time", "month", "remove", "delete"]
+    }
+  ],
+  "Medical": [
+    {
+      "name": "Capsule",
+      "tags": ["rx", "pills", "capsules", "medicine"]
+    },
+    {
+      "name": "CapsulePill",
+      "tags": ["rx", "pills", "capsules", "medicine"]
+    },
+    {
+      "name": "Clipboard2Pulse",
+      "tags": ["copy", "paste", "heartrate"]
+    },
+    {
+      "name": "Clipboard2PulseFill",
+      "tags": ["copy", "paste", "heartrate"]
+    },
+    {
+      "name": "HeartPulse",
+      "tags": ["heartbeat"]
+    },
+    {
+      "name": "HeartPulseFill",
+      "tags": ["heartbeat"]
+    },
+    {
+      "name": "Hospital",
+      "tags": ["health", "emergency room"]
+    },
+    {
+      "name": "HospitalFill",
+      "tags": ["health", "emergency room"]
+    },
+    {
+      "name": "Lungs",
+      "tags": ["medicine", "health", "breathing"]
+    },
+    {
+      "name": "LungsFill",
+      "tags": ["medicine", "health", "breathing"]
+    },
+    {
+      "name": "Prescription",
+      "tags": ["rx", "pills", "capsules", "medicine"]
+    },
+    {
+      "name": "Prescription2",
+      "tags": ["rx", "pills", "capsules", "medicine"]
+    },
+    {
+      "name": "Virus",
+      "tags": ["covid", "viral"]
+    },
+    {
+      "name": "Virus2",
+      "tags": ["covid", "viral"]
+    }
+  ],
+  "Carets": [
+    {
+      "name": "CaretDown",
+      "tags": ["caret", "arrow", "triangle"]
+    },
+    {
+      "name": "CaretDownFill",
+      "tags": ["caret", "arrow", "triangle"]
+    },
+    {
+      "name": "CaretDownSquare",
+      "tags": ["caret", "arrow", "triangle"]
+    },
+    {
+      "name": "CaretDownSquareFill",
+      "tags": ["caret", "arrow", "triangle"]
+    },
+    {
+      "name": "CaretLeft",
+      "tags": ["caret", "arrow", "triangle"]
+    },
+    {
+      "name": "CaretLeftFill",
+      "tags": ["caret", "arrow", "triangle"]
+    },
+    {
+      "name": "CaretLeftSquare",
+      "tags": ["caret", "arrow", "triangle"]
+    },
+    {
+      "name": "CaretLeftSquareFill",
+      "tags": ["caret", "arrow", "triangle"]
+    },
+    {
+      "name": "CaretRight",
+      "tags": ["caret", "arrow", "triangle"]
+    },
+    {
+      "name": "CaretRightFill",
+      "tags": ["caret", "arrow", "triangle"]
+    },
+    {
+      "name": "CaretRightSquare",
+      "tags": ["caret", "arrow", "triangle"]
+    },
+    {
+      "name": "CaretRightSquareFill",
+      "tags": ["caret", "arrow", "triangle"]
+    },
+    {
+      "name": "CaretUp",
+      "tags": ["caret", "arrow", "triangle"]
+    },
+    {
+      "name": "CaretUpFill",
+      "tags": ["caret", "arrow", "triangle"]
+    },
+    {
+      "name": "CaretUpSquare",
+      "tags": ["caret", "arrow", "triangle"]
+    },
+    {
+      "name": "CaretUpSquareFill",
+      "tags": ["caret", "arrow", "triangle"]
+    }
+  ],
+  "Alerts, warnings, and signs": [
+    {
+      "name": "Check",
+      "tags": ["checkmark", "confirm", "done"]
+    },
+    {
+      "name": "CheckCircle",
+      "tags": ["checkmark", "confirm", "done"]
+    },
+    {
+      "name": "CheckCircleFill",
+      "tags": ["checkmark", "confirm", "done"]
+    },
+    {
+      "name": "CheckLg",
+      "tags": ["checkmark", "confirm", "done"]
+    },
+    {
+      "name": "CheckSquare",
+      "tags": ["checkmark", "confirm", "done"]
+    },
+    {
+      "name": "CheckSquareFill",
+      "tags": ["checkmark", "confirm", "done"]
+    },
+    {
+      "name": "Dash",
+      "tags": ["minus"]
+    },
+    {
+      "name": "DashCircle",
+      "tags": ["minus"]
+    },
+    {
+      "name": "DashCircleDotted",
+      "tags": ["minus"]
+    },
+    {
+      "name": "DashCircleFill",
+      "tags": ["minus"]
+    },
+    {
+      "name": "DashLg",
+      "tags": ["minus"]
+    },
+    {
+      "name": "DashSquare",
+      "tags": ["minus"]
+    },
+    {
+      "name": "DashSquareDotted",
+      "tags": ["minus"]
+    },
+    {
+      "name": "DashSquareFill",
+      "tags": ["minus"]
+    },
+    {
+      "name": "Exclamation",
+      "tags": ["alert", "warning"]
+    },
+    {
+      "name": "ExclamationCircle",
+      "tags": ["alert", "warning"]
+    },
+    {
+      "name": "ExclamationCircleFill",
+      "tags": ["alert", "warning"]
+    },
+    {
+      "name": "ExclamationDiamond",
+      "tags": ["alert", "warning"]
+    },
+    {
+      "name": "ExclamationDiamondFill",
+      "tags": ["alert", "warning"]
+    },
+    {
+      "name": "ExclamationLg",
+      "tags": ["alert", "warning"]
+    },
+    {
+      "name": "ExclamationOctagon",
+      "tags": ["alert", "warning"]
+    },
+    {
+      "name": "ExclamationOctagonFill",
+      "tags": ["alert", "warning"]
+    },
+    {
+      "name": "ExclamationSquare",
+      "tags": ["alert", "warning"]
+    },
+    {
+      "name": "ExclamationSquareFill",
+      "tags": ["alert", "warning"]
+    },
+    {
+      "name": "ExclamationTriangle",
+      "tags": ["alert", "warning"]
+    },
+    {
+      "name": "ExclamationTriangleFill",
+      "tags": ["alert", "warning"]
+    },
+    {
+      "name": "Info",
+      "tags": ["information", "help"]
+    },
+    {
+      "name": "InfoCircle",
+      "tags": ["information", "help"]
+    },
+    {
+      "name": "InfoCircleFill",
+      "tags": ["information", "help"]
+    },
+    {
+      "name": "InfoLg",
+      "tags": ["information", "help"]
+    },
+    {
+      "name": "InfoSquare",
+      "tags": ["information", "help"]
+    },
+    {
+      "name": "InfoSquareFill",
+      "tags": ["information", "help"]
+    },
+    {
+      "name": "Plus",
+      "tags": ["add", "new"]
+    },
+    {
+      "name": "PlusCircle",
+      "tags": ["add", "new"]
+    },
+    {
+      "name": "PlusCircleDotted",
+      "tags": ["add", "new"]
+    },
+    {
+      "name": "PlusCircleFill",
+      "tags": ["add", "new"]
+    },
+    {
+      "name": "PlusLg",
+      "tags": ["add", "new"]
+    },
+    {
+      "name": "PlusSquare",
+      "tags": ["add", "new"]
+    },
+    {
+      "name": "PlusSquareDotted",
+      "tags": ["add", "new"]
+    },
+    {
+      "name": "PlusSquareFill",
+      "tags": ["add", "new"]
+    },
+    {
+      "name": "Question",
+      "tags": ["help"]
+    },
+    {
+      "name": "QuestionCircle",
+      "tags": ["help"]
+    },
+    {
+      "name": "QuestionCircleFill",
+      "tags": ["help"]
+    },
+    {
+      "name": "QuestionDiamond",
+      "tags": ["help"]
+    },
+    {
+      "name": "QuestionDiamondFill",
+      "tags": ["help"]
+    },
+    {
+      "name": "QuestionLg",
+      "tags": ["help"]
+    },
+    {
+      "name": "QuestionOctagon",
+      "tags": ["help"]
+    },
+    {
+      "name": "QuestionOctagonFill",
+      "tags": ["help"]
+    },
+    {
+      "name": "QuestionSquare",
+      "tags": ["help"]
+    },
+    {
+      "name": "QuestionSquareFill",
+      "tags": ["help"]
+    },
+    {
+      "name": "Slash",
+      "tags": ["shape", "stop", "ban", "no"]
+    },
+    {
+      "name": "SlashCircle",
+      "tags": ["shape", "stop", "ban", "no"]
+    },
+    {
+      "name": "SlashCircleFill",
+      "tags": ["shape", "stop", "ban", "no"]
+    },
+    {
+      "name": "SlashLg",
+      "tags": ["shape", "stop", "ban", "no"]
+    },
+    {
+      "name": "SlashSquare",
+      "tags": ["shape", "stop", "ban", "no"]
+    },
+    {
+      "name": "SlashSquareFill",
+      "tags": ["shape", "stop", "ban", "no"]
+    },
+    {
+      "name": "X",
+      "tags": ["x", "delete", "remove", "reset", "clear", "cancel", "close", "exit"]
+    },
+    {
+      "name": "XCircle",
+      "tags": ["x", "delete", "remove", "reset", "clear", "cancel", "close", "exit"]
+    },
+    {
+      "name": "XCircleFill",
+      "tags": ["x", "delete", "remove", "reset", "clear", "cancel", "close", "exit"]
+    },
+    {
+      "name": "XDiamond",
+      "tags": ["x", "delete", "reset", "clear", "cancel", "close", "exit"]
+    },
+    {
+      "name": "XDiamondFill",
+      "tags": ["x", "delete", "reset", "clear", "cancel", "close", "exit"]
+    },
+    {
+      "name": "XLg",
+      "tags": ["x", "delete", "remove", "reset", "clear", "cancel", "close", "exit"]
+    },
+    {
+      "name": "XOctagon",
+      "tags": ["x", "delete", "remove", "reset", "clear", "cancel", "close", "exit"]
+    },
+    {
+      "name": "XOctagonFill",
+      "tags": ["x", "delete", "remove", "reset", "clear", "cancel", "close", "exit"]
+    },
+    {
+      "name": "XSquare",
+      "tags": ["x", "delete", "remove", "reset", "clear", "cancel", "close", "exit"]
+    },
+    {
+      "name": "XSquareFill",
+      "tags": ["x", "delete", "remove", "reset", "clear", "cancel", "close", "exit"]
+    }
+  ],
+  "Chevrons": [
+    {
+      "name": "ChevronBarContract",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronBarDown",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronBarExpand",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronBarLeft",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronBarRight",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronBarUp",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronCompactDown",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronCompactLeft",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronCompactRight",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronCompactUp",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronContract",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronDoubleDown",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronDoubleLeft",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronDoubleRight",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronDoubleUp",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronDown",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronLeft",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronRight",
+      "tags": ["chevron"]
+    },
+    {
+      "name": "ChevronUp",
+      "tags": ["chevron"]
+    }
+  ],
+  "Clouds": [
+    {
+      "name": "Cloud",
+      "tags": ["weather"]
+    },
+    {
+      "name": "CloudArrowDown",
+      "tags": ["download"]
+    },
+    {
+      "name": "CloudArrowDownFill",
+      "tags": ["download"]
+    },
+    {
+      "name": "CloudArrowUp",
+      "tags": ["upload"]
+    },
+    {
+      "name": "CloudArrowUpFill",
+      "tags": ["upload"]
+    },
+    {
+      "name": "CloudCheck",
+      "tags": ["checkmark"]
+    },
+    {
+      "name": "CloudCheckFill",
+      "tags": ["checkmark"]
+    },
+    {
+      "name": "CloudDownload",
+      "tags": ["arrow", "save"]
+    },
+    {
+      "name": "CloudDownloadFill",
+      "tags": ["arrow", "save"]
+    },
+    {
+      "name": "CloudFill",
+      "tags": ["weather"]
+    },
+    {
+      "name": "CloudMinus",
+      "tags": ["subtract"]
+    },
+    {
+      "name": "CloudMinusFill",
+      "tags": ["subtract"]
+    },
+    {
+      "name": "CloudPlus",
+      "tags": ["add", "new", "upload"]
+    },
+    {
+      "name": "CloudPlusFill",
+      "tags": ["add", "new", "upload"]
+    },
+    {
+      "name": "CloudSlash",
+      "tags": ["cloud"]
+    },
+    {
+      "name": "CloudSlashFill",
+      "tags": ["cloud"]
+    },
+    {
+      "name": "CloudUpload",
+      "tags": ["cloud"]
+    },
+    {
+      "name": "CloudUploadFill",
+      "tags": ["cloud"]
+    }
+  ],
+  "Weather": [
+    {
+      "name": "CloudDrizzle",
+      "tags": ["storm", "rain"]
+    },
+    {
+      "name": "CloudDrizzleFill",
+      "tags": ["storm", "rain"]
+    },
+    {
+      "name": "CloudFog",
+      "tags": ["foggy"]
+    },
+    {
+      "name": "CloudFog2",
+      "tags": ["foggy"]
+    },
+    {
+      "name": "CloudFog2Fill",
+      "tags": ["foggy"]
+    },
+    {
+      "name": "CloudFogFill",
+      "tags": ["foggy"]
+    },
+    {
+      "name": "CloudHail",
+      "tags": ["storm"]
+    },
+    {
+      "name": "CloudHailFill",
+      "tags": ["storm"]
+    },
+    {
+      "name": "CloudHaze",
+      "tags": ["smog"]
+    },
+    {
+      "name": "CloudHaze2",
+      "tags": ["smog"]
+    },
+    {
+      "name": "CloudHaze2Fill",
+      "tags": ["smog"]
+    },
+    {
+      "name": "CloudHazeFill",
+      "tags": ["smog"]
+    },
+    {
+      "name": "CloudLightning",
+      "tags": ["thunder", "storm"]
+    },
+    {
+      "name": "CloudLightningFill",
+      "tags": ["thunder", "storm"]
+    },
+    {
+      "name": "CloudLightningRain",
+      "tags": ["thunder", "storm"]
+    },
+    {
+      "name": "CloudLightningRainFill",
+      "tags": ["thunder", "storm"]
+    },
+    {
+      "name": "CloudMoon",
+      "tags": ["cloudy", "overcast"]
+    },
+    {
+      "name": "CloudMoonFill",
+      "tags": ["cloudy", "overcast"]
+    },
+    {
+      "name": "CloudRain",
+      "tags": ["cloud", "rainstorm", "storm"]
+    },
+    {
+      "name": "CloudRainFill",
+      "tags": ["cloud", "rainstorm", "storm"]
+    },
+    {
+      "name": "CloudRainHeavy",
+      "tags": ["cloud", "rainstorm", "storm"]
+    },
+    {
+      "name": "CloudRainHeavyFill",
+      "tags": ["cloud", "rainstorm", "storm"]
+    },
+    {
+      "name": "CloudSleet",
+      "tags": ["cloud", "blizzard", "flurries"]
+    },
+    {
+      "name": "CloudSleetFill",
+      "tags": ["cloud", "blizzard", "flurries"]
+    },
+    {
+      "name": "CloudSnow",
+      "tags": ["cloud", "blizzard", "flurries"]
+    },
+    {
+      "name": "CloudSnowFill",
+      "tags": ["cloud", "blizzard", "flurries"]
+    },
+    {
+      "name": "CloudSun",
+      "tags": ["cloudy", "overcast"]
+    },
+    {
+      "name": "CloudSunFill",
+      "tags": ["cloudy", "overcast"]
+    },
+    {
+      "name": "Clouds",
+      "tags": ["clouds", "overcast"]
+    },
+    {
+      "name": "CloudsFill",
+      "tags": ["clouds", "overcast"]
+    },
+    {
+      "name": "Cloudy",
+      "tags": ["clouds", "overcast"]
+    },
+    {
+      "name": "CloudyFill",
+      "tags": ["clouds", "overcast"]
+    },
+    {
+      "name": "Hurricane",
+      "tags": ["storm"]
+    },
+    {
+      "name": "Lightning",
+      "tags": ["storm", "thunder", "bolt"]
+    },
+    {
+      "name": "LightningFill",
+      "tags": ["storm", "thunder", "bolt"]
+    },
+    {
+      "name": "Moisture",
+      "tags": ["water", "droplets"]
+    },
+    {
+      "name": "MoonFill",
+      "tags": ["night", "sky"]
+    },
+    {
+      "name": "MoonStars",
+      "tags": ["night", "sky"]
+    },
+    {
+      "name": "MoonStarsFill",
+      "tags": ["night", "sky"]
+    },
+    {
+      "name": "Rainbow",
+      "tags": ["colors", "arches"]
+    },
+    {
+      "name": "Snow",
+      "tags": ["blizzard", "flurries"]
+    },
+    {
+      "name": "Snow2",
+      "tags": ["blizzard", "flurries"]
+    },
+    {
+      "name": "Snow3",
+      "tags": ["blizzard", "flurries"]
+    },
+    {
+      "name": "Stars",
+      "tags": ["clear", "skies", "night"]
+    },
+    {
+      "name": "Sun",
+      "tags": ["solar", "weather"]
+    },
+    {
+      "name": "SunFill",
+      "tags": ["solar", "weather"]
+    },
+    {
+      "name": "Sunrise",
+      "tags": ["dawn"]
+    },
+    {
+      "name": "SunriseFill",
+      "tags": ["dawn"]
+    },
+    {
+      "name": "Sunset",
+      "tags": ["dusk"]
+    },
+    {
+      "name": "SunsetFill",
+      "tags": ["dusk"]
+    },
+    {
+      "name": "ThermometerHalf",
+      "tags": ["temperature", "weather"]
+    },
+    {
+      "name": "ThermometerHigh",
+      "tags": ["temperature", "weather"]
+    },
+    {
+      "name": "ThermometerLow",
+      "tags": ["temperature", "weather"]
+    },
+    {
+      "name": "ThermometerSnow",
+      "tags": ["temperature", "weather"]
+    },
+    {
+      "name": "ThermometerSun",
+      "tags": ["temperature", "weather"]
+    },
+    {
+      "name": "Tornado",
+      "tags": ["wind"]
+    },
+    {
+      "name": "TropicalStorm",
+      "tags": ["hurricane"]
+    },
+    {
+      "name": "Tsunami",
+      "tags": ["wave"]
+    },
+    {
+      "name": "Umbrella",
+      "tags": ["rain"]
+    },
+    {
+      "name": "UmbrellaFill",
+      "tags": ["rain"]
+    },
+    {
+      "name": "Water",
+      "tags": ["waves", "levels"]
+    },
+    {
+      "name": "Wind",
+      "tags": ["windy", "breeze"]
+    }
+  ],
+  "Layout": [
+    {
+      "name": "Columns",
+      "tags": ["grid", "layout"]
+    },
+    {
+      "name": "ColumnsGap",
+      "tags": ["grid", "layout"]
+    },
+    {
+      "name": "Grid",
+      "tags": ["grid", "layout"]
+    },
+    {
+      "name": "Grid1x2",
+      "tags": ["grid", "layout"]
+    },
+    {
+      "name": "Grid1x2Fill",
+      "tags": ["grid", "layout"]
+    },
+    {
+      "name": "Grid3x2",
+      "tags": ["grid", "layout"]
+    },
+    {
+      "name": "Grid3x2Gap",
+      "tags": ["grid", "layout"]
+    },
+    {
+      "name": "Grid3x2GapFill",
+      "tags": ["grid", "layout"]
+    },
+    {
+      "name": "Grid3x3",
+      "tags": ["grid", "layout"]
+    },
+    {
+      "name": "Grid3x3Gap",
+      "tags": ["grid", "layout"]
+    },
+    {
+      "name": "Grid3x3GapFill",
+      "tags": ["grid", "layout"]
+    },
+    {
+      "name": "GridFill",
+      "tags": ["grid", "layout"]
+    },
+    {
+      "name": "LayoutSidebar",
+      "tags": ["grid", "layout", "sidebar"]
+    },
+    {
+      "name": "LayoutSidebarInset",
+      "tags": ["layout", "columns"]
+    },
+    {
+      "name": "LayoutSidebarInsetReverse",
+      "tags": ["layout", "columns"]
+    },
+    {
+      "name": "LayoutSidebarReverse",
+      "tags": ["grid", "layout", "sidebar"]
+    },
+    {
+      "name": "LayoutSplit",
+      "tags": ["grid", "layout", "sidebar"]
+    },
+    {
+      "name": "LayoutTextSidebar",
+      "tags": ["layout", "columns"]
+    },
+    {
+      "name": "LayoutTextSidebarReverse",
+      "tags": ["layout", "columns"]
+    },
+    {
+      "name": "LayoutTextWindow",
+      "tags": ["layout", "columns"]
+    },
+    {
+      "name": "LayoutTextWindowReverse",
+      "tags": ["layout", "columns"]
+    },
+    {
+      "name": "LayoutThreeColumns",
+      "tags": ["layout", "columns"]
+    },
+    {
+      "name": "LayoutWtf",
+      "tags": ["layout", "broken"]
+    },
+    {
+      "name": "Window",
+      "tags": ["app", "application"]
+    }
+  ],
+  "Entertainment": [
+    {
+      "name": "Dice1",
+      "tags": ["dice", "die", "games", "gaming", "gambling"]
+    },
+    {
+      "name": "Dice1Fill",
+      "tags": ["dice", "die", "games", "gaming", "gambling"]
+    },
+    {
+      "name": "Dice2",
+      "tags": ["dice", "die", "games", "gaming", "gambling"]
+    },
+    {
+      "name": "Dice2Fill",
+      "tags": ["dice", "die", "games", "gaming", "gambling"]
+    },
+    {
+      "name": "Dice3",
+      "tags": ["dice", "die", "games", "gaming", "gambling"]
+    },
+    {
+      "name": "Dice3Fill",
+      "tags": ["dice", "die", "games", "gaming", "gambling"]
+    },
+    {
+      "name": "Dice4",
+      "tags": ["dice", "die", "games", "gaming", "gambling"]
+    },
+    {
+      "name": "Dice4Fill",
+      "tags": ["dice", "die", "games", "gaming", "gambling"]
+    },
+    {
+      "name": "Dice5",
+      "tags": ["dice", "die", "games", "gaming", "gambling"]
+    },
+    {
+      "name": "Dice5Fill",
+      "tags": ["dice", "die", "games", "gaming", "gambling"]
+    },
+    {
+      "name": "Dice6",
+      "tags": ["dice", "die", "games", "gaming", "gambling"]
+    },
+    {
+      "name": "Dice6Fill",
+      "tags": ["dice", "die", "games", "gaming", "gambling"]
+    },
+    {
+      "name": "Dpad",
+      "tags": ["gaming", "controller", "direction"]
+    },
+    {
+      "name": "DpadFill",
+      "tags": ["gaming", "controller", "direction"]
+    },
+    {
+      "name": "Joystick",
+      "tags": ["gaming", "game", "video games"]
+    },
+    {
+      "name": "SuitClub",
+      "tags": ["card", "cards", "suit", "deck", "gambling"]
+    },
+    {
+      "name": "SuitClubFill",
+      "tags": ["card", "cards", "suit", "deck", "gambling"]
+    },
+    {
+      "name": "SuitDiamond",
+      "tags": ["card", "cards", "suit", "deck", "gambling"]
+    },
+    {
+      "name": "SuitDiamondFill",
+      "tags": ["card", "cards", "suit", "deck", "gambling"]
+    },
+    {
+      "name": "SuitHeart",
+      "tags": ["card", "cards", "suit", "deck", "gambling"]
+    },
+    {
+      "name": "SuitHeartFill",
+      "tags": ["card", "cards", "suit", "deck", "gambling"]
+    },
+    {
+      "name": "SuitSpade",
+      "tags": ["card", "cards", "suit", "deck", "gambling"]
+    },
+    {
+      "name": "SuitSpadeFill",
+      "tags": ["card", "cards", "suit", "deck", "gambling"]
+    }
+  ],
+  "Emoji": [
+    {
+      "name": "EmojiAngry",
+      "tags": ["emoticon", "anger", "upset"]
+    },
+    {
+      "name": "EmojiAngryFill",
+      "tags": ["emoticon", "anger", "upset"]
+    },
+    {
+      "name": "EmojiDizzy",
+      "tags": ["emoticon"]
+    },
+    {
+      "name": "EmojiDizzyFill",
+      "tags": ["emoticon"]
+    },
+    {
+      "name": "EmojiExpressionless",
+      "tags": ["emoticon", "neutral", "unphased"]
+    },
+    {
+      "name": "EmojiExpressionlessFill",
+      "tags": ["emoticon", "neutral", "unphased"]
+    },
+    {
+      "name": "EmojiFrown",
+      "tags": ["emoticon", "sad"]
+    },
+    {
+      "name": "EmojiFrownFill",
+      "tags": ["emoticon", "sad"]
+    },
+    {
+      "name": "EmojiHeartEyes",
+      "tags": ["emoticon", "heart", "love"]
+    },
+    {
+      "name": "EmojiHeartEyesFill",
+      "tags": ["emoticon", "heart", "love"]
+    },
+    {
+      "name": "EmojiKiss",
+      "tags": ["emoticon", "heart", "love"]
+    },
+    {
+      "name": "EmojiKissFill",
+      "tags": ["emoticon", "heart", "love"]
+    },
+    {
+      "name": "EmojiLaughing",
+      "tags": ["emoticon", "happy"]
+    },
+    {
+      "name": "EmojiLaughingFill",
+      "tags": ["emoticon", "happy"]
+    },
+    {
+      "name": "EmojiNeutral",
+      "tags": ["emoticon", "expressionless"]
+    },
+    {
+      "name": "EmojiNeutralFill",
+      "tags": ["emoticon", "expressionless"]
+    },
+    {
+      "name": "EmojiSmile",
+      "tags": ["emoticon", "happy"]
+    },
+    {
+      "name": "EmojiSmileFill",
+      "tags": ["emoticon", "happy"]
+    },
+    {
+      "name": "EmojiSmileUpsideDown",
+      "tags": ["emoticon", "sarcasm"]
+    },
+    {
+      "name": "EmojiSmileUpsideDownFill",
+      "tags": ["emoticon", "sarcasm"]
+    },
+    {
+      "name": "EmojiSunglasses",
+      "tags": ["emoticon", "cool"]
+    },
+    {
+      "name": "EmojiSunglassesFill",
+      "tags": ["emoticon", "cool"]
+    },
+    {
+      "name": "EmojiWink",
+      "tags": ["emoticon"]
+    },
+    {
+      "name": "EmojiWinkFill",
+      "tags": ["emoticon"]
+    },
+    {
+      "name": "Heartbreak",
+      "tags": ["love", "valentine", "romance"]
+    },
+    {
+      "name": "HeartbreakFill",
+      "tags": ["love", "valentine", "romance"]
+    }
+  ],
+  "UI and Keyboard": [
+    {
+      "name": "Escape",
+      "tags": ["esc", "quit", "exit"]
+    },
+    {
+      "name": "Indent",
+      "tags": ["tab", "indent"]
+    },
+    {
+      "name": "Unindent",
+      "tags": ["tab", "indent"]
+    },
+    {
+      "name": "UniversalAccess",
+      "tags": ["accessibility", "a11y"]
+    },
+    {
+      "name": "UniversalAccessCircle",
+      "tags": ["accessibility", "a11y"]
+    }
+  ],
+  "Sort and filter": [
+    {
+      "name": "FilterCircle",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "FilterCircleFill",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "FilterLeft",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "FilterRight",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "FilterSquare",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "FilterSquareFill",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "SortAlphaDown",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "SortAlphaDownAlt",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "SortAlphaUp",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "SortAlphaUpAlt",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "SortDown",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "SortDownAlt",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "SortNumericDown",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "SortNumericDownAlt",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "SortNumericUp",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "SortNumericUpAlt",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "SortUp",
+      "tags": ["sort", "filter", "organize"]
+    },
+    {
+      "name": "SortUpAlt",
+      "tags": ["sort", "filter", "organize"]
+    }
+  ],
+  "Security": [
+    {
+      "name": "Fingerprint",
+      "tags": ["touch id", "secure", "biometric"]
+    },
+    {
+      "name": "Lock",
+      "tags": ["privacy", "security"]
+    },
+    {
+      "name": "LockFill",
+      "tags": ["privacy", "security"]
+    },
+    {
+      "name": "Shield",
+      "tags": ["privacy", "security"]
+    },
+    {
+      "name": "ShieldCheck",
+      "tags": ["privacy", "security"]
+    },
+    {
+      "name": "ShieldExclamation",
+      "tags": ["privacy", "security"]
+    },
+    {
+      "name": "ShieldFill",
+      "tags": ["privacy", "security"]
+    },
+    {
+      "name": "ShieldFillCheck",
+      "tags": ["privacy", "security"]
+    },
+    {
+      "name": "ShieldFillExclamation",
+      "tags": ["privacy", "security"]
+    },
+    {
+      "name": "ShieldFillMinus",
+      "tags": ["privacy", "security"]
+    },
+    {
+      "name": "ShieldFillPlus",
+      "tags": ["privacy", "security"]
+    },
+    {
+      "name": "ShieldFillX",
+      "tags": ["privacy", "security", "remove", "delete"]
+    },
+    {
+      "name": "ShieldLock",
+      "tags": ["privacy", "security", "lock"]
+    },
+    {
+      "name": "ShieldLockFill",
+      "tags": ["privacy", "security", "lock"]
+    },
+    {
+      "name": "ShieldMinus",
+      "tags": ["privacy", "security"]
+    },
+    {
+      "name": "ShieldPlus",
+      "tags": ["privacy", "security"]
+    },
+    {
+      "name": "ShieldShaded",
+      "tags": ["privacy", "security"]
+    },
+    {
+      "name": "ShieldSlash",
+      "tags": ["shield", "badge"]
+    },
+    {
+      "name": "ShieldSlashFill",
+      "tags": ["shield", "badge"]
+    },
+    {
+      "name": "ShieldX",
+      "tags": ["privacy", "security", "remove", "delete"]
+    },
+    {
+      "name": "Unlock",
+      "tags": ["privacy", "security"]
+    },
+    {
+      "name": "UnlockFill",
+      "tags": ["privacy", "security"]
+    }
+  ],
+  "People": [
+    {
+      "name": "GenderAmbiguous",
+      "tags": ["gender", "identity"]
+    },
+    {
+      "name": "GenderFemale",
+      "tags": ["gender", "identity"]
+    },
+    {
+      "name": "GenderMale",
+      "tags": ["gender", "identity"]
+    },
+    {
+      "name": "GenderTrans",
+      "tags": ["gender", "identity"]
+    },
+    {
+      "name": "People",
+      "tags": ["humans", "organization", "avatar", "users", "profile"]
+    },
+    {
+      "name": "PeopleFill",
+      "tags": ["humans", "organization", "avatar", "users", "profile"]
+    },
+    {
+      "name": "Person",
+      "tags": ["human", "individual", "avatar", "user", "account", "profile"]
+    },
+    {
+      "name": "PersonAdd",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonBadge",
+      "tags": ["human", "individual", "avatar", "user", "badge", "id", "card", "account", "profile"]
+    },
+    {
+      "name": "PersonBadgeFill",
+      "tags": ["human", "individual", "avatar", "user", "badge", "id", "card", "account"]
+    },
+    {
+      "name": "PersonBoundingBox",
+      "tags": ["human", "individual", "avatar", "user", "crop", "account", "profile"]
+    },
+    {
+      "name": "PersonCheck",
+      "tags": ["human", "individual", "avatar", "user", "verified", "account", "profile"]
+    },
+    {
+      "name": "PersonCheckFill",
+      "tags": ["human", "individual", "avatar", "user", "verified", "account"]
+    },
+    {
+      "name": "PersonCircle",
+      "tags": ["humans", "organization", "avatar", "user", "account", "profile"]
+    },
+    {
+      "name": "PersonDash",
+      "tags": ["human", "individual", "avatar", "user", "remove", "delete", "account"]
+    },
+    {
+      "name": "PersonDashFill",
+      "tags": ["human", "individual", "avatar", "user", "remove", "delete", "account"]
+    },
+    {
+      "name": "PersonDown",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonExclamation",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonFill",
+      "tags": ["human", "individual", "avatar", "user", "account", "profile"]
+    },
+    {
+      "name": "PersonFillAdd",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonFillCheck",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonFillDash",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonFillDown",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonFillExclamation",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonFillGear",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonFillLock",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonFillSlash",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonFillUp",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonFillX",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonGear",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonHeart",
+      "tags": ["human", "individual", "avatar", "user", "account", "love", "valentine", "romance"]
+    },
+    {
+      "name": "PersonHearts",
+      "tags": ["human", "individual", "avatar", "user", "account", "love", "valentine", "romance"]
+    },
+    {
+      "name": "PersonLinesFill",
+      "tags": ["human", "individual", "avatar", "user", "contact", "list", "account", "profile"]
+    },
+    {
+      "name": "PersonLock",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonPlus",
+      "tags": ["human", "individual", "avatar", "user", "new", "add", "account"]
+    },
+    {
+      "name": "PersonPlusFill",
+      "tags": ["human", "individual", "avatar", "user", "new", "add", "account"]
+    },
+    {
+      "name": "PersonRolodex",
+      "tags": ["human", "individual", "avatar", "user", "account", "contact"]
+    },
+    {
+      "name": "PersonSlash",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonSquare",
+      "tags": ["human", "individual", "avatar", "user", "account", "profile"]
+    },
+    {
+      "name": "PersonUp",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonVcard",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonVcardFill",
+      "tags": ["human", "individual", "avatar", "user", "account"]
+    },
+    {
+      "name": "PersonVideo",
+      "tags": ["human", "individual", "avatar", "user", "wfh"]
+    },
+    {
+      "name": "PersonVideo2",
+      "tags": ["human", "individual", "avatar", "user", "wfh"]
+    },
+    {
+      "name": "PersonVideo3",
+      "tags": ["human", "individual", "avatar", "user", "wfh"]
+    },
+    {
+      "name": "PersonWorkspace",
+      "tags": ["human", "individual", "avatar", "user", "wfh"]
+    },
+    {
+      "name": "PersonX",
+      "tags": ["human", "individual", "avatar", "user", "remove", "delete", "account"]
+    },
+    {
+      "name": "PersonXFill",
+      "tags": ["human", "individual", "avatar", "user", "remove", "delete", "account"]
+    }
+  ],
+  "Hands": [
+    {
+      "name": "HandIndex",
+      "tags": ["hand", "pointer", "cursor"]
+    },
+    {
+      "name": "HandIndexFill",
+      "tags": ["hand", "pointer", "cursor"]
+    },
+    {
+      "name": "HandIndexThumb",
+      "tags": ["hand", "pointer", "cursor"]
+    },
+    {
+      "name": "HandIndexThumbFill",
+      "tags": ["hand", "pointer", "cursor"]
+    },
+    {
+      "name": "HandThumbsDown",
+      "tags": ["hand", "pointer", "thumbs-down", "-1"]
+    },
+    {
+      "name": "HandThumbsDownFill",
+      "tags": ["hand", "pointer", "thumbs-down", "-1"]
+    },
+    {
+      "name": "HandThumbsUp",
+      "tags": ["hand", "pointer", "thumbs-up", "+1"]
+    },
+    {
+      "name": "HandThumbsUpFill",
+      "tags": ["hand", "pointer", "thumbs-up", "+1"]
+    }
+  ],
+  "Controls": [
+    {
+      "name": "MenuApp",
+      "tags": ["dropdown", "menu", "context", "app", "ui"]
+    },
+    {
+      "name": "MenuAppFill",
+      "tags": ["dropdown", "menu", "context", "app", "ui"]
+    },
+    {
+      "name": "MenuButton",
+      "tags": ["dropdown", "menu", "context", "app", "ui"]
+    },
+    {
+      "name": "MenuButtonFill",
+      "tags": ["dropdown", "menu", "context", "app", "ui"]
+    },
+    {
+      "name": "MenuButtonWide",
+      "tags": ["dropdown", "menu", "context", "app", "ui"]
+    },
+    {
+      "name": "MenuButtonWideFill",
+      "tags": ["dropdown", "menu", "context", "app", "ui"]
+    },
+    {
+      "name": "MenuDown",
+      "tags": ["dropdown", "menu", "context", "app", "ui"]
+    },
+    {
+      "name": "MenuUp",
+      "tags": ["dropdown", "menu", "context", "app", "ui"]
+    },
+    {
+      "name": "SegmentedNav",
+      "tags": ["nav", "tabs", "tabbed", "app", "ui"]
+    },
+    {
+      "name": "ThreeDots",
+      "tags": ["meatballs", "more", "ellipsis", "overflow", "menu"]
+    },
+    {
+      "name": "ThreeDotsVertical",
+      "tags": ["kebab", "more", "ellipsis", "overflow", "menu"]
+    },
+    {
+      "name": "Toggle2Off",
+      "tags": ["toggle", "switch", "checkbox"]
+    },
+    {
+      "name": "Toggle2On",
+      "tags": ["toggle", "switch", "checkbox"]
+    },
+    {
+      "name": "ToggleOff",
+      "tags": ["toggle", "switch", "checkbox"]
+    },
+    {
+      "name": "ToggleOn",
+      "tags": ["toggle", "switch", "checkbox"]
+    },
+    {
+      "name": "Toggles",
+      "tags": ["toggle", "switch", "checkbox"]
+    },
+    {
+      "name": "Toggles2",
+      "tags": ["toggle", "switch", "checkbox"]
+    },
+    {
+      "name": "UiChecks",
+      "tags": ["checkbox", "form"]
+    },
+    {
+      "name": "UiChecksGrid",
+      "tags": ["checkbox", "form"]
+    },
+    {
+      "name": "UiRadios",
+      "tags": ["radio", "form"]
+    },
+    {
+      "name": "UiRadiosGrid",
+      "tags": ["radio", "form"]
+    }
+  ],
+  "UI": [
+    {
+      "name": "Plugin",
+      "tags": ["addon", "software"]
+    }
+  ],
+  "Other": [
+    {
+      "name": "Alexa",
+      "tags": []
+    },
+    {
+      "name": "Boxes",
+      "tags": ["cube"]
+    },
+    {
+      "name": "ChevronExpand",
+      "tags": []
+    },
+    {
+      "name": "FiletypePpt",
+      "tags": []
+    },
+    {
+      "name": "FiletypeXls",
+      "tags": []
+    },
+    {
+      "name": "Pass",
+      "tags": []
+    },
+    {
+      "name": "PassFill",
+      "tags": []
+    },
+    {
+      "name": "Vinyl",
+      "tags": ["audio", "music", "record"]
+    }
+  ]
+}

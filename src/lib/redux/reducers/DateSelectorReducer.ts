@@ -11,7 +11,7 @@ interface DateSelectionMap {
     [month: string]: {
       [day: string]: {
         isSelected: boolean
-        isRepeating: boolean
+        isRecurring: boolean
       }
     }
   }
@@ -44,11 +44,11 @@ const dateSelectorSlice = createSlice({
         state.individualDatesAtStart = cloneDeep(state.individualDates)
       }
     },
-    setRepeatingDates: (state, action: PayloadAction<{ date: string | Date; isRepeating: boolean }[]>) => {
+    setRepeatingDates: (state, action: PayloadAction<{ date: string | Date; isRecurring: boolean }[]>) => {
       state.repeatingDates = {}
       _addNewDates(state.repeatingDates, action.payload)
     },
-    setIndividualDates: (state, action: PayloadAction<{ date: string | Date; isRepeating: boolean }[]>) => {
+    setIndividualDates: (state, action: PayloadAction<{ date: string | Date; isRecurring: boolean }[]>) => {
       state.individualDates = {}
       _addNewDates(state.individualDates, action.payload)
     },
@@ -65,7 +65,7 @@ const dateSelectorSlice = createSlice({
       if (state.individualDates[year][month][day] === undefined) {
         state.individualDates[year][month][day] = {
           isSelected: true,
-          isRepeating: false
+          isRecurring: false
         }
       } else {
         state.individualDates[year][month][day].isSelected = !state.individualDates[year][month][day].isSelected
@@ -91,8 +91,8 @@ const dateSelectorSlice = createSlice({
   }
 })
 
-const _addNewDates = (selectedDates: DateSelectionMap, dates: { date: string | Date; isRepeating: boolean }[]) => {
-  dates.forEach(({ date, isRepeating }) => {
+const _addNewDates = (selectedDates: DateSelectionMap, dates: { date: string | Date; isRecurring: boolean }[]) => {
+  dates.forEach(({ date, isRecurring }) => {
     const d = dayjs(date)
     const year = d.year()
     const month = d.month()
@@ -106,7 +106,7 @@ const _addNewDates = (selectedDates: DateSelectionMap, dates: { date: string | D
     if (selectedDates[year][month][day] === undefined) {
       selectedDates[year][month][day] = {
         isSelected: true,
-        isRepeating: isRepeating
+        isRecurring: isRecurring
       }
     }
   })
@@ -132,7 +132,7 @@ export const getSelectedDates = (state: State) => {
         if (individualDates[year][month][day].isSelected) {
           selectedDates.push({
             date: `${year}-${Number(month) + 1}-${day}`,
-            isRepeating: false
+            isRecurring: false
           })
         }
       }
@@ -144,7 +144,7 @@ export const getSelectedDates = (state: State) => {
         if (repeatingDates[year][month][day].isSelected) {
           selectedDates.push({
             date: `${year}-${Number(month) + 1}-${day}`,
-            isRepeating: true
+            isRecurring: true
           })
         }
       }

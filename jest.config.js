@@ -29,8 +29,7 @@ const customJestConfig = {
   },
   testEnvironment: 'node',
   clearMocks: true,
-  setupFilesAfterEnv: ['<rootDir>/src/lib/prisma/singleton.ts'],
-  modulePathIgnorePatterns: ['<rootDir>/__tests__/utils']
+  setupFilesAfterEnv: ['<rootDir>/src/lib/prisma/singleton.ts']
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
