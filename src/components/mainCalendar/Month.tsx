@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
@@ -230,6 +230,15 @@ export const Month = (props: MonthProps) => {
     [useBanners, getBannersOrIcons, nonOverflowElemCount, renderPopover]
   )
 
+  const getDayBackgroundColor = useCallback(
+    (isSelected: boolean | undefined, dayOfWeek: number) => {
+      if (isSelected) return 'bg-emerald-100'
+      if (isSelectingDates || (dayOfWeek < 6 && dayOfWeek > 0)) return 'bg-white'
+      return 'bg-slate-100'
+    },
+    [isSelectingDates]
+  )
+
   const renderDay = useCallback(
     (firstDateOfWeek: number, dayNum: number) => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
@@ -242,7 +251,7 @@ export const Month = (props: MonthProps) => {
         <div
           key={day.format('YY-MM-DD')}
           className={`tile flex flex-col overflow-y-hidden px-0.5
-            ${selected?.isSelected ? 'bg-emerald-100' : 'bg-white'} 
+            ${getDayBackgroundColor(selected?.isSelected, day.day())} 
             ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} `}
           onClick={() => {
             if (!selected || !selected?.isRepeating) {
@@ -258,13 +267,14 @@ export const Month = (props: MonthProps) => {
       )
     },
     [
-      getNonOverflowCategoryElems,
       monthStartDate,
       getSelectedSettings,
       daysInMonth,
+      getDayBackgroundColor,
       isSelectingDates,
       renderDateNum,
       categoryContainerRef,
+      getNonOverflowCategoryElems,
       dispatch
     ]
   )
@@ -296,11 +306,11 @@ export const Month = (props: MonthProps) => {
     return <div className={`${isMonthView ? 'h-[95%]' : 'h-[90%]'}`}>{weeks}</div>
   }, [daysInMonth, monthStartDate, isMonthView, numWeeks, renderWeek])
 
-  const generateDayNames = useCallback(() => {
+  const generateDayNames = useMemo(() => {
     return (
       <div className='grid grid-cols-7'>
         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((letter, index) => (
-          <span className='tile text-m text-center text-slate-400' key={index}>
+          <span className='tile text-m text-center text-slate-500' key={index}>
             {letter}
           </span>
         ))}
@@ -311,9 +321,9 @@ export const Month = (props: MonthProps) => {
   return (
     <div
       ref={monthRef}
-      className={props.className + ' ' + 'box-border bg-slate-100' + ' ' + (isMonthView ? 'h-full' : '')}
+      className={props.className + ' ' + 'box-border bg-slate-200' + ' ' + (isMonthView ? 'h-full' : '')}
     >
-      {generateDayNames()}
+      {isMonthView && generateDayNames}
       {generateWeeks()}
     </div>
   )
