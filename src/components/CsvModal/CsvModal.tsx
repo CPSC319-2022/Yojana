@@ -55,7 +55,7 @@ export const CsvModal = () => {
         closeWhenClickOutside={true}
         handle='csv-import-modal-handle'
         bounds='csv-import-modal-wrapper'
-        buttonClassName='ml-3'
+        buttonClassName='ml-3 truncate'
         showCloseBtn={false}
         bodyPadding='p-6'
         minWidth='35vw'
