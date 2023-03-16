@@ -346,6 +346,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       </div>
     )
   }, [control, watchColor])
+  const [masterSelected, setMasterSelected] = useState(false)
 
   const categoryTypeField = useMemo(() => {
     if (session && session.user.isAdmin) {
@@ -354,22 +355,34 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           <label className='mb-2 block'>Category Creator</label>
           <div className='flex space-x-4'>
             <button
-              className='background: text-slate hover:text-slate rounded bg-emerald-100 px-4 py-2 transition-colors duration-300 hover:bg-emerald-200'
-              onClick={() => userType == true}
+              type='button'
+              className={`${
+                masterSelected ? 'bg-emerald-100 hover:bg-emerald-200' : 'bg-slate-100 hover:bg-slate-200'
+              } rounded-md px-4 py-2 text-left `}
+              onClick={() => {
+                setMasterSelected(true)
+                userType = true
+              }}
             >
-              Create as User
+              Master Calendar
             </button>
             <button
-              className=' background: text-slate hover:text-slate rounded bg-emerald-100 px-4 py-2 transition-colors duration-300 hover:bg-emerald-200'
-              onClick={() => userType == false}
+              type='button'
+              className={`${
+                !masterSelected ? 'bg-emerald-100 hover:bg-emerald-200' : 'bg-slate-100 hover:bg-slate-200'
+              } rounded-md px-4 py-2 text-left`}
+              onClick={() => {
+                setMasterSelected(false)
+                userType = false
+              }}
             >
-              Create as Admin
+              Personal Calendar
             </button>
           </div>
         </div>
       )
     }
-  }, [control, session])
+  }, [masterSelected, session])
 
   const weeklyRecurringField = useMemo(() => {
     return (
