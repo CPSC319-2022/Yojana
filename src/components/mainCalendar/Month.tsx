@@ -200,7 +200,7 @@ export const Month = (props: MonthProps) => {
 
   const getSelectedSettings = useCallback(
     (dateNum: number, offsetFromMonthStart: number) => {
-      if (!isSelectingDates) return { isSelected: false, isRepeating: false }
+      if (!isSelectingDates) return { isSelected: false, isRecurring: false }
       if (offsetFromMonthStart < 0) {
         return prevMonthSelected?.[dateNum]
       } else if (offsetFromMonthStart >= daysInMonth) {
@@ -239,9 +239,9 @@ export const Month = (props: MonthProps) => {
           key={day.format('YY-MM-DD')}
           className={`tile flex flex-col overflow-y-hidden px-0.5
             ${selected?.isSelected ? 'bg-emerald-100' : 'bg-white'} 
-            ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} `}
+            ${isSelectingDates && !selected?.isRecurring ? 'cursor-pointer' : ''} `}
           onClick={() => {
-            if (!selected || !selected?.isRepeating) {
+            if (!selected || !selected?.isRecurring) {
               dispatch(toggleIndividualDate(day))
             }
           }}

@@ -32,7 +32,7 @@ describe('/api/dates/[id]', () => {
         id: idToDelete,
         date: new Date(),
         categoryId: 10,
-        isRepeating: false
+        isRecurring: false
       }
 
       prismaMock.entry.delete.mockResolvedValue(mock_entry)

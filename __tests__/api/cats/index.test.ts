@@ -206,7 +206,7 @@ describe('/api/cats', () => {
       cron: null,
       startDate: null,
       endDate: null,
-      toDelete: [{ id: 1, date: new Date('2022-01-01'), isRepeating: false, categoryId: 1 }],
+      toDelete: [{ id: 1, date: new Date('2022-01-01'), isRecurring: false, categoryId: 1 }],
       dates: ['2023-01-01', '2023-01-02']
     }
     const req = createRequest({

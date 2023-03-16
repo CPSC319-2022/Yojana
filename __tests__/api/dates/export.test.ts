@@ -27,7 +27,7 @@ const mock_body = [
       {
         id: 1,
         date: new Date('2022-03-15T10:30:00.000Z'),
-        isRepeating: false
+        isRecurring: false
       }
     ]
   }

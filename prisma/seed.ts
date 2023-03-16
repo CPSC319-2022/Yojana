@@ -71,7 +71,7 @@ const generateRandomDates = (start: Date, end: Date, n: number, category: string
   }
   return Array.from(set).map((date) => {
     // discard the category name
-    return { date: date.split(',')[0] }
+    return { date: date.split(',')[0], isRecurring: false }
   })
 }
 

@@ -10,6 +10,7 @@ interface CheckboxProps {
   wrapperClassName?: string
   icon: IconName
   onChange?: () => void
+  iconClassName?: string
 }
 
 export const Checkbox = ({
@@ -19,7 +20,8 @@ export const Checkbox = ({
   label,
   defaultChecked = false,
   icon,
-  onChange
+  onChange,
+  iconClassName
 }: CheckboxProps) => {
   return (
     <div className={`items-center truncate`}>
@@ -40,7 +42,7 @@ export const Checkbox = ({
       />
       <label className='ml-2' htmlFor={id}>
         <span className={'colored pr-1 font-bold'}>
-          <Icon iconName={icon} color={color} className='inline' />
+          <Icon iconName={icon} color={color} className={`inline ${iconClassName}`} />
         </span>
         {label}
       </label>

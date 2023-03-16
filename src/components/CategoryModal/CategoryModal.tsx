@@ -31,14 +31,14 @@ import {
   MonthRecurrenceType
 } from '@/components/RecurringDatePickers/DayOfMonthPicker'
 import { IconSearchModal } from '@/components/IconPicker/IconSearchModal'
-
-let userType = false
+import CategoryTypePicker from '@/components/CategoryModal/CategoryTypePicker'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
   description: z.string().trim().max(191).optional(),
   color: z.string().refine((color) => /^#[0-9A-F]{6}$/i.test(color), { message: 'Invalid color' }),
   icon: z.string(),
+  isMaster: z.boolean().optional(),
   repeating: z
     .object({
       cron: z.string().optional(),
@@ -101,14 +101,14 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     setSelectedMonthRecurrenceCron(currentMonthly)
   }, [currentState?.cron, getInitialMonthlyCronState, method])
 
-  const getInitialDates = (dates: EntryWithoutCategoryId[], isRepeating: boolean) => {
+  const getInitialDates = (dates: EntryWithoutCategoryId[], isRecurring: boolean) => {
     return dates
-      .filter((entry) => entry.isRepeating === isRepeating)
+      .filter((entry) => entry.isRecurring === isRecurring)
       .map((entry) => {
         return {
           // TODO: Fix this hack to get the correct date, ignore timezones
           date: dayjs(entry.date).add(1, 'day').toISOString(),
-          isRepeating: isRepeating
+          isRecurring: isRecurring
         }
       })
   }
@@ -133,7 +133,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             cron: '',
             startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
             endDate: dayjs().endOf('year').format('YYYY-MM-DD')
-          }
+          },
+          isMaster: false
         }
       : {
           name: currentState?.name,
@@ -145,7 +146,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             startDate:
               currentState?.startDate?.toString().split('T')[0] || dayjs().startOf('year').format('YYYY-MM-DD'),
             endDate: currentState?.endDate?.toString().split('T')[0] || dayjs().endOf('year').format('YYYY-MM-DD')
-          }
+          },
+          isMaster: currentState?.isMaster
         }
 
   const {
@@ -179,7 +181,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         cron: undefined,
         startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
         endDate: dayjs().endOf('year').format('YYYY-MM-DD')
-      }
+      },
+      isMaster: false
     }))
     setSelectedDaysOfTheWeek([])
     setSelectedMonthRecurrenceCron(MonthRecurrence.NONE)
@@ -190,12 +193,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const [isMinimized, setIsMinimized] = useState(false)
 
   const onSubmit: SubmitHandler<Schema> = useCallback(
-    async ({ name, color, icon, description, repeating }) => {
+    async ({ name, color, icon, description, repeating, isMaster }) => {
       if (!session) {
         console.error('No session found')
         return
       }
-      const newDates = new Set<{ date: string; isRepeating: boolean }>(selectedDates)
+      const newDates = new Set<{ date: string; isRecurring: boolean }>(selectedDates)
       const response = await fetch('api/cats', {
         method: method,
         headers: {
@@ -208,7 +211,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           color: color,
           icon: icon,
           creatorId: session.user.id,
-          isMaster: session.user.isAdmin,
+          isMaster: isMaster,
           cron: repeating.cron ? repeating.cron : method === 'PUT' ? currentCron : undefined,
           startDate: repeating.cron ? repeating.startDate : undefined,
           endDate: repeating.cron ? repeating.endDate : undefined,
@@ -219,15 +222,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       if (response.ok) {
         const data: Category & { entries: Entry[] } = await response.json()
 
-        const isAdmin = userType ? session.user.isAdmin : false
-        const isMaster = userType ? data.isMaster : false
-
         const dispatchPayload = {
           id: data.id,
           color: data.color,
           name: data.name,
           description: data.description,
-          isMaster: isMaster,
+          isMaster: data.isMaster,
           icon: data.icon,
           cron: data.cron,
           startDate: data.startDate,
@@ -237,7 +237,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             id: session.user.id,
             name: session.user.name,
             email: session.user.email,
-            isAdmin: isAdmin
+            isAdmin: session.user.isAdmin
           },
           entries: data.entries
         }
@@ -331,7 +331,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
 
   const iconPickerField = useMemo(() => {
     return (
-      <div className='mb-8'>
+      <div className='mb-6'>
         <label className='mb-2 block'>
           Icon
           <IconSearchModal
@@ -346,43 +346,17 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       </div>
     )
   }, [control, watchColor])
-  const [masterSelected, setMasterSelected] = useState(false)
 
   const categoryTypeField = useMemo(() => {
-    if (session && session.user.isAdmin) {
+    if (session?.user.isAdmin) {
       return (
-        <div className='mb-8'>
-          <label className='mb-2 block'>Category Creator</label>
-          <div className='flex space-x-4'>
-            <button
-              type='button'
-              className={`${
-                masterSelected ? 'bg-emerald-100 hover:bg-emerald-200' : 'bg-slate-100 hover:bg-slate-200'
-              } rounded-md px-4 py-2 text-left `}
-              onClick={() => {
-                setMasterSelected(true)
-                userType = true
-              }}
-            >
-              Master Calendar
-            </button>
-            <button
-              type='button'
-              className={`${
-                !masterSelected ? 'bg-emerald-100 hover:bg-emerald-200' : 'bg-slate-100 hover:bg-slate-200'
-              } rounded-md px-4 py-2 text-left`}
-              onClick={() => {
-                setMasterSelected(false)
-                userType = false
-              }}
-            >
-              Personal Calendar
-            </button>
-          </div>
+        <div className='mb-4'>
+          <label className='mb-2 block'>Type</label>
+          <CategoryTypePicker control={control} name='isMaster' rules={{ required: true }} />
         </div>
       )
     }
-  }, [masterSelected, session])
+  }, [control, session?.user.isAdmin])
 
   const weeklyRecurringField = useMemo(() => {
     return (
