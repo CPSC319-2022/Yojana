@@ -11,7 +11,7 @@ export const SideBar = ({ session }: Props) => {
   return (
     <div className='mt-4 pt-2 pl-1'>
       <div className='flex flex-row px-4'>
-        {session.user.isAdmin && <CategoryModal method='POST' id={-1} callBack={() => {}} />}
+        {session.user && <CategoryModal method='POST' id={-1} callBack={() => {}} />}
         <CsvModal />
       </div>
       <CategoriesMenu session={session} />

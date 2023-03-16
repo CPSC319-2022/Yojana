@@ -32,6 +32,8 @@ import {
 } from '@/components/RecurringDatePickers/DayOfMonthPicker'
 import { IconSearchModal } from '@/components/IconPicker/IconSearchModal'
 
+let userType = false
+
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
   description: z.string().trim().max(191).optional(),
@@ -172,6 +174,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       description: '',
       color: randomColor(),
       icon: randomIcon(),
+      userType: true,
       repeating: {
         cron: undefined,
         startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
@@ -215,12 +218,16 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       })
       if (response.ok) {
         const data: Category & { entries: Entry[] } = await response.json()
+
+        const isAdmin = userType ? session.user.isAdmin : false
+        const isMaster = userType ? data.isMaster : false
+
         const dispatchPayload = {
           id: data.id,
           color: data.color,
           name: data.name,
           description: data.description,
-          isMaster: data.isMaster,
+          isMaster: isMaster,
           icon: data.icon,
           cron: data.cron,
           startDate: data.startDate,
@@ -230,7 +237,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             id: session.user.id,
             name: session.user.name,
             email: session.user.email,
-            isAdmin: session.user.isAdmin
+            isAdmin: isAdmin
           },
           entries: data.entries
         }
@@ -339,6 +346,30 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       </div>
     )
   }, [control, watchColor])
+
+  const categoryTypeField = useMemo(() => {
+    if (session && session.user.isAdmin) {
+      return (
+        <div className='mb-8'>
+          <label className='mb-2 block'>Category Creator</label>
+          <div className='flex space-x-4'>
+            <button
+              className='background: text-slate hover:text-slate rounded bg-emerald-100 px-4 py-2 transition-colors duration-300 hover:bg-emerald-200'
+              onClick={() => userType == true}
+            >
+              Create as User
+            </button>
+            <button
+              className=' background: text-slate hover:text-slate rounded bg-emerald-100 px-4 py-2 transition-colors duration-300 hover:bg-emerald-200'
+              onClick={() => userType == false}
+            >
+              Create as Admin
+            </button>
+          </div>
+        </div>
+      )
+    }
+  }, [control, session])
 
   const weeklyRecurringField = useMemo(() => {
     return (
@@ -505,6 +536,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           {descriptionField}
           {colorPickerField}
           {iconPickerField}
+          {categoryTypeField}
           {recurringDatesFields}
           {buttonsAtBottom}
         </form>
