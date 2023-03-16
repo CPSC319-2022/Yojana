@@ -70,7 +70,7 @@ export const CategoriesMenu = ({ session }: Props) => {
         {renderCategoryType().map((categoryType, key) => {
           return (
             <Accordion.Item key={`category-type-${key}`} size='md'>
-              <Accordion.Header>{categoryType ? 'Master Categories' : 'Personal Categories'}</Accordion.Header>
+              <Accordion.Header>{categoryType ? 'Master Calendar' : 'Personal Calendar'}</Accordion.Header>
               <Accordion.Body>{renderCategories(categoryType)}</Accordion.Body>
             </Accordion.Item>
           )
