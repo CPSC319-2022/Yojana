@@ -21,6 +21,9 @@ interface MonthProps {
 const CATEGORY_BANNER_HEIGHT_PX = 28
 const CATEGORY_ICON_WIDTH_PX = 24
 
+// To avoid an infinite resizing loop. The count is reset whenever the window is resized.
+const MAX_TIMES_SIZE_SET = 2
+
 export const Month = (props: MonthProps) => {
   const isMonthView = useAppSelector(isMonthInterval)
   const isQuarterlyView = useAppSelector(isQuarterlyInterval)
@@ -44,23 +47,34 @@ export const Month = (props: MonthProps) => {
   const [nonOverflowElemCount, setNonOverflowElemCount] = useState(1)
   const [nonOverflowCountKnown, setNonOverflowCountKnown] = useState(false)
   const monthRef = useRef<HTMLDivElement>(null)
+  const [numTimesSizeSet, setNumTimesSizeSet] = useState(0)
   const categoryContainerRef = useCallback(
     (node: HTMLDivElement) => {
-      if (node !== null && !nonOverflowCountKnown) {
+      if (node !== null && !nonOverflowCountKnown && numTimesSizeSet < MAX_TIMES_SIZE_SET) {
         let newCount: number
         if (useBanners) newCount = Math.floor(node.getBoundingClientRect().height / CATEGORY_BANNER_HEIGHT_PX)
         else newCount = Math.floor(node.getBoundingClientRect().width / CATEGORY_ICON_WIDTH_PX)
         setNonOverflowElemCount(newCount)
         setNonOverflowCountKnown(true)
+        setNumTimesSizeSet(numTimesSizeSet + 1)
       }
     },
-    [nonOverflowCountKnown, useBanners]
+    [nonOverflowCountKnown, numTimesSizeSet, useBanners]
   )
+
+  useEffect(() => {
+    window.addEventListener('resize', () => setNumTimesSizeSet(0))
+    return () => {
+      window.removeEventListener('resize', () => setNumTimesSizeSet(0))
+    }
+  }, [])
 
   useEffect(() => {
     if (!monthRef.current) return
 
-    const handleWindowSizeChange = () => setNonOverflowCountKnown(false)
+    const handleWindowSizeChange = () => {
+      setNonOverflowCountKnown(false)
+    }
     const resizeObserver = new ResizeObserver(handleWindowSizeChange)
     resizeObserver.observe(monthRef.current)
     return () => resizeObserver.disconnect()
