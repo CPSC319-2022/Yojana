@@ -21,11 +21,12 @@ interface MonthProps {
 const CATEGORY_BLOCK_HEIGHT_PX = 28
 
 export const Month = (props: MonthProps) => {
-  const monthView = useAppSelector(isMonthInterval)
+  const isMonthView = useAppSelector(isMonthInterval)
   const stateDate = useAppSelector(getDate)
   const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
   const isSelectingDates = useAppSelector(getIsSelectingDates)
   const dispatch = useAppDispatch()
+  const [useBanners, setUseBanners] = useState(isMonthView)
 
   const [targetDate, setTargetDate] = useState(referenceDate.add(props.monthOffset, 'month'))
   const [monthStartDate, setMonthStartDate] = useState(targetDate.startOf('month'))
@@ -52,6 +53,10 @@ export const Month = (props: MonthProps) => {
   )
 
   useEffect(() => {
+    setUseBanners(isMonthView)
+  }, [isMonthView])
+
+  useEffect(() => {
     const newTarget = referenceDate.add(props.monthOffset, 'month')
     const newStart = newTarget.startOf('month')
     const newDaysInMonth = newTarget.daysInMonth()
@@ -75,63 +80,6 @@ export const Month = (props: MonthProps) => {
     setNonOverflowCountKnown(false)
   }, [numWeeks])
 
-  const getPopoverContent = useCallback(
-    (day: Dayjs, offsetFromMonthStart: number, allDayBlocks: JSX.Element[]) => {
-      return (
-        <div className='lg:grid-rows relative grid gap-1 p-2 pb-3'>
-          <span
-            className={`${
-              offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''
-            } block text-center`}
-          >
-            {day.date()}
-          </span>
-          {allDayBlocks}
-        </div>
-      )
-    },
-    [daysInMonth]
-  )
-
-  const renderPopover = useCallback(
-    (day: Dayjs, offsetFromMonthStart: number, allDayBlocks: JSX.Element[]) => {
-      const translateXClass = day.day() === 6 ? '-translate-x-32' : ''
-      const appearBelow = offsetFromMonthStart < 21
-      const translateYClass = appearBelow ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
-      const hiddenElemCount = allDayBlocks.length - nonOverflowElemCount + 1
-      return (
-        <Popover className={'mx-1 mt-1'} key={day.format('YY-MM-DD')}>
-          <Popover.Button className={'border-box flex w-full rounded-md px-1 hover:bg-slate-100 focus:outline-none'}>
-            {hiddenElemCount + ' more'}
-          </Popover.Button>
-          <Transition
-            as={Fragment}
-            enter='transition ease-out duration-200'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='transition ease-in duration-150'
-            leaveFrom={`opacity-100 ${appearBelow ? 'translate-y-0' : ''}`}
-            leaveTo={`opacity-0 ${appearBelow ? 'translate-y-1' : ''}`}
-          >
-            <Popover.Panel className={`${translateXClass} ${translateYClass} z-100 absolute transform`}>
-              <style jsx>{`
-                div {
-                  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                  -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                }
-              `}</style>
-              <div className='h-fit max-h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white'>
-                {getPopoverContent(day, offsetFromMonthStart, allDayBlocks)}
-              </div>
-            </Popover.Panel>
-          </Transition>
-        </Popover>
-      )
-    },
-    [getPopoverContent, nonOverflowElemCount]
-  )
-
   const getEntriesOnDay = useCallback(
     (dateNum: number, offsetFromMonthStart: number) => {
       if (offsetFromMonthStart < 0) {
@@ -146,7 +94,7 @@ export const Month = (props: MonthProps) => {
   )
 
   const getBannersOrIcons = useCallback(
-    (day: Dayjs, offsetFromMonthStart: number, showBanners: boolean): JSX.Element[] => {
+    (day: Dayjs, offsetFromMonthStart: number, getBanners: boolean): JSX.Element[] => {
       if (isSelectingDates) return []
 
       const entriesOnDay = getEntriesOnDay(day.date(), offsetFromMonthStart) || []
@@ -155,7 +103,7 @@ export const Month = (props: MonthProps) => {
       const categories = entriesOnDay?.map((entry) => {
         const category = categoryMap[entry.categoryId]
         if (!category.show) return null
-        if (showBanners) {
+        if (getBanners) {
           return (
             <CategoryBlock
               color={category.color}
@@ -181,6 +129,64 @@ export const Month = (props: MonthProps) => {
       return categories.filter((element) => element !== null) as JSX.Element[]
     },
     [categoryMap, getEntriesOnDay, isSelectingDates]
+  )
+
+  const getPopoverContent = useCallback(
+    (day: Dayjs, offsetFromMonthStart: number) => {
+      const allDayBanners = getBannersOrIcons(day, offsetFromMonthStart, true) || []
+      return (
+        <div className='lg:grid-rows relative grid gap-1 p-2 pb-3'>
+          <span
+            className={`${
+              offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''
+            } block text-center`}
+          >
+            {day.date()}
+          </span>
+          {allDayBanners}
+        </div>
+      )
+    },
+    [daysInMonth, getBannersOrIcons]
+  )
+
+  const renderPopover = useCallback(
+    (day: Dayjs, offsetFromMonthStart: number, allDayBlocksLength: number) => {
+      const translateXClass = day.day() === 6 ? '-translate-x-32' : ''
+      const appearBelow = offsetFromMonthStart < 21
+      const translateYClass = appearBelow ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
+      const hiddenElemCount = allDayBlocksLength - nonOverflowElemCount + 1
+      return (
+        <Popover className={'mx-1 mt-1'} key={day.format('YY-MM-DD')}>
+          <Popover.Button className={'border-box flex w-full rounded-md px-1 hover:bg-slate-100 focus:outline-none'}>
+            {hiddenElemCount + ' more'}
+          </Popover.Button>
+          <Transition
+            as={Fragment}
+            enter='transition ease-out duration-200'
+            enterFrom='opacity-0'
+            enterTo='opacity-100'
+            leave='transition ease-in duration-150'
+            leaveFrom={`opacity-100 ${appearBelow ? 'translate-y-0' : ''}`}
+            leaveTo={`opacity-0 ${appearBelow ? 'translate-y-1' : ''}`}
+          >
+            <Popover.Panel className={`${translateXClass} ${translateYClass} z-100 absolute transform`}>
+              <style jsx>{`
+                div {
+                  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+                  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+                  -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+                }
+              `}</style>
+              <div className='h-fit max-h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white'>
+                {getPopoverContent(day, offsetFromMonthStart)}
+              </div>
+            </Popover.Panel>
+          </Transition>
+        </Popover>
+      )
+    },
+    [getPopoverContent, nonOverflowElemCount]
   )
 
   const renderDateNum = useCallback(
@@ -212,27 +218,25 @@ export const Month = (props: MonthProps) => {
     [currMonthSelected, daysInMonth, isSelectingDates, nextMonthSelected, prevMonthSelected]
   )
 
+  const getNonOverflowCategoryElems = useCallback(
+    (day: Dayjs, offsetFromMonthStart: number) => {
+      const allCategoryElems = getBannersOrIcons(day, offsetFromMonthStart, useBanners) || []
+      if (allCategoryElems.length <= nonOverflowElemCount) return allCategoryElems
+
+      const nonOverflowElems = allCategoryElems.slice(0, nonOverflowElemCount - 1)
+      nonOverflowElems.push(renderPopover(day, offsetFromMonthStart, allCategoryElems.length))
+      return nonOverflowElems
+    },
+    [useBanners, getBannersOrIcons, nonOverflowElemCount, renderPopover]
+  )
+
   const renderDay = useCallback(
     (firstDateOfWeek: number, dayNum: number) => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
       const day = monthStartDate.add(offsetFromMonthStart, 'days')
 
-      // make an explicit showBanners variable because we'll be adding logic to this later.
-      const showBanners = monthView // don't inline this variable.
-      const allCategoryElems = getBannersOrIcons(day, offsetFromMonthStart, showBanners) || []
-
       const selected = getSelectedSettings(day.date(), offsetFromMonthStart)
       const isCurrentMonth = offsetFromMonthStart >= 0 && offsetFromMonthStart < daysInMonth
-
-      const nonOverflowCategoryElems =
-        allCategoryElems.length > nonOverflowElemCount ? (
-          <>
-            {allCategoryElems.slice(0, nonOverflowElemCount - 1)}
-            {renderPopover(day, offsetFromMonthStart, allCategoryElems)}
-          </>
-        ) : (
-          allCategoryElems
-        )
 
       return (
         <div
@@ -248,19 +252,16 @@ export const Month = (props: MonthProps) => {
         >
           {renderDateNum(day, isCurrentMonth)}
           <div className='flex-grow' ref={offsetFromMonthStart === 0 ? categoryContainerRef : undefined}>
-            {nonOverflowCategoryElems}
+            {getNonOverflowCategoryElems(day, offsetFromMonthStart)}
           </div>
         </div>
       )
     },
     [
+      getNonOverflowCategoryElems,
       monthStartDate,
-      monthView,
-      getBannersOrIcons,
       getSelectedSettings,
       daysInMonth,
-      nonOverflowElemCount,
-      renderPopover,
       isSelectingDates,
       renderDateNum,
       categoryContainerRef,
@@ -292,8 +293,8 @@ export const Month = (props: MonthProps) => {
     for (let i = 0 - monthStartDate.day(); i < target; i += 7) {
       weeks.push(renderWeek(i))
     }
-    return <div className={`${monthView ? 'h-[95%]' : 'h-[90%]'}`}>{weeks}</div>
-  }, [daysInMonth, monthStartDate, monthView, numWeeks, renderWeek])
+    return <div className={`${isMonthView ? 'h-[95%]' : 'h-[90%]'}`}>{weeks}</div>
+  }, [daysInMonth, monthStartDate, isMonthView, numWeeks, renderWeek])
 
   const generateDayNames = useCallback(() => {
     return (
@@ -310,7 +311,7 @@ export const Month = (props: MonthProps) => {
   return (
     <div
       ref={monthRef}
-      className={props.className + ' ' + 'box-border bg-slate-100' + ' ' + (monthView ? 'h-full' : '')}
+      className={props.className + ' ' + 'box-border bg-slate-100' + ' ' + (isMonthView ? 'h-full' : '')}
     >
       {generateDayNames()}
       {generateWeeks()}
