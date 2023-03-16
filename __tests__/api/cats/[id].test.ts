@@ -107,10 +107,13 @@ describe('/api/cats/[id]', () => {
       expect(res._getData()).toBe(JSON.stringify(mock_body))
     })
 
-    it('should return a 401 status code when not Authorized to delete', async () => {
+    it('should return a 401 status code when pleb tries to delete a master calendar category', async () => {
       const req = createRequest({
         method: 'DELETE',
-        url: '/cats/1'
+        url: '/cats/1',
+        body: {
+          isMaster: true
+        }
       })
       const res = createResponse()
 

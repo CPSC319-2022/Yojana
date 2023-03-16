@@ -29,7 +29,7 @@ export type CategoryFull = Prisma.CategoryGetPayload<{
       select: {
         id: true
         date: true
-        isRepeating: true
+        isRecurring: true
       }
     }
   }

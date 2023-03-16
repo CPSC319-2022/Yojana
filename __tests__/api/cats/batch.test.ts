@@ -29,19 +29,19 @@ const expectedResponse: Entry[] = [
   {
     id: 1,
     date: new Date('2025-03-10T00:00:00.000Z'),
-    isRepeating: false,
+    isRecurring: false,
     categoryId: 21
   },
   {
     id: 2,
     date: new Date('2025-03-04T00:00:00.000Z'),
-    isRepeating: false,
+    isRecurring: false,
     categoryId: 21
   },
   {
     id: 3,
     date: new Date('2025-03-22T00:00:00.000Z'),
-    isRepeating: false,
+    isRecurring: false,
     categoryId: 22
   }
 ]

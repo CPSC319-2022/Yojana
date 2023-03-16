@@ -19,7 +19,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return res
     case 'DELETE':
       const token = await getToken({ req })
-      if (!token?.isAdmin) {
+      // Only admins can delete master categories
+      if (req.body.isMaster && !token?.isAdmin) {
         return res.status(401).send('Unauthorized')
       }
       // Delete data from your database

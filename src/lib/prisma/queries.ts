@@ -14,9 +14,21 @@ const select = {
   icon: true
 }
 
-// returns all categories
-export const getCategories = async () => {
-  return prisma.category.findMany({ select })
+// returns all master categories and personal categories for a user
+export const getCategories = async (creatorId?: string) => {
+  return prisma.category.findMany({
+    where: {
+      OR: [
+        {
+          creatorId: creatorId
+        },
+        {
+          isMaster: true
+        }
+      ]
+    },
+    select
+  })
 }
 
 // returns all master categories
