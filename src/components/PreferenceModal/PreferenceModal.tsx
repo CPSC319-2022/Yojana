@@ -78,7 +78,6 @@ export const PreferenceModal = ({
                       monthCategoryAppearance.value === 'icons' ? 'banners' : 'icons'
                     )
                   }}
-                  disabled
                 />
               </div>
             </Accordion.Body>

@@ -12,6 +12,7 @@ import {
   toggleIndividualDate
 } from '@/redux/reducers/DateSelectorReducer'
 import { Icon, IconName } from '@/components/common'
+import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 
 interface MonthProps {
   monthOffset: number
@@ -26,6 +27,7 @@ export const Month = (props: MonthProps) => {
   const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
   const isSelectingDates = useAppSelector(getIsSelectingDates)
   const dispatch = useAppDispatch()
+  const preferences = useAppSelector(getPreferences)
 
   const [targetDate, setTargetDate] = useState(referenceDate.add(props.monthOffset, 'month'))
   const [monthStartDate, setMonthStartDate] = useState(targetDate.startOf('month'))
@@ -172,7 +174,7 @@ export const Month = (props: MonthProps) => {
                   color: ${category.color};
                 }
               `}</style>
-              <Icon iconName={category.icon as IconName} className='inline' />
+              <Icon iconName={category.icon as IconName} className='inline' size={23} />
             </span>
           )
         }
@@ -189,7 +191,7 @@ export const Month = (props: MonthProps) => {
       const todayCircle = isToday && !isSelectingDates ? 'rounded-full bg-emerald-200' : ''
       return (
         <div className={`flex items-center justify-center`}>
-          <div className={`flex h-7 w-7 items-center justify-center ${todayCircle} mt-1`}>
+          <div className={`flex h-7 w-7 items-center justify-center pb-1 pt-1 ${todayCircle} mt-1`}>
             <span className={`${isCurrentMonth ? '' : 'text-slate-400'} block text-center text-sm`}>{day.date()}</span>
           </div>
         </div>
@@ -218,14 +220,14 @@ export const Month = (props: MonthProps) => {
       const day = monthStartDate.add(offsetFromMonthStart, 'days')
 
       // make an explicit showBanners variable because we'll be adding logic to this later.
-      const showBanners = monthView // don't inline this variable.
+      const showBanners = monthView && preferences.monthCategoryAppearance.value === 'banners' // don't inline this variable.
       const allCategoryElems = getBannersOrIcons(day, offsetFromMonthStart, showBanners) || []
 
       const selected = getSelectedSettings(day.date(), offsetFromMonthStart)
       const isCurrentMonth = offsetFromMonthStart >= 0 && offsetFromMonthStart < daysInMonth
 
       const nonOverflowCategoryElems =
-        allCategoryElems.length > nonOverflowElemCount ? (
+        showBanners && allCategoryElems.length > nonOverflowElemCount ? (
           <>
             {allCategoryElems.slice(0, nonOverflowElemCount - 1)}
             {renderPopover(day, offsetFromMonthStart, allCategoryElems)}
@@ -264,6 +266,7 @@ export const Month = (props: MonthProps) => {
       isSelectingDates,
       renderDateNum,
       categoryContainerRef,
+      preferences.monthCategoryAppearance.value,
       dispatch
     ]
   )
