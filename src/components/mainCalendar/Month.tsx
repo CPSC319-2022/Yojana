@@ -179,11 +179,20 @@ export const Month = (props: MonthProps) => {
     [nonOverflowElemCount, useBanners]
   )
 
+  const appearBelow = useCallback(
+    (offsetFromMonthStart: number) => {
+      if (isMonthView) return offsetFromMonthStart < 21
+      if (isQuarterlyView) return props.monthOffset === 0 || (props.monthOffset === 1 && offsetFromMonthStart < 21)
+      else return props.monthOffset < 2
+    },
+    [isMonthView, isQuarterlyView, props.monthOffset]
+  )
+
   const renderPopover = useCallback(
     (day: Dayjs, offsetFromMonthStart: number, allDayBlocksLength: number) => {
-      const translateXClass = day.day() === 6 ? '-translate-x-32' : ''
-      const appearBelow = offsetFromMonthStart < 21
-      const translateYClass = appearBelow ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
+      const translateXClass = day.day() > 4 ? (useBanners ? '-translate-x-32' : '-translate-x-60') : ''
+      const below = appearBelow(offsetFromMonthStart)
+      const translateYClass = below ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
       return (
         <Popover className={useBanners ? 'mx-1 mt-1' : ''} key={day.format('YY-MM-DD')}>
           {renderPopoverButton(allDayBlocksLength)}
@@ -193,8 +202,8 @@ export const Month = (props: MonthProps) => {
             enterFrom='opacity-0'
             enterTo='opacity-100'
             leave='transition ease-in duration-150'
-            leaveFrom={`opacity-100 ${appearBelow ? 'translate-y-0' : ''}`}
-            leaveTo={`opacity-0 ${appearBelow ? 'translate-y-1' : ''}`}
+            leaveFrom={`opacity-100 ${below ? 'translate-y-0' : ''}`}
+            leaveTo={`opacity-0 ${below ? 'translate-y-1' : ''}`}
           >
             <Popover.Panel className={`${translateXClass} ${translateYClass} z-100 absolute transform`}>
               <style jsx>{`
@@ -212,7 +221,7 @@ export const Month = (props: MonthProps) => {
         </Popover>
       )
     },
-    [getPopoverContent, renderPopoverButton, useBanners]
+    [appearBelow, getPopoverContent, renderPopoverButton, useBanners]
   )
 
   const renderDateNum = useCallback(
@@ -246,16 +255,14 @@ export const Month = (props: MonthProps) => {
 
   const getNonOverflowCategoryElems = useCallback(
     (day: Dayjs, offsetFromMonthStart: number) => {
-      const outOfMonth = offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth
-      const allCategoryElems =
-        getBannersOrIcons(day, offsetFromMonthStart, useBanners, outOfMonth ? 'opacity-50' : '') || []
+      const allCategoryElems = getBannersOrIcons(day, offsetFromMonthStart, useBanners) || []
       if (allCategoryElems.length <= nonOverflowElemCount) return allCategoryElems
 
       const nonOverflowElems = allCategoryElems.slice(0, nonOverflowElemCount - 1)
       nonOverflowElems.push(renderPopover(day, offsetFromMonthStart, allCategoryElems.length))
       return nonOverflowElems
     },
-    [daysInMonth, getBannersOrIcons, useBanners, nonOverflowElemCount, renderPopover]
+    [getBannersOrIcons, useBanners, nonOverflowElemCount, renderPopover]
   )
 
   const getDayBackgroundColor = useCallback(
@@ -278,7 +285,7 @@ export const Month = (props: MonthProps) => {
       return (
         <div
           key={day.format('YY-MM-DD')}
-          className={`tile flex overflow-hidden px-0.5 ${isMonthView ? 'flex-col' : 'flex-row'}
+          className={`tile flex px-0.5 ${isMonthView ? 'flex-col' : 'flex-row'}
             ${getDayBackgroundColor(selected?.isSelected, day.day())} 
             ${isQuarterlyView ? 'items-center' : ''}
             ${isSelectingDates && !selected?.isRepeating ? 'cursor-pointer' : ''} `}
