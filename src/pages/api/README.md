@@ -45,14 +45,13 @@ get:
   responses:
     200:
       description: user data with matching id
-      array:
-        object:
-          id: string
-          name: string
-          email: string
-          isAdmin: boolean
+      object:
+        id: string
+        name: string
+        email: string
+        isAdmin: boolean
     400:
-      description: no id, id not a string
+      description: no id, id is not a string
       text: Bad Request
     401:
       description: user is not an admin
