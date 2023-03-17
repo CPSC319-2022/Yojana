@@ -15,7 +15,7 @@ export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
   const yearSelected = useAppSelector((state) => getYearSelectedDates(state, stateDate))
   const preferences = useAppSelector(getPreferences)
 
-  const yearStartDate = dayjs().startOf('year')
+  const yearStartDate = dayjs(stateDate).startOf('year')
   const yearNum = yearStartDate.get('year')
 
   const dispatch = useAppDispatch()

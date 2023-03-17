@@ -1,10 +1,12 @@
 import { Dropdown } from '@/components/common'
 import { signOut, useSession } from 'next-auth/react'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useAppSelector } from '@/redux/hooks'
 import { CategoryState } from '@/types/prisma'
 import { getCategories } from '@/redux/reducers/AppDataReducer'
 import { PreferenceModal } from '@/components/PreferenceModal'
+import { useReactToPrint } from 'react-to-print'
+import ComponentToPrint from '@/components/navBar/ComponentToPrint'
 
 export const AccountDropdown = () => {
   const { data: session } = useSession()
@@ -18,6 +20,22 @@ export const AccountDropdown = () => {
     .filter((category) => category.show)
     .map((category) => category.id)
     .join(',')
+
+  const printComponentRef = useRef(null)
+  const handlePrint = useReactToPrint({
+    content: () => printComponentRef.current,
+    pageStyle: `
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      @media print {
+        body {
+          transform-origin: top left;
+        }
+      }
+    `
+  })
 
   return (
     <div>
@@ -47,8 +65,10 @@ export const AccountDropdown = () => {
             }}
           />
         </Dropdown.Accordion>
+        <Dropdown.Button key='Print' label='Print' onClick={handlePrint} />
         <Dropdown.Button key='Logout' label='Logout' onClick={() => signOut()} />
       </Dropdown>
+      <ComponentToPrint ref={printComponentRef} />
       <PreferenceModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </div>
   )
