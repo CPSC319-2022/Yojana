@@ -9,15 +9,24 @@ const ComponentToPrint = React.forwardRef<HTMLDivElement>((props, ref) => {
   const categories = useAppSelector(getCategories).filter((category) => category.show)
   const year = useAppSelector(getDate).year()
 
+  let gridSize
+  if (categories.length <= 12) {
+    gridSize = 'grid-cols-3'
+  } else if (categories.length <= 20) {
+    gridSize = 'grid-cols-4'
+  } else {
+    gridSize = 'grid-cols-6'
+  }
+
   return (
     <span className='relative hidden'>
       <div ref={ref} className='h-auto w-auto overflow-visible border'>
-        <div className='absolute bottom-0 left-0 right-0 pb-2'>
-          <div className='grid grid-cols-[repeat(6,1fr)] gap-1 px-4'>
+        <div className='pt-4'>
+          <div className={`grid ${gridSize} gap-1 px-4`}>
             {categories.map((category) => (
-              <div key={category.id} className='bg-white text-left'>
+              <div key={category.id} className='flex flex-row bg-white text-left'>
                 <Icon iconName={category.icon as IconName} color={category.color} className='mr-2 inline' />
-                {category.name}
+                <p>{category.name}</p>
               </div>
             ))}
           </div>
