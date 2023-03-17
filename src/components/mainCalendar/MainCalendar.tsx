@@ -12,7 +12,7 @@ export const MainCalendar = () => {
   const calView = useMemo(() => {
     switch (activeCalView) {
       case CalendarInterval.YEAR:
-        return <Year getForPrinting={false} />
+        return <Year />
       case CalendarInterval.FOUR_MONTHS:
         return <MultiMonth />
       case CalendarInterval.QUARTERLY:

@@ -7,7 +7,7 @@ import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 import dayjs, { Dayjs } from 'dayjs'
 import { useCallback, useMemo } from 'react'
 
-export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
+export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) => {
   const stateDate = useAppSelector(getDate)
   const categoryMap = useAppSelector(getCategoryMap)
   const entriesInYear = useAppSelector((state) => getYear(state, stateDate))
