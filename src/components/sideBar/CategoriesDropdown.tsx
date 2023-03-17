@@ -58,7 +58,7 @@ const HoverDropdown = ({
     <div className={containerClassName}>
       {closeWhenClickOutside && (
         <div
-          className='fixed absolute inset-0 z-10 flex h-screen w-screen bg-transparent'
+          className='fixed absolute inset-0 z-10 flex bg-transparent'
           aria-hidden='true'
           onClick={handleClosePopover}
         />
@@ -86,7 +86,7 @@ const HoverDropdown = ({
             leaveTo='transform opacity-0 scale-95'
           >
             <Popover.Panel
-              className={`w-42 absolute left-0 z-10 mt-2 w-28 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none
+              className={`w-42 absolute right-0 z-10 mt-2 w-28 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none
               ${disable || !closeWhenClickOutside ? 'visibility: collapse' : ''}`}
               onClick={() => {
                 setCloseWhenClickOutside(false)
