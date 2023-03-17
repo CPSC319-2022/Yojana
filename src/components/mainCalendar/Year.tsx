@@ -151,7 +151,7 @@ export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
   const months = useMemo(() => {
     return (
       <div
-        className={`box-border grid grow  divide-x divide-y border-b bg-slate-300 
+        className={`box-border grid grow  divide-x divide-y border-b border-r bg-slate-300 
         ${
           getForPrinting
             ? 'grid-cols-[3.25%_7.5%_7.5%_7.5%_7.5%_3.25%_7.5%_7.5%_7.5%_7.5%_3.25%_7.5%_7.5%_7.5%_7.5%]'

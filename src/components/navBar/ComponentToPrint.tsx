@@ -6,28 +6,24 @@ import { Icon, IconName } from '@/components/common'
 import { Year } from '@/components/mainCalendar/Year'
 
 const ComponentToPrint = React.forwardRef<HTMLDivElement>((props, ref) => {
-  const categories = useAppSelector(getCategories)
+  const categories = useAppSelector(getCategories).filter((category) => category.show)
   const year = useAppSelector(getDate).year()
 
   return (
-    <span style={{ display: 'none' }}>
+    <span className='relative hidden'>
       <div ref={ref} className='mx-2 h-auto w-auto overflow-visible border'>
-        <div className='my-[1%] ml-[45%] font-[bolder]'>Categories</div>
-        <div className='grid grid-cols-[repeat(6,1fr)] gap-1'>
-          {categories.map(
-            (category) =>
-              category.show && (
-                <div key={category.id} className='bg-white text-center'>
-                  <Icon iconName={category.icon as IconName} color={category.color} className='inline' />
-                  <div>{category.name}</div>
-                </div>
-              )
-          )}
+        <div className='absolute bottom-0 left-0 right-0 pb-2'>
+          <div className='grid grid-cols-[repeat(6,1fr)] gap-1'>
+            {categories.map((category) => (
+              <div key={category.id} className='bg-white text-center'>
+                <Icon iconName={category.icon as IconName} color={category.color} className='mr-2 inline' />
+                {category.name}
+              </div>
+            ))}
+          </div>
+          <div className='mt-3 pb-3 text-center text-2xl font-bold'>{year}</div>
+          <Year getForPrinting={true} />
         </div>
-        <div style={{ marginTop: '5px', fontSize: '28px' }} className='text-center font-bold'>
-          {year}
-        </div>
-        <Year getForPrinting={true} />
       </div>
     </span>
   )
