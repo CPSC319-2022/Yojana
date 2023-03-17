@@ -25,7 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       if (validCategories.some((category) => category.name === categoryToAddTo)) {
         const entry = {
           date: newDate,
-          isRepeating: false,
+          isRecurring: false,
           categoryId: validCategories.find((category) => category.name === categoryToAddTo)?.id
         }
         entriesToAdd.push(entry)
@@ -34,9 +34,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
   try {
     await prisma.entry.createMany({
-      data: entriesToAdd.map(({ date, isRepeating, categoryId }) => ({
+      data: entriesToAdd.map(({ date, isRecurring, categoryId }) => ({
         date: date,
-        isRepeating: isRepeating,
+        isRecurring: isRecurring,
         categoryId: categoryId!
       }))
     })

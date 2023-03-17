@@ -11,7 +11,7 @@ model User {
   id         String     @id
   email      String
   name       String
-  isAdmin    Boolean    @default(false)
+  isAdmin    Boolean
   categories Category[]
 }
 
@@ -20,7 +20,7 @@ model Category {
   name        String
   description String    @default("")
   color       String    @db.VarChar(7)
-  isMaster    Boolean   @default(false)
+  isMaster    Boolean
   icon        String
   cron        String?   @default("")
   startDate   DateTime? @db.Date()
@@ -33,7 +33,7 @@ model Category {
 model Entry {
   id          Int      @id @default(autoincrement())
   date        DateTime @db.Date()
-  isRepeating Boolean  @default(false)
+  isRecurring Boolean
   category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId  Int
 

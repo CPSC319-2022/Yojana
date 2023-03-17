@@ -6,6 +6,8 @@ export const intervalToNumMonths = (interval: CalendarInterval) => {
       return 12
     case CalendarInterval.FOUR_MONTHS:
       return 4
+    case CalendarInterval.QUARTERLY:
+      return 3
     case CalendarInterval.MONTH:
       return 1
   }

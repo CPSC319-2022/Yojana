@@ -4,7 +4,7 @@ export const generateDatesFromCron = (
   cron: string | undefined,
   start: string,
   end: string
-): { date: string; isRepeating: boolean }[] => {
+): { date: string; isRecurring: boolean }[] => {
   if (!cron) return []
   const dates = []
   try {
@@ -19,7 +19,7 @@ export const generateDatesFromCron = (
       try {
         dates.push({
           date: interval.next().value.toDate().toISOString(),
-          isRepeating: true
+          isRecurring: true
         })
       } catch (e) {
         break

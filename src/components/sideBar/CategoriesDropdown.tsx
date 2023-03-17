@@ -63,7 +63,7 @@ const HoverDropdown = ({
           onClick={handleClosePopover}
         />
       )}
-      <Popover as='div' className='relative inline-block text-left'>
+      <Popover as='div' className='relative mt-1 inline-block text-left'>
         <>
           <Popover.Button
             as={Button}

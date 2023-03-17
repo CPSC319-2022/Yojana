@@ -112,7 +112,7 @@ const _addEntriesToEntryMap = (entryMap: EntryMap, entries: EntryWithoutCategory
     entryMap[year][month][day].push({
       id: entry.id,
       date: entry.date,
-      isRepeating: entry.isRepeating,
+      isRecurring: entry.isRecurring,
       categoryId: categoryId
     })
   })

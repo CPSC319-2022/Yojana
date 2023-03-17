@@ -106,8 +106,11 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
       store.dispatch(setYearOverflow(yearOverflowCookie))
     }
 
+    // current session
+    const session = await getServerSession(req, res, authOptions)
+
     // make query to database to get categories
-    const categories = await getCategories()
+    const categories = await getCategories(session?.user.id)
     // add show property to each category based on cookie value
     const appDate = categories.map((category) => {
       let show = true
@@ -126,7 +129,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     return {
       props: {
         sidebarOpenInitial,
-        session: await getServerSession(req, res, authOptions)
+        session
       }
     }
   }
