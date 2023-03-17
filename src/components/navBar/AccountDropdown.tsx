@@ -65,7 +65,7 @@ export const AccountDropdown = () => {
             }}
           />
         </Dropdown.Accordion>
-        <Dropdown.Button key='Print' label='Print' onClick={handlePrint} />
+        <Dropdown.Button key='Print Calendar' label='Print Calendar' onClick={handlePrint} />
         <Dropdown.Button key='Logout' label='Logout' onClick={() => signOut()} />
       </Dropdown>
       <ComponentToPrint ref={printComponentRef} />
