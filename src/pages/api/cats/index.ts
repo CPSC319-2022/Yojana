@@ -4,11 +4,24 @@ import dayjs from 'dayjs'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Entry } from '@prisma/client'
 import { getToken } from 'next-auth/jwt'
+import z from 'zod'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case 'GET':
-      const categories = await getCategories()
+      const schema = z.object({
+        userID: z.string().optional(),
+        year: z.number().optional()
+      })
+      let id, year
+      try {
+        const parsed = schema.parse(req.query)
+        id = parsed.userID
+        year = parsed.year
+      } catch (e) {
+        return res.status(400).send('Bad Request')
+      }
+      const categories = await getCategories(id, year)
       return res.status(200).json(categories)
     case 'PUT': {
       const token = await getToken({ req })

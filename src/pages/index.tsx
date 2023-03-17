@@ -3,9 +3,9 @@ import { MainCalendar } from '@/components/mainCalendar'
 import { NavBar } from '@/components/navBar'
 import { SideBar } from '@/components/sideBar/'
 import { CalendarInterval } from '@/constants/enums'
-import { getCategories } from '@/prisma/queries'
+import { getCategories, getCategoriesWithoutEntries } from '@/prisma/queries'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { setAppData } from '@/redux/reducers/AppDataReducer'
+import { setAppData, updateAppData } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates, resetSelectedDates, setIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import { setDate, setInterval } from '@/redux/reducers/MainCalendarReducer'
 import { wrapper } from '@/redux/store'
@@ -17,6 +17,8 @@ import { useEffect, useState } from 'react'
 import { authOptions } from './api/auth/[...nextauth]'
 import { setCookieMaxAge } from '@/utils/cookies'
 import { defaultPreferences, setYearOverflow, setYearShowGrid } from '@/redux/reducers/PreferencesReducer'
+import z from 'zod'
+import { CategoryFull } from '@/types/prisma'
 
 interface CalendarProps {
   sidebarOpenInitial: boolean
@@ -27,6 +29,17 @@ const Calendar = ({ sidebarOpenInitial, session }: CalendarProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(sidebarOpenInitial)
   const dispatch = useAppDispatch()
   const isSelectingDates = useAppSelector((state) => getIsSelectingDates(state))
+
+  // get complete AppData from database on initial render
+  useEffect(() => {
+    const getAllAppData = async () => {
+      const response = await fetch(`/api/cats?userID=${session?.user.id}`)
+      const categories: CategoryFull[] = await response.json()
+      dispatch(updateAppData(categories))
+    }
+    getAllAppData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // reset selected dates when sidebar is closed while in date selection mode
   useEffect(() => {
@@ -60,17 +73,36 @@ const Calendar = ({ sidebarOpenInitial, session }: CalendarProps) => {
   )
 }
 
+// schema for query params
+const querySchema = z.object({
+  interval: z.nativeEnum(CalendarInterval).optional(),
+  date: z
+    .string()
+    .refine((date) => dayjs(date).isValid())
+    .optional()
+})
+
 // get data from database on server side
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps((store) => {
   return async ({ req, res, query }) => {
-    const { interval, date } = query
-    // check if date query param is valid
-    if (date && typeof date === 'string' && dayjs(date).isValid()) {
+    // check if query params are valid
+    const parsedQuery = querySchema.safeParse(query)
+    // if query params are invalid, redirect to home page
+    if (!parsedQuery.success) {
+      return {
+        redirect: {
+          destination: '/',
+          permanent: false
+        }
+      }
+    }
+    // if query params are valid, set interval and date in redux store
+    const { interval, date } = parsedQuery.data
+    if (date) {
       store.dispatch(setDate(dayjs(date)))
     }
-    // check if interval query param is valid
-    if (interval && Object.values(CalendarInterval).includes(interval as CalendarInterval)) {
-      store.dispatch(setInterval(interval as CalendarInterval))
+    if (interval) {
+      store.dispatch(setInterval(interval))
     }
 
     // get cookies
@@ -109,8 +141,22 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     // current session
     const session = await getServerSession(req, res, authOptions)
 
-    // make query to database to get categories
-    const categories = await getCategories(session?.user.id)
+    // if date query param exists, get the year for that year, otherwise get the current year
+    const year = date ? dayjs(date).year() : dayjs().year()
+
+    const [categoriesWithoutEntries, categoriesData] = await Promise.all([
+      // make query to database to get all categories without entries
+      getCategoriesWithoutEntries(session?.user.id),
+      // make query to database to get categories with entries only if the category has en entry in the current year
+      // this reduces the amount of date being sent to the client on initial render
+      getCategories(session?.user.id, year)
+    ])
+    // add entries to each category in categoriesWithoutEntries
+    const categories: CategoryFull[] = []
+    categoriesWithoutEntries.forEach((categoryWithoutEntries) => {
+      const categoryData = categoriesData.find((cat) => cat.id === categoryWithoutEntries.id)
+      categories.push({ ...categoryWithoutEntries, entries: categoryData ? categoryData.entries : [] })
+    })
     // add show property to each category based on cookie value
     const appDate = categories.map((category) => {
       let show = true

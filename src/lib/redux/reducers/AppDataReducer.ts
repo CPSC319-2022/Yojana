@@ -1,4 +1,4 @@
-import { AppData, CategoryFullState, EntryWithoutCategoryId } from '@/types/prisma'
+import { AppData, CategoryFull, CategoryFullState, EntryWithoutCategoryId } from '@/types/prisma'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import dayjs, { Dayjs } from 'dayjs'
 import { Entry } from '@prisma/client'
@@ -41,6 +41,23 @@ const appDataSlice = createSlice({
       state.data = action.payload
       // update EntryMap
       state.entryMap = _createEntryMap(action.payload)
+    },
+    // this is used to update state.data with the complete AppData which is loaded on initial render
+    updateAppData: (state, action: PayloadAction<CategoryFull[]>) => {
+      // update data
+      state.data = state.data.map((cat) => {
+        // find the index of the category in the payload
+        const index = action.payload.findIndex((c) => c.id === cat.id)
+        if (index !== -1) {
+          // if the category is found in the payload, update the category with the payload data
+          return { ...cat, ...action.payload[index] }
+        } else {
+          // if the category is not found in the payload, return the category as is
+          return cat
+        }
+      })
+      // update EntryMap
+      state.entryMap = _createEntryMap(state.data)
     },
     addCategory: (state, action: PayloadAction<CategoryFullState>) => {
       setCookieMaxAge(`yojana.show-category-${action.payload.id}`, action.payload.show)
@@ -119,7 +136,8 @@ const _addEntriesToEntryMap = (entryMap: EntryMap, entries: EntryWithoutCategory
   return entryMap
 }
 
-export const { setAppData, addCategory, updateCategory, toggleCategory, deleteCategory } = appDataSlice.actions
+export const { setAppData, updateAppData, addCategory, updateCategory, toggleCategory, deleteCategory } =
+  appDataSlice.actions
 
 export const getCategory = (state: State, id: number) => {
   const index = state.appData.data.findIndex((cat) => cat.id === id)

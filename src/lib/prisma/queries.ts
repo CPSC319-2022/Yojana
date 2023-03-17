@@ -1,6 +1,6 @@
 import prisma from '@/prisma/prismadb'
 
-const select = {
+const selectAll = {
   id: true,
   name: true,
   description: true,
@@ -14,8 +14,8 @@ const select = {
   icon: true
 }
 
-// returns all master categories and personal categories for a user
-export const getCategories = async (creatorId?: string) => {
+// returns all master categories and personal categories for a user without the entries included
+export const getCategoriesWithoutEntries = async (creatorId?: string) => {
   return prisma.category.findMany({
     where: {
       OR: [
@@ -27,7 +27,45 @@ export const getCategories = async (creatorId?: string) => {
         }
       ]
     },
-    select
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      color: true,
+      isMaster: true,
+      cron: true,
+      startDate: true,
+      endDate: true,
+      creator: true,
+      icon: true
+    }
+  })
+}
+
+// returns all master categories and personal categories for a user for a given year (if provided)
+export const getCategories = async (creatorId?: string, year?: number) => {
+  return prisma.category.findMany({
+    where: {
+      OR: [
+        {
+          creatorId: creatorId
+        },
+        {
+          isMaster: true
+        }
+      ],
+      entries: year
+        ? {
+            some: {
+              date: {
+                gte: new Date(year, 0, 1),
+                lte: new Date(year, 11, 31)
+              }
+            }
+          }
+        : undefined
+    },
+    select: selectAll
   })
 }
 
@@ -37,7 +75,7 @@ export const getMasterCategories = async () => {
     where: {
       isMaster: true
     },
-    select
+    select: selectAll
   })
 }
 
@@ -48,7 +86,7 @@ export const getPersonalCategories = async (creatorId: string) => {
       creatorId: creatorId,
       isMaster: false
     },
-    select
+    select: selectAll
   })
 }
 
@@ -60,6 +98,6 @@ export const getCategoriesById = async (categoryIds: number[]) => {
         in: categoryIds
       }
     },
-    select
+    select: selectAll
   })
 }

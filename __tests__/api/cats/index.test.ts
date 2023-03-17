@@ -46,6 +46,21 @@ describe('/api/cats', () => {
       expect(res._getStatusCode()).toBe(200)
       expect(res._getData()).toBe(JSON.stringify(mock_cats))
     })
+
+    it('should return a 400 status code when year is invalid', async () => {
+      const req = createRequest({
+        method: 'GET',
+        url: '/cats?year=abc',
+        query: {
+          year: 'abc'
+        }
+      })
+      const res = createResponse()
+      await cats(req, res)
+
+      expect(res._getStatusCode()).toBe(400)
+      expect(res._getData()).toBe('Bad Request')
+    })
   })
 
   describe('POST', () => {
