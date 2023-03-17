@@ -16,7 +16,12 @@ import { getServerSession, Session } from 'next-auth'
 import { useEffect, useState } from 'react'
 import { authOptions } from './api/auth/[...nextauth]'
 import { setCookieMaxAge } from '@/utils/cookies'
-import { defaultPreferences, setYearOverflow, setYearShowGrid } from '@/redux/reducers/PreferencesReducer'
+import {
+  defaultPreferences,
+  setYearOverflow,
+  setYearShowGrid,
+  setMonthCategoryAppearance
+} from '@/redux/reducers/PreferencesReducer'
 
 interface CalendarProps {
   sidebarOpenInitial: boolean
@@ -85,7 +90,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
       sidebarOpenInitial = cookies['yojana.sidebar-open'] === 'true'
     }
 
-    const { yearShowGrid, yearOverflow } = defaultPreferences
+    const { yearShowGrid, yearOverflow, monthCategoryAppearance } = defaultPreferences
 
     // set cookie for yearShowGrid
     const yearShowGridCookie = cookies[yearShowGrid.cookieName]
@@ -105,7 +110,14 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
       // if yearOverflow cookie is defined and valid, set yearOverflow to the value of the cookie
       store.dispatch(setYearOverflow(yearOverflowCookie))
     }
-
+    // set cookie for monthCategoryAppearance
+    const monthCategoryAppearanceCookie = cookies[monthCategoryAppearance.cookieName]
+    if (monthCategoryAppearanceCookie === undefined) {
+      setCookieMaxAge(monthCategoryAppearance.cookieName, monthCategoryAppearance.value, { req, res })
+    } else {
+      // if the month cookie is defined, set monthCategoryAppearance to banners or icons based on the value of the cookie
+      store.dispatch(setMonthCategoryAppearance(monthCategoryAppearanceCookie === 'icons' ? 'icons' : 'banners'))
+    }
     // current session
     const session = await getServerSession(req, res, authOptions)
 

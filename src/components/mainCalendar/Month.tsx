@@ -12,6 +12,7 @@ import {
   toggleIndividualDate
 } from '@/redux/reducers/DateSelectorReducer'
 import { Icon, IconName } from '@/components/common'
+import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 
 interface MonthProps {
   monthOffset: number
@@ -31,7 +32,8 @@ export const Month = (props: MonthProps) => {
   const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
   const isSelectingDates = useAppSelector(getIsSelectingDates)
   const dispatch = useAppDispatch()
-  const [useBanners, setUseBanners] = useState(isMonthView)
+  const preferences = useAppSelector(getPreferences)
+  const [useBanners, setUseBanners] = useState(isMonthView && preferences.monthCategoryAppearance.value === 'banners')
 
   const [targetDate, setTargetDate] = useState(referenceDate.add(props.monthOffset, 'month'))
   const [monthStartDate, setMonthStartDate] = useState(targetDate.startOf('month'))
@@ -81,8 +83,8 @@ export const Month = (props: MonthProps) => {
   }, [])
 
   useEffect(() => {
-    setUseBanners(isMonthView)
-  }, [isMonthView])
+    setUseBanners(isMonthView && preferences.monthCategoryAppearance.value === 'banners')
+  }, [isMonthView, preferences.monthCategoryAppearance.value])
 
   useEffect(() => {
     const newTarget = referenceDate.add(props.monthOffset, 'month')
@@ -140,7 +142,11 @@ export const Month = (props: MonthProps) => {
                   color: ${category.color};
                 }
               `}</style>
-              <Icon iconName={category.icon as IconName} className={`inline ${className}`} />
+              {isMonthView ? (
+                <Icon iconName={category.icon as IconName} className={`inline ${className}`} size={23} />
+              ) : (
+                <Icon iconName={category.icon as IconName} className={`inline ${className}`} />
+              )}
             </span>
           )
         }
