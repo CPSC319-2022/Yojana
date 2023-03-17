@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { FiletypeCsv } from 'react-bootstrap-icons'
 import csv from 'csv-parser'
@@ -42,6 +42,11 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchRespons
     })
   }, [])
 
+  // useEffect if CsvEntries changes, then do something
+  useEffect(() => {
+    console.log(csvEntries)
+  }, [csvEntries])
+
   const handleSubmit = async () => {
     let entryMap: EntryMap = {}
     try {
@@ -51,6 +56,7 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchRespons
           entryMap[entry.Category] = [...(entryMap[entry.Category] ?? []), new Date(entry.Date).toISOString()]
         }
       }
+      console.log(entryMap, 'entryMap')
     } catch (error) {
       onSuccess({ createdEntries: [], appData: [] }, 'make sure your csv file is formatted correctly')
       return

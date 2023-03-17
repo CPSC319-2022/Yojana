@@ -12,6 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(401).send('Unauthorized')
   }
   const categories = req.body
+  // TODO: Report all missing category names, fail if any are missing
   const validCategories = await prisma.category.findMany({
     where: {
       name: {
@@ -19,6 +20,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
     }
   })
+  console.log(validCategories, 'validCategories')
+
+  // const existingCategories = await getCategories()
+  // console.log(existingCategories, 'existingCategories')
+
+  // TODO: Add logic to keep track of duplicate entries i.e adding an entry to a date when there is already one there,
+  //  report to frontend if any are found
   let entriesToAdd = []
   for (const categoryToAddTo of Object.keys(categories)) {
     for (const newDate of categories[categoryToAddTo]) {
@@ -32,6 +40,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
     }
   }
+  console.log(entriesToAdd)
   try {
     await prisma.entry.createMany({
       data: entriesToAdd.map(({ date, isRecurring, categoryId }) => ({
@@ -52,6 +61,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }))
       }
     })
+    // TODO: Add logic to fail if no entries were added. Could be blue alert on frontend
     let appData = await getCategories()
     const response = {
       appData: appData,
