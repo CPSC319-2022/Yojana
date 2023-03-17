@@ -13,46 +13,95 @@ export const data = [
     isAdmin: true,
     categories: [
       {
-        name: 'PayDay',
-        description: 'This is the day you get paid',
+        name: 'Statutory Holiday',
+        description: 'Statutory holidays in Canada',
         color: tcolors.emerald[500],
         isMaster: true,
-        icon: 'CurrencyDollar'
+        icon: 'Circle'
       },
       {
-        name: 'Holiday',
-        description: 'Statuary holidays',
+        name: 'Month End',
+        description: 'Month End',
         color: tcolors.red[500],
         isMaster: true,
-        icon: 'CalendarDateFill'
+        icon: 'XLg'
       },
       {
-        name: 'Work from home',
-        description: 'Work from home',
-        color: tcolors.sky[500],
+        name: 'Plan',
+        description: 'Plan',
+        color: tcolors.orange[500],
         isMaster: true,
-        icon: 'HouseFill'
+        icon: 'Hexagon'
       },
       {
-        name: 'Shareholder meeting',
+        name: 'EPSP',
         description: 'Shareholder meeting',
         color: tcolors.violet[500],
         isMaster: true,
-        icon: 'SuitSpadeFill'
+        icon: 'App'
       },
       {
-        name: 'Vacation',
-        description: 'Corporate retrieve',
-        color: tcolors.slate[900],
-        isMaster: true,
-        icon: 'AirplaneFill'
-      },
-      {
-        name: 'Birthday',
-        description: 'List of Birthdays',
+        name: 'Group Board Meeting',
+        description: 'Group Board Meeting',
         color: tcolors.amber[500],
         isMaster: true,
-        icon: 'BalloonFill'
+        icon: 'ChevronUp'
+      },
+      {
+        name: 'ASHCO Board Meeting',
+        description: 'ASHCO Board Meeting',
+        color: tcolors.fuchsia[500],
+        isMaster: true,
+        icon: 'ChevronDoubleUp'
+      },
+      {
+        name: 'Management Meeting',
+        description: 'Management Meeting',
+        color: tcolors.fuchsia[500],
+        isMaster: true,
+        icon: 'Diamond'
+      },
+      {
+        name: 'Expense Cutoff',
+        description: 'Expense Cutoff',
+        color: tcolors.gray[500],
+        isMaster: true,
+        icon: 'Bank'
+      },
+      {
+        name: 'Annual General Meeting',
+        description: 'Annual General Meeting',
+        color: tcolors.yellow[500],
+        isMaster: true,
+        icon: 'MegaphoneFill'
+      },
+      {
+        name: 'Preliminary Forecast',
+        description: 'Preliminary Forecast',
+        color: tcolors.indigo[500],
+        isMaster: true,
+        icon: 'Thunderbolt'
+      },
+      {
+        name: 'Forecast',
+        description: 'Forecast',
+        color: tcolors.cyan[500],
+        isMaster: true,
+        icon: 'Braces'
+      },
+      {
+        name: 'UBAR Distribution',
+        description: 'UBAR Distribution',
+        color: tcolors.lime[500],
+        isMaster: true,
+        icon: 'ArrowReturnLeft'
+      },
+      {
+        name: 'Office Closed',
+        description: 'Office Closed',
+        color: tcolors.sky[500],
+        isMaster: true,
+        icon: 'CloudFill'
       }
     ]
   }
@@ -111,7 +160,7 @@ const seed = async () => {
             entries: {
               createMany: {
                 // create 100 random dates for each category
-                data: generateRandomDates(new Date(2022, 0, 1), new Date(2024, 11, 31), 100, category.name)
+                data: []
               }
             }
           }
