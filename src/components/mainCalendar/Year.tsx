@@ -4,7 +4,8 @@ import { getCategoryMap, getYear } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates, getYearSelectedDates, toggleIndividualDate } from '@/redux/reducers/DateSelectorReducer'
 import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
-import dayjs, { Dayjs } from 'dayjs'
+import { default as daytz } from '@/utils/daytz'
+import { Dayjs } from 'dayjs'
 import { useCallback, useMemo } from 'react'
 
 export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) => {
@@ -15,7 +16,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
   const yearSelected = useAppSelector((state) => getYearSelectedDates(state, stateDate))
   const preferences = useAppSelector(getPreferences)
 
-  const yearStartDate = dayjs(stateDate).startOf('year')
+  const yearStartDate = daytz.tz(stateDate).startOf('year')
   const yearNum = yearStartDate.get('year')
 
   const dispatch = useAppDispatch()
@@ -76,13 +77,13 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
 
   const renderDay = useCallback(
     (monthNum: number, dateOffset: number) => {
-      const monthStartDate = dayjs(yearStartDate).add(monthNum, 'month')
+      const monthStartDate = daytz.tz(yearStartDate).add(monthNum, 'month')
       if (monthStartDate.daysInMonth() <= dateOffset) {
         return <span key={`${yearNum}-${monthNum}-${dateOffset}`}>&nbsp;</span>
       }
 
       const day = monthStartDate.add(dateOffset, 'days')
-      const isToday = day.isSame(dayjs(), 'day')
+      const isToday = day.isSame(daytz(), 'day')
       const isWeekend = day.day() === 0 || day.day() === 6
       const selected = yearSelected?.[monthNum]?.[day.date()]
       const backgroundColor = getDateBackgroundColour(isWeekend, selected?.isSelected, selected?.isRecurring)
@@ -122,7 +123,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
   const monthHeaders = useMemo(() => {
     return Array.from(Array(15).keys()).map((columnNum) => {
       const monthNum = columnNum - Math.ceil(columnNum / 5)
-      const monthStartDate = dayjs(yearStartDate).add(monthNum, 'month')
+      const monthStartDate = daytz(yearStartDate).add(monthNum, 'month')
       return (
         <h3 className='sticky top-0 bg-slate-100 text-center text-slate-400' key={`col-${columnNum}-header`}>
           {columnNum % 5 === 0 ? '\u00A0' : monthStartDate.format('MMM')}

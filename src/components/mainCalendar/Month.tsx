@@ -1,17 +1,18 @@
-import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
 import { getDate, isMonthInterval, isQuarterlyInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
-import dayjs, { Dayjs } from 'dayjs'
+import { default as daytz } from '@/utils/daytz'
 import { Popover, Transition } from '@headlessui/react'
+import { Dayjs } from 'dayjs'
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+import { Icon, IconName } from '@/components/common'
 import {
   getIsSelectingDates,
   getPrevCurrNextMonthSelectedDates,
   toggleIndividualDate
 } from '@/redux/reducers/DateSelectorReducer'
-import { Icon, IconName } from '@/components/common'
 
 interface MonthProps {
   monthOffset: number
@@ -28,7 +29,7 @@ export const Month = (props: MonthProps) => {
   const isMonthView = useAppSelector(isMonthInterval)
   const isQuarterlyView = useAppSelector(isQuarterlyInterval)
   const stateDate = useAppSelector(getDate)
-  const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
+  const referenceDate = useAppSelector(isYearInterval) ? daytz.tz(stateDate).startOf('year') : stateDate
   const isSelectingDates = useAppSelector(getIsSelectingDates)
   const dispatch = useAppDispatch()
   const [useBanners, setUseBanners] = useState(isMonthView)
@@ -240,7 +241,7 @@ export const Month = (props: MonthProps) => {
 
   const renderDateNum = useCallback(
     (day: Dayjs, isCurrentMonth: boolean) => {
-      const isToday = dayjs().isSame(day, 'day')
+      const isToday = daytz().isSame(day, 'day')
       const todayCircle = isToday && !isSelectingDates ? 'rounded-full bg-emerald-200' : ''
       return (
         <div className={`flex ${isMonthView ? 'items-center justify-center' : ''}`}>

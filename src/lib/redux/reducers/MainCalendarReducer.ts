@@ -1,7 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { CalendarInterval } from '@/constants/enums'
-import dayjs, { Dayjs } from 'dayjs'
 import { intervalToNumMonths } from '@/utils/month'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Dayjs } from 'dayjs'
+import { default as daytz } from '@/utils/daytz'
 import { HYDRATE } from 'next-redux-wrapper'
 
 interface State {
@@ -13,7 +14,7 @@ interface State {
 
 const initialState = {
   interval: CalendarInterval.YEAR,
-  date: dayjs().unix()
+  date: daytz().unix()
 }
 
 const mainCalendarSlice = createSlice({
@@ -27,13 +28,13 @@ const mainCalendarSlice = createSlice({
       state.date = action.payload.unix()
     },
     incrementDate: (state) => {
-      state.date = dayjs.unix(state.date).add(intervalToNumMonths(state.interval), 'M').unix()
+      state.date = daytz.unix(state.date).add(intervalToNumMonths(state.interval), 'M').unix()
     },
     decrementDate: (state) => {
-      state.date = dayjs.unix(state.date).subtract(intervalToNumMonths(state.interval), 'M').unix()
+      state.date = daytz.unix(state.date).subtract(intervalToNumMonths(state.interval), 'M').unix()
     },
     jumpToToday: (state) => {
-      state.date = dayjs().unix()
+      state.date = daytz().unix()
     }
   },
   extraReducers: {
@@ -51,5 +52,5 @@ export const getInterval = (state: State) => state.mainCalendar.interval
 export const isYearInterval = (state: State) => state.mainCalendar.interval === CalendarInterval.YEAR
 export const isQuarterlyInterval = (state: State) => state.mainCalendar.interval === CalendarInterval.QUARTERLY
 export const isMonthInterval = (state: State) => state.mainCalendar.interval === CalendarInterval.MONTH
-export const getDate = (state: State) => dayjs.unix(state.mainCalendar.date)
+export const getDate = (state: State) => daytz.unix(state.mainCalendar.date)
 export const mainCalendarReducer = mainCalendarSlice.reducer

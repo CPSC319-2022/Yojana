@@ -1,9 +1,9 @@
-import { useAppSelector } from '@/redux/hooks'
-import { getDate, getInterval, isQuarterlyInterval } from '@/redux/reducers/MainCalendarReducer'
-import { intervalToNumMonths } from '@/utils/month'
 import { Month } from '@/components/mainCalendar/Month'
-import dayjs from 'dayjs'
+import { useAppSelector } from '@/redux/hooks'
 import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
+import { getDate, getInterval, isQuarterlyInterval } from '@/redux/reducers/MainCalendarReducer'
+import { default as daytz } from '@/utils/daytz'
+import { intervalToNumMonths } from '@/utils/month'
 
 export const MultiMonth = () => {
   const targetDate = useAppSelector(getDate)
@@ -12,13 +12,13 @@ export const MultiMonth = () => {
   const isSelectingDates = useAppSelector(getIsSelectingDates)
 
   const quarterlyMonths = Array.from(Array(intervalToNumMonths(activeCalView)).keys()).map((monthNum) => {
-    const dateInMonth = dayjs(targetDate).add(monthNum, 'month')
+    const dateInMonth = daytz.tz(targetDate).add(monthNum, 'month')
     return (
       <div key={monthNum} className='flex flex-row items-center py-1'>
         <div className='flex w-1/6 flex-row pl-2 text-lg'>
           <h3 className='font-medium'>{dateInMonth.format('MM')}</h3>
           <h3 className='px-2'>•</h3>
-          <h3>{dayjs(targetDate).add(monthNum, 'month').format('MMMM')}</h3>
+          <h3>{daytz.tz(targetDate).add(monthNum, 'month').format('MMMM')}</h3>
         </div>
         <Month className='h-full w-5/6' monthOffset={monthNum} key={monthNum}></Month>
       </div>
@@ -28,7 +28,7 @@ export const MultiMonth = () => {
   const fourMonthMonths = Array.from(Array(intervalToNumMonths(activeCalView)).keys()).map((monthNum) => {
     return (
       <div key={monthNum}>
-        <h3 className='pl-1'>{dayjs(targetDate).add(monthNum, 'month').format('MMMM')}</h3>
+        <h3 className='pl-1'>{daytz.tz(targetDate).add(monthNum, 'month').format('MMMM')}</h3>
         <Month className='h-[90%] flex-grow' monthOffset={monthNum} key={monthNum}></Month>
       </div>
     )

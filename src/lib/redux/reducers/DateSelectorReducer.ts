@@ -1,7 +1,8 @@
+import { default as daytz } from '@/utils/daytz'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { HYDRATE } from 'next-redux-wrapper'
 import dayjs, { Dayjs } from 'dayjs'
 import { cloneDeep, merge } from 'lodash'
+import { HYDRATE } from 'next-redux-wrapper'
 
 // year: 2023
 // month: 0-11
@@ -93,7 +94,7 @@ const dateSelectorSlice = createSlice({
 
 const _addNewDates = (selectedDates: DateSelectionMap, dates: { date: string | Date; isRecurring: boolean }[]) => {
   dates.forEach(({ date, isRecurring }) => {
-    const d = dayjs(date)
+    const d = daytz.tz(date)
     const year = d.year()
     const month = d.month()
     const day = d.date()

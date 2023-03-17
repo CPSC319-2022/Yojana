@@ -1,6 +1,5 @@
-import { ColorPicker } from './ColorPicker'
+import CategoryTypePicker from '@/components/CategoryModal/CategoryTypePicker'
 import { Button, Icon, Modal, Tabs } from '@/components/common'
-import { DayOfWeek, DayOfWeekPicker } from './DayOfWeekPicker'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setAlert } from '@/redux/reducers/AlertReducer'
 import { addCategory, getCategory, updateCategory } from '@/redux/reducers/AppDataReducer'
@@ -15,18 +14,19 @@ import {
 import { EntryWithoutCategoryId } from '@/types/prisma'
 import { randomColor } from '@/utils/color'
 import { generateDatesFromCron } from '@/utils/dates'
+import { default as daytz } from '@/utils/daytz'
 import { Disclosure, Transition } from '@headlessui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Category, Entry } from '@prisma/client'
-import dayjs from 'dayjs'
 import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { IconPicker, iconPickerIcons } from './IconPicker'
+import { ColorPicker } from './ColorPicker'
 import { DayOfMonthPicker, MonthRecurrence, monthRecurrenceCrons, MonthRecurrenceType } from './DayOfMonthPicker'
+import { DayOfWeek, DayOfWeekPicker } from './DayOfWeekPicker'
+import { IconPicker, iconPickerIcons } from './IconPicker'
 import { IconSearchModal } from './IconSearchModal'
-import CategoryTypePicker from '@/components/CategoryModal/CategoryTypePicker'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
@@ -43,7 +43,7 @@ const schema = z.object({
     .refine(
       (object) => {
         if (object.cron) {
-          return dayjs(object.endDate).isAfter(object.startDate)
+          return daytz.tz(object.endDate).isAfter(object.startDate)
         }
         return true
       },
@@ -102,7 +102,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       .map((entry) => {
         return {
           // TODO: Fix this hack to get the correct date, ignore timezones
-          date: dayjs(entry.date).add(1, 'day').toISOString(),
+          date: daytz.tz(entry.date).toISOString(),
           isRecurring: isRecurring
         }
       })
@@ -126,8 +126,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           icon: randomIcon(),
           repeating: {
             cron: '',
-            startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
-            endDate: dayjs().endOf('year').format('YYYY-MM-DD')
+            startDate: daytz().startOf('year').format('YYYY-MM-DD'),
+            endDate: daytz().endOf('year').format('YYYY-MM-DD')
           },
           isMaster: false
         }
@@ -139,8 +139,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           repeating: {
             cron: currentState?.cron || '',
             startDate:
-              currentState?.startDate?.toString().split('T')[0] || dayjs().startOf('year').format('YYYY-MM-DD'),
-            endDate: currentState?.endDate?.toString().split('T')[0] || dayjs().endOf('year').format('YYYY-MM-DD')
+              currentState?.startDate?.toString().split('T')[0] || daytz().startOf('year').format('YYYY-MM-DD'),
+            endDate: currentState?.endDate?.toString().split('T')[0] || daytz().endOf('year').format('YYYY-MM-DD')
           },
           isMaster: currentState?.isMaster
         }
@@ -174,8 +174,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       userType: true,
       repeating: {
         cron: undefined,
-        startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
-        endDate: dayjs().endOf('year').format('YYYY-MM-DD')
+        startDate: daytz().startOf('year').format('YYYY-MM-DD'),
+        endDate: daytz().endOf('year').format('YYYY-MM-DD')
       },
       isMaster: false
     }))
@@ -378,7 +378,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           control={control}
           name='repeating.cron'
           rules={{ required: false }}
-          startDate={dayjs(watchStartDate)}
+          startDate={daytz.tz(watchStartDate)}
           selectedRecurrenceType={selectedMonthRecurrenceCron}
           setSelectedRecurrenceType={setSelectedMonthRecurrenceCron}
           updateState={(cron) => {

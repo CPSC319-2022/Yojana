@@ -1,8 +1,8 @@
 import prisma from '@/prisma/prismadb'
 import { getCategories } from '@/prisma/queries'
-import dayjs from 'dayjs'
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { default as daytz } from '@/utils/daytz'
 import { Entry } from '@prisma/client'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { getToken } from 'next-auth/jwt'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -35,13 +35,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               isMaster: req.body.isMaster,
               icon: req.body.icon,
               cron: req.body.cron,
-              startDate: req.body.startDate ? dayjs(req.body.startDate).toISOString() : null,
-              endDate: req.body.endDate ? dayjs(req.body.endDate).toISOString() : null,
+              startDate: req.body.startDate ? daytz.tz(req.body.startDate).toISOString() : null,
+              endDate: req.body.endDate ? daytz.tz(req.body.endDate).toISOString() : null,
               entries: {
                 createMany: {
                   data: req.body.dates.map(
                     ({ date, isRecurring = false }: { date: string; isRecurring?: boolean }) => ({
-                      date: dayjs(date).toISOString(),
+                      date: daytz.tz(date).toISOString(),
                       isRecurring: isRecurring
                     })
                   ),
@@ -74,12 +74,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           creatorId: req.body.creatorId,
           icon: req.body.icon,
           cron: req.body.cron,
-          startDate: req.body.startDate ? dayjs(req.body.startDate).toISOString() : null,
-          endDate: req.body.endDate ? dayjs(req.body.endDate).toISOString() : null,
+          startDate: req.body.startDate ? daytz.tz(req.body.startDate).toISOString() : null,
+          endDate: req.body.endDate ? daytz.tz(req.body.endDate).toISOString() : null,
           entries: {
             createMany: {
               data: req.body.dates.map(({ date, isRecurring = false }: { date: string; isRecurring?: boolean }) => ({
-                date: dayjs(date).toISOString(),
+                date: daytz.tz(date).toISOString(),
                 isRecurring: isRecurring
               })),
               skipDuplicates: true
