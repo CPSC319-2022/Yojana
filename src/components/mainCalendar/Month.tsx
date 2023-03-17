@@ -52,6 +52,7 @@ export const Month = (props: MonthProps) => {
   )
 
   const [nonOverflowElemCount, setNonOverflowElemCount] = useState(0)
+  const [measureSizeCounter, setMeasureSizeCounter] = useState(0)
   const numTimesSizeSet = useRef(0)
 
   useEffect(() => {
@@ -75,14 +76,17 @@ export const Month = (props: MonthProps) => {
     numTimesSizeSet.current = 0
   }, [calendarInterval, monthStartDate, useBanners])
   useEffect(() => {
-    const windowResizeListener = () => (numTimesSizeSet.current = 0)
+    const windowResizeListener = () => {
+      numTimesSizeSet.current = 0
+      setMeasureSizeCounter(measureSizeCounter + 1)
+    }
     window.addEventListener('resize', windowResizeListener)
     return () => {
       window.removeEventListener('resize', windowResizeListener)
     }
-  }, [])
+  }, [measureSizeCounter])
 
-  // If the day's size has changed, recompute how many elements fit in it.
+  // If the day's reference has changed, recompute how many elements fit in it.
   const categoryContainerRef = useCallback(
     (node: HTMLDivElement) => {
       if (node !== null && numTimesSizeSet.current < MAX_TIMES_SIZE_SET) {
@@ -93,7 +97,8 @@ export const Month = (props: MonthProps) => {
         numTimesSizeSet.current += 1
       }
     },
-    [useBanners]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [useBanners, measureSizeCounter]
   )
 
   const getEntriesOnDay = useCallback(
