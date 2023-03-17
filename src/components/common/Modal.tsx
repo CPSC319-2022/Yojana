@@ -33,6 +33,7 @@ interface ModalProps {
   overrideDefaultButtonStyle?: boolean
   closeParent?: () => void
   scrollable?: boolean
+  id?: string
 }
 
 export const Modal = ({
@@ -58,7 +59,8 @@ export const Modal = ({
   overrideDefaultButtonStyle = false,
   closeParent,
   bodyPadding = 'px-6 pb-6 pt-3',
-  scrollable = true
+  scrollable = true,
+  id
 }: ModalProps) => {
   const directionClass = direction ? `absolute ${direction}-0 my-10` : ''
   const disable = useAppSelector(getIsSelectingDates)
@@ -113,6 +115,7 @@ export const Modal = ({
                       scrollable ? 'overflow-y-auto' : 'overflow-y-hidden'
                     } rounded-md bg-white text-left align-middle shadow-modal transition-all`}
                     style={{ maxWidth: maxWidth, maxHeight: maxHeight, minWidth: minWidth }}
+                    id={id}
                   >
                     {showCloseBtn && (
                       <div

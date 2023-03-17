@@ -58,7 +58,9 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
           }}
           className='mr-5 px-3 pt-0.5 pb-2 text-2xl'
         />
-        <h1 className='text-2xl font-medium'>Yojana</h1>
+        <h1 className='text-2xl font-medium' id='yojana-title'>
+          Yojana
+        </h1>
       </div>
       <div className='flex w-[25vw] flex-row items-center'>
         <Button text='Today' onClick={() => dispatch(jumpToToday())} className='mr-10' />

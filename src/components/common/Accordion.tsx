@@ -20,9 +20,10 @@ interface AccordionItemProps {
   children: React.ReactNode
   defaultOpen?: boolean
   size?: 'sm' | 'md' | 'lg'
+  id?: string
 }
 
-const AccordionItem = ({ children, defaultOpen = true, size = 'sm' }: AccordionItemProps) => {
+const AccordionItem = ({ children, defaultOpen = true, size = 'sm', id }: AccordionItemProps) => {
   const header = getChildByType(children, Accordion.Header)
   const body = getChildByType(children, Accordion.Body)
   if (!header || !body) {
@@ -31,13 +32,13 @@ const AccordionItem = ({ children, defaultOpen = true, size = 'sm' }: AccordionI
   const sizeClass = size === 'sm' ? 'text-sm' : size === 'md' ? 'text-base' : 'text-lg'
 
   return (
-    <Disclosure defaultOpen={defaultOpen}>
+    <Disclosure defaultOpen={defaultOpen} as='div' id={id}>
       {({ open }) => (
         <>
           <Disclosure.Button
             className={`flex w-full justify-between rounded-lg bg-emerald-100 px-4 py-2 text-left ${sizeClass} font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none focus-visible:ring focus-visible:ring-emerald-500 focus-visible:ring-opacity-75`}
           >
-            <span>{header}</span>
+            {header}
             <Icon iconName='ChevronUp' className={`${open ? 'rotate-180 transform' : ''} h-5 w-5`} />
           </Disclosure.Button>
           <Disclosure.Panel className={`px-4 pb-2 ${sizeClass} text-slate-600`}>{body}</Disclosure.Panel>
@@ -49,7 +50,7 @@ const AccordionItem = ({ children, defaultOpen = true, size = 'sm' }: AccordionI
 Accordion.Item = AccordionItem
 
 const AccordionHeader = ({ children }: { children: React.ReactNode }) => {
-  return <>{children}</>
+  return <span>{children}</span>
 }
 Accordion.Header = AccordionHeader
 
