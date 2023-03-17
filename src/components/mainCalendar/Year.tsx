@@ -49,7 +49,7 @@ export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
   )
 
   const getDateBackgroundColour = useCallback(
-    (isWeekend: boolean, isToday: boolean, isSelected?: boolean, isRecurring?: boolean) => {
+    (isWeekend: boolean, isSelected?: boolean, isRecurring?: boolean) => {
       if (!isSelectingDates) {
         return isWeekend ? 'bg-slate-100' : 'bg-white'
       } else {
@@ -85,7 +85,7 @@ export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
       const isToday = day.isSame(dayjs(), 'day')
       const isWeekend = day.day() === 0 || day.day() === 6
       const selected = yearSelected?.[monthNum]?.[day.date()]
-      const backgroundColor = getDateBackgroundColour(isWeekend, isToday, selected?.isSelected, selected?.isRecurring)
+      const backgroundColor = getDateBackgroundColour(isWeekend, selected?.isSelected, selected?.isRecurring)
 
       return (
         <div
@@ -93,7 +93,7 @@ export const Year = ({ getForPrinting }: { getForPrinting: boolean }) => {
             ${backgroundColor} 
             ${isSelectingDates && !selected?.isRecurring ? 'cursor-pointer' : ''} 
             ${isSelectingDates && !selected?.isSelected ? 'hover:ring-2 hover:ring-inset hover:ring-emerald-200' : ''}
-            ${!isSelectingDates && isToday ? 'ring-2 ring-inset ring-emerald-300' : ''}
+            ${!isSelectingDates && isToday && !getForPrinting ? 'ring-2 ring-inset ring-emerald-300' : ''}
             ${
               preferences.yearOverflow.value === 'expand' || getForPrinting
                 ? 'inline-flow break-all'
