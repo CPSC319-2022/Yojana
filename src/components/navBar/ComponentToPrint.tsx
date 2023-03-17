@@ -11,11 +11,11 @@ const ComponentToPrint = React.forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <span className='relative hidden'>
-      <div ref={ref} className='mx-2 h-auto w-auto overflow-visible border'>
+      <div ref={ref} className='h-auto w-auto overflow-visible border'>
         <div className='absolute bottom-0 left-0 right-0 pb-2'>
-          <div className='grid grid-cols-[repeat(6,1fr)] gap-1'>
+          <div className='grid grid-cols-[repeat(6,1fr)] gap-1 px-4'>
             {categories.map((category) => (
-              <div key={category.id} className='bg-white text-center'>
+              <div key={category.id} className='bg-white text-left'>
                 <Icon iconName={category.icon as IconName} color={category.color} className='mr-2 inline' />
                 {category.name}
               </div>
