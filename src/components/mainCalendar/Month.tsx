@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
@@ -52,7 +52,7 @@ export const Month = (props: MonthProps) => {
   )
 
   const [nonOverflowElemCount, setNonOverflowElemCount] = useState(0)
-  const [numTimesSizeSet, setNumTimesSizeSet] = useState(0)
+  const numTimesSizeSet = useRef(0)
 
   useEffect(() => {
     setUseBanners(isMonthView)
@@ -72,10 +72,10 @@ export const Month = (props: MonthProps) => {
 
   // Events that require resetting the resize count
   useEffect(() => {
-    setNumTimesSizeSet(0)
-  }, [calendarInterval, targetDate, useBanners])
+    numTimesSizeSet.current = 0
+  }, [calendarInterval, monthStartDate, useBanners])
   useEffect(() => {
-    const windowResizeListener = () => setNumTimesSizeSet(0)
+    const windowResizeListener = () => (numTimesSizeSet.current = 0)
     window.addEventListener('resize', windowResizeListener)
     return () => {
       window.removeEventListener('resize', windowResizeListener)
@@ -85,15 +85,15 @@ export const Month = (props: MonthProps) => {
   // If the day's size has changed, recompute how many elements fit in it.
   const categoryContainerRef = useCallback(
     (node: HTMLDivElement) => {
-      if (node !== null && numTimesSizeSet < MAX_TIMES_SIZE_SET) {
+      if (node !== null && numTimesSizeSet.current < MAX_TIMES_SIZE_SET) {
         let newCount: number
         if (useBanners) newCount = Math.floor(node.getBoundingClientRect().height / CATEGORY_BANNER_HEIGHT_PX)
         else newCount = Math.floor(node.getBoundingClientRect().width / CATEGORY_ICON_WIDTH_PX)
         setNonOverflowElemCount(newCount)
-        setNumTimesSizeSet(numTimesSizeSet + 1)
+        numTimesSizeSet.current += 1
       }
     },
-    [numTimesSizeSet, useBanners]
+    [useBanners]
   )
 
   const getEntriesOnDay = useCallback(
