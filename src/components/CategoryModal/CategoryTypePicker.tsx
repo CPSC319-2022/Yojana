@@ -24,6 +24,7 @@ const CategoryTypePicker = ({ control, name, rules }: CategoryTypePicker) => {
           value ? 'bg-emerald-100 hover:bg-emerald-200' : 'bg-slate-100 hover:bg-slate-200'
         } rounded-md px-4 py-2 text-left `}
         onClick={() => onChange(true)}
+        id='master-calendar-type-btn'
       >
         Master Calendar
       </button>
@@ -33,6 +34,7 @@ const CategoryTypePicker = ({ control, name, rules }: CategoryTypePicker) => {
           !value ? 'bg-emerald-100 hover:bg-emerald-200' : 'bg-slate-100 hover:bg-slate-200'
         } rounded-md px-4 py-2 text-left`}
         onClick={() => onChange(false)}
+        id='personal-calendar-type-btn'
       >
         Personal Calendar
       </button>

@@ -482,6 +482,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             dispatch(setRepeatingDates(generateDatesFromCron(cron, startDate, endDate)))
             handleSubmit(onSubmit)
           }}
+          id='create-category-submit-btn'
         />
       </div>
     )
@@ -503,6 +504,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         closeWhenClickOutside={false}
         handle={'create-category-modal-handle'}
         bounds={'create-category-modal-wrapper'}
+        id={'create-category-modal-div'}
         buttonClassName={
           method === 'POST' ? 'truncate' : `group flex w-full items-center rounded-md px-2 py-2 hover:bg-slate-100`
         }
