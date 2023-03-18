@@ -33,6 +33,7 @@ interface ModalProps {
   overrideDefaultButtonStyle?: boolean
   closeParent?: () => void
   scrollable?: boolean
+  showOverflow?: boolean
   id?: string
 }
 
@@ -60,6 +61,7 @@ export const Modal = ({
   closeParent,
   bodyPadding = 'px-6 pb-6 pt-3',
   scrollable = true,
+  showOverflow = false,
   id
 }: ModalProps) => {
   const directionClass = direction ? `absolute ${direction}-0 my-10` : ''
@@ -112,7 +114,7 @@ export const Modal = ({
                 {!isMinimized ? (
                   <Dialog.Panel
                     className={`${directionClass} w-full max-w-md transform ${
-                      scrollable ? 'overflow-y-auto' : 'overflow-y-hidden'
+                      scrollable ? 'overflow-y-auto' : showOverflow ? 'overflow-visible' : 'overflow-y-hidden'
                     } rounded-md bg-white text-left align-middle shadow-modal transition-all`}
                     style={{ maxWidth: maxWidth, maxHeight: maxHeight, minWidth: minWidth }}
                     id={id}

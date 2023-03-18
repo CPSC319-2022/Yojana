@@ -33,6 +33,8 @@ export const PreferenceModal = ({
       showCloseBtn={true}
       overrideDefaultButtonStyle={true}
       bodyPadding='px-4 pb-4 pt-3'
+      scrollable={false}
+      showOverflow={true}
     >
       <div className='mt-2'>
         <Accordion>
@@ -49,7 +51,7 @@ export const PreferenceModal = ({
                     setCookieMaxAge(yearOverflow.cookieName, yearOverflow.value === 'expand' ? 'scroll' : 'expand')
                   }}
                   tooltipIcon='QuestionCircle'
-                  tooltipText='wrap icons to the next line or scroll icons horizontally if there is not enough space to display them all on one line.'
+                  tooltipText='Wrap icons to the next line or scroll icons horizontally if there is not enough space to display them all on one day.'
                 />
                 <Toggle
                   textToToggle={['Show Grid', 'Hide Grid']}
