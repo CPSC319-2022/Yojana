@@ -160,6 +160,7 @@ const seed = async () => {
             entries: {
               createMany: {
                 // create 100 random dates for each category
+                // data: generateRandomDates(new Date(2022, 0, 1), new Date(2024, 11, 31), 100, category.name)
                 data: []
               }
             }
@@ -169,7 +170,8 @@ const seed = async () => {
     })
   })
 
-  await Promise.all(promises)
+  // create categories
+  await prisma.$transaction(promises)
 }
 
 seed()
