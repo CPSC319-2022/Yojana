@@ -27,6 +27,7 @@ import { IconPicker, iconPickerIcons } from './IconPicker'
 import { DayOfMonthPicker, MonthRecurrence, monthRecurrenceCrons, MonthRecurrenceType } from './DayOfMonthPicker'
 import { IconSearchModal } from './IconSearchModal'
 import CategoryTypePicker from '@/components/CategoryModal/CategoryTypePicker'
+import { preprocessEntries } from '@/utils/preprocessEntries'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
@@ -234,7 +235,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             email: session.user.email,
             isAdmin: session.user.isAdmin
           },
-          entries: data.entries
+          entries: preprocessEntries(data.entries)
         }
         dispatch(method === 'POST' ? addCategory(dispatchPayload) : updateCategory(dispatchPayload))
 
