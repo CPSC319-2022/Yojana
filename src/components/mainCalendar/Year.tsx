@@ -6,6 +6,7 @@ import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 import dayjs, { Dayjs } from 'dayjs'
 import { useCallback, useMemo } from 'react'
+import { CalendarInterval } from '@/constants/enums'
 
 export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) => {
   const stateDate = useAppSelector(getDate)
@@ -36,7 +37,14 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
                     color: ${category.color};
                   }
                 `}</style>
-                <Icon iconName={category.icon as IconName} className='inline' />
+                <Icon
+                  iconName={category.icon as IconName}
+                  category={category}
+                  calInterval={CalendarInterval.YEAR}
+                  monthOffset={monthNum}
+                  currentDay={day.date()}
+                  className='inline'
+                />
               </span>
             )
           }

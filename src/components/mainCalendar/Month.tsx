@@ -1,17 +1,17 @@
-import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Icon, IconName } from '@/components/common'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
+import { CalendarInterval } from '@/constants/enums'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
-import { getDate, isMonthInterval, isQuarterlyInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
-import dayjs, { Dayjs } from 'dayjs'
-import { Popover, Transition } from '@headlessui/react'
-
 import {
   getIsSelectingDates,
   getPrevCurrNextMonthSelectedDates,
   toggleIndividualDate
 } from '@/redux/reducers/DateSelectorReducer'
-import { Icon, IconName } from '@/components/common'
+import { getDate, isMonthInterval, isQuarterlyInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
+import { Popover, Transition } from '@headlessui/react'
+import dayjs, { Dayjs } from 'dayjs'
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 interface MonthProps {
   monthOffset: number
@@ -25,6 +25,7 @@ const CATEGORY_ICON_WIDTH_PX = 24
 const MAX_TIMES_SIZE_SET = 2
 
 export const Month = (props: MonthProps) => {
+  const startingMonthNum = props.monthOffset
   const isMonthView = useAppSelector(isMonthInterval)
   const isQuarterlyView = useAppSelector(isQuarterlyInterval)
   const stateDate = useAppSelector(getDate)
@@ -130,6 +131,11 @@ export const Month = (props: MonthProps) => {
               icon={category.icon as IconName}
               key={`${key}-${entry.categoryId}`}
               className={className}
+              category={category}
+              calInterval={CalendarInterval.MONTH}
+              dayOffset={day.day()}
+              monthOffset={isMonthView ? offsetFromMonthStart : startingMonthNum}
+              currentDay={day.date()}
             />
           )
         } else {
@@ -140,7 +146,21 @@ export const Month = (props: MonthProps) => {
                   color: ${category.color};
                 }
               `}</style>
-              <Icon iconName={category.icon as IconName} className={`inline ${className}`} />
+              <Icon
+                iconName={category.icon as IconName}
+                category={category}
+                calInterval={
+                  isMonthView
+                    ? CalendarInterval.MONTH
+                    : isQuarterlyView
+                    ? CalendarInterval.QUARTERLY
+                    : CalendarInterval.FOUR_MONTHS
+                }
+                dayOffset={day.day()}
+                monthOffset={isMonthView ? offsetFromMonthStart : startingMonthNum}
+                currentDay={day.date()}
+                className='inline'
+              />
             </span>
           )
         }
