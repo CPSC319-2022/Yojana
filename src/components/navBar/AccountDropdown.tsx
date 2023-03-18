@@ -38,7 +38,7 @@ export const AccountDropdown = () => {
   })
 
   return (
-    <div>
+    <div id='account-dropdown'>
       <Dropdown text='Account' containerClassName='w-[12vw]'>
         <Dropdown.Button key='User' label={userName} onClick={() => {}} />
         <Dropdown.Button key='Preferences' label='Preferences' onClick={() => setIsModalOpen(true)} />
