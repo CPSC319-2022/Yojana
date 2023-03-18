@@ -29,8 +29,8 @@ const CATEGORY_BANNER_HEIGHT_PX = 28
 const CATEGORY_ICON_WIDTH_PX = 24
 const DATE_CONTAINER_HEIGHT_VH = 0.123 // 12.3 vh
 const DATE_CONTAINER_WIDTH_VW = 0.11 // 11 vw
-
 // To avoid an infinite resizing loop. The count is reset whenever the window is resized.
+const MAX_TIMES_SIZE_SET = 2
 
 export const Month = (props: MonthProps) => {
   const isMonthView = useAppSelector(isMonthInterval)
@@ -53,44 +53,15 @@ export const Month = (props: MonthProps) => {
   const { prevMonthSelected, currMonthSelected, nextMonthSelected } = useAppSelector((state) =>
     getPrevCurrNextMonthSelectedDates(state, targetDate)
   )
-
-  const [nonOverflowElemCount, setNonOverflowElemCount] = useState(1)
   const [nonOverflowCountKnown, setNonOverflowCountKnown] = useState(false)
-  const monthRef = useRef<HTMLDivElement>(null)
-  const categoryContainerRef = useCallback(
-    (node: HTMLDivElement) => {
-      if (node !== null && !nonOverflowCountKnown) {
-        let newCount: number
-        let dateContainerHeight = window.innerHeight * DATE_CONTAINER_HEIGHT_VH
-        let dateContainerWidth = window.innerWidth * DATE_CONTAINER_WIDTH_VW
-
-        if (useBanners) newCount = Math.floor(dateContainerHeight / CATEGORY_BANNER_HEIGHT_PX)
-        else newCount = Math.floor(dateContainerWidth / CATEGORY_ICON_WIDTH_PX)
-        setNonOverflowElemCount(newCount)
-        setNonOverflowCountKnown(true)
-      }
-    },
-    [nonOverflowCountKnown, useBanners]
-  )
-
-  useEffect(() => {
-    if (!monthRef.current) return
-
-    const handleWindowSizeChange = () => {
-      setNonOverflowCountKnown(false)
-    }
-    const resizeObserver = new ResizeObserver(handleWindowSizeChange)
-    resizeObserver.observe(monthRef.current)
-    return () => resizeObserver.disconnect()
-  }, [])
 
   const [nonOverflowElemCount, setNonOverflowElemCount] = useState(0)
   const [measureSizeCounter, setMeasureSizeCounter] = useState(0)
   const numTimesSizeSet = useRef(0)
 
-
   useEffect(() => {
     if (preferences.monthCategoryAppearance.value === 'banners') setUseBanners(isMonthView)
+    else setUseBanners(false)
     setNonOverflowCountKnown(false)
   }, [isMonthView, preferences.monthCategoryAppearance.value])
 
@@ -124,10 +95,12 @@ export const Month = (props: MonthProps) => {
   // If the day's reference has changed, recompute how many elements fit in it.
   const categoryContainerRef = useCallback(
     (node: HTMLDivElement) => {
-      if (node !== null && numTimesSizeSet.current < MAX_TIMES_SIZE_SET) {
+      if (node !== null && !nonOverflowCountKnown && numTimesSizeSet.current < MAX_TIMES_SIZE_SET) {
         let newCount: number
-        if (useBanners) newCount = Math.floor(node.getBoundingClientRect().height / CATEGORY_BANNER_HEIGHT_PX)
-        else newCount = Math.floor(node.getBoundingClientRect().width / CATEGORY_ICON_WIDTH_PX)
+        let dateContainerHeight = window.innerHeight * DATE_CONTAINER_HEIGHT_VH
+        let dateContainerWidth = window.innerWidth * DATE_CONTAINER_WIDTH_VW
+        if (useBanners) newCount = Math.floor(dateContainerHeight / CATEGORY_BANNER_HEIGHT_PX)
+        else newCount = Math.floor(dateContainerWidth / CATEGORY_ICON_WIDTH_PX)
         setNonOverflowElemCount(newCount)
         numTimesSizeSet.current += 1
       }
@@ -353,7 +326,6 @@ export const Month = (props: MonthProps) => {
           {renderDateNum(day, isCurrentMonth)}
           <div
             className={`flex-grow ${isMonthView ? 'pl-2 pr-2' : 'inline-flex overflow-hidden'}`}
-
             ref={offsetFromMonthStart === 0 ? categoryContainerRef : undefined}
           >
             {getNonOverflowCategoryElems(day, offsetFromMonthStart)}
