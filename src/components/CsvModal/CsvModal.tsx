@@ -30,13 +30,16 @@ export const CsvModal = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleUploadSuccess = (response?: BatchResponse, error?: string) => {
-    const createdEntries = response?.createdEntries
-    const categories = response?.appData
+  const handleUploadSuccess = (response?: BatchResponse) => {
     setIsModalOpen(false)
-    if (error) {
-      dispatch(setAlert({ message: `There was an error processing your request: ${error}`, type: 'error', show: true }))
+    if (response?.error) {
+      const errorMessage = response?.error?.message
+      // TODO: make us of uneditableCategories
+      const uneditableCategories = response?.error?.uneditableCategories
+      dispatch(setAlert({ message: errorMessage || '', type: 'error', show: true }))
     } else {
+      const createdEntries = response?.success.entries
+      const categories = response?.success.appData
       const appData = setCategoryShow(categories!)
       dispatch(setAppData(appData))
       dispatch(

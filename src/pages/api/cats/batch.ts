@@ -1,40 +1,54 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '@/prisma/prismadb'
 import { getToken } from 'next-auth/jwt'
-import { getCategories } from '@/prisma/queries'
+import { getCategories, getOwnedCategories } from '@/prisma/queries'
+import z from 'zod'
+import { BatchResponse } from '@/types/prisma'
+
+const schema = z.object({
+  userID: z.string().optional()
+})
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
     return res.status(405).send('Method Not Allowed')
   }
   const token = await getToken({ req })
-  if (!token?.isAdmin) {
-    return res.status(401).send('Unauthorized')
-  }
+  const { userID } = schema.parse(req.query)
   const categories = req.body
-  // TODO: Report all missing category names, fail if any are missing
-  const validCategories = await prisma.category.findMany({
-    where: {
-      name: {
-        in: Object.keys(categories)
+  // TODO: Report all missing/unauthorized category names, fail if any are missing
+  const { uneditableCategories, editableCategories } = await getUneditableAndEditableCategoryNames(
+    userID!,
+    token?.isAdmin || false,
+    Object.keys(categories)
+  )
+
+  if (uneditableCategories.length > 0) {
+    console.log('sending error')
+    const response: BatchResponse = {
+      success: {
+        entries: [],
+        appData: []
+      },
+      error: {
+        uneditableCategories: uneditableCategories,
+        message: `There are some categories that either do not exist, or you do not have permission to edit`
       }
     }
-  })
-  console.log(validCategories, 'validCategories')
-
-  // const existingCategories = await getCategories()
-  // console.log(existingCategories, 'existingCategories')
+    return res.status(401).json(response)
+  }
 
   // TODO: Add logic to keep track of duplicate entries i.e adding an entry to a date when there is already one there,
   //  report to frontend if any are found
   let entriesToAdd = []
-  for (const categoryToAddTo of Object.keys(categories)) {
+  const categoryNames = Object.keys(categories)
+  for (const categoryToAddTo of categoryNames) {
     for (const newDate of categories[categoryToAddTo]) {
-      if (validCategories.some((category) => category.name === categoryToAddTo)) {
+      if (editableCategories.some((category) => category.name === categoryToAddTo)) {
         const entry = {
           date: newDate,
           isRecurring: false,
-          categoryId: validCategories.find((category) => category.name === categoryToAddTo)?.id
+          categoryId: editableCategories.find((category) => category.name === categoryToAddTo)?.id
         }
         entriesToAdd.push(entry)
       }
@@ -64,13 +78,25 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     // TODO: Add logic to fail if no entries were added. Could be blue alert on frontend
     let appData = await getCategories()
     const response = {
-      appData: appData,
-      createdEntries: addedEntries
+      success: {
+        entries: addedEntries,
+        appData: appData
+      },
+      error: undefined
     }
     return res.status(201).json(response)
   } catch (error) {
+    console.log(error)
     return res.status(500).send('Internal Server Error')
   }
+}
+
+const getUneditableAndEditableCategoryNames = async (userId: string, isAdmin: boolean, categories: string[]) => {
+  const editableCategories = await getOwnedCategories(userId, isAdmin)
+  const editableCategoryNames = editableCategories.map((category) => category.name)
+  const uneditableCategories = categories.filter((category) => !editableCategoryNames.includes(category))
+  console.log('uneditableCategories', uneditableCategories)
+  return { uneditableCategories, editableCategories }
 }
 
 export default handler

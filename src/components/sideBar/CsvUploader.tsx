@@ -4,6 +4,7 @@ import { FiletypeCsv } from 'react-bootstrap-icons'
 import csv from 'csv-parser'
 import { Button } from '@/components/common'
 import { BatchResponse } from '@/types/prisma'
+import { useSession } from 'next-auth/react'
 
 interface CsvEntry {
   Category: string
@@ -14,9 +15,12 @@ interface EntryMap {
   [key: string]: string[]
 }
 
-export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchResponse, error?: string) => void }) => {
+export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchResponse) => void }) => {
   const [csvFileName, setCsvFileName] = useState('')
   const [csvEntries, setCsvEntries] = useState<CsvEntry[]>([])
+
+  const { data: session } = useSession()
+  const userID = session?.user.id || ''
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     acceptedFiles.forEach((file) => {
@@ -58,22 +62,35 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchRespons
       }
       console.log(entryMap, 'entryMap')
     } catch (error) {
-      onSuccess({ createdEntries: [], appData: [] }, 'make sure your csv file is formatted correctly')
+      const res = {
+        success: {
+          entries: [],
+          appData: []
+        },
+        error: {
+          message: 'make sure your csv file is formatted correctly',
+          uneditableCategories: []
+        }
+      }
+      onSuccess(res)
       return
     }
 
     try {
-      const response = await fetch('/api/cats/batch', {
+      const response = await fetch(`/api/cats/batch?userID=${userID}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(entryMap)
       })
+      console.log('sending request...')
       const res = await response.json()
-      onSuccess(res, undefined)
+      console.log('no error')
+      onSuccess(res)
     } catch (error) {
-      onSuccess(undefined, "couldn't add entries")
+      console.log('error')
+      console.log(error)
     }
   }
 
