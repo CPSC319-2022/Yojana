@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react'
 import { authOptions } from './api/auth/[...nextauth]'
 import { setCookieMaxAge } from '@/utils/cookies'
 import { defaultPreferences, setYearOverflow, setYearShowGrid } from '@/redux/reducers/PreferencesReducer'
+import { preprocessEntries } from '@/utils/preprocessEntries'
 
 interface CalendarProps {
   sidebarOpenInitial: boolean
@@ -122,6 +123,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
         // if cookie is defined, set show to the value of the cookie
         show = cookies[key] === 'true'
       }
+      category.entries = preprocessEntries(category.entries)
       return { ...category, show: show }
     })
 
