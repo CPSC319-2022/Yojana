@@ -9,6 +9,9 @@ dayjs.extend(utc)
 // Set the timezone plugin for Day.js
 dayjs.extend(timezone)
 
+// Set the process timezone to UTC
+process.env.TZ = 'UTC'
+
 const getLocalDateWithoutTime = (date: Date, timezone = dayjs.tz.guess()) => {
   // Convert the input date to UTC and set the timezone
   const UTCDate = dayjs.utc(date).tz(timezone, true)
