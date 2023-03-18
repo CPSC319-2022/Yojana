@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
 
-export type YearOverflow = 'scroll' | 'expand'
+export type YearOverflow = 'scroll' | 'wrap'
 export type MonthCategoryAppearance = 'icons' | 'banners'
 
 interface State {
@@ -23,7 +23,7 @@ interface State {
 
 export const defaultPreferences = {
   yearOverflow: {
-    value: 'expand' as YearOverflow,
+    value: 'wrap' as YearOverflow,
     cookieName: 'yojana.year-overflow-preference'
   },
   yearShowGrid: {

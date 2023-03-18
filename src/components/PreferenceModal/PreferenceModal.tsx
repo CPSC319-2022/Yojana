@@ -33,6 +33,8 @@ export const PreferenceModal = ({
       showCloseBtn={true}
       overrideDefaultButtonStyle={true}
       bodyPadding='px-4 pb-4 pt-3'
+      scrollable={false}
+      showOverflow={true}
     >
       <div className='mt-2'>
         <Accordion>
@@ -41,13 +43,15 @@ export const PreferenceModal = ({
             <Accordion.Body>
               <div className='mt-2 flex flex-col space-y-2'>
                 <Toggle
-                  textToToggle={['Overflow: Expand', 'Overflow: Scroll']}
+                  textToToggle={['Wrap Icons', 'Scroll Icons']}
                   name={yearOverflow.cookieName}
-                  preference={yearOverflow.value === 'expand'}
+                  preference={yearOverflow.value === 'wrap'}
                   onChange={() => {
-                    dispatch(setYearOverflow(yearOverflow.value === 'expand' ? 'scroll' : 'expand'))
-                    setCookieMaxAge(yearOverflow.cookieName, yearOverflow.value === 'expand' ? 'scroll' : 'expand')
+                    dispatch(setYearOverflow(yearOverflow.value === 'wrap' ? 'scroll' : 'wrap'))
+                    setCookieMaxAge(yearOverflow.cookieName, yearOverflow.value === 'wrap' ? 'scroll' : 'wrap')
                   }}
+                  tooltipIcon='QuestionCircle'
+                  tooltipText='Wrap icons to the next line or scroll icons horizontally if there is not enough space to display them all on one day.'
                 />
                 <Toggle
                   textToToggle={['Show Grid', 'Hide Grid']}
@@ -57,6 +61,8 @@ export const PreferenceModal = ({
                     dispatch(setYearShowGrid(!yearShowGrid.value))
                     setCookieMaxAge(yearShowGrid.cookieName, !yearShowGrid.value)
                   }}
+                  tooltipIcon='QuestionCircle'
+                  tooltipText='Show or hide the grid lines for days.'
                 />
               </div>
             </Accordion.Body>
@@ -78,6 +84,8 @@ export const PreferenceModal = ({
                       monthCategoryAppearance.value === 'icons' ? 'banners' : 'icons'
                     )
                   }}
+                  tooltipIcon='QuestionCircle'
+                  tooltipText='Show categories as icons or banners.'
                   disabled
                 />
               </div>
