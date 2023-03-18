@@ -45,10 +45,10 @@ export const PreferenceModal = ({
                 <Toggle
                   textToToggle={['Wrap Icons', 'Scroll Icons']}
                   name={yearOverflow.cookieName}
-                  preference={yearOverflow.value === 'expand'}
+                  preference={yearOverflow.value === 'wrap'}
                   onChange={() => {
-                    dispatch(setYearOverflow(yearOverflow.value === 'expand' ? 'scroll' : 'expand'))
-                    setCookieMaxAge(yearOverflow.cookieName, yearOverflow.value === 'expand' ? 'scroll' : 'expand')
+                    dispatch(setYearOverflow(yearOverflow.value === 'wrap' ? 'scroll' : 'wrap'))
+                    setCookieMaxAge(yearOverflow.cookieName, yearOverflow.value === 'wrap' ? 'scroll' : 'wrap')
                   }}
                   tooltipIcon='QuestionCircle'
                   tooltipText='Wrap icons to the next line or scroll icons horizontally if there is not enough space to display them all on one day.'
