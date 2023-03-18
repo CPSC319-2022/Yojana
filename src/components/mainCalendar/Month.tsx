@@ -78,7 +78,7 @@ export const Month = (props: MonthProps) => {
   }, [])
 
   useEffect(() => {
-    setUseBanners(isMonthView && preferences.monthCategoryAppearance.value === 'banners')
+    if (preferences.monthCategoryAppearance.value === 'banners') setUseBanners(isMonthView)
     setNonOverflowCountKnown(false)
   }, [isMonthView, preferences.monthCategoryAppearance.value])
 
@@ -138,11 +138,11 @@ export const Month = (props: MonthProps) => {
                   color: ${category.color};
                 }
               `}</style>
-              {isMonthView ? (
-                <Icon iconName={category.icon as IconName} className={`inline ${className}`} size={23} />
-              ) : (
-                <Icon iconName={category.icon as IconName} className={`inline ${className}`} />
-              )}
+              <Icon
+                iconName={category.icon as IconName}
+                className={`inline ${className}`}
+                size={isMonthView ? 23 : undefined}
+              />
             </span>
           )
         }
