@@ -91,8 +91,7 @@ const _createEntryMap = (data: AppData) => {
 
 const _addEntriesToEntryMap = (entryMap: EntryMap, entries: EntryWithoutCategoryId[], categoryId: number) => {
   entries.forEach((entry) => {
-    // TODO: Fix this hack to get the correct date, ignore timezones
-    const date = dayjs(entry.date).add(1, 'day')
+    const date = dayjs(entry.date)
     const year = date.year() // 2023
     const month = date.month() // 0-11
     const day = date.date() // 1-31

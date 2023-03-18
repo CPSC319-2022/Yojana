@@ -102,8 +102,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       .filter((entry) => entry.isRecurring === isRecurring)
       .map((entry) => {
         return {
-          // TODO: Fix this hack to get the correct date, ignore timezones
-          date: dayjs(entry.date).add(1, 'day').toISOString(),
+          date: dayjs(entry.date).toISOString(),
           isRecurring: isRecurring
         }
       })

@@ -9,14 +9,15 @@ dayjs.extend(utc)
 // Set the timezone plugin for Day.js
 dayjs.extend(timezone)
 
-// Set the default timezone to Vancouver
-dayjs.tz.setDefault('America/Vancouver')
+const getLocalDateWithoutTime = (date: Date, timezone = dayjs.tz.guess()) => {
+  // Convert the input date to UTC and set the timezone
+  const UTCDate = dayjs.utc(date).tz(timezone, true)
 
-// Set the process timezone to UTC
-process.env.TZ = 'UTC'
+  // Calculate the timezone offset at the given date
+  const timezoneOffset = UTCDate.utcOffset()
 
-const getLocalDateWithoutTime = (date: Date) => {
-  return dayjs.utc(date).tz().startOf('day').toDate()
+  // Calculate the local date without time using the UTC date and the timezone offset
+  return UTCDate.utcOffset(timezoneOffset).startOf('day').toDate()
 }
 
 export const preprocessEntries = (entries: Entry[]) => {
