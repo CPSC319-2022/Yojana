@@ -170,7 +170,7 @@ const seed = async () => {
     })
   })
 
-  // create categories
+  // wait for all promises to resolve in the order they were created
   await prisma.$transaction(promises)
 }
 
