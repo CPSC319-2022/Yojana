@@ -2,7 +2,13 @@ import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } fr
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
-import { getDate, isMonthInterval, isQuarterlyInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
+import {
+  getDate,
+  getInterval,
+  isMonthInterval,
+  isQuarterlyInterval,
+  isYearInterval
+} from '@/redux/reducers/MainCalendarReducer'
 import dayjs, { Dayjs } from 'dayjs'
 import { Popover, Transition } from '@headlessui/react'
 
@@ -28,6 +34,7 @@ const DATE_CONTAINER_WIDTH_VW = 0.11 // 11 vw
 
 export const Month = (props: MonthProps) => {
   const isMonthView = useAppSelector(isMonthInterval)
+  const calendarInterval = useAppSelector(getInterval)
   const isQuarterlyView = useAppSelector(isQuarterlyInterval)
   const stateDate = useAppSelector(getDate)
   const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
@@ -77,11 +84,17 @@ export const Month = (props: MonthProps) => {
     return () => resizeObserver.disconnect()
   }, [])
 
+  const [nonOverflowElemCount, setNonOverflowElemCount] = useState(0)
+  const [measureSizeCounter, setMeasureSizeCounter] = useState(0)
+  const numTimesSizeSet = useRef(0)
+
+
   useEffect(() => {
     if (preferences.monthCategoryAppearance.value === 'banners') setUseBanners(isMonthView)
     setNonOverflowCountKnown(false)
   }, [isMonthView, preferences.monthCategoryAppearance.value])
 
+  // Determines what days and weeks are in the month.
   useEffect(() => {
     const newTarget = referenceDate.add(props.monthOffset, 'month')
     const newStart = newTarget.startOf('month')
@@ -93,9 +106,35 @@ export const Month = (props: MonthProps) => {
     setNumWeeks(Math.ceil((newDaysInMonth + newStart.day()) / 7))
   }, [props.monthOffset, referenceDate])
 
+  // Events that require resetting the resize count
   useEffect(() => {
-    setNonOverflowCountKnown(false)
-  }, [numWeeks])
+    numTimesSizeSet.current = 0
+  }, [calendarInterval, monthStartDate, useBanners])
+  useEffect(() => {
+    const windowResizeListener = () => {
+      numTimesSizeSet.current = 0
+      setMeasureSizeCounter(measureSizeCounter + 1)
+    }
+    window.addEventListener('resize', windowResizeListener)
+    return () => {
+      window.removeEventListener('resize', windowResizeListener)
+    }
+  }, [measureSizeCounter])
+
+  // If the day's reference has changed, recompute how many elements fit in it.
+  const categoryContainerRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (node !== null && numTimesSizeSet.current < MAX_TIMES_SIZE_SET) {
+        let newCount: number
+        if (useBanners) newCount = Math.floor(node.getBoundingClientRect().height / CATEGORY_BANNER_HEIGHT_PX)
+        else newCount = Math.floor(node.getBoundingClientRect().width / CATEGORY_ICON_WIDTH_PX)
+        setNonOverflowElemCount(newCount)
+        numTimesSizeSet.current += 1
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [useBanners, measureSizeCounter]
+  )
 
   const getEntriesOnDay = useCallback(
     (dateNum: number, offsetFromMonthStart: number) => {
@@ -314,6 +353,7 @@ export const Month = (props: MonthProps) => {
           {renderDateNum(day, isCurrentMonth)}
           <div
             className={`flex-grow ${isMonthView ? 'pl-2 pr-2' : 'inline-flex overflow-hidden'}`}
+
             ref={offsetFromMonthStart === 0 ? categoryContainerRef : undefined}
           >
             {getNonOverflowCategoryElems(day, offsetFromMonthStart)}
@@ -378,7 +418,7 @@ export const Month = (props: MonthProps) => {
   }, [])
 
   return (
-    <div ref={monthRef} className={`box-border bg-slate-200 ${isMonthView ? 'h-full' : ''} ${props.className}`}>
+    <div className={`box-border bg-slate-200 ${isMonthView ? 'h-full' : ''} ${props.className}`}>
       {isMonthView && generateDayNames}
       {generateWeeks()}
     </div>

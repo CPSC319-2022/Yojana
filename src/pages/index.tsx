@@ -22,6 +22,8 @@ import {
   setYearShowGrid,
   setMonthCategoryAppearance
 } from '@/redux/reducers/PreferencesReducer'
+import { preprocessEntries } from '@/utils/preprocessEntries'
+
 
 interface CalendarProps {
   sidebarOpenInitial: boolean
@@ -103,7 +105,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
 
     // set cookie for yearOverflow
     const yearOverflowCookie = cookies[yearOverflow.cookieName]
-    if (yearOverflowCookie === undefined || (yearOverflowCookie !== 'expand' && yearOverflowCookie !== 'scroll')) {
+    if (yearOverflowCookie === undefined || (yearOverflowCookie !== 'wrap' && yearOverflowCookie !== 'scroll')) {
       // if yearOverflow cookie is undefined or invalid, set it to the default value
       setCookieMaxAge(yearOverflow.cookieName, yearOverflow.value, { req, res })
     } else {
@@ -134,6 +136,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
         // if cookie is defined, set show to the value of the cookie
         show = cookies[key] === 'true'
       }
+      category.entries = preprocessEntries(category.entries)
       return { ...category, show: show }
     })
 

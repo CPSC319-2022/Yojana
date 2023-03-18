@@ -1,4 +1,6 @@
 import { Switch } from '@headlessui/react'
+import { Icon, IconName } from '@/components/common'
+import { Tooltip } from '@/components/common/Tooltip'
 
 interface ToggleProps {
   textToToggle: string[]
@@ -7,18 +9,32 @@ interface ToggleProps {
   onChange: () => void
   disabled?: boolean
   className?: string
+  tooltipIcon?: IconName
+  tooltipPosition?: 'top' | 'bottom' | 'left' | 'right'
+  tooltipText?: string
 }
+
 export const Toggle = ({
   textToToggle,
   name,
   className = 'w-full',
   preference,
   onChange,
-  disabled = false
+  disabled = false,
+  tooltipIcon,
+  tooltipPosition = 'top',
+  tooltipText = ''
 }: ToggleProps) => {
   return (
     <div className='space-between mt-2 inline-flex'>
-      <div className={className}>{preference ? textToToggle[0] : textToToggle[1]}</div>
+      <div className={className}>
+        {preference ? textToToggle[0] : textToToggle[1]}
+        {tooltipIcon && tooltipText && (
+          <Tooltip text={tooltipText} position={tooltipPosition}>
+            <Icon iconName={tooltipIcon} className='mb-0.5 inline' />
+          </Tooltip>
+        )}
+      </div>
       <Switch
         checked={preference}
         name={name}

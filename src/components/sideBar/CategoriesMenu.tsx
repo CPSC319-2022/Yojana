@@ -28,7 +28,7 @@ export const CategoriesMenu = ({ session }: Props) => {
                 !disable && 'hover:bg-slate-100'
               } ${keepFocus === calEvent.id ? 'bg-slate-100' : ''}`}
               key={`category-item-${key}`}
-              id={`category-item-${key}`}
+              id={`category-item-${calEvent.name}`}
             >
               <Checkbox
                 icon={calEvent.icon as IconName}
@@ -69,7 +69,11 @@ export const CategoriesMenu = ({ session }: Props) => {
       <Accordion>
         {renderCategoryType().map((categoryType, key) => {
           return (
-            <Accordion.Item key={`category-type-${key}`} size='md'>
+            <Accordion.Item
+              key={`category-type-${key}`}
+              size='md'
+              id={`${categoryType ? 'master' : 'personal'}-calendar-accordion-item`}
+            >
               <Accordion.Header>{categoryType ? 'Master Calendar' : 'Personal Calendar'}</Accordion.Header>
               <Accordion.Body>{renderCategories(categoryType)}</Accordion.Body>
             </Accordion.Item>
