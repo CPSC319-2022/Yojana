@@ -88,7 +88,6 @@ export const Month = (props: MonthProps) => {
   const [measureSizeCounter, setMeasureSizeCounter] = useState(0)
   const numTimesSizeSet = useRef(0)
 
-
   useEffect(() => {
     if (preferences.monthCategoryAppearance.value === 'banners') setUseBanners(isMonthView)
     setNonOverflowCountKnown(false)
@@ -353,7 +352,6 @@ export const Month = (props: MonthProps) => {
           {renderDateNum(day, isCurrentMonth)}
           <div
             className={`flex-grow ${isMonthView ? 'pl-2 pr-2' : 'inline-flex overflow-hidden'}`}
-
             ref={offsetFromMonthStart === 0 ? categoryContainerRef : undefined}
           >
             {getNonOverflowCategoryElems(day, offsetFromMonthStart)}
