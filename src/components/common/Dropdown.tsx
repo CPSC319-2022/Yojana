@@ -59,32 +59,33 @@ export const Dropdown = ({
   )
 }
 
-const DropdownButton = ({
-  key,
-  label,
-  onClick,
-  disabled = false
-}: {
-  key: string
+interface DropdownButtonProps {
   label: string
   onClick: () => void
   disabled?: boolean
-}) => {
+  clickable?: boolean
+}
+
+const renderDropdownButton = ({ label, onClick, disabled = false, clickable = true }: DropdownButtonProps) => {
   return (
-    <Menu.Item key={key}>
-      {({ active }) => (
-        <button
-          type='button'
-          onClick={onClick}
-          className={`${active && 'bg-slate-100'} group flex w-full items-center rounded-md px-4 py-2 ${
-            disabled && 'text-slate-400'
-          }`}
-          disabled={disabled}
-        >
-          {label}
-        </button>
-      )}
-    </Menu.Item>
+    <button
+      type='button'
+      onClick={onClick}
+      className={`group flex w-full items-center rounded-md px-4 py-2 hover:bg-slate-100 ${
+        disabled && 'text-slate-400'
+      } ${!clickable && 'cursor-default'}`}
+      disabled={disabled}
+    >
+      {label}
+    </button>
+  )
+}
+
+const DropdownButton = ({ label, onClick, disabled = false, clickable = true }: DropdownButtonProps) => {
+  return clickable ? (
+    <Menu.Item>{renderDropdownButton({ label, onClick, disabled, clickable })}</Menu.Item>
+  ) : (
+    renderDropdownButton({ label, onClick, disabled, clickable })
   )
 }
 Dropdown.Button = DropdownButton

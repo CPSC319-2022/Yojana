@@ -7,13 +7,15 @@ import { CalViewDropdown } from './CalViewDropdown'
 import { setCookieMaxAge } from '@/utils/cookies'
 import { AccountDropdown } from '@/components/navBar/AccountDropdown'
 import { CalendarInterval } from '@/constants/enums'
+import { Session } from 'next-auth'
 
 interface NavBarProps {
   sidebarOpen: boolean
   setSidebarOpen: (value: boolean) => void
+  session: Session
 }
 
-export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
+export const NavBar = ({ sidebarOpen, setSidebarOpen, session }: NavBarProps) => {
   const dispatch = useAppDispatch()
   const targetDate = useAppSelector(getDate)
   const interval = useAppSelector(getInterval)
@@ -75,7 +77,7 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
         <h4 className='flex-none text-center text-lg'>{getIntervalDescription}</h4>
       </div>
       <CalViewDropdown />
-      <AccountDropdown />
+      <AccountDropdown session={session} />
     </div>
   )
 }
