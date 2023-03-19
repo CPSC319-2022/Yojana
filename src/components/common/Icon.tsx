@@ -95,9 +95,9 @@ export const Icon = ({ iconName, monthOffset, dayOffset, currentDay, category, i
                   -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
                 }
               `}</style>
-              <div className='max-w-60 h-fit max-h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white p-5 leading-7'>
-                <p className='text-m text-center text-slate-500'>{currentDay}</p>
-                <p className='text-base'>{category?.name + ' #' + category?.id}</p>
+              <div className='max-w-60 h-fit max-h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white p-2 pb-3 font-normal leading-7'>
+                <p className='text-center text-base text-slate-500'>{currentDay}</p>
+                <h1 className={`text-base`}>{category?.name + ' #' + category?.id}</h1>
                 <p className='text-sm text-slate-700'>{descText}</p>
                 <p className='text-xs text-slate-500'>
                   creator:{' '}

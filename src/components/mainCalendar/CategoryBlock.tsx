@@ -67,10 +67,10 @@ export const CategoryBlock = ({
                 color: ${category?.color};
               }
             `}</style>
-            <div className='max-w-60 h-fit max-h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white p-5 leading-7'>
-              <p className='text-m text-center font-bold text-slate-500'>{currentDay}</p>
-              <h1 className={`text-base font-bold`}>{category?.name + ' #' + category?.id}</h1>
-              <p className='text-sm font-bold text-slate-700'>{descText}</p>
+            <div className='font-inherit max-w-60 h-fit max-h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white p-2 pb-3 leading-7'>
+              <p className='text-center text-base text-slate-500'>{currentDay}</p>
+              <h1 className={`text-base`}>{category?.name + ' #' + category?.id}</h1>
+              <p className='text-sm text-slate-700'>{descText}</p>
               <p className='text-xs text-slate-500'>
                 creator:{' '}
                 <a className=' text-blue-500 underline' href={email}>
