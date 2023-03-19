@@ -32,19 +32,27 @@ export const CsvModal = () => {
 
   const handleUploadSuccess = (response?: BatchResponse) => {
     setIsModalOpen(false)
-    if (response?.error) {
+    if (response?.error || response?.success === undefined) {
       const errorMessage = response?.error?.message
-      // TODO: make us of uneditableCategories
       const uneditableCategories = response?.error?.uneditableCategories
+      const errorCode = response?.error?.code
+      if (errorCode === 401) {
+        dispatch(
+          setAlert({
+            message: `You do not have access to the following category ids: ${uneditableCategories?.join(', ')}`,
+            type: 'error',
+            show: true
+          })
+        )
+        return
+      }
       dispatch(setAlert({ message: errorMessage || '', type: 'error', show: true }))
     } else {
-      const createdEntries = response?.success.entries
-      const categories = response?.success.appData
+      const createdEntries = response?.success?.entriesAdded
+      const categories = response?.success?.appData
       const appData = setCategoryShow(categories!)
       dispatch(setAppData(appData))
-      dispatch(
-        setAlert({ message: `successfully added ${createdEntries?.length} entries`, type: 'success', show: true })
-      )
+      dispatch(setAlert({ message: `successfully added ${createdEntries} entries`, type: 'success', show: true }))
     }
   }
 

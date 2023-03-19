@@ -1,92 +1,92 @@
-Category,Date
-Statutory Holiday,2023-01-02
-Statutory Holiday,2023-02-20
-Statutory Holiday,2023-04-07
-Statutory Holiday,2023-05-22
-Statutory Holiday,2023-07-03
-Statutory Holiday,2023-08-07
-Statutory Holiday,2023-09-04
-Statutory Holiday,2023-10-09
-Statutory Holiday,2023-11-13
-Statutory Holiday,2023-12-25
-Statutory Holiday,2023-12-26
-Month End,2023-02-03
-Month End,2023-03-03
-Month End,2023-03-31
-Month End,2023-04-28
-Month End,2023-06-02
-Month End,2023-06-30
-Month End,2023-07-28
-Month End,2023-09-01
-Month End,2023-09-29
-Month End,2023-11-03
-Month End,2023-12-01
-Month End,2023-12-31
-Plan, 2023-10-20
-EPSP, 2023-02-24
-EPSP, 2023-11-30
-Group Board Meeting, 2023-02-16
-Group Board Meeting, 2023-05-12
-Group Board Meeting, 2023-08-16
-Group Board Meeting, 2023-08-17
-Group Board Meeting, 2023-12-14
-ASHCO Board Meeting, 2023-02-15
-ASHCO Board Meeting, 2023-05-12
-ASHCO Board Meeting, 2023-05-13
-ASHCO Board Meeting, 2023-08-16
-ASHCO Board Meeting, 2023-08-17
-ASHCO Board Meeting, 2023-12-14
-Management Meeting, 2023-02-13
-Management Meeting, 2023-02-14
-Management Meeting, 2023-05-10
-Management Meeting, 2023-05-11
-Management Meeting, 2023-08-14
-Management Meeting, 2023-08-15
-Management Meeting, 2023-11-15
-Management Meeting, 2023-11-16
-Expense Cutoff, 2023-01-06
-Expense Cutoff, 2023-01-20
-Expense Cutoff, 2023-02-03
-Expense Cutoff, 2023-02-17
-Expense Cutoff, 2023-03-03
-Expense Cutoff, 2023-03-17
-Expense Cutoff, 2023-03-31
-Expense Cutoff, 2023-04-14
-Expense Cutoff, 2023-04-28
-Expense Cutoff, 2023-05-12
-Expense Cutoff, 2023-06-02
-Expense Cutoff, 2023-06-16
-Expense Cutoff, 2023-06-30
-Expense Cutoff, 2023-07-14
-Expense Cutoff, 2023-07-28
-Expense Cutoff, 2023-08-11
-Expense Cutoff, 2023-09-01
-Expense Cutoff, 2023-09-15
-Expense Cutoff, 2023-09-29
-Expense Cutoff, 2023-10-13
-Expense Cutoff, 2023-11-03
-Expense Cutoff, 2023-11-17
-Expense Cutoff, 2023-12-01
-Expense Cutoff, 2023-12-15
-Annual General Meeting, 2023-05-13
-Preliminary Forecast, 2023-04-12
-Preliminary Forecast, 2023-07-12
-Preliminary Forecast, 2023-10-11
-Forecast, 2023-04-17
-Forecast, 2023-07-17
-Forecast, 2023-10-23
-UBAR Distribution, 2023-01-16
-UBAR Distribution, 2023-02-13
-UBAR Distribution, 2023-03-13
-UBAR Distribution, 2023-04-10
-UBAR Distribution, 2023-05-08
-UBAR Distribution, 2023-06-12
-UBAR Distribution, 2023-07-10
-UBAR Distribution, 2023-08-08
-UBAR Distribution, 2023-09-11
-UBAR Distribution, 2023-10-10
-UBAR Distribution, 2023-11-14
-UBAR Distribution, 2023-12-11
-Office Closed, 2023-12-27
-Office Closed, 2023-12-28
-Office Closed, 2023-12-29
+CategoryID,Date
+1,2023-01-02
+1,2023-02-20
+1,2023-04-07
+1,2023-05-22
+1,2023-07-03
+1,2023-08-07
+1,2023-09-04
+1,2023-10-09
+1,2023-11-13
+1,2023-12-25
+1,2023-12-26
+2,2023-02-03
+2,2023-03-03
+2,2023-03-31
+2,2023-04-28
+2,2023-06-02
+2,2023-06-30
+2,2023-07-28
+2,2023-09-01
+2,2023-09-29
+2,2023-11-03
+2,2023-12-01
+2,2023-12-31
+3, 2023-10-20
+4, 2023-02-24
+4, 2023-11-30
+5, 2023-02-16
+5, 2023-05-12
+5, 2023-08-16
+5, 2023-08-17
+5, 2023-12-14
+6, 2023-02-15
+6, 2023-05-12
+6, 2023-05-13
+6, 2023-08-16
+6, 2023-08-17
+6, 2023-12-14
+7, 2023-02-13
+7, 2023-02-14
+7, 2023-05-10
+7, 2023-05-11
+7, 2023-08-14
+7, 2023-08-15
+7, 2023-11-15
+7, 2023-11-16
+8, 2023-01-06
+8, 2023-01-20
+8, 2023-02-03
+8, 2023-02-17
+8, 2023-03-03
+8, 2023-03-17
+8, 2023-03-31
+8, 2023-04-14
+8, 2023-04-28
+8, 2023-05-12
+8, 2023-06-02
+8, 2023-06-16
+8, 2023-06-30
+8, 2023-07-14
+8, 2023-07-28
+8, 2023-08-11
+8, 2023-09-01
+8, 2023-09-15
+8, 2023-09-29
+8, 2023-10-13
+8, 2023-11-03
+8, 2023-11-17
+8, 2023-12-01
+8, 2023-12-15
+9, 2023-05-13
+10, 2023-04-12
+10, 2023-07-12
+10, 2023-10-11
+11, 2023-04-17
+11, 2023-07-17
+11, 2023-10-23
+12, 2023-01-16
+12, 2023-02-13
+12, 2023-03-13
+12, 2023-04-10
+12, 2023-05-08
+12, 2023-06-12
+12, 2023-07-10
+12, 2023-08-08
+12, 2023-09-11
+12, 2023-10-10
+12, 2023-11-14
+12, 2023-12-11
+13, 2023-12-27
+13, 2023-12-28
+13, 2023-12-29

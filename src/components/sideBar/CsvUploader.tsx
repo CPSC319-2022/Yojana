@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { FiletypeCsv } from 'react-bootstrap-icons'
 import csv from 'csv-parser'
@@ -7,7 +7,7 @@ import { BatchResponse } from '@/types/prisma'
 import { useSession } from 'next-auth/react'
 
 interface CsvEntry {
-  Category: string
+  CategoryID: string
   Date: string
 }
 
@@ -46,28 +46,20 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchRespons
     })
   }, [])
 
-  // useEffect if CsvEntries changes, then do something
-  useEffect(() => {
-    console.log(csvEntries)
-  }, [csvEntries])
-
   const handleSubmit = async () => {
     let entryMap: EntryMap = {}
     try {
       for (let key in csvEntries) {
         if (csvEntries.hasOwnProperty(key)) {
           let entry = csvEntries[key]
-          entryMap[entry.Category] = [...(entryMap[entry.Category] ?? []), new Date(entry.Date).toISOString()]
+          entryMap[entry.CategoryID] = [...(entryMap[entry.CategoryID] ?? []), new Date(entry.Date).toISOString()]
         }
       }
-      console.log(entryMap, 'entryMap')
     } catch (error) {
-      const res = {
-        success: {
-          entries: [],
-          appData: []
-        },
+      const res: BatchResponse = {
+        success: undefined,
         error: {
+          code: 400,
           message: 'make sure your csv file is formatted correctly',
           uneditableCategories: []
         }
@@ -84,12 +76,9 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchRespons
         },
         body: JSON.stringify(entryMap)
       })
-      console.log('sending request...')
       const res = await response.json()
-      console.log('no error')
       onSuccess(res)
     } catch (error) {
-      console.log('error')
       console.log(error)
     }
   }

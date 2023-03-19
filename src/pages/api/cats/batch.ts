@@ -16,87 +16,81 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const token = await getToken({ req })
   const { userID } = schema.parse(req.query)
   const categories = req.body
-  // TODO: Report all missing/unauthorized category names, fail if any are missing
-  const { uneditableCategories, editableCategories } = await getUneditableAndEditableCategoryNames(
+  const categoryIDs = Object.keys(categories).map(Number)
+  const { uneditableCategories, editableCategories } = await getUneditableAndEditableCategoryIDs(
     userID!,
     token?.isAdmin || false,
-    Object.keys(categories)
+    categoryIDs
   )
 
   if (uneditableCategories.length > 0) {
-    console.log('sending error')
     const response: BatchResponse = {
-      success: {
-        entries: [],
-        appData: []
-      },
+      success: undefined,
       error: {
+        code: 401,
         uneditableCategories: uneditableCategories,
         message: `There are some categories that either do not exist, or you do not have permission to edit`
       }
     }
     return res.status(401).json(response)
   }
-
-  // TODO: Add logic to keep track of duplicate entries i.e adding an entry to a date when there is already one there,
-  //  report to frontend if any are found
-  let entriesToAdd = []
-  const categoryNames = Object.keys(categories)
-  for (const categoryToAddTo of categoryNames) {
-    for (const newDate of categories[categoryToAddTo]) {
-      if (editableCategories.some((category) => category.name === categoryToAddTo)) {
-        const entry = {
-          date: newDate,
-          isRecurring: false,
-          categoryId: editableCategories.find((category) => category.name === categoryToAddTo)?.id
-        }
-        entriesToAdd.push(entry)
-      }
-    }
-  }
-  console.log(entriesToAdd)
+  let entriesToAdd = getEntriesFromCategoryIDMappings(categoryIDs, categories)
   try {
-    await prisma.entry.createMany({
+    const addedEntries = await prisma.entry.createMany({
       data: entriesToAdd.map(({ date, isRecurring, categoryId }) => ({
         date: date,
         isRecurring: isRecurring,
         categoryId: categoryId!
-      }))
+      })),
+      skipDuplicates: true
     })
-    const entriesToFind = entriesToAdd.map((entry) => {
-      return { date: entry.date, categoryId: entry.categoryId }
-    })
-    // get entries from database that were just created using date and categoryId
-    const addedEntries = await prisma.entry.findMany({
-      where: {
-        OR: entriesToFind.map((entry) => ({
-          date: entry.date,
-          categoryId: entry.categoryId
-        }))
+    let appData = await getCategories(userID)
+    if (addedEntries.count === 0) {
+      const response: BatchResponse = {
+        success: undefined,
+        error: {
+          code: 422,
+          message: 'No Changes Made, make sure you are not adding duplicate entries',
+          uneditableCategories: []
+        }
       }
-    })
-    // TODO: Add logic to fail if no entries were added. Could be blue alert on frontend
-    let appData = await getCategories()
-    const response = {
+      return res.status(422).json(response)
+    }
+    const response: BatchResponse = {
       success: {
-        entries: addedEntries,
+        entriesAdded: addedEntries.count,
         appData: appData
       },
       error: undefined
     }
     return res.status(201).json(response)
   } catch (error) {
-    console.log(error)
     return res.status(500).send('Internal Server Error')
   }
 }
 
-const getUneditableAndEditableCategoryNames = async (userId: string, isAdmin: boolean, categories: string[]) => {
+const getUneditableAndEditableCategoryIDs = async (userId: string, isAdmin: boolean, categories: number[]) => {
   const editableCategories = await getOwnedCategories(userId, isAdmin)
-  const editableCategoryNames = editableCategories.map((category) => category.name)
-  const uneditableCategories = categories.filter((category) => !editableCategoryNames.includes(category))
-  console.log('uneditableCategories', uneditableCategories)
+  const editableCategoryIDs = editableCategories.map((category) => {
+    return category.id
+  })
+  const uneditableCategories = categories.filter((category) => !editableCategoryIDs.includes(category))
   return { uneditableCategories, editableCategories }
+}
+
+function getEntriesFromCategoryIDMappings(categoryIDs: number[], categories: any) {
+  let entriesToAdd = []
+  for (const categoryToAddTo of categoryIDs) {
+    for (const newDate of categories[categoryToAddTo]) {
+      const entry = {
+        date: newDate,
+        isRecurring: false,
+        categoryId: categoryToAddTo
+      }
+      entriesToAdd.push(entry)
+    }
+  }
+  return entriesToAdd
 }
 
 export default handler
