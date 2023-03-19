@@ -33,11 +33,10 @@ export const CategoriesMenu = ({ session }: Props) => {
               <Checkbox
                 icon={calEvent.icon as IconName}
                 label={calEvent.name}
-                id={`checkbox-${key}`}
-                key={`checkbox-${key}`}
+                id={`checkbox-${key}-${calEvent.id}`}
                 color={calEvent.color}
                 defaultChecked={calEvent.show}
-                checkboxClassName={`h-5 w-5`}
+                checkboxClassName={`h-5 w-5 cursor-pointer`}
                 onChange={() => dispatch(toggleCategory(calEvent.id))}
                 iconClassName={`relative mb-1`}
               />
@@ -65,7 +64,7 @@ export const CategoriesMenu = ({ session }: Props) => {
   }, [categories])
 
   return (
-    <div style={{ marginTop: '20px' }}>
+    <div className='pt-4'>
       <Accordion>
         {renderCategoryType().map((categoryType, key) => {
           return (
