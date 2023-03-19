@@ -1,18 +1,12 @@
 import { Button } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import {
-  decrementDate,
-  getDate,
-  getInterval,
-  incrementDate,
-  isYearInterval,
-  jumpToToday
-} from '@/redux/reducers/MainCalendarReducer'
+import { decrementDate, getDate, getInterval, incrementDate, jumpToToday } from '@/redux/reducers/MainCalendarReducer'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { CalViewDropdown } from './CalViewDropdown'
 import { setCookieMaxAge } from '@/utils/cookies'
 import { AccountDropdown } from '@/components/navBar/AccountDropdown'
+import { CalendarInterval } from '@/constants/enums'
 
 interface NavBarProps {
   sidebarOpen: boolean
@@ -22,7 +16,6 @@ interface NavBarProps {
 export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
   const dispatch = useAppDispatch()
   const targetDate = useAppSelector(getDate)
-  const yearView = useAppSelector(isYearInterval)
   const interval = useAppSelector(getInterval)
   const router = useRouter()
   const [mounted, setMounted] = useState(false)
@@ -47,6 +40,19 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [targetDate, interval])
 
+  const getIntervalDescription = useMemo(() => {
+    switch (interval) {
+      case CalendarInterval.YEAR:
+        return targetDate.format('YYYY')
+      case CalendarInterval.FOUR_MONTHS:
+        return `${targetDate.format('MMM YYYY')} - ${targetDate.add(3, 'M').format('MMM YYYY')}`
+      case CalendarInterval.QUARTERLY:
+        return `Q${Math.floor(targetDate.month() / 3) + 1} ${targetDate.format('YYYY')}`
+      default:
+        return targetDate.format('MMMM YYYY')
+    }
+  }, [interval, targetDate])
+
   return (
     <div className='box-border flex h-[10vh] w-full flex-row items-center justify-between border-b px-5'>
       <div className='flex flex-row items-center'>
@@ -66,7 +72,7 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen }: NavBarProps) => {
         <Button text='Today' onClick={() => dispatch(jumpToToday())} className='mr-10' />
         <Button iconName='CaretLeftFill' onClick={() => dispatch(decrementDate())} className='mr-3 py-3' />
         <Button iconName='CaretRightFill' onClick={() => dispatch(incrementDate())} className='mr-3 py-3' />
-        <h4 className='flex-none text-center text-lg'>{targetDate.format(yearView ? 'YYYY' : 'MMMM YYYY')}</h4>
+        <h4 className='flex-none text-center text-lg'>{getIntervalDescription}</h4>
       </div>
       <CalViewDropdown />
       <AccountDropdown />
