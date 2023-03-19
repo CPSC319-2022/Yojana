@@ -161,8 +161,8 @@ export const Modal = ({
   )
 }
 
-const Minimized = ({ children }: { children: ReactNode }) => {
-  return <>{children}</>
+const Minimized = ({ children, className }: { children: ReactNode; className?: string }) => {
+  return <div className={className}>{children}</div>
 }
 
 Modal.Minimized = Minimized

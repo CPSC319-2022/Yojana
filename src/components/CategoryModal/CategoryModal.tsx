@@ -274,24 +274,6 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     [dispatch]
   )
 
-  const saveCancelWhenMinimized = useMemo(() => {
-    return (
-      <Modal.Minimized>
-        <button
-          type='button'
-          className='mr-3 inline-flex animate-pulse items-center justify-center rounded-md border border-transparent bg-slate-100 py-2 px-4 text-slate-900 enabled:hover:bg-slate-200 disabled:opacity-75'
-          onClick={() => {
-            setIsMinimizedCallback(false)
-            dispatch(cancelDateSelection())
-          }}
-        >
-          Cancel
-        </button>
-        <Button text='Save' onClick={() => setIsMinimizedCallback(false)} className='animate-pulse' />
-      </Modal.Minimized>
-    )
-  }, [dispatch, setIsMinimizedCallback])
-
   const nameField = useMemo(() => {
     return (
       <div className='mb-4'>
@@ -398,18 +380,35 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
 
   const startAndEndDatesRecurringField = useMemo(() => {
     return (
-      <div className='grid grid-cols-2 gap-4'>
-        <div>
-          <label className='mb-2 block text-sm'>Start Date</label>
+      <div className={`grid ${isMinimized ? 'grid-cols-1 pb-4' : 'grid-cols-2'} gap-4`}>
+        <div className={isMinimized ? 'flex' : ''}>
+          <label className={`${isMinimized ? 'mr-2 pt-[1px]' : 'mb-2'} block text-sm`}>Start Date</label>
           <input className='cursor-pointer text-sm' type='date' {...register('repeating.startDate')} />
         </div>
-        <div>
-          <label className='mb-2 block text-sm'>End Date</label>
+        <div className={isMinimized ? 'flex' : ''}>
+          <label className={`${isMinimized ? 'mr-2 pt-[1px]' : 'mb-2'} block text-sm`}>End Date</label>
           <input className='cursor-pointer text-sm' type='date' {...register('repeating.endDate')} />
         </div>
       </div>
     )
-  }, [register])
+  }, [isMinimized, register])
+
+  const recurringPanel = useMemo(() => {
+    return (
+      <>
+        <div className='pb-5'>
+          <Tabs currentIndex={currentTabIndex}>
+            <Tabs.Title>Weekly</Tabs.Title>
+            {weeklyRecurringField}
+            <Tabs.Title>Monthly</Tabs.Title>
+            {monthlyRecurringField}
+          </Tabs>
+        </div>
+        {startAndEndDatesRecurringField}
+        {errors.repeating && <p className='mt-2 text-sm text-red-500'>{errors.repeating.message}</p>}
+      </>
+    )
+  }, [currentTabIndex, errors.repeating, monthlyRecurringField, startAndEndDatesRecurringField, weeklyRecurringField])
 
   const recurringDatesFields = useMemo(() => {
     return (
@@ -429,25 +428,14 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                 leaveFrom='transform scale-100 opacity-100'
                 leaveTo='transform scale-95 opacity-0'
               >
-                <Disclosure.Panel className='pt-4 pb-2'>
-                  <div className='pb-5'>
-                    <Tabs currentIndex={currentTabIndex}>
-                      <Tabs.Title>Weekly</Tabs.Title>
-                      {weeklyRecurringField}
-                      <Tabs.Title>Monthly</Tabs.Title>
-                      {monthlyRecurringField}
-                    </Tabs>
-                  </div>
-                  {startAndEndDatesRecurringField}
-                  {errors.repeating && <p className='mt-2 text-sm text-red-500'>{errors.repeating.message}</p>}
-                </Disclosure.Panel>
+                <Disclosure.Panel className='pt-4 pb-2'>{recurringPanel}</Disclosure.Panel>
               </Transition>
             </>
           )}
         </Disclosure>
       </div>
     )
-  }, [currentTabIndex, errors.repeating, monthlyRecurringField, startAndEndDatesRecurringField, weeklyRecurringField])
+  }, [recurringPanel])
 
   const buttonsAtBottom = useMemo(() => {
     return (
@@ -493,6 +481,27 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       </div>
     )
   }, [dirtyDates, dispatch, getValues, handleSubmit, isDirty, isSubmitting, method, onSubmit])
+
+  const saveCancelWhenMinimized = useMemo(() => {
+    return (
+      <Modal.Minimized className={'w-[17vw] rounded-md border-2 border-slate-200 bg-white p-2'}>
+        {recurringPanel}
+        <span className='flex w-full'>
+          <button
+            type='button'
+            className='mr-3 inline-flex w-full animate-pulse items-center justify-center rounded-md border border-transparent bg-slate-100 py-2 px-4 text-slate-900 enabled:hover:bg-slate-200 disabled:opacity-75'
+            onClick={() => {
+              setIsMinimizedCallback(false)
+              dispatch(cancelDateSelection())
+            }}
+          >
+            Cancel
+          </button>
+          <Button text='Save' onClick={() => setIsMinimizedCallback(false)} className='w-full animate-pulse' />
+        </span>
+      </Modal.Minimized>
+    )
+  }, [dispatch, recurringPanel, setIsMinimizedCallback])
 
   return (
     <>

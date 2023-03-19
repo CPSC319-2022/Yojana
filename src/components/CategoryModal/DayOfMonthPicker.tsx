@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useController } from 'react-hook-form'
 import { Dayjs } from 'dayjs'
+import { useAppSelector } from '@/redux/hooks'
+import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 
 interface DayOfMonthPickerProps {
   control: any
@@ -56,6 +58,7 @@ export const DayOfMonthPicker = ({
   const [weekNum, setWeekNum] = useState(Math.ceil(startDate.date() / 7))
   const [dayOfWeek, setDayOfWeek] = useState(startDate.day())
   const [recurrenceType, setRecurrenceType] = useState(selectedRecurrenceType)
+  const isSelectingDates = useAppSelector(getIsSelectingDates)
 
   useEffect(() => {
     setDateOfMonth(startDate.date())
@@ -117,7 +120,11 @@ export const DayOfMonthPicker = ({
   }, [availableMenuItems, dateOfMonth, recurrenceType, startDate, weekNum])
 
   return (
-    <div className='mx-4 mt-3 flex grid grid-cols-2 flex-wrap justify-center gap-3 pt-3'>
+    <div
+      className={`mx-4 mt-3 flex grid flex-wrap justify-center pt-3 ${
+        isSelectingDates ? 'grid-cols-1 gap-1' : 'grid-cols-2  gap-3'
+      }`}
+    >
       {getMenuItems.map((item) => {
         const isActive = recurrenceType === item.key
         return (
