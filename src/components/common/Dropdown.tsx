@@ -111,6 +111,6 @@ const DropdownAccordion = ({ title, children }: { title: string; children: React
 Dropdown.Accordion = DropdownAccordion
 
 const DropdownDivider = () => {
-  return <hr className='m-2' />
+  return <hr className='m-2 border-slate-200' />
 }
 Dropdown.Divider = DropdownDivider
