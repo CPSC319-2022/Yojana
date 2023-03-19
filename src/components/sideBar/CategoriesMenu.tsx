@@ -1,10 +1,10 @@
 import { Accordion, Checkbox, IconName } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategories, toggleCategory } from '@/redux/reducers/AppDataReducer'
-import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
+import { getCategoryInfo, getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import { CategoryState } from '@/types/prisma'
 import { Session } from 'next-auth'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { CategoriesDropdown } from './CategoriesDropdown'
 
 interface Props {
@@ -15,17 +15,20 @@ export const CategoriesMenu = ({ session }: Props) => {
   const dispatch = useAppDispatch()
   const categories: CategoryState[] = useAppSelector(getCategories)
   const [keepFocus, setKeepFocus] = useState(-1)
-  const disable = useAppSelector(getIsSelectingDates)
+  const isSelectingDates = useAppSelector(getIsSelectingDates)
+  const dateSelectCategory = useAppSelector(getCategoryInfo)
 
   const renderCategories = useCallback(
     (isMaster: boolean) => {
       return categories
-        .filter((calEvent) => calEvent.isMaster === isMaster)
+        .filter((calEvent) => {
+          return isSelectingDates ? calEvent.id === dateSelectCategory?.id : calEvent.isMaster === isMaster
+        })
         .map((calEvent) => {
           return (
             <div
               className={`group mt-1 flex flex-row justify-between rounded-md py-1 px-2 ${
-                !disable && 'hover:bg-slate-100'
+                !isSelectingDates && 'hover:bg-slate-100'
               } ${keepFocus === calEvent.id ? 'bg-slate-100' : ''}`}
               key={`category-item-${calEvent.id}`}
               id={`category-item-${calEvent.id}`}
@@ -47,24 +50,23 @@ export const CategoriesMenu = ({ session }: Props) => {
           )
         })
     },
-    [categories, disable, dispatch, keepFocus, session.user.isAdmin]
+    [categories, isSelectingDates, dateSelectCategory?.id, keepFocus, session.user.isAdmin, dispatch]
   )
 
   const renderCategoryType = useCallback(() => {
     const masterExists = categories.some((category) => category.isMaster)
     const personalExists = categories.some((category) => !category.isMaster)
-    if (masterExists && personalExists) {
-      return [true, false]
-    } else if (masterExists) {
-      return [true]
-    } else if (personalExists) {
-      return [false]
-    }
-    return []
-  }, [categories])
+    const selectingMasterCatDates = !isSelectingDates || dateSelectCategory?.isMaster === true
+    const selectingPersonalCatDates = !isSelectingDates || dateSelectCategory?.isMaster === false
 
-  return (
-    <div className='pt-4'>
+    const accordionGroups = []
+    if ((masterExists && !isSelectingDates) || selectingMasterCatDates) accordionGroups.push(true)
+    if ((personalExists && !isSelectingDates) || selectingPersonalCatDates) accordionGroups.push(false)
+    return accordionGroups
+  }, [categories, dateSelectCategory?.isMaster, isSelectingDates])
+
+  const renderMenuContent = useMemo(() => {
+    return (
       <Accordion>
         {renderCategoryType().map((categoryType, key) => {
           return (
@@ -79,6 +81,8 @@ export const CategoriesMenu = ({ session }: Props) => {
           )
         })}
       </Accordion>
-    </div>
-  )
+    )
+  }, [renderCategories, renderCategoryType])
+
+  return <div className='pt-4'>{renderMenuContent}</div>
 }

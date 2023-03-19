@@ -4,7 +4,7 @@ import { DeleteCategoryModal } from '@/components/DeleteCategoryModal'
 import { useAppSelector } from '@/redux/hooks'
 import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import { Popover, Transition } from '@headlessui/react'
-import { Dispatch, Fragment, useState } from 'react'
+import React, { Dispatch, Fragment, useState } from 'react'
 import { DropdownProps } from '../common/Dropdown'
 
 export const CategoriesDropdown = (props: {

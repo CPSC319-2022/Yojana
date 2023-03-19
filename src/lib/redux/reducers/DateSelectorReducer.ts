@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
 import dayjs, { Dayjs } from 'dayjs'
 import { cloneDeep, merge } from 'lodash'
+import { CategoryFullState } from '@/types/prisma'
 
 export interface SelectedSettings {
   isSelected: boolean
@@ -25,6 +26,7 @@ interface State {
     individualDates: DateSelectionMap
     individualDatesAtStart: DateSelectionMap
     repeatingDates: DateSelectionMap
+    categoryInfo: CategoryFullState | null
   }
 }
 
@@ -32,7 +34,8 @@ const initialState = {
   isSelectingDates: false,
   individualDates: {} as DateSelectionMap,
   individualDatesAtStart: {} as DateSelectionMap,
-  repeatingDates: {} as DateSelectionMap
+  repeatingDates: {} as DateSelectionMap,
+  categoryInfo: null as CategoryFullState | null
 }
 
 const dateSelectorSlice = createSlice({
@@ -77,10 +80,14 @@ const dateSelectorSlice = createSlice({
       // Revert individual dates back to the state they were in when we started selecting dates
       state.individualDates = state.individualDatesAtStart
     },
+    setCategoryInfo: (state, action: PayloadAction<CategoryFullState | null>) => {
+      state.categoryInfo = action.payload
+    },
     resetSelectedDates: (state) => {
       state.individualDates = {}
       state.individualDatesAtStart = {}
       state.repeatingDates = {}
+      state.categoryInfo = null
     }
   },
   extraReducers: {
@@ -120,7 +127,8 @@ export const {
   toggleIndividualDate,
   resetSelectedDates,
   setIndividualDates,
-  cancelDateSelection
+  cancelDateSelection,
+  setCategoryInfo
 } = dateSelectorSlice.actions
 
 export const getSelectedDates = (state: State) => {
@@ -184,5 +192,7 @@ export const getYearSelectedDates = (state: State, date: Dayjs) => {
   const repeatingDates = cloneDeep(state.dateSelector.repeatingDates[date.year()]) ?? {}
   return merge(individualDates, repeatingDates)
 }
+
+export const getCategoryInfo = (state: State) => state.dateSelector.categoryInfo
 
 export const DateSelectorReducer = dateSelectorSlice.reducer

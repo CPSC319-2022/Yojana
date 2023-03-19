@@ -8,6 +8,7 @@ import {
   cancelDateSelection,
   getSelectedDates,
   resetSelectedDates,
+  setCategoryInfo,
   setIndividualDates,
   setIsSelectingDates,
   setRepeatingDates
@@ -112,6 +113,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   useEffect(() => {
     dispatch(setIndividualDates(getInitialDates(currentState?.entries || [], false)))
     dispatch(setRepeatingDates(getInitialDates(currentState?.entries || [], true)))
+    dispatch(setCategoryInfo(currentState))
     //   eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
