@@ -7,7 +7,6 @@ import { setAppData } from '@/redux/reducers/AppDataReducer'
 import { BatchResponse, CategoryFull } from '@/types/prisma'
 import { getCookies } from 'cookies-next'
 import { setCookieMaxAge } from '@/utils/cookies'
-import { CsvDownloader } from '@/components/CsvModal/CsvTemplate'
 
 export const setCategoryShow = (categories: CategoryFull[]) => {
   const cookies = getCookies()
@@ -65,7 +64,14 @@ export const CsvModal = () => {
           <h3 className='mb-2 text-lg font-medium'>Import from CSV</h3>
           <div className='text-sm'>
             Upload a CSV file with the following format (
-            <CsvDownloader csvUrl={'/template.csv'} fileName={'template.csv'}></CsvDownloader>):
+            <a
+              href='/template.csv'
+              className='text-blue-600 underline visited:text-purple-600 hover:text-blue-800'
+              download
+            >
+              click here to download a template
+            </a>
+            ):
             <br />
             <table className='mb-6 mt-3 w-full table-auto'>
               <thead>
