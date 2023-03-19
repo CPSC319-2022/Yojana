@@ -41,6 +41,7 @@ export const AccountDropdown = ({ session }: { session: Session }) => {
     <div id='account-dropdown'>
       <Dropdown text='Account' containerClassName='w-[12vw]'>
         <Dropdown.Button label={userName} onClick={() => {}} clickable={false} />
+        <Dropdown.Divider />
         <Dropdown.Button label='Preferences' onClick={() => setIsModalOpen(true)} />
         <Dropdown.Accordion title='Export Calendar'>
           <Dropdown.Button
