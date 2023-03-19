@@ -103,7 +103,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
             ${isSelectingDates && !selected?.isSelected ? 'hover:ring-2 hover:ring-inset hover:ring-emerald-200' : ''}
             ${!isSelectingDates && isToday && !getForPrinting ? 'ring-2 ring-inset ring-emerald-300' : ''}
             ${
-              preferences.yearOverflow.value === 'expand' || getForPrinting
+              preferences.yearOverflow.value === 'wrap' || getForPrinting
                 ? 'inline-flow break-all'
                 : 'flex overflow-x-scroll'
             }`}

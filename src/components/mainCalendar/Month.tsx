@@ -3,16 +3,18 @@ import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
 import { CalendarInterval } from '@/constants/enums'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
+import { getDate, isMonthInterval, isQuarterlyInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
+import dayjs, { Dayjs } from 'dayjs'
+import { Popover, Transition } from '@headlessui/react'
+
 import {
   getIsSelectingDates,
   getPrevCurrNextMonthSelectedDates,
   toggleIndividualDate
 } from '@/redux/reducers/DateSelectorReducer'
-import { getDate, isMonthInterval, isQuarterlyInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
-import { Popover, Transition } from '@headlessui/react'
-import dayjs, { Dayjs } from 'dayjs'
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+import { getInterval } from '@/redux/reducers/MainCalendarReducer'
 interface MonthProps {
   monthOffset: number
   className?: string
@@ -27,6 +29,7 @@ const MAX_TIMES_SIZE_SET = 2
 export const Month = (props: MonthProps) => {
   const startingMonthNum = props.monthOffset
   const isMonthView = useAppSelector(isMonthInterval)
+  const calendarInterval = useAppSelector(getInterval)
   const isQuarterlyView = useAppSelector(isQuarterlyInterval)
   const stateDate = useAppSelector(getDate)
   const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
@@ -45,46 +48,15 @@ export const Month = (props: MonthProps) => {
     getPrevCurrNextMonthSelectedDates(state, targetDate)
   )
 
-  const [nonOverflowElemCount, setNonOverflowElemCount] = useState(1)
-  const [nonOverflowCountKnown, setNonOverflowCountKnown] = useState(false)
-  const monthRef = useRef<HTMLDivElement>(null)
-  const [numTimesSizeSet, setNumTimesSizeSet] = useState(0)
-  const categoryContainerRef = useCallback(
-    (node: HTMLDivElement) => {
-      if (node !== null && !nonOverflowCountKnown && numTimesSizeSet < MAX_TIMES_SIZE_SET) {
-        let newCount: number
-        if (useBanners) newCount = Math.floor(node.getBoundingClientRect().height / CATEGORY_BANNER_HEIGHT_PX)
-        else newCount = Math.floor(node.getBoundingClientRect().width / CATEGORY_ICON_WIDTH_PX)
-        setNonOverflowElemCount(newCount)
-        setNonOverflowCountKnown(true)
-        setNumTimesSizeSet(numTimesSizeSet + 1)
-      }
-    },
-    [nonOverflowCountKnown, numTimesSizeSet, useBanners]
-  )
-
-  useEffect(() => {
-    window.addEventListener('resize', () => setNumTimesSizeSet(0))
-    return () => {
-      window.removeEventListener('resize', () => setNumTimesSizeSet(0))
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!monthRef.current) return
-
-    const handleWindowSizeChange = () => {
-      setNonOverflowCountKnown(false)
-    }
-    const resizeObserver = new ResizeObserver(handleWindowSizeChange)
-    resizeObserver.observe(monthRef.current)
-    return () => resizeObserver.disconnect()
-  }, [])
+  const [nonOverflowElemCount, setNonOverflowElemCount] = useState(0)
+  const [measureSizeCounter, setMeasureSizeCounter] = useState(0)
+  const numTimesSizeSet = useRef(0)
 
   useEffect(() => {
     setUseBanners(isMonthView)
   }, [isMonthView])
 
+  // Determines what days and weeks are in the month.
   useEffect(() => {
     const newTarget = referenceDate.add(props.monthOffset, 'month')
     const newStart = newTarget.startOf('month')
@@ -96,9 +68,35 @@ export const Month = (props: MonthProps) => {
     setNumWeeks(Math.ceil((newDaysInMonth + newStart.day()) / 7))
   }, [props.monthOffset, referenceDate])
 
+  // Events that require resetting the resize count
   useEffect(() => {
-    setNonOverflowCountKnown(false)
-  }, [numWeeks])
+    numTimesSizeSet.current = 0
+  }, [calendarInterval, monthStartDate, useBanners])
+  useEffect(() => {
+    const windowResizeListener = () => {
+      numTimesSizeSet.current = 0
+      setMeasureSizeCounter(measureSizeCounter + 1)
+    }
+    window.addEventListener('resize', windowResizeListener)
+    return () => {
+      window.removeEventListener('resize', windowResizeListener)
+    }
+  }, [measureSizeCounter])
+
+  // If the day's reference has changed, recompute how many elements fit in it.
+  const categoryContainerRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (node !== null && numTimesSizeSet.current < MAX_TIMES_SIZE_SET) {
+        let newCount: number
+        if (useBanners) newCount = Math.floor(node.getBoundingClientRect().height / CATEGORY_BANNER_HEIGHT_PX)
+        else newCount = Math.floor(node.getBoundingClientRect().width / CATEGORY_ICON_WIDTH_PX)
+        setNonOverflowElemCount(newCount)
+        numTimesSizeSet.current += 1
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [useBanners, measureSizeCounter]
+  )
 
   const getEntriesOnDay = useCallback(
     (dateNum: number, offsetFromMonthStart: number) => {
@@ -339,7 +337,7 @@ export const Month = (props: MonthProps) => {
         >
           {renderDateNum(day, isCurrentMonth)}
           <div
-            className={`flex-grow ${isQuarterlyView ? 'inline-flex overflow-hidden' : ''}`}
+            className={`flex-grow overflow-hidden ${isQuarterlyView ? 'inline-flex overflow-hidden' : ''}`}
             ref={offsetFromMonthStart === 0 ? categoryContainerRef : undefined}
           >
             {getNonOverflowCategoryElems(day, offsetFromMonthStart)}
@@ -402,7 +400,7 @@ export const Month = (props: MonthProps) => {
   }, [])
 
   return (
-    <div ref={monthRef} className={`box-border bg-slate-200 ${isMonthView ? 'h-full' : ''} ${props.className}`}>
+    <div className={`box-border bg-slate-200 ${isMonthView ? 'h-full' : ''} ${props.className}`}>
       {isMonthView && generateDayNames}
       {generateWeeks()}
     </div>
