@@ -136,7 +136,6 @@ export const Month = (props: MonthProps) => {
               key={`${key}-${entry.categoryId}`}
               className={className}
               category={category}
-              calInterval={CalendarInterval.MONTH}
               dayOffset={day.day()}
               monthOffset={isMonthView ? offsetFromMonthStart : startingMonthNum}
               currentDay={day.date()}
@@ -154,13 +153,6 @@ export const Month = (props: MonthProps) => {
               <Icon
                 iconName={category.icon as IconName}
                 category={category}
-                calInterval={
-                  isMonthView
-                    ? CalendarInterval.MONTH
-                    : isQuarterlyView
-                    ? CalendarInterval.QUARTERLY
-                    : CalendarInterval.FOUR_MONTHS
-                }
                 dayOffset={day.day()}
                 monthOffset={isMonthView ? offsetFromMonthStart : startingMonthNum}
                 currentDay={day.date()}

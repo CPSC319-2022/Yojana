@@ -40,7 +40,6 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
                 <Icon
                   iconName={category.icon as IconName}
                   category={category}
-                  calInterval={CalendarInterval.YEAR}
                   monthOffset={monthNum}
                   currentDay={day.date()}
                   className='inline'

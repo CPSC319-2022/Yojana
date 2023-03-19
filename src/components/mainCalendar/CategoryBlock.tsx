@@ -1,5 +1,4 @@
 import { Icon, IconName } from '@/components/common'
-import { CalendarInterval } from '@/constants/enums'
 import { CategoryFullState } from '@/types/prisma'
 import { getTextColor } from '@/utils/color'
 import { Popover, Transition } from '@headlessui/react'
@@ -10,7 +9,6 @@ interface CategoryBlockProps {
   label: string
   icon: IconName
   className?: string
-  calInterval?: CalendarInterval
   monthOffset?: number
   dayOffset?: number
   currentDay?: number
@@ -27,7 +25,6 @@ export const CategoryBlock = ({
   currentDay,
   dayOffset,
   category,
-  calInterval,
   isNested
 }: CategoryBlockProps) => {
   const renderPopover = useCallback((catBlock: JSX.Element, category: CategoryFullState) => {
