@@ -30,7 +30,7 @@ export const Toggle = ({
       <div className={className}>
         {preference ? textToToggle[0] : textToToggle[1]}
         {tooltipIcon && tooltipText && (
-          <Tooltip text={tooltipText} position={tooltipPosition}>
+          <Tooltip text={tooltipText} position={tooltipPosition} boundingClassName='ml-1'>
             <Icon iconName={tooltipIcon} className='mb-0.5 inline' />
           </Tooltip>
         )}
