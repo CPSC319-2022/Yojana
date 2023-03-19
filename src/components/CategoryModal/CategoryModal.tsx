@@ -381,12 +381,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const startAndEndDatesRecurringField = useMemo(() => {
     return (
       <div className={`grid ${isMinimized ? 'grid-cols-1 pb-4' : 'grid-cols-2'} gap-4`}>
-        <div className={isMinimized ? 'flex' : ''}>
-          <label className={`${isMinimized ? 'mr-2 pt-[1px]' : 'mb-2'} block text-sm`}>Start Date</label>
+        <div className={isMinimized ? 'flex justify-between' : ''}>
+          <label className={`${isMinimized ? 'mr-2 truncate pt-[1px]' : 'mb-2'} block text-sm`}>Start Date</label>
           <input className='cursor-pointer text-sm' type='date' {...register('repeating.startDate')} />
         </div>
-        <div className={isMinimized ? 'flex' : ''}>
-          <label className={`${isMinimized ? 'mr-2 pt-[1px]' : 'mb-2'} block text-sm`}>End Date</label>
+        <div className={isMinimized ? 'flex justify-between' : ''}>
+          <label className={`${isMinimized ? 'mr-2 truncate pt-[1px]' : 'mb-2'} block text-sm`}>End Date</label>
           <input className='cursor-pointer text-sm' type='date' {...register('repeating.endDate')} />
         </div>
       </div>
