@@ -9,7 +9,7 @@ interface Props {
 
 export const SideBar = ({ session }: Props) => {
   return (
-    <div className='box-border h-full overflow-y-auto overflow-x-visible pt-4 pl-1' id='sidebar'>
+    <div className='box-border h-full overflow-y-auto overflow-x-visible pt-6 pl-1 pr-2' id='sidebar'>
       <div className='flex flex-row px-4'>
         <CategoryModal method='POST' id={-1} callBack={() => {}} />
         <CsvModal />
