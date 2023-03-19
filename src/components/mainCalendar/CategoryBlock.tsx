@@ -15,6 +15,7 @@ interface CategoryBlockProps {
   dayOffset?: number
   currentDay?: number
   category?: CategoryFullState
+  isNested?: boolean
 }
 
 export const CategoryBlock = ({
@@ -26,11 +27,16 @@ export const CategoryBlock = ({
   currentDay,
   dayOffset,
   category,
-  calInterval
+  calInterval,
+  isNested
 }: CategoryBlockProps) => {
   const renderPopover = useCallback((catBlock: JSX.Element, category: CategoryFullState) => {
     let translateXClass = (dayOffset ? dayOffset >= 6 : false) ? '-translate-x-60' : 'translate-x-6'
     let translateYClass = (monthOffset ? monthOffset >= 15 : false) ? '-translate-y-60' : ''
+    translateXClass = isNested ? '-translate-x-60' : translateXClass
+    translateYClass = isNested ? '-translate-y-60' : translateYClass
+
+    const descText = category?.description.trim().length === 0 ? 'No description provided!' : category?.description
 
     return (
       <Popover>
@@ -44,7 +50,7 @@ export const CategoryBlock = ({
           leaveFrom={`opacity-100 translate-y-0`}
           leaveTo={`opacity-0 translate-y-1`}
         >
-          <Popover.Panel className={`z-100 absolute transform ${translateXClass} ${translateYClass}`}>
+          <Popover.Panel className={`absolute z-40 transform ${translateXClass} ${translateYClass}`}>
             <style jsx>{`
               div {
                 box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
@@ -57,8 +63,8 @@ export const CategoryBlock = ({
             `}</style>
             <div className='h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white p-5 leading-7'>
               <p className='text-m text-center font-bold text-slate-500'>{currentDay}</p>
-              <h1 className={`truncate text-base font-bold`}>{category?.name}</h1>
-              <p className='text-sm font-bold text-slate-700'>{category?.description}</p>
+              <h1 className={`text-base font-bold`}>{category?.name + ' #' + category?.id}</h1>
+              <p className='text-sm font-bold text-slate-700'>{descText}</p>
             </div>
           </Popover.Panel>
         </Transition>

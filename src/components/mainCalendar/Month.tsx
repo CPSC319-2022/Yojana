@@ -114,7 +114,13 @@ export const Month = (props: MonthProps) => {
   )
 
   const getBannersOrIcons = useCallback(
-    (day: Dayjs, offsetFromMonthStart: number, getBanners: boolean, className?: string): JSX.Element[] => {
+    (
+      day: Dayjs,
+      offsetFromMonthStart: number,
+      getBanners: boolean,
+      isForPopover = false,
+      className?: string
+    ): JSX.Element[] => {
       if (isSelectingDates) return []
 
       const entriesOnDay = getEntriesOnDay(day.date(), offsetFromMonthStart) || []
@@ -136,6 +142,7 @@ export const Month = (props: MonthProps) => {
               dayOffset={day.day()}
               monthOffset={isMonthView ? offsetFromMonthStart : startingMonthNum}
               currentDay={day.date()}
+              isNested={isForPopover}
             />
           )
         } else {
@@ -159,6 +166,7 @@ export const Month = (props: MonthProps) => {
                 dayOffset={day.day()}
                 monthOffset={isMonthView ? offsetFromMonthStart : startingMonthNum}
                 currentDay={day.date()}
+                isNested={isForPopover}
                 className='inline'
               />
             </span>
@@ -173,9 +181,9 @@ export const Month = (props: MonthProps) => {
 
   const getPopoverContent = useCallback(
     (day: Dayjs, offsetFromMonthStart: number) => {
-      const allDayBanners = getBannersOrIcons(day, offsetFromMonthStart, true) || []
+      const allDayBanners = getBannersOrIcons(day, offsetFromMonthStart, true, true) || []
       return (
-        <div className='lg:grid-rows relative grid gap-1 p-2 pb-3'>
+        <div className='lg:grid-rows grid gap-1 p-2 pb-3'>
           <span
             className={`${
               offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''
@@ -239,7 +247,7 @@ export const Month = (props: MonthProps) => {
             leaveFrom={`opacity-100 ${below ? 'translate-y-0' : ''}`}
             leaveTo={`opacity-0 ${below ? 'translate-y-1' : ''}`}
           >
-            <Popover.Panel className={`${translateXClass} ${translateYClass} z-100 absolute transform`}>
+            <Popover.Panel className={`${translateXClass} ${translateYClass} absolute z-50 transform`}>
               <style jsx>{`
                 div {
                   box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
