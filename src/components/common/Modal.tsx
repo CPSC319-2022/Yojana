@@ -162,6 +162,7 @@ export const Modal = ({
 }
 
 const Minimized = ({ children }: { children: ReactNode }) => {
+  document.getElementById('__next')?.removeAttribute('inert')
   return <>{children}</>
 }
 
