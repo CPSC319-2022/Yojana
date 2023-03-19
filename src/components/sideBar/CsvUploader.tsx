@@ -79,7 +79,7 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchRespons
       const res = await response.json()
       onSuccess(res)
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 

@@ -73,7 +73,6 @@ export const getOwnedCategories = async (creatorId: string, isAdmin: boolean) =>
       select
     })
   }
-  console.log('getting user categories')
   return prisma.category.findMany({
     where: {
       creatorId: creatorId
