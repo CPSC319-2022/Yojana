@@ -42,7 +42,7 @@ const Calendar = ({ sidebarOpenInitial, session }: CalendarProps) => {
       <Alert />
       <div className='flex h-screen w-full flex-col bg-white text-slate-800'>
         <div className='z-10'>
-          <NavBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <NavBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} session={session} />
         </div>
         <div className='border-box z-0 flex h-[90vh] w-full flex-row'>
           <div
