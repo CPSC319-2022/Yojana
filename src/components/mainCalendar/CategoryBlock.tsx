@@ -31,12 +31,21 @@ export const CategoryBlock = ({
   isNested
 }: CategoryBlockProps) => {
   const renderPopover = useCallback((catBlock: JSX.Element, category: CategoryFullState) => {
-    let translateXClass = (dayOffset ? dayOffset >= 6 : false) ? '-translate-x-60' : 'translate-x-6'
-    let translateYClass = (monthOffset ? monthOffset >= 15 : false) ? '-translate-y-60' : ''
-    translateXClass = isNested ? '-translate-x-60' : translateXClass
-    translateYClass = isNested ? '-translate-y-60' : translateYClass
-
     const descText = category?.description.trim().length === 0 ? 'No description provided!' : category?.description
+    const titleLength = category?.name.length + category?.creator.name.length
+    const email = 'mailto:' + category?.creator.email
+    let translateXClass = (dayOffset ? dayOffset >= 6 : false) ? '-translate-x-60' : 'translate-x-6'
+    let translateYClass = (monthOffset ? monthOffset >= 15 : false)
+      ? titleLength * 2 + descText.length >= 128
+        ? '-translate-y-60'
+        : '-translate-y-40'
+      : ''
+    translateXClass = isNested ? '-translate-x-60' : translateXClass
+    translateYClass = isNested
+      ? titleLength * 2 + descText.length >= 128
+        ? '-translate-y-60'
+        : '-translate-y-40'
+      : translateYClass
 
     return (
       <Popover>
@@ -45,9 +54,9 @@ export const CategoryBlock = ({
           as={Fragment}
           enter='transition ease-out duration-200'
           enterFrom='opacity-0'
-          enterTo='opacity-100'
+          enterTo='opacity-128'
           leave='transition ease-in duration-150'
-          leaveFrom={`opacity-100 translate-y-0`}
+          leaveFrom={`opacity-128 translate-y-0`}
           leaveTo={`opacity-0 translate-y-1`}
         >
           <Popover.Panel className={`absolute z-40 transform ${translateXClass} ${translateYClass}`}>
@@ -61,10 +70,16 @@ export const CategoryBlock = ({
                 color: ${category?.color};
               }
             `}</style>
-            <div className='h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white p-5 leading-7'>
+            <div className='max-w-60 h-fit max-h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white p-5 leading-7'>
               <p className='text-m text-center font-bold text-slate-500'>{currentDay}</p>
               <h1 className={`text-base font-bold`}>{category?.name + ' #' + category?.id}</h1>
               <p className='text-sm font-bold text-slate-700'>{descText}</p>
+              <p className='text-xs text-slate-500'>
+                creator:{' '}
+                <a className=' text-blue-500 underline' href={email}>
+                  {category?.creator.name}
+                </a>
+              </p>
             </div>
           </Popover.Panel>
         </Transition>
@@ -82,7 +97,7 @@ export const CategoryBlock = ({
         `}</style>
         <div
           aria-label={label}
-          className={`event-block mx-1 mt-1 overflow-x-hidden whitespace-nowrap rounded-md px-1.5 
+          className={`event-block mx-1 mt-1 overflow-x-hidden whitespace-nowrap rounded-md px-2 
           ${getTextColor(color)} 
           ${className}`}
         >
@@ -101,7 +116,7 @@ export const CategoryBlock = ({
       `}</style>
       <div
         aria-label={label}
-        className={`event-block mx-1 mt-1 overflow-x-hidden whitespace-nowrap rounded-md px-1.5 
+        className={`event-block mx-1 mt-1 overflow-x-hidden whitespace-nowrap rounded-md px-2 
           ${getTextColor(color)} 
           ${className}`}
       >

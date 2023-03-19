@@ -4,8 +4,8 @@ import { CalendarInterval } from '@/constants/enums'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
 import { getDate, isMonthInterval, isQuarterlyInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
-import dayjs, { Dayjs } from 'dayjs'
 import { Popover, Transition } from '@headlessui/react'
+import dayjs, { Dayjs } from 'dayjs'
 
 import {
   getIsSelectingDates,

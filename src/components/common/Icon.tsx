@@ -29,6 +29,9 @@ export const Icon = ({
   const BootstrapIcon = icons[iconName]
 
   const renderPopover = useCallback((BootstrapIcon: JSX.Element, category: CategoryFullState) => {
+    const descText = category?.description.trim().length === 0 ? 'No description provided!' : category?.description
+    const titleLength = category?.name.length + category?.creator.name.length
+    const email = 'mailto:' + category?.creator.email
     let translateXClass
     let translateYClass
     switch (calInterval) {
@@ -38,7 +41,11 @@ export const Icon = ({
           : (currentDay ? currentDay >= 15 : false)
           ? 'translate-x-5'
           : ''
-        translateYClass = (currentDay ? currentDay >= 15 : false) ? '-translate-y-60' : ''
+        translateYClass = (currentDay ? currentDay >= 15 : false)
+          ? titleLength * 2 + descText.length >= 128
+            ? '-translate-y-60'
+            : '-translate-y-40'
+          : ''
         break
       case CalendarInterval.FOUR_MONTHS:
         translateXClass = (monthOffset ? monthOffset % 2 !== 0 : false)
@@ -46,16 +53,26 @@ export const Icon = ({
           : (monthOffset ? monthOffset === 2 : false)
           ? 'translate-x-5'
           : ''
-        translateYClass = (monthOffset ? monthOffset >= 2 : false) ? '-translate-y-60' : ''
+        translateYClass = (monthOffset ? monthOffset >= 2 : false)
+          ? titleLength * 2 + descText.length >= 128
+            ? '-translate-y-60'
+            : '-translate-y-40'
+          : ''
         break
       case CalendarInterval.MONTH:
         translateXClass = (dayOffset ? dayOffset >= 6 : false) ? '-translate-x-60' : ''
-        translateYClass = (monthOffset ? monthOffset >= 15 : false) ? '-translate-y-60' : ''
+        translateYClass = (monthOffset ? monthOffset >= 15 : false)
+          ? titleLength * 2 + descText.length >= 128
+            ? '-translate-y-60'
+            : '-translate-y-40'
+          : ''
         break
       case CalendarInterval.QUARTERLY:
         translateXClass = '-translate-x-60'
         translateYClass = (monthOffset ? monthOffset == 2 : false)
-          ? '-translate-y-60'
+          ? titleLength * 2 + descText.length >= 128
+            ? '-translate-y-60'
+            : '-translate-y-40'
           : (monthOffset ? monthOffset == 1 : false)
           ? '-translate-y-24'
           : ''
@@ -63,8 +80,6 @@ export const Icon = ({
     }
     translateXClass = isNested ? '-translate-x-60' : translateXClass
     translateYClass = isNested ? '-translate-y-60' : translateYClass
-
-    const descText = category?.description.trim().length === 0 ? 'No description provided!' : category?.description
 
     return (
       <Popover className='inline'>
@@ -86,10 +101,16 @@ export const Icon = ({
                 -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
               }
             `}</style>
-            <div className='h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white p-5 leading-7'>
+            <div className='max-w-60 h-fit max-h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white p-5 leading-7'>
               <p className='text-m text-center text-slate-500'>{currentDay}</p>
               <p className='text-base'>{category?.name + ' #' + category?.id}</p>
               <p className='text-sm text-slate-700'>{descText}</p>
+              <p className='text-xs text-slate-500'>
+                creator:{' '}
+                <a className=' text-blue-500 underline' href={email}>
+                  {category?.creator.name}
+                </a>
+              </p>
             </div>
           </Popover.Panel>
         </Transition>
