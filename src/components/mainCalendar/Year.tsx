@@ -38,7 +38,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
                     color: ${category.color};
                   }
                 `}</style>
-                <Icon iconName={category.icon as IconName} className='inline' />
+                <Icon iconName={category.icon as IconName} className='mb-0.5 inline' />
               </span>
             )
           }
