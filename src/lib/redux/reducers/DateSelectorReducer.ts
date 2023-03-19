@@ -3,16 +3,18 @@ import { HYDRATE } from 'next-redux-wrapper'
 import dayjs, { Dayjs } from 'dayjs'
 import { cloneDeep, merge } from 'lodash'
 
+export interface SelectedSettings {
+  isSelected: boolean
+  isRecurring: boolean
+}
+
 // year: 2023
 // month: 0-11
 // day: 1-31
 interface DateSelectionMap {
   [year: string]: {
     [month: string]: {
-      [day: string]: {
-        isSelected: boolean
-        isRecurring: boolean
-      }
+      [day: string]: SelectedSettings
     }
   }
 }

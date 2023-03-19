@@ -6,6 +6,7 @@ import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 import dayjs, { Dayjs } from 'dayjs'
 import { useCallback, useMemo } from 'react'
+import { getDayStyling } from '@/utils/day'
 
 export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) => {
   const stateDate = useAppSelector(getDate)
@@ -48,23 +49,6 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
     [categoryMap, entriesInYear, isSelectingDates]
   )
 
-  const getDateBackgroundColour = useCallback(
-    (isWeekend: boolean, isSelected?: boolean, isRecurring?: boolean) => {
-      if (!isSelectingDates) {
-        return isWeekend ? 'bg-slate-100' : 'bg-white'
-      } else {
-        if (isWeekend && isSelected) {
-          return isRecurring ? 'bg-slate-100' : 'bg-emerald-200'
-        } else if (isSelected) {
-          return isRecurring ? 'bg-slate-100' : 'bg-emerald-100'
-        } else {
-          return 'bg-white'
-        }
-      }
-    },
-    [isSelectingDates]
-  )
-
   const onDayClicked = useCallback(
     (day: Dayjs, isNotSelectedNorRepeating: boolean) => {
       if (isNotSelectedNorRepeating) {
@@ -83,16 +67,24 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
 
       const day = monthStartDate.add(dateOffset, 'days')
       const isToday = day.isSame(dayjs(), 'day')
-      const isWeekend = day.day() === 0 || day.day() === 6
       const selected = yearSelected?.[monthNum]?.[day.date()]
-      const backgroundColor = getDateBackgroundColour(isWeekend, selected?.isSelected, selected?.isRecurring)
+
+      const dayContent = isSelectingDates ? (
+        <span
+          className={`flex justify-center align-middle font-semibold ${
+            selected?.isSelected ? 'text-emerald-600' : 'text-slate-300'
+          }`}
+        >
+          {day.format('dd').charAt(0)}
+        </span>
+      ) : (
+        renderDayCategories(day, monthNum, dateOffset)
+      )
 
       return (
         <div
           className={`tile px-0.5 
-            ${backgroundColor} 
-            ${isSelectingDates && !selected?.isRecurring ? 'cursor-pointer' : ''} 
-            ${isSelectingDates && !selected?.isSelected ? 'hover:ring-2 hover:ring-inset hover:ring-emerald-200' : ''}
+            ${getDayStyling(day.day(), isSelectingDates, selected)} 
             ${!isSelectingDates && isToday && !getForPrinting ? 'ring-2 ring-inset ring-emerald-300' : ''}
             ${
               preferences.yearOverflow.value === 'wrap' || getForPrinting
@@ -102,13 +94,12 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
           key={`${yearNum}-${monthNum}-${dateOffset}`}
           onClick={() => onDayClicked(day, !selected || !selected?.isRecurring)}
         >
-          {renderDayCategories(day, monthNum, dateOffset)}
+          {dayContent}
         </div>
       )
     },
     [
       getForPrinting,
-      getDateBackgroundColour,
       isSelectingDates,
       onDayClicked,
       renderDayCategories,

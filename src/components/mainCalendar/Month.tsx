@@ -18,6 +18,7 @@ import {
   toggleIndividualDate
 } from '@/redux/reducers/DateSelectorReducer'
 import { Icon, IconName } from '@/components/common'
+import { getDayStyling } from '@/utils/day'
 
 interface MonthProps {
   monthOffset: number
@@ -281,15 +282,6 @@ export const Month = (props: MonthProps) => {
     [getBannersOrIcons, useBanners, nonOverflowElemCount, renderPopover]
   )
 
-  const getDayBackgroundColor = useCallback(
-    (isSelected: boolean | undefined, dayOfWeek: number) => {
-      if (isSelected) return 'bg-emerald-100'
-      if (isSelectingDates || (dayOfWeek < 6 && dayOfWeek > 0)) return 'bg-white'
-      return 'bg-slate-100'
-    },
-    [isSelectingDates]
-  )
-
   const renderDay = useCallback(
     (firstDateOfWeek: number, dayNum: number) => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
@@ -301,10 +293,10 @@ export const Month = (props: MonthProps) => {
       return (
         <div
           key={day.format('YY-MM-DD')}
-          className={`tile flex overflow-hidden px-0.5 ${isMonthView ? 'flex-col' : 'flex-row'}
-            ${getDayBackgroundColor(selected?.isSelected, day.day())} 
+          className={`tile flex overflow-hidden px-0.5 
+            ${isMonthView ? 'flex-col' : 'flex-row'}
             ${isQuarterlyView ? 'items-center' : ''}
-            ${isSelectingDates && !selected?.isRecurring ? 'cursor-pointer' : ''} `}
+            ${getDayStyling(day.day(), isSelectingDates, selected)}  `}
           onClick={() => {
             if (!selected || !selected?.isRecurring) {
               dispatch(toggleIndividualDate(day))
@@ -326,7 +318,6 @@ export const Month = (props: MonthProps) => {
       getSelectedSettings,
       daysInMonth,
       isMonthView,
-      getDayBackgroundColor,
       isQuarterlyView,
       isSelectingDates,
       renderDateNum,
