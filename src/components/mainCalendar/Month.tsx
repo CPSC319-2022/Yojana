@@ -1,18 +1,17 @@
 import { Icon, IconName } from '@/components/common'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
-import { CalendarInterval } from '@/constants/enums'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
-import { getDate, isMonthInterval, isQuarterlyInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
-import { Popover, Transition } from '@headlessui/react'
-import dayjs, { Dayjs } from 'dayjs'
-
 import {
   getIsSelectingDates,
   getPrevCurrNextMonthSelectedDates,
   toggleIndividualDate
 } from '@/redux/reducers/DateSelectorReducer'
+import { getDate, isMonthInterval, isQuarterlyInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
+import { Popover, Transition } from '@headlessui/react'
+import dayjs, { Dayjs } from 'dayjs'
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { DescriptionPopover } from '../DescriptionPopover'
 
 import { getInterval } from '@/redux/reducers/MainCalendarReducer'
 interface MonthProps {
@@ -129,17 +128,23 @@ export const Month = (props: MonthProps) => {
         if (!category.show) return null
         if (getBanners) {
           return (
-            <CategoryBlock
-              color={category.color}
-              label={category.name}
-              icon={category.icon as IconName}
-              key={`${key}-${entry.categoryId}`}
-              className={className}
+            <DescriptionPopover
+              type='block'
+              component={
+                <CategoryBlock
+                  color={category.color}
+                  label={category.name}
+                  icon={category.icon as IconName}
+                  key={`${key}-${entry.categoryId}`}
+                  className={className}
+                />
+              }
               category={category}
               dayOffset={day.day()}
               monthOffset={isMonthView ? offsetFromMonthStart : startingMonthNum}
               currentDay={day.date()}
               isNested={isForPopover}
+              key={`description-${key}-${entry.categoryId}`}
             />
           )
         } else {
@@ -150,8 +155,9 @@ export const Month = (props: MonthProps) => {
                   color: ${category.color};
                 }
               `}</style>
-              <Icon
-                iconName={category.icon as IconName}
+              <DescriptionPopover
+                type='icon'
+                component={<Icon iconName={category.icon as IconName} className='inline' />}
                 category={category}
                 dayOffset={day.day()}
                 monthOffset={isMonthView ? offsetFromMonthStart : startingMonthNum}
@@ -166,7 +172,7 @@ export const Month = (props: MonthProps) => {
 
       return categories.filter((element) => element !== null) as JSX.Element[]
     },
-    [categoryMap, getEntriesOnDay, isSelectingDates]
+    [categoryMap, getEntriesOnDay, isSelectingDates, isMonthView, startingMonthNum]
   )
 
   const getPopoverContent = useCallback(

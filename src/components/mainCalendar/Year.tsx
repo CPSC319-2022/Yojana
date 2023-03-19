@@ -6,7 +6,7 @@ import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 import dayjs, { Dayjs } from 'dayjs'
 import { useCallback, useMemo } from 'react'
-import { CalendarInterval } from '@/constants/enums'
+import { DescriptionPopover } from '../DescriptionPopover'
 
 export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) => {
   const stateDate = useAppSelector(getDate)
@@ -37,9 +37,11 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
                     color: ${category.color};
                   }
                 `}</style>
-                <Icon
-                  iconName={category.icon as IconName}
+                <DescriptionPopover
+                  type='icon'
+                  component={<Icon iconName={category.icon as IconName} className='inline' />}
                   category={category}
+                  dayOffset={day.day()}
                   monthOffset={monthNum}
                   currentDay={day.date()}
                   className='inline'
