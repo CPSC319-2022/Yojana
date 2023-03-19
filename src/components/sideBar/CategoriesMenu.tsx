@@ -21,19 +21,19 @@ export const CategoriesMenu = ({ session }: Props) => {
     (isMaster: boolean) => {
       return categories
         .filter((calEvent) => calEvent.isMaster === isMaster)
-        .map((calEvent, key) => {
+        .map((calEvent) => {
           return (
             <div
               className={`group mt-1 flex flex-row justify-between rounded-md py-1 px-2 ${
                 !disable && 'hover:bg-slate-100'
               } ${keepFocus === calEvent.id ? 'bg-slate-100' : ''}`}
-              key={`category-item-${key}`}
-              id={`category-item-${calEvent.name}`}
+              key={`category-item-${calEvent.id}`}
+              id={`category-item-${calEvent.id}`}
             >
               <Checkbox
                 icon={calEvent.icon as IconName}
                 label={calEvent.name}
-                id={`checkbox-${key}-${calEvent.id}`}
+                id={`checkbox-${calEvent.id}`}
                 color={calEvent.color}
                 defaultChecked={calEvent.show}
                 checkboxClassName={`h-5 w-5 cursor-pointer`}
