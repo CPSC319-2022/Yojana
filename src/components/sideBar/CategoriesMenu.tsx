@@ -1,10 +1,10 @@
 import { Accordion, Checkbox, IconName } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { getCategories, toggleCategory } from '@/redux/reducers/AppDataReducer'
+import { getCategories, setCategoriesShow, toggleCategory } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import { CategoryState } from '@/types/prisma'
 import { Session } from 'next-auth'
-import { useCallback, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { CategoriesDropdown } from './CategoriesDropdown'
 
 interface Props {
@@ -35,7 +35,7 @@ export const CategoriesMenu = ({ session }: Props) => {
                 label={calEvent.name}
                 id={`checkbox-${calEvent.id}`}
                 color={calEvent.color}
-                defaultChecked={calEvent.show}
+                checked={calEvent.show}
                 checkboxClassName={`h-5 w-5 cursor-pointer`}
                 onChange={() => dispatch(toggleCategory(calEvent.id))}
                 iconClassName={`relative mb-1`}
@@ -63,22 +63,33 @@ export const CategoriesMenu = ({ session }: Props) => {
     return []
   }, [categories])
 
+  const renderAccordionItem = useCallback(
+    (isMaster: boolean, key: number) => {
+      const NumVisibleCategories = categories.filter(
+        (category) => category.isMaster === isMaster && category.show
+      ).length
+
+      return (
+        <Accordion.Item
+          key={`category-type-${key}`}
+          size='md'
+          id={`${isMaster ? 'master' : 'personal'}-calendar-accordion-item`}
+          secondIcon={NumVisibleCategories > 0 ? 'EyeSlashFill' : 'EyeFill'}
+          secondIconOnClick={() => {
+            dispatch(setCategoriesShow({ isMaster: isMaster, show: NumVisibleCategories === 0 }))
+          }}
+        >
+          <Accordion.Header>{isMaster ? 'Master Calendar' : 'Personal Calendar'}</Accordion.Header>
+          <Accordion.Body>{renderCategories(isMaster)}</Accordion.Body>
+        </Accordion.Item>
+      )
+    },
+    [categories, dispatch, renderCategories]
+  )
+
   return (
     <div className='pt-4'>
-      <Accordion>
-        {renderCategoryType().map((categoryType, key) => {
-          return (
-            <Accordion.Item
-              key={`category-type-${key}`}
-              size='md'
-              id={`${categoryType ? 'master' : 'personal'}-calendar-accordion-item`}
-            >
-              <Accordion.Header>{categoryType ? 'Master Calendar' : 'Personal Calendar'}</Accordion.Header>
-              <Accordion.Body>{renderCategories(categoryType)}</Accordion.Body>
-            </Accordion.Item>
-          )
-        })}
-      </Accordion>
+      <Accordion>{renderCategoryType().map((isMaster, key) => renderAccordionItem(isMaster, key))}</Accordion>
     </div>
   )
 }

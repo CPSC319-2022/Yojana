@@ -1,6 +1,6 @@
 import { getChildByType, getChildrenByType } from 'react-nanny'
 import { Disclosure } from '@headlessui/react'
-import { Icon } from '@/components/common/Icon'
+import { Icon, IconName } from '@/components/common/Icon'
 import React from 'react'
 
 export const Accordion = ({ children }: { children: React.ReactNode }) => {
@@ -21,9 +21,18 @@ interface AccordionItemProps {
   defaultOpen?: boolean
   size?: 'sm' | 'md' | 'lg'
   id?: string
+  secondIcon?: IconName
+  secondIconOnClick?: () => void
 }
 
-const AccordionItem = ({ children, defaultOpen = true, size = 'sm', id }: AccordionItemProps) => {
+const AccordionItem = ({
+  children,
+  defaultOpen = true,
+  size = 'sm',
+  id,
+  secondIcon,
+  secondIconOnClick = () => {}
+}: AccordionItemProps) => {
   const header = getChildByType(children, Accordion.Header)
   const body = getChildByType(children, Accordion.Body)
   if (!header || !body) {
@@ -39,7 +48,20 @@ const AccordionItem = ({ children, defaultOpen = true, size = 'sm', id }: Accord
             className={`flex w-full justify-between rounded-lg bg-emerald-100 px-4 py-2 text-left ${sizeClass} font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none`}
           >
             {header}
-            <Icon iconName='ChevronUp' className={`${open ? 'rotate-180 transform' : ''} h-5 w-5`} />
+            <span className='flex'>
+              {secondIcon && (
+                <Icon
+                  iconName={secondIcon}
+                  className={`mr-3 h-5 w-5`}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    e.preventDefault()
+                    secondIconOnClick()
+                  }}
+                />
+              )}
+              <Icon iconName='ChevronUp' className={`${open ? 'rotate-180 transform' : ''} h-5 w-5`} />
+            </span>
           </Disclosure.Button>
           <Disclosure.Panel className={`px-4 pb-2 ${sizeClass} text-slate-600`}>{body}</Disclosure.Panel>
         </>
