@@ -112,7 +112,7 @@ export const DescriptionPopover = ({
               <div className='max-w-60 h-fit max-h-60 w-60 overflow-y-auto break-words rounded-lg rounded-md bg-white p-3 font-normal leading-7'>
                 <p className='text-center text-base text-slate-400'>{currentDay}</p>
                 <h1 className='pt-1 text-base'>{category?.name + ' #' + category?.id}</h1>
-                <p className='pt-1 text-sm text-slate-700'>{descText + monthOffset}</p>
+                <p className='pt-1 text-sm text-slate-700'>{descText}</p>
                 <p className='pt-2 text-xs text-slate-500'>
                   creator:{' '}
                   <a className='text-blue-600 underline visited:text-purple-600 hover:text-blue-800' href={email}>
