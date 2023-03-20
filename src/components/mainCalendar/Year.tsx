@@ -8,6 +8,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import { useCallback, useMemo } from 'react'
 import { getDayStyling } from '@/utils/day'
 import { Tooltip } from '@/components/common/Tooltip'
+import { DescriptionPopover } from '../DescriptionPopover'
 
 export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) => {
   const stateDate = useAppSelector(getDate)
@@ -38,7 +39,15 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
                     color: ${category.color};
                   }
                 `}</style>
-                <Icon iconName={category.icon as IconName} className='mb-0.5 inline' />
+                <DescriptionPopover
+                  type='icon'
+                  component={<Icon iconName={category.icon as IconName} className='inline' />}
+                  category={category}
+                  dayOffset={day.day()}
+                  monthOffset={monthNum}
+                  currentDay={day.date()}
+                  className='inline'
+                />
               </span>
             )
           }

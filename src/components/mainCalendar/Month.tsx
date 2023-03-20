@@ -1,17 +1,6 @@
-import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
-import {
-  getDate,
-  getInterval,
-  isMonthInterval,
-  isQuarterlyInterval,
-  isYearInterval
-} from '@/redux/reducers/MainCalendarReducer'
-import dayjs, { Dayjs } from 'dayjs'
-import { Popover, Transition } from '@headlessui/react'
-
 import {
   getIsSelectingDates,
   getPrevCurrNextMonthSelectedDates,
@@ -20,6 +9,17 @@ import {
 import { Icon, IconName } from '@/components/common'
 import { getDayStyling } from '@/utils/day'
 
+import {
+  getInterval,
+  isMonthInterval,
+  isQuarterlyInterval,
+  getDate,
+  isYearInterval
+} from '@/redux/reducers/MainCalendarReducer'
+import { useState, useRef, useEffect, useCallback, Fragment, useMemo } from 'react'
+import { DescriptionPopover } from '../DescriptionPopover'
+import dayjs, { Dayjs } from 'dayjs'
+import { Popover, Transition } from '@headlessui/react'
 interface MonthProps {
   monthOffset: number
   className?: string
@@ -32,6 +32,7 @@ const CATEGORY_ICON_WIDTH_PX = 24
 const MAX_TIMES_SIZE_SET = 2
 
 export const Month = (props: MonthProps) => {
+  const startingMonthNum = props.monthOffset
   const isMonthView = useAppSelector(isMonthInterval)
   const calendarInterval = useAppSelector(getInterval)
   const isQuarterlyView = useAppSelector(isQuarterlyInterval)
@@ -116,7 +117,13 @@ export const Month = (props: MonthProps) => {
   )
 
   const getBannersOrIcons = useCallback(
-    (day: Dayjs, offsetFromMonthStart: number, getBanners: boolean, className?: string): JSX.Element[] => {
+    (
+      day: Dayjs,
+      offsetFromMonthStart: number,
+      getBanners: boolean,
+      isForPopover = false,
+      className?: string
+    ): JSX.Element[] => {
       if (isSelectingDates) return []
 
       const entriesOnDay = getEntriesOnDay(day.date(), offsetFromMonthStart) || []
@@ -127,12 +134,23 @@ export const Month = (props: MonthProps) => {
         if (!category.show) return null
         if (getBanners) {
           return (
-            <CategoryBlock
-              color={category.color}
-              label={category.name}
-              icon={category.icon as IconName}
-              key={`${key}-${entry.categoryId}`}
-              className={className}
+            <DescriptionPopover
+              type='block'
+              component={
+                <CategoryBlock
+                  color={category.color}
+                  label={category.name}
+                  icon={category.icon as IconName}
+                  key={`${key}-${entry.categoryId}`}
+                  className={className}
+                />
+              }
+              category={category}
+              dayOffset={day.day()}
+              monthOffset={isMonthView ? offsetFromMonthStart : startingMonthNum}
+              currentDay={day.date()}
+              isNested={isForPopover}
+              key={`description-${key}-${entry.categoryId}`}
             />
           )
         } else {
@@ -143,7 +161,16 @@ export const Month = (props: MonthProps) => {
                   color: ${category.color};
                 }
               `}</style>
-              <Icon iconName={category.icon as IconName} className={`inline ${className}`} />
+              <DescriptionPopover
+                type='icon'
+                component={<Icon iconName={category.icon as IconName} className='inline' />}
+                category={category}
+                dayOffset={day.day()}
+                monthOffset={isMonthView ? offsetFromMonthStart : startingMonthNum}
+                currentDay={day.date()}
+                isNested={isForPopover}
+                className='inline'
+              />
             </span>
           )
         }
@@ -151,14 +178,14 @@ export const Month = (props: MonthProps) => {
 
       return categories.filter((element) => element !== null) as JSX.Element[]
     },
-    [categoryMap, getEntriesOnDay, isSelectingDates]
+    [categoryMap, getEntriesOnDay, isSelectingDates, isMonthView, startingMonthNum]
   )
 
   const getPopoverContent = useCallback(
     (day: Dayjs, offsetFromMonthStart: number) => {
-      const allDayBanners = getBannersOrIcons(day, offsetFromMonthStart, true) || []
+      const allDayBanners = getBannersOrIcons(day, offsetFromMonthStart, true, true) || []
       return (
-        <div className='lg:grid-rows relative grid gap-1 p-2 pb-3'>
+        <div className='lg:grid-rows grid gap-1 p-2 pb-3'>
           <span
             className={`${
               offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''
@@ -222,7 +249,7 @@ export const Month = (props: MonthProps) => {
             leaveFrom={`opacity-100 ${below ? 'translate-y-0' : ''}`}
             leaveTo={`opacity-0 ${below ? 'translate-y-1' : ''}`}
           >
-            <Popover.Panel className={`${translateXClass} ${translateYClass} z-100 absolute transform`}>
+            <Popover.Panel className={`${translateXClass} ${translateYClass} absolute z-50 transform`}>
               <style jsx>{`
                 div {
                   box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
