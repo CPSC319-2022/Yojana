@@ -11,7 +11,6 @@ import {
 } from '@/redux/reducers/MainCalendarReducer'
 import dayjs, { Dayjs } from 'dayjs'
 import { Popover, Transition } from '@headlessui/react'
-
 import {
   getIsSelectingDates,
   getPrevCurrNextMonthSelectedDates,
@@ -20,17 +19,18 @@ import {
 import { Icon, IconName } from '@/components/common'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 
+const CATEGORY_BANNER_HEIGHT_PX = 28
+const CATEGORY_ICON_WIDTH_MONTH_PX = 25
+const CATEGORY_ICON_WIDTH_QUARTER_PX = 24
+const CATEGORY_ICON_HEIGHT_MONTH_PX = 40
+
+// To avoid an infinite resizing loop. The count is reset whenever the window is resized.
+const MAX_TIMES_SIZE_SET = 2
+
 interface MonthProps {
   monthOffset: number
   className?: string
 }
-
-const CATEGORY_BANNER_HEIGHT_PX = 28
-const CATEGORY_ICON_WIDTH_PX = 24
-const DATE_CONTAINER_HEIGHT_VH = 0.123 // 12.3 vh
-const DATE_CONTAINER_WIDTH_VW = 0.11 // 11 vw
-// To avoid an infinite resizing loop. The count is reset whenever the window is resized.
-const MAX_TIMES_SIZE_SET = 2
 
 export const Month = (props: MonthProps) => {
   const isMonthView = useAppSelector(isMonthInterval)
@@ -85,6 +85,7 @@ export const Month = (props: MonthProps) => {
     const windowResizeListener = () => {
       numTimesSizeSet.current = 0
       setMeasureSizeCounter(measureSizeCounter + 1)
+      setNonOverflowCountKnown(false)
     }
     window.addEventListener('resize', windowResizeListener)
     return () => {
@@ -96,12 +97,22 @@ export const Month = (props: MonthProps) => {
   const categoryContainerRef = useCallback(
     (node: HTMLDivElement) => {
       if (node !== null && !nonOverflowCountKnown && numTimesSizeSet.current < MAX_TIMES_SIZE_SET) {
-        let newCount: number
-        let dateContainerHeight = window.innerHeight * DATE_CONTAINER_HEIGHT_VH
-        let dateContainerWidth = window.innerWidth * DATE_CONTAINER_WIDTH_VW
-        if (useBanners) newCount = Math.floor(dateContainerHeight / CATEGORY_BANNER_HEIGHT_PX)
-        else newCount = Math.floor(dateContainerWidth / CATEGORY_ICON_WIDTH_PX)
-        setNonOverflowElemCount(newCount)
+        if (useBanners) {
+          setNonOverflowElemCount(Math.floor((window.innerHeight * 0.123) / CATEGORY_BANNER_HEIGHT_PX)) // banner height in vh
+          console.log(nonOverflowElemCount)
+        } else {
+          let rowsPerCell
+          let iconsPerRow
+          if (isMonthView) {
+            rowsPerCell = Math.floor(node.getBoundingClientRect().height / CATEGORY_ICON_HEIGHT_MONTH_PX)
+            iconsPerRow = Math.floor(node.getBoundingClientRect().width / CATEGORY_ICON_WIDTH_MONTH_PX)
+          } else {
+            rowsPerCell = 1
+            iconsPerRow = Math.floor(node.getBoundingClientRect().width / CATEGORY_ICON_WIDTH_QUARTER_PX)
+          }
+          setNonOverflowElemCount(rowsPerCell * iconsPerRow)
+        }
+        setNonOverflowCountKnown(true)
         numTimesSizeSet.current += 1
       }
     },
@@ -222,7 +233,7 @@ export const Month = (props: MonthProps) => {
       const below = appearBelow(offsetFromMonthStart)
       const translateYClass = below ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
       return (
-        <Popover className={useBanners ? 'mx-1 mt-1' : ''} key={day.format('YY-MM-DD')}>
+        <Popover className={useBanners ? 'mx-1 mt-1' : 'flex justify-center'} key={day.format('YY-MM-DD')}>
           {renderPopoverButton(allDayBlocksLength)}
           <Transition
             as={Fragment}
