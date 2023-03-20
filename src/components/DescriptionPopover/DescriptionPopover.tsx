@@ -10,9 +10,9 @@ interface DescriptionPopover {
   component: JSX.Element
   category: CategoryFullState
   className?: string
-  monthOffset?: number
-  dayOffset?: number
-  currentDay?: number
+  monthOffset: number
+  dayOffset: number
+  currentDay: number
   isNested?: boolean
 }
 
@@ -39,37 +39,20 @@ export const DescriptionPopover = ({
       if (type === 'icon') {
         switch (currentInterval) {
           case CalendarInterval.YEAR:
-            translateXClass =
-              monthOffset && monthOffset >= 8
-                ? '-translate-x-60'
-                : currentDay && currentDay >= 15
-                ? 'translate-x-5'
-                : ''
+            translateXClass = monthOffset >= 8 ? '-translate-x-60' : currentDay >= 15 ? 'translate-x-5' : ''
             translateYClass =
-              currentDay && currentDay >= 15
-                ? titleLength * 2 + descText.length >= 128
-                  ? '-translate-y-40'
-                  : '-translate-y-32'
-                : ''
+              currentDay >= 15 ? (titleLength * 2 + descText.length >= 128 ? '-translate-y-40' : '-translate-y-32') : ''
             break
           case CalendarInterval.FOUR_MONTHS:
             translateXClass =
-              monthOffset && monthOffset % 2 !== 0
-                ? '-translate-x-60'
-                : monthOffset && monthOffset === 2
-                ? 'translate-x-5'
-                : ''
+              monthOffset % 2 !== 0 ? '-translate-x-60' : monthOffset && monthOffset === 2 ? 'translate-x-5' : ''
             translateYClass =
-              monthOffset && monthOffset >= 2
-                ? titleLength * 2 + descText.length >= 128
-                  ? '-translate-y-40'
-                  : '-translate-y-32'
-                : ''
+              monthOffset >= 2 ? (titleLength * 2 + descText.length >= 128 ? '-translate-y-40' : '-translate-y-32') : ''
             break
           case CalendarInterval.MONTH:
             translateXClass = dayOffset && dayOffset >= 6 ? '-translate-x-60' : ''
             translateYClass =
-              monthOffset && monthOffset >= 15
+              monthOffset >= 15
                 ? titleLength * 2 + descText.length >= 128
                   ? '-translate-y-40'
                   : '-translate-y-32'
@@ -78,11 +61,11 @@ export const DescriptionPopover = ({
           case CalendarInterval.QUARTERLY:
             translateXClass = '-translate-x-60'
             translateYClass =
-              monthOffset && monthOffset == 2
+              monthOffset === 0
                 ? titleLength * 2 + descText.length >= 128
                   ? '-translate-y-40'
-                  : '-translate-y-24'
-                : monthOffset && monthOffset == 1
+                  : '-translate-y-32'
+                : monthOffset && monthOffset === -1
                 ? '-translate-y-12'
                 : ''
             break
@@ -90,12 +73,9 @@ export const DescriptionPopover = ({
         translateXClass = isNested ? '-translate-x-60' : translateXClass
         translateYClass = isNested ? '-translate-y-40' : translateYClass
       } else if (type === 'block') {
-        translateXClass = (dayOffset ? dayOffset >= 6 : false) ? '-translate-x-60' : 'translate-x-6'
-        translateYClass = (monthOffset ? monthOffset >= 15 : false)
-          ? titleLength * 2 + descText.length >= 128
-            ? '-translate-y-40'
-            : '-translate-y-32'
-          : ''
+        translateXClass = dayOffset >= 6 ? '-translate-x-60' : 'translate-x-6'
+        translateYClass =
+          monthOffset >= 15 ? (titleLength * 2 + descText.length >= 128 ? '-translate-y-40' : '-translate-y-32') : ''
         translateXClass = isNested ? '-translate-x-60' : translateXClass
         translateYClass = isNested
           ? titleLength * 2 + descText.length >= 128
@@ -132,7 +112,7 @@ export const DescriptionPopover = ({
               <div className='max-w-60 h-fit max-h-60 w-60 overflow-y-auto break-words rounded-lg rounded-md bg-white p-3 font-normal leading-7'>
                 <p className='text-center text-base text-slate-400'>{currentDay}</p>
                 <h1 className='pt-1 text-base'>{category?.name + ' #' + category?.id}</h1>
-                <p className='pt-1 text-sm text-slate-700'>{descText}</p>
+                <p className='pt-1 text-sm text-slate-700'>{descText + monthOffset}</p>
                 <p className='pt-2 text-xs text-slate-500'>
                   creator:{' '}
                   <a className='text-blue-600 underline visited:text-purple-600 hover:text-blue-800' href={email}>
