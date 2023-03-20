@@ -50,22 +50,34 @@ const appDataSlice = createSlice({
       _addEntriesToEntryMap(state.entryMap, action.payload.entries, action.payload.id)
     },
     updateCategory: (state, action: PayloadAction<CategoryFullState>) => {
-      const index = state.data.findIndex((cat) => cat.id === action.payload.id)
+      const cat = state.data.find((cat) => cat.id === action.payload.id)
+      // return if category doesn't exist
+      if (!cat) return
       // update data
-      const previousShow = state.data[index].show
-      setCookieMaxAge(`yojana.show-category-${action.payload.id}`, state.data[index].show)
-      state.data[index] = action.payload
-      state.data[index].show = previousShow
+      setCookieMaxAge(`yojana.show-category-${action.payload.id}`, cat.show)
+      Object.assign(cat, action.payload)
       // update EntryMap
       state.entryMap = _createEntryMap(state.data)
     },
     toggleCategory: (state, action: PayloadAction<number>) => {
-      const index = state.data.findIndex((cat) => cat.id === action.payload)
-      setCookieMaxAge(`yojana.show-category-${action.payload}`, !state.data[index].show)
-      state.data[index].show = !state.data[index].show
+      const cat = state.data.find((cat) => cat.id === action.payload)
+      // return if category doesn't exist
+      if (!cat) return
+      setCookieMaxAge(`yojana.show-category-${action.payload}`, !cat.show)
+      cat.show = !cat.show
+    },
+    setCategoriesShow: (state, action: PayloadAction<{ isMaster: boolean; show: boolean }>) => {
+      state.data.forEach((cat) => {
+        if (cat.isMaster === action.payload.isMaster) {
+          setCookieMaxAge(`yojana.show-category-${cat.id}`, action.payload.show)
+          cat.show = action.payload.show
+        }
+      })
     },
     deleteCategory: (state, action: PayloadAction<number>) => {
       const index = state.data.findIndex((cat) => cat.id === action.payload)
+      // return if category doesn't exist
+      if (index === -1) return
       // update data
       state.data.splice(index, 1)
       // update EntryMap
@@ -119,7 +131,8 @@ const _addEntriesToEntryMap = (entryMap: EntryMap, entries: EntryWithoutCategory
   return entryMap
 }
 
-export const { setAppData, addCategory, updateCategory, toggleCategory, deleteCategory } = appDataSlice.actions
+export const { setAppData, addCategory, updateCategory, toggleCategory, deleteCategory, setCategoriesShow } =
+  appDataSlice.actions
 
 export const getCategory = (state: State, id: number) => {
   const index = state.appData.data.findIndex((cat) => cat.id === id)
