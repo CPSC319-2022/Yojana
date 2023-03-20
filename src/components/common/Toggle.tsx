@@ -30,7 +30,7 @@ export const Toggle = ({
       <div className={className}>
         {preference ? textToToggle[0] : textToToggle[1]}
         {tooltipIcon && tooltipText && (
-          <Tooltip text={tooltipText} position={tooltipPosition}>
+          <Tooltip text={tooltipText} position={tooltipPosition} boundingClassName='ml-1'>
             <Icon iconName={tooltipIcon} className='mb-0.5 inline' />
           </Tooltip>
         )}
@@ -46,7 +46,7 @@ export const Toggle = ({
             ? 'cursor-pointer bg-emerald-500'
             : 'cursor-pointer bg-emerald-300'
         }
-        relative inline-flex h-[20px] w-[40px] shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+        relative inline-flex h-[20px] w-[40px] shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none`}
         disabled={disabled}
       >
         <span className='sr-only'>Use setting</span>

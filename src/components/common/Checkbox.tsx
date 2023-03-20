@@ -40,7 +40,7 @@ export const Checkbox = ({
         defaultChecked={defaultChecked}
         onChange={onChange}
       />
-      <label className='ml-2' htmlFor={id}>
+      <label className='ml-2 cursor-pointer' htmlFor={id}>
         <span className={'colored pr-1 font-bold'}>
           <Icon iconName={icon} color={color} className={`inline ${iconClassName}`} />
         </span>

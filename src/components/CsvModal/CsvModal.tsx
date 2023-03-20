@@ -63,7 +63,16 @@ export const CsvModal = () => {
         <div className='flex h-full w-full flex-col'>
           <h3 className='mb-2 text-lg font-medium'>Import from CSV</h3>
           <div className='text-sm'>
-            Upload a CSV file with the following format: <br />
+            Upload a CSV file with the following format (
+            <a
+              href='/template.csv'
+              className='text-blue-600 underline visited:text-purple-600 hover:text-blue-800'
+              download
+            >
+              click here to download a template
+            </a>
+            ):
+            <br />
             <table className='mb-6 mt-3 w-full table-auto'>
               <thead>
                 <tr>
