@@ -24,7 +24,6 @@ import {
 } from '@/redux/reducers/PreferencesReducer'
 import { preprocessEntries } from '@/utils/preprocessEntries'
 
-
 interface CalendarProps {
   sidebarOpenInitial: boolean
   session: Session
