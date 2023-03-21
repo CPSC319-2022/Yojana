@@ -268,6 +268,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     (minimized: boolean) => {
       setIsMinimized(minimized)
       dispatch(setIsSelectingDates(minimized))
+      // set page back to inert (after selecting dates) to make Modal work as expect in headlessui 1.17.13
+      document.getElementById('__next')?.setAttribute('inert', 'true')
     },
     [dispatch]
   )
