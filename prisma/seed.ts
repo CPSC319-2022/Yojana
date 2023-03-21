@@ -102,6 +102,48 @@ export const data = [
         color: tcolors.sky[500],
         isMaster: true,
         icon: 'CloudFill'
+      },
+      {
+        name: 'PayDay',
+        description: 'This is the day you get paid',
+        color: tcolors.emerald[500],
+        isMaster: false,
+        icon: 'CurrencyDollar'
+      },
+      {
+        name: 'Holiday',
+        description: 'Statuary holidays',
+        color: tcolors.red[500],
+        isMaster: false,
+        icon: 'CalendarDateFill'
+      },
+      {
+        name: 'Work from home',
+        description: 'Work from home',
+        color: tcolors.sky[500],
+        isMaster: false,
+        icon: 'HouseFill'
+      },
+      {
+        name: 'Shareholder meeting',
+        description: 'Shareholder meeting',
+        color: tcolors.violet[500],
+        isMaster: false,
+        icon: 'SuitSpadeFill'
+      },
+      {
+        name: 'Vacation',
+        description: 'Corporate retrieve',
+        color: tcolors.slate[900],
+        isMaster: false,
+        icon: 'AirplaneFill'
+      },
+      {
+        name: 'Birthday',
+        description: 'List of Birthdays',
+        color: tcolors.amber[500],
+        isMaster: false,
+        icon: 'BalloonFill'
       }
     ]
   }
@@ -161,7 +203,9 @@ const seed = async () => {
               createMany: {
                 // create 100 random dates for each category
                 // data: generateRandomDates(new Date(2022, 0, 1), new Date(2024, 11, 31), 100, category.name)
-                data: []
+                data: category.isMaster
+                  ? []
+                  : generateRandomDates(new Date(2022, 0, 1), new Date(2024, 11, 31), 100, category.name)
               }
             }
           }

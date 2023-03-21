@@ -52,7 +52,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }))
       }
     })
-    let appData = await getCategories()
+    let appData = await getCategories(token.id)
     const response = {
       appData: appData,
       createdEntries: addedEntries
