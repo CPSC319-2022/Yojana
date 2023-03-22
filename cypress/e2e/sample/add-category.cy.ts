@@ -1,4 +1,4 @@
-describe('Create Category With Name', () => {
+describe('Sample test', () => {
   const createNewPersonalCategory = () => {
     cy.get('div[id="category-item-20"]').should('not.exist')
     cy.get('button#create-category-btn').click()
