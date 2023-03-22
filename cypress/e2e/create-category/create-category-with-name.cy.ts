@@ -1,7 +1,6 @@
 describe('Create Category With Name', () => {
   const createNewPersonalCategory = () => {
-    cy.get('div#personal-calendar-accordion-item').should('not.exist')
-    cy.get('div[id="category-item-14"]').should('not.exist')
+    cy.get('div[id="category-item-20"]').should('not.exist')
     cy.get('button#create-category-btn').click()
     cy.get('div#create-category-modal-div').should('be.visible')
     cy.get('input[name="name"]').type('new cat')
@@ -9,7 +8,7 @@ describe('Create Category With Name', () => {
     cy.get('button#create-category-submit-btn').click()
     cy.get('div#sidebar').scrollTo('bottom')
     cy.get('div#personal-calendar-accordion-item').eq(0).children().should('contain', 'new cat')
-    cy.get('div[id="category-item-14"]').should('exist')
+    cy.get('div[id="category-item-20"]').should('exist')
   }
 
   describe('admin', () => {
@@ -24,7 +23,7 @@ describe('Create Category With Name', () => {
 
     it('should create a new master category', () => {
       cy.get('div#master-calendar-accordion-item').should('be.visible')
-      cy.get('div[id="category-item-14"]').should('not.exist')
+      cy.get('div[id="category-item-20"]').should('not.exist')
       cy.get('button#create-category-btn').click()
       cy.get('div#create-category-modal-div').should('be.visible')
       cy.get('input[name="name"]').type('new cat')
@@ -33,7 +32,7 @@ describe('Create Category With Name', () => {
       cy.get('button#create-category-submit-btn').click()
       cy.get('div#sidebar').scrollTo('bottom')
       cy.get('div#master-calendar-accordion-item').eq(0).children().should('contain', 'new cat')
-      cy.get('div[id="category-item-14"]').should('exist')
+      cy.get('div[id="category-item-20"]').should('exist')
     })
 
     it('should create a new personal category', () => {
@@ -53,7 +52,7 @@ describe('Create Category With Name', () => {
 
     it('should not be able to create a new master category', () => {
       cy.get('div#master-calendar-accordion-item').should('be.visible')
-      cy.get('div[id="category-item-14"]').should('not.exist')
+      cy.get('div[id="category-item-20"]').should('not.exist')
       cy.get('button#create-category-btn').click()
       cy.get('div#create-category-modal-div').should('be.visible')
       cy.get('div#create-category-modal-div').scrollTo('bottom')
