@@ -13,20 +13,26 @@ import { getCookies } from 'cookies-next'
 import dayjs from 'dayjs'
 import { GetServerSideProps } from 'next'
 import { getServerSession, Session } from 'next-auth'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { authOptions } from './api/auth/[...nextauth]'
 import { setCookieMaxAge } from '@/utils/cookies'
-import { defaultPreferences, setYearOverflow, setYearShowGrid } from '@/redux/reducers/PreferencesReducer'
+import {
+  defaultPreferences,
+  getPreferences,
+  setIsSidebarOpen,
+  setMonthCategoryAppearance,
+  setYearOverflow,
+  setYearShowGrid
+} from '@/redux/reducers/PreferencesReducer'
 import { preprocessEntries } from '@/utils/preprocessEntries'
 
 interface CalendarProps {
-  sidebarOpenInitial: boolean
   session: Session
 }
 
-const Calendar = ({ sidebarOpenInitial, session }: CalendarProps) => {
-  const [sidebarOpen, setSidebarOpen] = useState(sidebarOpenInitial)
+const Calendar = ({ session }: CalendarProps) => {
   const dispatch = useAppDispatch()
+  const sidebarOpen = useAppSelector(getPreferences).sidebarOpen.value
   const isSelectingDates = useAppSelector((state) => getIsSelectingDates(state))
 
   // reset selected dates when sidebar is closed while in date selection mode
@@ -42,7 +48,7 @@ const Calendar = ({ sidebarOpenInitial, session }: CalendarProps) => {
       <Alert />
       <div className='flex h-screen w-full flex-col bg-white text-slate-800'>
         <div className='z-10'>
-          <NavBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} session={session} />
+          <NavBar session={session} />
         </div>
         <div className='border-box z-0 flex h-[90vh] w-full flex-row'>
           <div
@@ -77,16 +83,16 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     // get cookies
     const cookies = getCookies({ req, res })
 
+    const { yearShowGrid, yearOverflow, monthCategoryAppearance } = defaultPreferences
+
     // if sidebar cookie is undefined, set it to true
-    let sidebarOpenInitial = true
-    if (cookies['yojana.sidebar-open'] === undefined) {
+    const sidebarOpenInitial = cookies['yojana.sidebar-open']
+    if (sidebarOpenInitial === undefined) {
       setCookieMaxAge('yojana.sidebar-open', true, { req, res })
     } else {
       // if sidebar cookie is defined, set sidebarOpenInitial to the value of the cookie
-      sidebarOpenInitial = cookies['yojana.sidebar-open'] === 'true'
+      store.dispatch(setIsSidebarOpen(sidebarOpenInitial === 'true'))
     }
-
-    const { yearShowGrid, yearOverflow } = defaultPreferences
 
     // set cookie for yearShowGrid
     const yearShowGridCookie = cookies[yearShowGrid.cookieName]
@@ -105,6 +111,15 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     } else {
       // if yearOverflow cookie is defined and valid, set yearOverflow to the value of the cookie
       store.dispatch(setYearOverflow(yearOverflowCookie))
+    }
+
+    // set cookie for monthCategoryAppearance
+    const monthCategoryAppearanceCookie = cookies[monthCategoryAppearance.cookieName]
+    if (monthCategoryAppearanceCookie === undefined) {
+      setCookieMaxAge(monthCategoryAppearance.cookieName, monthCategoryAppearance.value, { req, res })
+    } else {
+      // if the monthCategoryAppearance cookie is defined, set monthCategoryAppearance to icons or banners based on the value of the cookie
+      store.dispatch(setMonthCategoryAppearance(monthCategoryAppearanceCookie === 'icons' ? 'icons' : 'banners'))
     }
 
     // current session
@@ -130,7 +145,6 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     store.dispatch(setAppData(appDate))
     return {
       props: {
-        sidebarOpenInitial,
         session
       }
     }

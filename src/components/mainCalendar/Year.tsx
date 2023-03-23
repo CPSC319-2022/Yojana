@@ -41,7 +41,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
                 `}</style>
                 <DescriptionPopover
                   type='icon'
-                  component={<Icon iconName={category.icon as IconName} className='inline' />}
+                  component={<Icon iconName={category.icon as IconName} className='mb-0.5 inline' />}
                   category={category}
                   dayOffset={day.day()}
                   monthOffset={monthNum}

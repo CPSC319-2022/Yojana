@@ -4,21 +4,20 @@ import { decrementDate, getDate, getInterval, incrementDate, jumpToToday } from 
 import { useRouter } from 'next/router'
 import React, { useEffect, useMemo, useState } from 'react'
 import { CalViewDropdown } from './CalViewDropdown'
-import { setCookieMaxAge } from '@/utils/cookies'
 import { AccountDropdown } from '@/components/navBar/AccountDropdown'
 import { CalendarInterval } from '@/constants/enums'
 import { Session } from 'next-auth'
+import { getPreferences, setIsSidebarOpen } from '@/redux/reducers/PreferencesReducer'
 
 interface NavBarProps {
-  sidebarOpen: boolean
-  setSidebarOpen: (value: boolean) => void
   session: Session
 }
 
-export const NavBar = ({ sidebarOpen, setSidebarOpen, session }: NavBarProps) => {
+export const NavBar = ({ session }: NavBarProps) => {
   const dispatch = useAppDispatch()
   const targetDate = useAppSelector(getDate)
   const interval = useAppSelector(getInterval)
+  const sidebarOpen = useAppSelector(getPreferences).sidebarOpen.value
   const router = useRouter()
   const [mounted, setMounted] = useState(false)
 
@@ -61,8 +60,7 @@ export const NavBar = ({ sidebarOpen, setSidebarOpen, session }: NavBarProps) =>
         <Button
           text='&#9776;'
           onClick={() => {
-            setSidebarOpen(!sidebarOpen)
-            setCookieMaxAge(`yojana.sidebar-open`, !sidebarOpen)
+            dispatch(setIsSidebarOpen(!sidebarOpen))
           }}
           className='mr-5 px-3 pt-0.5 pb-2 text-2xl'
         />

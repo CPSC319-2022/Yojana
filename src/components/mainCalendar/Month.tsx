@@ -9,17 +9,13 @@ import {
 import { Icon, IconName } from '@/components/common'
 import { getDayStyling } from '@/utils/day'
 
-import {
-  getDate,
-  getInterval,
-  isMonthInterval,
-  isQuarterlyInterval,
-  isYearInterval
-} from '@/redux/reducers/MainCalendarReducer'
+import { getDate, isMonthInterval, isQuarterlyInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DescriptionPopover } from '../DescriptionPopover'
 import dayjs, { Dayjs } from 'dayjs'
 import { Popover, Transition } from '@headlessui/react'
+import { getPreferences } from '@/redux/reducers/PreferencesReducer'
+import { useIsomorphicLayoutEffect } from '@/utils/useIsomorphicLayoutEffect'
 
 interface MonthProps {
   monthOffset: number
@@ -27,21 +23,21 @@ interface MonthProps {
 }
 
 const CATEGORY_BANNER_HEIGHT_PX = 28
-const CATEGORY_ICON_WIDTH_PX = 24
-
-// To avoid an infinite resizing loop. The count is reset whenever the window is resized.
-const MAX_TIMES_SIZE_SET = 2
+// Width of 1 square icon (16px) including padding (4px left, 4px right). Also doubles as icon height.
+const CATEGORY_ICON_PX = 24
+// Width of 1 large square icon (24px) including padding (4px left, 4px right). Also doubles as large icon height.
+const CATEGORY_ICON_LARGE_PX = 32
 
 export const Month = (props: MonthProps) => {
   const startingMonthNum = props.monthOffset
   const isMonthView = useAppSelector(isMonthInterval)
-  const calendarInterval = useAppSelector(getInterval)
   const isQuarterlyView = useAppSelector(isQuarterlyInterval)
   const stateDate = useAppSelector(getDate)
   const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
   const isSelectingDates = useAppSelector(getIsSelectingDates)
+  const preferences = useAppSelector(getPreferences)
   const dispatch = useAppDispatch()
-  const [useBanners, setUseBanners] = useState(isMonthView)
+  const [useBanners, setUseBanners] = useState(isMonthView && preferences.monthCategoryAppearance.value === 'banners')
 
   const [targetDate, setTargetDate] = useState(referenceDate.add(props.monthOffset, 'month'))
   const [monthStartDate, setMonthStartDate] = useState(targetDate.startOf('month'))
@@ -55,12 +51,12 @@ export const Month = (props: MonthProps) => {
   )
 
   const [nonOverflowElemCount, setNonOverflowElemCount] = useState(0)
-  const [measureSizeCounter, setMeasureSizeCounter] = useState(0)
-  const numTimesSizeSet = useRef(0)
+  const categoryContainerRef = useRef<HTMLDivElement>(null)
+  const [colsPerDay, setColsPerDay] = useState(1)
 
   useEffect(() => {
-    setUseBanners(isMonthView)
-  }, [isMonthView])
+    setUseBanners(isMonthView && preferences.monthCategoryAppearance.value === 'banners')
+  }, [isMonthView, preferences.monthCategoryAppearance.value])
 
   // Determines what days and weeks are in the month.
   useEffect(() => {
@@ -74,35 +70,40 @@ export const Month = (props: MonthProps) => {
     setNumWeeks(Math.ceil((newDaysInMonth + newStart.day()) / 7))
   }, [props.monthOffset, referenceDate])
 
-  // Events that require resetting the resize count
-  useEffect(() => {
-    numTimesSizeSet.current = 0
-  }, [calendarInterval, monthStartDate, useBanners])
-  useEffect(() => {
-    const windowResizeListener = () => {
-      numTimesSizeSet.current = 0
-      setMeasureSizeCounter(measureSizeCounter + 1)
-    }
-    window.addEventListener('resize', windowResizeListener)
-    return () => {
-      window.removeEventListener('resize', windowResizeListener)
-    }
-  }, [measureSizeCounter])
-
-  // If the day's reference has changed, recompute how many elements fit in it.
-  const categoryContainerRef = useCallback(
-    (node: HTMLDivElement) => {
-      if (node !== null && numTimesSizeSet.current < MAX_TIMES_SIZE_SET) {
-        let newCount: number
-        if (useBanners) newCount = Math.floor(node.getBoundingClientRect().height / CATEGORY_BANNER_HEIGHT_PX)
-        else newCount = Math.floor(node.getBoundingClientRect().width / CATEGORY_ICON_WIDTH_PX)
-        setNonOverflowElemCount(newCount)
-        numTimesSizeSet.current += 1
+  const recalculateItemsPerDay = useCallback(() => {
+    if (categoryContainerRef.current !== null) {
+      const { offsetHeight, offsetWidth } = categoryContainerRef.current
+      if (useBanners) setNonOverflowElemCount(Math.floor(offsetHeight / CATEGORY_BANNER_HEIGHT_PX))
+      else {
+        const iconSize = isMonthView ? CATEGORY_ICON_LARGE_PX : CATEGORY_ICON_PX
+        const iconsPerRow = Math.floor(offsetWidth / iconSize)
+        const rowsPerDay = Math.floor(offsetHeight / iconSize) || 1
+        setColsPerDay(iconsPerRow)
+        setNonOverflowElemCount(iconsPerRow * rowsPerDay)
       }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [useBanners, measureSizeCounter]
-  )
+    }
+  }, [isMonthView, useBanners])
+
+  useIsomorphicLayoutEffect(() => {
+    recalculateItemsPerDay()
+    // Add any deps that would require recalculating items per day here
+  }, [recalculateItemsPerDay, isMonthView, useBanners, monthStartDate])
+
+  useEffect(() => {
+    if (!categoryContainerRef.current) return
+
+    const resizeObserver = new ResizeObserver(recalculateItemsPerDay)
+    resizeObserver.observe(categoryContainerRef.current)
+
+    return () => resizeObserver.disconnect()
+  }, [recalculateItemsPerDay])
+
+  useEffect(() => {
+    window.addEventListener('resize', () => recalculateItemsPerDay())
+    return () => {
+      window.removeEventListener('resize', () => recalculateItemsPerDay())
+    }
+  }, [recalculateItemsPerDay])
 
   const getEntriesOnDay = useCallback(
     (dateNum: number, offsetFromMonthStart: number) => {
@@ -122,8 +123,7 @@ export const Month = (props: MonthProps) => {
       day: Dayjs,
       offsetFromMonthStart: number,
       getBanners: boolean,
-      isForPopover = false,
-      className?: string
+      settings?: { getLargeIcons?: boolean; isForPopover?: boolean; className?: string }
     ): JSX.Element[] => {
       if (isSelectingDates) return []
 
@@ -143,20 +143,20 @@ export const Month = (props: MonthProps) => {
                   label={category.name}
                   icon={category.icon as IconName}
                   key={`${key}-${entry.categoryId}`}
-                  className={className}
+                  className={settings?.className}
                 />
               }
               category={category}
               dayOffset={day.day()}
               monthOffset={isMonthView ? offsetFromMonthStart : startingMonthNum}
               currentDay={day.date()}
-              isNested={isForPopover}
+              isNested={settings?.isForPopover}
               key={`description-${key}-${entry.categoryId}`}
             />
           )
         } else {
           return (
-            <span className={'w-6 px-0.5 font-bold'} key={`${key}-${entry.id}`}>
+            <span className={`${isMonthView ? 'h-8 w-8' : 'h-6 w-6'} px-0.5 font-bold`} key={`${key}-${entry.id}`}>
               <style jsx>{`
                 * {
                   color: ${category.color};
@@ -164,12 +164,18 @@ export const Month = (props: MonthProps) => {
               `}</style>
               <DescriptionPopover
                 type='icon'
-                component={<Icon iconName={category.icon as IconName} className='inline' />}
+                component={
+                  <Icon
+                    iconName={category.icon as IconName}
+                    className='inline'
+                    size={settings?.getLargeIcons && isMonthView ? 24 : 16}
+                  />
+                }
                 category={category}
                 dayOffset={day.day()}
                 monthOffset={isMonthView ? offsetFromMonthStart : startingMonthNum}
                 currentDay={day.date()}
-                isNested={isForPopover}
+                isNested={settings?.isForPopover}
                 className='inline'
               />
             </span>
@@ -184,7 +190,7 @@ export const Month = (props: MonthProps) => {
 
   const getPopoverContent = useCallback(
     (day: Dayjs, offsetFromMonthStart: number) => {
-      const allDayBanners = getBannersOrIcons(day, offsetFromMonthStart, true, true) || []
+      const allDayBanners = getBannersOrIcons(day, offsetFromMonthStart, true, { isForPopover: true }) || []
       return (
         <div className='lg:grid-rows grid gap-1 p-2 pb-3'>
           <span
@@ -239,7 +245,7 @@ export const Month = (props: MonthProps) => {
       const below = appearBelow(offsetFromMonthStart)
       const translateYClass = below ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
       return (
-        <Popover className={useBanners ? 'mx-1 mt-1' : ''} key={day.format('YY-MM-DD')}>
+        <Popover className={useBanners ? 'mx-1 mt-1' : 'h-6 w-6'} key={day.format('YY-MM-DD')}>
           {renderPopoverButton(allDayBlocksLength)}
           <Transition
             as={Fragment}
@@ -306,7 +312,7 @@ export const Month = (props: MonthProps) => {
 
   const getNonOverflowCategoryElems = useCallback(
     (day: Dayjs, offsetFromMonthStart: number) => {
-      const allCategoryElems = getBannersOrIcons(day, offsetFromMonthStart, useBanners) || []
+      const allCategoryElems = getBannersOrIcons(day, offsetFromMonthStart, useBanners, { getLargeIcons: true }) || []
       if (allCategoryElems.length <= nonOverflowElemCount) return allCategoryElems
 
       const nonOverflowElems = allCategoryElems.slice(0, nonOverflowElemCount - 1)
@@ -339,10 +345,17 @@ export const Month = (props: MonthProps) => {
         >
           {renderDateNum(day, isCurrentMonth)}
           <div
-            className={`flex-grow overflow-hidden ${isQuarterlyView ? 'inline-flex overflow-hidden' : ''}`}
+            className={`flex-grow overflow-hidden`}
             ref={offsetFromMonthStart === 0 ? categoryContainerRef : undefined}
           >
-            {getNonOverflowCategoryElems(day, offsetFromMonthStart)}
+            <style jsx>{`
+              .use-grid {
+                grid-template-columns: repeat(${useBanners ? 1 : colsPerDay}, minmax(0, 1fr));
+              }
+            `}</style>
+            <div className={`${isQuarterlyView ? 'inline-flex' : 'use-grid grid'}`}>
+              {getNonOverflowCategoryElems(day, offsetFromMonthStart)}
+            </div>
           </div>
         </div>
       )
@@ -355,7 +368,8 @@ export const Month = (props: MonthProps) => {
       isQuarterlyView,
       isSelectingDates,
       renderDateNum,
-      categoryContainerRef,
+      useBanners,
+      colsPerDay,
       getNonOverflowCategoryElems,
       dispatch
     ]

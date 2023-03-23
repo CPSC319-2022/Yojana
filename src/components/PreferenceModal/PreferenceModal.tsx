@@ -86,7 +86,6 @@ export const PreferenceModal = ({
                   }}
                   tooltipIcon='QuestionCircle'
                   tooltipText='Show categories as icons or banners.'
-                  disabled
                 />
               </div>
             </Accordion.Body>
