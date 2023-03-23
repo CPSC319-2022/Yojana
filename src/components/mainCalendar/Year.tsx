@@ -6,6 +6,9 @@ import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 import dayjs, { Dayjs } from 'dayjs'
 import { useCallback, useMemo } from 'react'
+import { getDayStyling } from '@/utils/day'
+import { Tooltip } from '@/components/common/Tooltip'
+import { DescriptionPopover } from '../DescriptionPopover'
 
 export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) => {
   const stateDate = useAppSelector(getDate)
@@ -36,7 +39,15 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
                     color: ${category.color};
                   }
                 `}</style>
-                <Icon iconName={category.icon as IconName} className='inline' />
+                <DescriptionPopover
+                  type='icon'
+                  component={<Icon iconName={category.icon as IconName} className='inline' />}
+                  category={category}
+                  dayOffset={day.day()}
+                  monthOffset={monthNum}
+                  currentDay={day.date()}
+                  className='inline'
+                />
               </span>
             )
           }
@@ -46,23 +57,6 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       return icons
     },
     [categoryMap, entriesInYear, isSelectingDates]
-  )
-
-  const getDateBackgroundColour = useCallback(
-    (isWeekend: boolean, isSelected?: boolean, isRecurring?: boolean) => {
-      if (!isSelectingDates) {
-        return isWeekend ? 'bg-slate-100' : 'bg-white'
-      } else {
-        if (isWeekend && isSelected) {
-          return isRecurring ? 'bg-slate-100' : 'bg-emerald-200'
-        } else if (isSelected) {
-          return isRecurring ? 'bg-slate-100' : 'bg-emerald-100'
-        } else {
-          return 'bg-white'
-        }
-      }
-    },
-    [isSelectingDates]
   )
 
   const onDayClicked = useCallback(
@@ -83,16 +77,26 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
 
       const day = monthStartDate.add(dateOffset, 'days')
       const isToday = day.isSame(dayjs(), 'day')
-      const isWeekend = day.day() === 0 || day.day() === 6
       const selected = yearSelected?.[monthNum]?.[day.date()]
-      const backgroundColor = getDateBackgroundColour(isWeekend, selected?.isSelected, selected?.isRecurring)
+
+      const dayContent = isSelectingDates ? (
+        <Tooltip text={day.format('MMM D')} boundingClassName='inline-block w-full' popoverClassName='min-w-max'>
+          <span
+            className={`flex justify-center align-middle font-semibold ${
+              selected?.isSelected ? 'text-emerald-600' : 'text-slate-300'
+            }`}
+          >
+            {day.format('dd').charAt(0)}
+          </span>
+        </Tooltip>
+      ) : (
+        renderDayCategories(day, monthNum, dateOffset)
+      )
 
       return (
         <div
           className={`tile px-0.5 
-            ${backgroundColor} 
-            ${isSelectingDates && !selected?.isRecurring ? 'cursor-pointer' : ''} 
-            ${isSelectingDates && !selected?.isSelected ? 'hover:ring-2 hover:ring-inset hover:ring-emerald-200' : ''}
+            ${getDayStyling(day.day(), isSelectingDates, selected)} 
             ${!isSelectingDates && isToday && !getForPrinting ? 'ring-2 ring-inset ring-emerald-300' : ''}
             ${
               preferences.yearOverflow.value === 'wrap' || getForPrinting
@@ -102,13 +106,12 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
           key={`${yearNum}-${monthNum}-${dateOffset}`}
           onClick={() => onDayClicked(day, !selected || !selected?.isRecurring)}
         >
-          {renderDayCategories(day, monthNum, dateOffset)}
+          {dayContent}
         </div>
       )
     },
     [
       getForPrinting,
-      getDateBackgroundColour,
       isSelectingDates,
       onDayClicked,
       renderDayCategories,
@@ -124,7 +127,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       const monthNum = columnNum - Math.ceil(columnNum / 5)
       const monthStartDate = dayjs(yearStartDate).add(monthNum, 'month')
       return (
-        <h3 className='sticky top-0 bg-slate-100 text-center text-slate-400' key={`col-${columnNum}-header`}>
+        <h3 className='sticky top-0 z-10 bg-slate-100 text-center text-slate-400' key={`col-${columnNum}-header`}>
           {columnNum % 5 === 0 ? '\u00A0' : monthStartDate.format('MMM')}
         </h3>
       )
@@ -149,22 +152,22 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
   }, [renderDay])
 
   const months = useMemo(() => {
+    const colSpacing = getForPrinting
+      ? 'grid-cols-[3.25%_7.5%_7.5%_7.5%_7.5%_3.25%_7.5%_7.5%_7.5%_7.5%_3.25%_7.5%_7.5%_7.5%_7.5%]'
+      : 'grid-cols-[2.5%_7.7%_7.7%_7.7%_7.7%_2.5%_7.7%_7.7%_7.7%_7.7%_2.5%_7.7%_7.7%_7.7%_7.7%]'
+
     return (
-      <div
-        className={`box-border grid grow  divide-x divide-y border-b border-r bg-slate-300 
-        ${
-          getForPrinting
-            ? 'grid-cols-[3.25%_7.5%_7.5%_7.5%_7.5%_3.25%_7.5%_7.5%_7.5%_7.5%_3.25%_7.5%_7.5%_7.5%_7.5%]'
-            : 'grid-cols-[2.5%_7.7%_7.7%_7.7%_7.7%_2.5%_7.7%_7.7%_7.7%_7.7%_2.5%_7.7%_7.7%_7.7%_7.7%]'
-        }
+      <div className={'h-full overflow-y-auto'}>
+        <div
+          className={`box-border grid grow divide-x divide-y border-b border-r bg-slate-300
+        ${colSpacing}
         ${preferences.yearShowGrid.value || getForPrinting ? '' : 'divide-transparent'}`}
-      >
-        <>
+        >
           {monthHeaders}
           {days}
-        </>
+        </div>
       </div>
     )
   }, [getForPrinting, days, preferences.yearShowGrid.value, monthHeaders])
-  return <div className='grow bg-white'>{months}</div>
+  return <div className='h-full bg-white'>{months}</div>
 }

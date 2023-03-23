@@ -21,5 +21,5 @@ export const MainCalendar = () => {
         return <Month monthOffset={0} />
     }
   }, [activeCalView])
-  return <div className='flex grow flex-col overflow-y-auto'>{calView}</div>
+  return <div className='flex grow flex-col overflow-y-hidden'>{calView}</div>
 }

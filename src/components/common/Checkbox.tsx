@@ -5,7 +5,7 @@ interface CheckboxProps {
   label: string
   id: string
   color: string
-  defaultChecked?: boolean
+  checked?: boolean
   checkboxClassName?: string
   wrapperClassName?: string
   icon: IconName
@@ -18,7 +18,7 @@ export const Checkbox = ({
   id,
   checkboxClassName,
   label,
-  defaultChecked = false,
+  checked,
   icon,
   onChange,
   iconClassName
@@ -37,10 +37,10 @@ export const Checkbox = ({
         type='checkbox'
         id={id}
         className={`${checkboxClassName} relative bottom-px align-middle`}
-        defaultChecked={defaultChecked}
+        checked={checked}
         onChange={onChange}
       />
-      <label className='ml-2' htmlFor={id}>
+      <label className='ml-2 cursor-pointer' htmlFor={id}>
         <span className={'colored pr-1 font-bold'}>
           <Icon iconName={icon} color={color} className={`inline ${iconClassName}`} />
         </span>

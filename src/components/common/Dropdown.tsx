@@ -21,7 +21,7 @@ export const Dropdown = ({
   iconName = 'CaretDownFill',
   children
 }: DropdownProps) => {
-  const dropdownChildren = getChildrenByType(children, [Dropdown.Button, Dropdown.Accordion])
+  const dropdownChildren = getChildrenByType(children, [Dropdown.Button, Dropdown.Accordion, Dropdown.Divider])
   return (
     <div className={containerClassName}>
       <Menu as='div' className='relative inline-block text-left'>
@@ -59,38 +59,39 @@ export const Dropdown = ({
   )
 }
 
-const DropdownButton = ({
-  key,
-  label,
-  onClick,
-  disabled = false
-}: {
-  key: string
+interface DropdownButtonProps {
   label: string
   onClick: () => void
   disabled?: boolean
-}) => {
+  clickable?: boolean
+}
+
+const renderDropdownButton = ({ label, onClick, disabled = false, clickable = true }: DropdownButtonProps) => {
   return (
-    <Menu.Item key={key}>
-      {({ active }) => (
-        <button
-          type='button'
-          onClick={onClick}
-          className={`${active && 'bg-slate-100'} group flex w-full items-center rounded-md px-4 py-2 ${
-            disabled && 'text-slate-400'
-          }`}
-          disabled={disabled}
-        >
-          {label}
-        </button>
-      )}
-    </Menu.Item>
+    <button
+      type='button'
+      onClick={onClick}
+      className={`group flex w-full items-center rounded-md px-4 py-2 ${disabled && 'text-slate-400'} ${
+        clickable ? 'hover:bg-slate-100' : 'cursor-default'
+      }`}
+      disabled={disabled}
+    >
+      {label}
+    </button>
+  )
+}
+
+const DropdownButton = ({ label, onClick, disabled = false, clickable = true }: DropdownButtonProps) => {
+  return clickable ? (
+    <Menu.Item>{renderDropdownButton({ label, onClick, disabled, clickable })}</Menu.Item>
+  ) : (
+    renderDropdownButton({ label, onClick, disabled, clickable })
   )
 }
 Dropdown.Button = DropdownButton
 
 const DropdownAccordion = ({ title, children }: { title: string; children: React.ReactNode }) => {
-  const accordionItems = getChildrenByType(children, [DropdownButton])
+  const accordionItems = getChildrenByType(children, [DropdownButton, DropdownDivider])
   return (
     <div className='w-full'>
       <Disclosure>
@@ -108,3 +109,8 @@ const DropdownAccordion = ({ title, children }: { title: string; children: React
   )
 }
 Dropdown.Accordion = DropdownAccordion
+
+const DropdownDivider = () => {
+  return <hr className='m-2 border-slate-200' />
+}
+Dropdown.Divider = DropdownDivider
