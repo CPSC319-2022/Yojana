@@ -80,6 +80,9 @@ yarn dev
 # build the app
 yarn build
 
+# analyze the build
+yarn build:analyze
+
 # start the app in production mode (after building)
 yarn start
 
