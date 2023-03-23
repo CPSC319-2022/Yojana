@@ -79,7 +79,7 @@ export const IconPicker = ({ control, name, color, rules }: IconPickerProps) => 
     if (!icons.includes(value)) {
       setIcons([value, ...icons])
     }
-  }, [value])
+  }, [value, icons])
 
   return (
     <div className='flex flex-wrap justify-center shadow-md'>
