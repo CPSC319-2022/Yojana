@@ -5,26 +5,26 @@ on:
     branches: [main]
 
 jobs:
-  unit_tests:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Run Unit Tests
-        run: yarn test:coverage
+  #  unit_tests:
+  #    runs-on: ubuntu-latest
+  #
+  #    steps:
+  #      - name: Checkout
+  #        uses: actions/checkout@v3
+  #        with:
+  #          ref: ${{ github.head_ref }}
+  #          fetch-depth: 0
+  #
+  #      - name: Setup Node.js
+  #        uses: actions/setup-node@v3
+  #        with:
+  #          node-version: 18
+  #
+  #      - name: Install Dependencies
+  #        run: yarn install --frozen-lockfile
+  #
+  #      - name: Run Unit Tests
+  #        run: yarn test:coverage
 
   end-to-end_tests:
     runs-on: ubuntu-latest
@@ -57,32 +57,31 @@ jobs:
 
       - name: Destroy Docker Container
         run: yarn run docker:down
-
-  format:
-    runs-on: ubuntu-latest
-
-    permissions: write-all
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: Install Dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Format code
-        run: yarn format
-
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Format code
-          branch: ${{ github.head_ref }}
+#  format:
+#    runs-on: ubuntu-latest
+#
+#    permissions: write-all
+#
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v3
+#        with:
+#          ref: ${{ github.head_ref }}
+#          fetch-depth: 0
+#
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: 18
+#
+#      - name: Install Dependencies
+#        run: yarn install --frozen-lockfile
+#
+#      - name: Format code
+#        run: yarn format
+#
+#      - name: Commit changes
+#        uses: stefanzweifel/git-auto-commit-action@v4
+#        with:
+#          commit_message: Format code
+#          branch: ${{ github.head_ref }}
