@@ -39,7 +39,9 @@ export const CsvModal = () => {
       if (errorCode === 401) {
         dispatch(
           setAlert({
-            message: `You do not have access to the following category ids: ${uneditableCategories?.join(', ')}`,
+            message: `You either do not have access to the following category ids or they do not exist: ${uneditableCategories?.join(
+              ', '
+            )}`,
             type: 'error',
             show: true
           })
@@ -87,15 +89,16 @@ export const CsvModal = () => {
             <table className='mb-6 mt-3 w-full table-auto'>
               <thead>
                 <tr>
-                  <th className='border px-4 py-2'>Category</th>
+                  <th className='border px-4 py-2'>CategoryID</th>
                   <th className='border px-4 py-2'>Date</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td className='border px-4 py-2'>
-                    <span>Pay Check</span>
-                    <span className='text-slate-400'> (Category Name)</span>
+                    <span>1</span>
+                    <br />
+                    <span className='text-slate-400'> (Check category details for ID)</span>
                   </td>
                   <td className='border px-4 py-2'>
                     <span>2021-01-01</span>
@@ -103,7 +106,7 @@ export const CsvModal = () => {
                   </td>
                 </tr>
                 <tr>
-                  <td className='border px-4 py-2'>Workshop</td>
+                  <td className='border px-4 py-2'>2</td>
                   <td className='border px-4 py-2'>2021-01-02</td>
                 </tr>
               </tbody>

@@ -4,7 +4,6 @@ import { FiletypeCsv } from 'react-bootstrap-icons'
 import csv from 'csv-parser'
 import { Button } from '@/components/common'
 import { BatchResponse } from '@/types/prisma'
-import { useSession } from 'next-auth/react'
 
 interface CsvEntry {
   CategoryID: string
@@ -18,9 +17,6 @@ interface EntryMap {
 export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchResponse) => void }) => {
   const [csvFileName, setCsvFileName] = useState('')
   const [csvEntries, setCsvEntries] = useState<CsvEntry[]>([])
-
-  const { data: session } = useSession()
-  const userID = session?.user.id || ''
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     acceptedFiles.forEach((file) => {
@@ -52,24 +48,29 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchRespons
       for (let key in csvEntries) {
         if (csvEntries.hasOwnProperty(key)) {
           let entry = csvEntries[key]
-          entryMap[entry.CategoryID] = [...(entryMap[entry.CategoryID] ?? []), new Date(entry.Date).toISOString()]
+          if (entry.CategoryID === undefined || entry.Date === undefined) {
+            throw new Error("Make sure the column headings are 'CategoryID' and 'Date' only.")
+          }
+          entryMap[entry.CategoryID] = [...(entryMap[entry.CategoryID] ?? []), entry.Date]
         }
       }
     } catch (error) {
-      const res: BatchResponse = {
-        success: undefined,
-        error: {
-          code: 400,
-          message: 'make sure your csv file is formatted correctly',
-          uneditableCategories: []
+      if (error instanceof Error) {
+        const noEntriesResponse: BatchResponse = {
+          success: undefined,
+          error: {
+            message: error.message,
+            code: 400,
+            uneditableCategories: []
+          }
         }
+        onSuccess(noEntriesResponse)
+        return
       }
-      onSuccess(res)
-      return
     }
 
     try {
-      const response = await fetch(`/api/cats/batch?userID=${userID}`, {
+      const response = await fetch(`/api/cats/batch`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
