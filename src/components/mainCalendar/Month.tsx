@@ -10,16 +10,17 @@ import { Icon, IconName } from '@/components/common'
 import { getDayStyling } from '@/utils/day'
 
 import {
+  getDate,
   getInterval,
   isMonthInterval,
   isQuarterlyInterval,
-  getDate,
   isYearInterval
 } from '@/redux/reducers/MainCalendarReducer'
-import { useState, useRef, useEffect, useCallback, Fragment, useMemo } from 'react'
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DescriptionPopover } from '../DescriptionPopover'
 import dayjs, { Dayjs } from 'dayjs'
 import { Popover, Transition } from '@headlessui/react'
+
 interface MonthProps {
   monthOffset: number
   className?: string
@@ -271,11 +272,17 @@ export const Month = (props: MonthProps) => {
   const renderDateNum = useCallback(
     (day: Dayjs, isCurrentMonth: boolean) => {
       const isToday = dayjs().isSame(day, 'day')
-      const todayCircle = isToday && !isSelectingDates ? 'rounded-full bg-emerald-200' : ''
+      const todayCircle = isToday && !isSelectingDates ? 'rounded-full bg-emerald-200 mt-1 ml-1' : ''
       return (
         <div className={`flex ${isMonthView ? 'items-center justify-center' : ''}`}>
           <div className={`flex h-7 w-7 items-center justify-center ${todayCircle} ${isMonthView ? 'mt-1' : ''}`}>
-            <span className={`${isCurrentMonth ? '' : 'text-slate-400'} block text-center text-sm`}>{day.date()}</span>
+            <span
+              className={`block text-center ${isMonthView ? 'text-sm' : 'text-xs'} ${
+                isCurrentMonth ? '' : 'text-slate-400'
+              }`}
+            >
+              {day.date()}
+            </span>
           </div>
         </div>
       )
