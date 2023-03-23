@@ -3,7 +3,8 @@ import batch from '@/pages/api/cats/batch'
 import '@testing-library/jest-dom'
 import { createRequest, createResponse } from 'node-mocks-http'
 import * as jwt from 'next-auth/jwt'
-import { Entry } from '@prisma/client'
+import { Category, Entry } from '@prisma/client'
+import { BatchResponse } from '@/types/prisma'
 
 const mockAdmin = {
   id: '1',
@@ -20,9 +21,8 @@ const mockUser = {
 }
 
 const mockBody = {
-  Testing1: ['2025-03-10T00:00:00.000Z', '2025-03-04T00:00:00.000Z'],
-  Testing2: ['2025-03-22T00:00:00.000Z'],
-  Testing3: ['2025-03-18T00:00:00.000Z']
+  1: ['2025-03-10', '2025-03-04'],
+  2: ['2025-03-22']
 }
 
 const expectedResponse: Entry[] = [
@@ -48,7 +48,7 @@ const expectedResponse: Entry[] = [
 
 const mockValidCats = [
   {
-    id: 21,
+    id: 1,
     name: 'Testing1',
     description: '',
     color: '#7f19b0',
@@ -60,7 +60,7 @@ const mockValidCats = [
     creatorId: 'f0b54ab0-366f-45b1-b750-1d5b79f3603c'
   },
   {
-    id: 22,
+    id: 2,
     name: 'Testing2',
     description: '',
     color: '#34cf29',
@@ -73,9 +73,11 @@ const mockValidCats = [
   }
 ]
 
+const mockNoCats: Category[] = []
+
 describe('/api/cats/batch', () => {
   describe('POST', () => {
-    it('should return a 201 status code when batch categories are added', async () => {
+    it('should return a 201 status code when all entries are added', async () => {
       const req = createRequest({
         method: 'POST',
         url: '/cats/batch',
@@ -94,7 +96,9 @@ describe('/api/cats/batch', () => {
       await batch(req, res)
 
       expect(res._getStatusCode()).toBe(201)
-      expect(res._getData()).toBe(JSON.stringify({ appData: mockValidCats, createdEntries: expectedResponse }))
+      const data: BatchResponse = JSON.parse(res._getData())
+      expect(data.error).toBe(undefined)
+      expect(data.success?.entriesAdded).toEqual(3)
     })
 
     it('should return a 500 status code when batch add fails', async () => {
@@ -117,7 +121,7 @@ describe('/api/cats/batch', () => {
       expect(res._getData()).toBe('Internal Server Error')
     })
 
-    it('should return a 401 status code when user is not an admin', async () => {
+    it('should return a 401 status code when user attempts to edit an unauthorized category', async () => {
       const req = createRequest({
         method: 'POST',
         url: '/cats/batch',
@@ -127,10 +131,16 @@ describe('/api/cats/batch', () => {
 
       jest.spyOn(jwt, 'getToken').mockResolvedValue(mockUser)
 
+      prismaMock.category.findMany.mockResolvedValue(mockNoCats)
+
       await batch(req, res)
 
       expect(res._getStatusCode()).toBe(401)
-      expect(res._getData()).toBe('Unauthorized')
+      const data: BatchResponse = JSON.parse(res._getData())
+      expect(data.error).toBeDefined()
+      expect(data.success).toBeUndefined()
+      expect(data.error?.uneditableCategories).toEqual([1, 2])
+      expect(data.error?.code).toEqual(401)
     })
   })
 
@@ -145,5 +155,45 @@ describe('/api/cats/batch', () => {
 
     expect(res._getStatusCode()).toBe(405)
     expect(res._getData()).toBe('Method Not Allowed')
+  })
+
+  it('should fail if request body has incorrect schema', async () => {
+    const req = createRequest({
+      method: 'POST',
+      url: '/cats/batch',
+      body: { incorrect: 'schema' }
+    })
+    const res = createResponse()
+
+    await batch(req, res)
+
+    expect(res._getStatusCode()).toBe(400)
+    const data: BatchResponse = JSON.parse(res._getData())
+    expect(data.error).toBeDefined()
+    expect(data.success).toBeUndefined()
+    expect(data.error?.code).toEqual(400)
+  })
+
+  it('should fail if no entries were added', async () => {
+    const req = createRequest({
+      method: 'POST',
+      url: '/cats/batch',
+      body: mockBody
+    })
+    const res = createResponse()
+
+    jest.spyOn(jwt, 'getToken').mockResolvedValue(mockAdmin)
+
+    prismaMock.category.findMany.mockResolvedValue(mockValidCats)
+
+    prismaMock.entry.createMany.mockResolvedValue({ count: 0 })
+
+    await batch(req, res)
+
+    expect(res._getStatusCode()).toBe(422)
+    const data: BatchResponse = JSON.parse(res._getData())
+    expect(data.error).toBeDefined()
+    expect(data.success).toBeUndefined()
+    expect(data.error?.code).toEqual(422)
   })
 })
