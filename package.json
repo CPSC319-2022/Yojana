@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:analyze": "ANALYZE=true next build",
     "start": "next start",
     "test": "jest --watch",
     "test:e2e": "yarn docker:up && dotenv -e .env.test yarn prisma migrate reset -- --force && dotenv -e .env.test start-server-and-test dev http://localhost:3000/hello \"cypress open --e2e\"",
@@ -59,6 +60,7 @@
   },
   "devDependencies": {
     "@microsoft/microsoft-graph-types": "^2.26.0",
+    "@next/bundle-analyzer": "^13.2.4",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@types/cypress-dotenv": "^2.0.0",
