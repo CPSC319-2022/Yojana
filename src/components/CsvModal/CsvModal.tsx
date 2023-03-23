@@ -47,6 +47,15 @@ export const CsvModal = () => {
           })
         )
         return
+      } else if (errorCode === 422) {
+        dispatch(
+          setAlert({
+            message: errorMessage || '',
+            type: 'warn',
+            show: true
+          })
+        )
+        return
       }
       dispatch(setAlert({ message: errorMessage || '', type: 'error', show: true }))
     } else {
