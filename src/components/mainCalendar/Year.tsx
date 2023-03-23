@@ -139,7 +139,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       return Array.from(Array(15).keys()).map((columnNum) => {
         if (columnNum % 5 === 0) {
           return (
-            <div className={'bg-white px-1'} key={`${columnNum}-${dateNum + 1}`}>
+            <div className={'bg-white px-1 pt-1 text-center text-xs'} key={`${columnNum}-${dateNum + 1}`}>
               {dateNum + 1}
             </div>
           )
@@ -154,7 +154,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
   const months = useMemo(() => {
     const colSpacing = getForPrinting
       ? 'grid-cols-[3.25%_7.5%_7.5%_7.5%_7.5%_3.25%_7.5%_7.5%_7.5%_7.5%_3.25%_7.5%_7.5%_7.5%_7.5%]'
-      : 'grid-cols-[2.5%_7.7%_7.7%_7.7%_7.7%_2.5%_7.7%_7.7%_7.7%_7.7%_2.5%_7.7%_7.7%_7.7%_7.7%]'
+      : 'grid-cols-[2.25%_7.77%_7.77%_7.77%_7.77%_2.25%_7.77%_7.77%_7.77%_7.77%_2.25%_7.77%_7.77%_7.77%_7.77%]'
 
     return (
       <div className={'h-full overflow-y-auto'}>
