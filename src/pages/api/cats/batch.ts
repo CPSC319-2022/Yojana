@@ -56,7 +56,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const categoryIDs = Object.keys(categories).map(Number)
 
   // Check if user has permission to edit all categories in request
-  const { uneditableCategories, _ } = await getUneditableAndEditableCategoryIDs(
+  const { uneditableCategories, editableCategories } = await getUneditableAndEditableCategoryIDs(
     userID! as string,
     token?.isAdmin || false,
     categoryIDs
