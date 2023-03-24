@@ -9,7 +9,13 @@ import {
 import { Icon, IconName } from '@/components/common'
 import { getDayStyling } from '@/utils/day'
 
-import { getDate, isMonthInterval, isQuarterlyInterval, isYearInterval } from '@/redux/reducers/MainCalendarReducer'
+import {
+  getDate,
+  getInterval,
+  isMonthInterval,
+  isQuarterlyInterval,
+  isYearInterval
+} from '@/redux/reducers/MainCalendarReducer'
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DescriptionPopover } from '../DescriptionPopover'
 import dayjs, { Dayjs } from 'dayjs'
@@ -36,6 +42,7 @@ export const Month = (props: MonthProps) => {
   const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
   const isSelectingDates = useAppSelector(getIsSelectingDates)
   const preferences = useAppSelector(getPreferences)
+  const activeCalView = useAppSelector(getInterval)
   const dispatch = useAppDispatch()
   const [useBanners, setUseBanners] = useState(isMonthView && preferences.monthCategoryAppearance.value === 'banners')
 
@@ -87,7 +94,7 @@ export const Month = (props: MonthProps) => {
   useIsomorphicLayoutEffect(() => {
     recalculateItemsPerDay()
     // Add any deps that would require recalculating items per day here
-  }, [recalculateItemsPerDay, isMonthView, useBanners, monthStartDate])
+  }, [recalculateItemsPerDay, activeCalView, useBanners, monthStartDate])
 
   useEffect(() => {
     if (!categoryContainerRef.current) return
