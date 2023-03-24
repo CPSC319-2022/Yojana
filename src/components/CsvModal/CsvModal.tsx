@@ -30,18 +30,40 @@ export const CsvModal = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleUploadSuccess = (response?: BatchResponse, error?: string) => {
-    const createdEntries = response?.createdEntries
-    const categories = response?.appData
+  const handleUploadSuccess = (response?: BatchResponse) => {
     setIsModalOpen(false)
-    if (error) {
-      dispatch(setAlert({ message: `There was an error processing your request: ${error}`, type: 'error', show: true }))
+    if (response?.error || response?.success === undefined) {
+      const errorMessage = response?.error?.message
+      const uneditableCategories = response?.error?.uneditableCategories
+      const errorCode = response?.error?.code
+      if (errorCode === 401) {
+        dispatch(
+          setAlert({
+            message: `You either do not have access to the following category ids or they do not exist: ${uneditableCategories?.join(
+              ', '
+            )}`,
+            type: 'error',
+            show: true
+          })
+        )
+        return
+      } else if (errorCode === 422) {
+        dispatch(
+          setAlert({
+            message: errorMessage || '',
+            type: 'warn',
+            show: true
+          })
+        )
+        return
+      }
+      dispatch(setAlert({ message: errorMessage || '', type: 'error', show: true }))
     } else {
+      const createdEntries = response?.success?.entriesAdded
+      const categories = response?.success?.appData
       const appData = setCategoryShow(categories!)
       dispatch(setAppData(appData))
-      dispatch(
-        setAlert({ message: `successfully added ${createdEntries?.length} entries`, type: 'success', show: true })
-      )
+      dispatch(setAlert({ message: `successfully added ${createdEntries} entries`, type: 'success', show: true }))
     }
   }
 
@@ -76,15 +98,15 @@ export const CsvModal = () => {
             <table className='mb-6 mt-3 w-full table-auto'>
               <thead>
                 <tr>
-                  <th className='border px-4 py-2'>Category</th>
+                  <th className='border px-4 py-2'>CategoryID</th>
                   <th className='border px-4 py-2'>Date</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td className='border px-4 py-2'>
-                    <span>Pay Check</span>
-                    <span className='text-slate-400'> (Category Name)</span>
+                    <span>1</span>
+                    <span className='text-slate-400'> (Check category details for ID)</span>
                   </td>
                   <td className='border px-4 py-2'>
                     <span>2021-01-01</span>
@@ -92,7 +114,7 @@ export const CsvModal = () => {
                   </td>
                 </tr>
                 <tr>
-                  <td className='border px-4 py-2'>Workshop</td>
+                  <td className='border px-4 py-2'>2</td>
                   <td className='border px-4 py-2'>2021-01-02</td>
                 </tr>
               </tbody>

@@ -6,7 +6,7 @@ import { Button } from '@/components/common'
 import { BatchResponse } from '@/types/prisma'
 
 interface CsvEntry {
-  Category: string
+  CategoryID: string
   Date: string
 }
 
@@ -14,7 +14,7 @@ interface EntryMap {
   [key: string]: string[]
 }
 
-export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchResponse, error?: string) => void }) => {
+export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchResponse) => void }) => {
   const [csvFileName, setCsvFileName] = useState('')
   const [csvEntries, setCsvEntries] = useState<CsvEntry[]>([])
 
@@ -48,16 +48,29 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchRespons
       for (let key in csvEntries) {
         if (csvEntries.hasOwnProperty(key)) {
           let entry = csvEntries[key]
-          entryMap[entry.Category] = [...(entryMap[entry.Category] ?? []), new Date(entry.Date).toISOString()]
+          if (entry.CategoryID === undefined || entry.Date === undefined) {
+            throw new Error("Make sure the column headings are 'CategoryID' and 'Date' only.")
+          }
+          entryMap[entry.CategoryID] = [...(entryMap[entry.CategoryID] ?? []), entry.Date]
         }
       }
     } catch (error) {
-      onSuccess({ createdEntries: [], appData: [] }, 'make sure your csv file is formatted correctly')
-      return
+      if (error instanceof Error) {
+        const noEntriesResponse: BatchResponse = {
+          success: undefined,
+          error: {
+            message: error.message,
+            code: 400,
+            uneditableCategories: []
+          }
+        }
+        onSuccess(noEntriesResponse)
+        return
+      }
     }
 
     try {
-      const response = await fetch('/api/cats/batch', {
+      const response = await fetch(`/api/cats/batch`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -65,9 +78,9 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchRespons
         body: JSON.stringify(entryMap)
       })
       const res = await response.json()
-      onSuccess(res, undefined)
+      onSuccess(res)
     } catch (error) {
-      onSuccess(undefined, "couldn't add entries")
+      console.error(error)
     }
   }
 

@@ -291,20 +291,44 @@ delete:
 post:
   body:
     object:
-      key: category name
-      value: array of dates
+      key: category id
+      value: array of dates (YYYY-MM-DD)
   responses:
     201:
       description: batch of entries added to categories
       object:
-        createdEntries: Entry[]
-        appData: CategoryFull[]
+        success:
+          createdEntries: Entry[]
+          appData: CategoryFull[]
+        error: undefined
+    400:
+      description: incorrect request body schema
+      success: undefined
+      error:
+        code: integer
+        message: string
+        uneditableCategories: CategoryID[]
     401:
-      description: user is not authorized to delete category
-      text: Unauthorized
+      description: user attempts to batch add to a category that they do not have access to
+      success: undefined
+      error:
+        code: integer
+        message: string
+        uneditableCategories: CategoryID[]
     405:
-      description: Invalid HTTP method
-      text: Method Not Allowed
+      description: endpoint only allows POST requests
+      success: undefined
+      error:
+        code: integer
+        message: string
+        uneditableCategories: CategoryID[]
+    422:
+      description: No changes made to any categories
+      success: undefined
+      error:
+        code: integer
+        message: string
+        uneditableCategories: CategoryID[]
     500:
       description: internal error
       text: Internal Server Error

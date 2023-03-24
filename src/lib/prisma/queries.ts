@@ -63,3 +63,20 @@ export const getCategoriesById = async (categoryIds: number[]) => {
     select
   })
 }
+
+export const getOwnedCategories = async (creatorId: string, isAdmin: boolean) => {
+  if (isAdmin) {
+    return prisma.category.findMany({
+      where: {
+        OR: [{ isMaster: isAdmin }, { creatorId: creatorId }]
+      },
+      select
+    })
+  }
+  return prisma.category.findMany({
+    where: {
+      creatorId: creatorId
+    },
+    select
+  })
+}

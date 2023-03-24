@@ -47,6 +47,17 @@ export type AppData = CategoryFullState[]
 export interface EntryWithoutCategoryId extends Omit<Entry, 'categoryId'> {}
 
 export interface BatchResponse {
-  createdEntries: Entry[]
-  appData: CategoryFull[]
+  success:
+    | {
+        entriesAdded: number
+        appData: CategoryFull[]
+      }
+    | undefined
+  error:
+    | {
+        code: number
+        message: string
+        uneditableCategories: number[]
+      }
+    | undefined
 }

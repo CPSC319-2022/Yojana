@@ -39,9 +39,9 @@ export const Alert = () => {
               }
             `}
           </style>
-          <div className={`alert rounded-md py-3 px-4 text-center`} role='alert'>
-            {type === 'error' && <strong className='font-bold'>Error:</strong>}{' '}
-            <span className='block sm:inline'>{message}</span>
+          <div className={`alert flex items-center justify-center rounded-md py-3 px-4`} role='alert'>
+            {type === 'error' && <strong className='px-3 font-bold'>Error:</strong>}{' '}
+            <span className='block px-3 sm:inline'>{message}</span>
             <button type='button' className={`float-right font-bold`} onClick={() => dispatch(setShow(false))}>
               &times;
             </button>
