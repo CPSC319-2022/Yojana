@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
+import { setCookieMaxAge } from '@/utils/cookies'
 
 export type YearOverflow = 'scroll' | 'wrap'
 export type MonthCategoryAppearance = 'icons' | 'banners'
@@ -18,6 +19,10 @@ interface State {
       value: MonthCategoryAppearance
       cookieName: string
     }
+    sidebarOpen: {
+      value: boolean
+      cookieName: string
+    }
   }
 }
 
@@ -33,6 +38,10 @@ export const defaultPreferences = {
   monthCategoryAppearance: {
     value: 'banners' as MonthCategoryAppearance,
     cookieName: 'yojana.month-category-appearance-preference'
+  },
+  sidebarOpen: {
+    value: true,
+    cookieName: 'yojana.sidebar-open'
   }
 }
 
@@ -48,6 +57,10 @@ const preferencesSlice = createSlice({
     },
     setMonthCategoryAppearance: (state, action: PayloadAction<MonthCategoryAppearance>) => {
       state.monthCategoryAppearance.value = action.payload
+    },
+    setIsSidebarOpen: (state, action: PayloadAction<boolean>) => {
+      state.sidebarOpen.value = action.payload
+      setCookieMaxAge(state.sidebarOpen.cookieName, action.payload)
     }
   },
   extraReducers: {
@@ -61,5 +74,6 @@ const preferencesSlice = createSlice({
 })
 
 export const getPreferences = (state: State) => state.preferences
-export const { setMonthCategoryAppearance, setYearShowGrid, setYearOverflow } = preferencesSlice.actions
+export const { setMonthCategoryAppearance, setYearShowGrid, setYearOverflow, setIsSidebarOpen } =
+  preferencesSlice.actions
 export const preferencesReducer = preferencesSlice.reducer
