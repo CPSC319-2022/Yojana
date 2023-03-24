@@ -106,7 +106,6 @@ export const CsvModal = () => {
                 <tr>
                   <td className='border px-4 py-2'>
                     <span>1</span>
-                    <br />
                     <span className='text-slate-400'> (Check category details for ID)</span>
                   </td>
                   <td className='border px-4 py-2'>
