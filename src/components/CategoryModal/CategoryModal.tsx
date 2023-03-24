@@ -1,6 +1,5 @@
-import { ColorPicker } from './ColorPicker'
+import CategoryTypePicker from '@/components/CategoryModal/CategoryTypePicker'
 import { Button, Icon, Modal, Tabs } from '@/components/common'
-import { DayOfWeek, DayOfWeekPicker } from './DayOfWeekPicker'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setAlert } from '@/redux/reducers/AlertReducer'
 import { addCategory, getCategory, updateCategory } from '@/redux/reducers/AppDataReducer'
@@ -15,6 +14,7 @@ import {
 import { EntryWithoutCategoryId } from '@/types/prisma'
 import { randomColor } from '@/utils/color'
 import { generateDatesFromCron } from '@/utils/dates'
+import { preprocessEntries } from '@/utils/preprocessEntries'
 import { Disclosure, Transition } from '@headlessui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Category, Entry } from '@prisma/client'
@@ -23,11 +23,11 @@ import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { IconPicker, iconPickerIcons } from './IconPicker'
+import { ColorPicker } from './ColorPicker'
 import { DayOfMonthPicker, MonthRecurrence, monthRecurrenceCrons, MonthRecurrenceType } from './DayOfMonthPicker'
+import { DayOfWeek, DayOfWeekPicker } from './DayOfWeekPicker'
+import { IconPicker, iconPickerIcons } from './IconPicker'
 import { IconSearchModal } from './IconSearchModal'
-import CategoryTypePicker from '@/components/CategoryModal/CategoryTypePicker'
-import { preprocessEntries } from '@/utils/preprocessEntries'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
@@ -398,7 +398,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
 
   const startAndEndDatesRecurringField = useMemo(() => {
     return (
-      <div className='grid grid-cols-2 gap-4'>
+      <div className='grid grid-cols-2 gap-4' id='recurring-dates-tab-start-end'>
         <div>
           <label className='mb-2 block text-sm'>Start Date</label>
           <input className='cursor-pointer text-sm' type='date' {...register('repeating.startDate')} />
@@ -417,7 +417,10 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         <Disclosure>
           {({ open }) => (
             <>
-              <Disclosure.Button className='flex w-full justify-between rounded-lg py-2 text-left text-slate-800 hover:text-emerald-700 focus:outline-none'>
+              <Disclosure.Button
+                id='recurring-dates-disclosure-btn'
+                className='flex w-full justify-between rounded-lg py-2 text-left text-slate-800 hover:text-emerald-700 focus:outline-none'
+              >
                 <span>Recurring Dates</span>
                 <Icon iconName='CaretDownFill' className={`${open ? 'rotate-180 transform' : ''} mt-0.5 h-5 w-5`} />
               </Disclosure.Button>
@@ -429,12 +432,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                 leaveFrom='transform scale-100 opacity-100'
                 leaveTo='transform scale-95 opacity-0'
               >
-                <Disclosure.Panel className='pt-4 pb-2'>
+                <Disclosure.Panel id='recurring-dates-panel' className='pt-4 pb-2'>
                   <div className='pb-5'>
                     <Tabs currentIndex={currentTabIndex}>
-                      <Tabs.Title>Weekly</Tabs.Title>
+                      <Tabs.Title id='recurring-dates-tab-weekly'>Weekly</Tabs.Title>
                       {weeklyRecurringField}
-                      <Tabs.Title>Monthly</Tabs.Title>
+                      <Tabs.Title id='recurring-dates-tab-monthly'>Monthly</Tabs.Title>
                       {monthlyRecurringField}
                     </Tabs>
                   </div>

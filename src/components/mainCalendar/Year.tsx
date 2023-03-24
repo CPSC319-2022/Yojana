@@ -33,7 +33,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
           const category = categoryMap[calEvent.categoryId]
           if (category.show) {
             return (
-              <span className={'px-0.5 font-bold'} key={`${calEvent.id}-${key}`}>
+              <span className={'px-0.5 font-bold'} key={`${calEvent.id}-${key}`} id={`${category.name}-icon`}>
                 <style jsx>{`
                   * {
                     color: ${category.color};
@@ -95,6 +95,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
 
       return (
         <div
+          id={`${yearNum}-${monthNum}-${dateOffset}`}
           className={`tile px-0.5 
             ${getDayStyling(day.day(), isSelectingDates, selected)} 
             ${!isSelectingDates && isToday && !getForPrinting ? 'ring-2 ring-inset ring-emerald-300' : ''}

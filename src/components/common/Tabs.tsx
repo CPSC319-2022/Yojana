@@ -15,7 +15,9 @@ export const Tabs = ({ children, currentIndex }: { children: React.ReactNode; cu
     <div className='w-full sm:px-0'>
       <Tab.Group defaultIndex={currentIndex}>
         <Tab.List className='flex space-x-1 rounded-xl bg-slate-100 p-1'>{titles.map((title) => title)}</Tab.List>
-        <Tab.Panels className='mt-2'>{contents.map((pane) => pane)}</Tab.Panels>
+        <Tab.Panels id='recurring-dates-upper-contents' className='mt-2'>
+          {contents.map((pane) => pane)}
+        </Tab.Panels>
       </Tab.Group>
     </div>
   )
@@ -26,9 +28,10 @@ const TabContent = ({ children }: { children: React.ReactNode }) => {
 }
 Tabs.Content = TabContent
 
-export const TabTitle = ({ children, disabled = false }: { children: string; disabled?: boolean }) => {
+export const TabTitle = ({ children, disabled = false, id }: { children: string; disabled?: boolean; id: string }) => {
   return (
     <Tab
+      id={id}
       className={({ selected }) => {
         return `w-full rounded-md py-2.5 text-sm font-medium leading-5 text-emerald-900 ${
           selected ? 'bg-emerald-100 shadow' : 'text-slate-400 hover:bg-slate-200/[0.5] hover:text-slate-500'
