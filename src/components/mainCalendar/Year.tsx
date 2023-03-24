@@ -67,7 +67,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
     },
     [dispatch]
   )
-
+  let currentIndexForId = 0
   const renderDay = useCallback(
     (monthNum: number, dateOffset: number) => {
       const monthStartDate = dayjs(yearStartDate).add(monthNum, 'month')
@@ -95,7 +95,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
 
       return (
         <div
-          id={`${yearNum}-${monthNum}-${dateOffset}`}
+          id={`${yearNum}-${currentIndexForId++}`}
           className={`tile px-0.5 
             ${getDayStyling(day.day(), isSelectingDates, selected)} 
             ${!isSelectingDates && isToday && !getForPrinting ? 'ring-2 ring-inset ring-emerald-300' : ''}

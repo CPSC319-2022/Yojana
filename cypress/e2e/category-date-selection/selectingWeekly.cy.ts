@@ -2,7 +2,7 @@ describe('select weekly recurring tests', () => {
   const openCreateModalAndSelectWeekly = () => {
     cy.get('button#create-category-btn').click()
     cy.get('div#create-category-modal-div').should('be.visible')
-    cy.get('input[name="name"]').type('some random new cat for weekly recurring')
+    cy.get('input[name="name"]').type('newWeeklyCat')
     cy.get('div#create-category-modal-div').scrollTo('bottom')
 
     // Open and check the recurring dates selection
@@ -36,38 +36,7 @@ describe('select weekly recurring tests', () => {
       cy.get('button#create-category-submit-btn').click()
 
       // Check icons in year view to match the selected weekly recurring dates
-      const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-      let daysToSkip = 0
-      for (let month = 0; month < 12; month++) {
-        let startingDay = daysToSkip > 0 ? daysToSkip : 0
-
-        for (let day = startingDay; day < daysInMonth[month]; day += 7) {
-          // Check the two consecutive days
-          for (let i = 0; i < 2; i++) {
-            if (day + i < daysInMonth[month]) {
-              const currentSelectedDateId = `2023-${month}-${day + i}`
-              const currentDivId = `div#${currentSelectedDateId}`
-              cy.get(currentDivId).find('span#some random new cat for weekly recurring-icon').should('exist')
-            }
-          }
-
-          // Check other 5 days
-          for (let i = 2; i < 7; i++) {
-            if (day + i < daysInMonth[month]) {
-              const currentSelectedDateId = `2023-${month}-${day + i}`
-              const currentDivId = `div#${currentSelectedDateId}`
-              !cy.get(currentDivId).find('span#some random new cat for weekly recurring-icon').should('exist')
-            }
-          }
-
-          // Check if there are remaining days to be skipped at the end of the month
-          if (day + 7 >= daysInMonth[month]) {
-            daysToSkip = 7 - (daysInMonth[month] - day)
-          } else {
-            daysToSkip = 0
-          }
-        }
-      }
+      cy.checkWeeklyConsecutiveDays(2)
     })
 
     it('should be able to change start and end date for weekly recurring during creation in 2023', () => {
