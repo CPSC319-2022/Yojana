@@ -142,6 +142,83 @@ describe('/api/cats/batch', () => {
       expect(data.error?.uneditableCategories).toEqual([1, 2])
       expect(data.error?.code).toEqual(401)
     })
+
+    it('should return a 401 status code when user not logged in', async () => {
+      const req = createRequest({
+        method: 'POST',
+        url: '/cats/batch',
+        body: mockBody
+      })
+      const res = createResponse()
+
+      jest.spyOn(jwt, 'getToken').mockResolvedValue(null)
+
+      await batch(req, res)
+
+      expect(res._getStatusCode()).toBe(401)
+      const data: BatchResponse = JSON.parse(res._getData())
+      expect(data.error).toBeDefined()
+      expect(data.success).toBeUndefined()
+      expect(data.error?.uneditableCategories).toEqual([])
+      expect(data.error?.code).toEqual(401)
+    })
+
+    it('should fail if request body has incorrect schema', async () => {
+      const req = createRequest({
+        method: 'POST',
+        url: '/cats/batch',
+        body: { incorrect: 'schema' }
+      })
+      const res = createResponse()
+
+      await batch(req, res)
+
+      expect(res._getStatusCode()).toBe(400)
+      const data: BatchResponse = JSON.parse(res._getData())
+      expect(data.error).toBeDefined()
+      expect(data.success).toBeUndefined()
+      expect(data.error?.code).toEqual(400)
+    })
+
+    it('should fail if invalid date', async () => {
+      const req = createRequest({
+        method: 'POST',
+        url: '/cats/batch',
+        body: { 1: ['invalid'] }
+      })
+      const res = createResponse()
+
+      await batch(req, res)
+
+      expect(res._getStatusCode()).toBe(400)
+      const data: BatchResponse = JSON.parse(res._getData())
+      expect(data.error).toBeDefined()
+      expect(data.success).toBeUndefined()
+      expect(data.error?.code).toEqual(400)
+    })
+
+    it('should fail if no entries were added', async () => {
+      const req = createRequest({
+        method: 'POST',
+        url: '/cats/batch',
+        body: mockBody
+      })
+      const res = createResponse()
+
+      jest.spyOn(jwt, 'getToken').mockResolvedValue(mockAdmin)
+
+      prismaMock.category.findMany.mockResolvedValue(mockValidCats)
+
+      prismaMock.entry.createMany.mockResolvedValue({ count: 0 })
+
+      await batch(req, res)
+
+      expect(res._getStatusCode()).toBe(422)
+      const data: BatchResponse = JSON.parse(res._getData())
+      expect(data.error).toBeDefined()
+      expect(data.success).toBeUndefined()
+      expect(data.error?.code).toEqual(422)
+    })
   })
 
   it('should return a 405 status code when invalid method', async () => {
@@ -155,45 +232,5 @@ describe('/api/cats/batch', () => {
 
     expect(res._getStatusCode()).toBe(405)
     expect(res._getData()).toBe('Method Not Allowed')
-  })
-
-  it('should fail if request body has incorrect schema', async () => {
-    const req = createRequest({
-      method: 'POST',
-      url: '/cats/batch',
-      body: { incorrect: 'schema' }
-    })
-    const res = createResponse()
-
-    await batch(req, res)
-
-    expect(res._getStatusCode()).toBe(400)
-    const data: BatchResponse = JSON.parse(res._getData())
-    expect(data.error).toBeDefined()
-    expect(data.success).toBeUndefined()
-    expect(data.error?.code).toEqual(400)
-  })
-
-  it('should fail if no entries were added', async () => {
-    const req = createRequest({
-      method: 'POST',
-      url: '/cats/batch',
-      body: mockBody
-    })
-    const res = createResponse()
-
-    jest.spyOn(jwt, 'getToken').mockResolvedValue(mockAdmin)
-
-    prismaMock.category.findMany.mockResolvedValue(mockValidCats)
-
-    prismaMock.entry.createMany.mockResolvedValue({ count: 0 })
-
-    await batch(req, res)
-
-    expect(res._getStatusCode()).toBe(422)
-    const data: BatchResponse = JSON.parse(res._getData())
-    expect(data.error).toBeDefined()
-    expect(data.success).toBeUndefined()
-    expect(data.error?.code).toEqual(422)
   })
 })

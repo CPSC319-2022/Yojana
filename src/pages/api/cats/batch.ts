@@ -10,7 +10,7 @@ export const bodySchema = z
     z.array(
       z.string().refine(
         (val) => {
-          const regex = /^\d{4}-\d{2}-\d{2}$/
+          const regex = /^((19|20)\d{2})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/
           return regex.test(val)
         },
         { message: 'Date column should contain only dates in the format YYYY-MM-DD' }
@@ -24,9 +24,6 @@ export const bodySchema = z
     },
     { message: 'CategoryID column should only contain integer CategoryIDs' }
   )
-  .refine((value) => value !== undefined, {
-    message: 'Input object should not be undefined'
-  })
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // Only POST allowed
@@ -50,14 +47,25 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
   }
   const token = await getToken({ req })
-  const userID = token?.id || ''
+  if (!token) {
+    const response: BatchResponse = {
+      success: undefined,
+      error: {
+        code: 401,
+        message: 'You must be logged in to access this resource',
+        uneditableCategories: []
+      }
+    }
+    return res.status(401).json(response)
+  }
+  const userID = token.id
   const categories = req.body
   const categoryIDs = Object.keys(categories).map(Number)
 
   // Check if user has permission to edit all categories in request
   const { uneditableCategories, editableCategories } = await getUneditableAndEditableCategoryIDs(
     userID! as string,
-    token?.isAdmin || false,
+    token.isAdmin || false,
     categoryIDs
   )
   if (uneditableCategories.length > 0) {
