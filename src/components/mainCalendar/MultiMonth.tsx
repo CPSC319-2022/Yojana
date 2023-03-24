@@ -11,17 +11,17 @@ export const MultiMonth = () => {
   const isQuarterlyView = useAppSelector(isQuarterlyInterval)
   const isSelectingDates = useAppSelector(getIsSelectingDates)
 
-  const quarterlyMonths = Array.from(Array(intervalToNumMonths(activeCalView)).keys()).map((monthNum) => {
-    const monthOffset = monthNum - (targetDate.month() % 3)
+  const quarterlyMonths = Array.from(Array(intervalToNumMonths(activeCalView)).keys()).map((index) => {
+    const monthOffset = index - (targetDate.month() % 3)
     const dateInMonth = dayjs(targetDate).add(monthOffset, 'month')
     return (
-      <div key={monthNum} className='flex flex-row items-center py-1'>
+      <div key={index} className='flex flex-row items-center py-1'>
         <div className='flex w-1/6 flex-row pl-2 text-lg'>
           <h3 className='font-medium'>{dateInMonth.format('MM')}</h3>
           <h3 className='px-2'>•</h3>
           <h3>{dateInMonth.format('MMMM')}</h3>
         </div>
-        <Month className='h-full w-5/6' monthOffset={monthOffset} key={monthNum}></Month>
+        <Month className='h-full w-5/6' monthOffset={monthOffset} key={monthOffset}></Month>
       </div>
     )
   })
