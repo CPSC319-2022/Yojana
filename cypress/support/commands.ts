@@ -10,40 +10,49 @@ Cypress.Commands.add('resetDb', () => {
 
 /* 
 checks:
-  - if consecutiveDays have the new icon
-  - if the next 7-consecutiveDays do not have the new icon 
+  - if consecutiveDays have the new icon (span#id or idToSearch)
+  - if the next daysToBeSkipped or 7-consecutiveDays do not have the new icon 
   - repeat
 
   - starts with startingDate (expects to start with the new icon), and optionally stops at lastDate
+  - iterates using the offset (eg. 0 then 0+offset then 0+2*offset ...)
   - checks only the first 28 days of each month (works in 2023 right now, not sure about others)
 */
 Cypress.Commands.add(
-  'checkWeeklyConsecutiveDays',
-  (startingDate: number, consecutiveDays: number, lastDate: number = 335) => {
-    const daysToSkip = 7 - consecutiveDays
+  'checkIconsInDays',
+  (
+    idToSearch: string,
+    startingDate: number,
+    consecutiveDays: number,
+    daysToBeSkipped: number,
+    offset: number,
+    lastDate: number = 335,
+    targetLastDate: number = 335
+  ) => {
+    const daysToSkip = daysToBeSkipped > 0 ? daysToBeSkipped : 7 - consecutiveDays
 
     function checkDay(day: number, skipDaysLeft: number, consDaysLeft: number) {
-      if (day > lastDate) return
+      if (day > lastDate || day === targetLastDate) return
 
       const currentSelectedDateId = `2023-${day}`
       const currentDivId = `div#${currentSelectedDateId}`
 
       cy.get(currentDivId).within(() => {
         if (consDaysLeft > 0) {
-          cy.get('span#newWeeklyCat-icon').should('exist')
+          cy.get(idToSearch).should('exist')
         } else {
-          cy.get('span#newWeeklyCat-icon').should('not.exist')
+          cy.get(idToSearch).should('not.exist')
         }
       })
 
       cy.wait(1).then(() => {
         if (consDaysLeft > 0) {
-          checkDay(day + 12, skipDaysLeft, consDaysLeft - 1)
+          checkDay(day + offset, skipDaysLeft, consDaysLeft - 1)
         } else if (skipDaysLeft > 0) {
           if (skipDaysLeft - 1 == 0) {
-            checkDay(day + 12, daysToSkip, consecutiveDays)
+            checkDay(day + offset, daysToSkip, consecutiveDays)
           } else {
-            checkDay(day + 12, skipDaysLeft - 1, consDaysLeft)
+            checkDay(day + offset, skipDaysLeft - 1, consDaysLeft)
           }
         } else {
           checkDay(startingDate + 1, daysToSkip, consecutiveDays)
@@ -60,7 +69,15 @@ declare global {
     interface Chainable {
       login(type: 'admin' | 'pleb'): Chainable<Element>
       resetDb(): Chainable<Element>
-      checkWeeklyConsecutiveDays: (startingDate: number, consecutiveDays: number, lastDate?: number) => void
+      checkIconsInDays: (
+        idToSearch: string,
+        startingDate: number,
+        consecutiveDays: number,
+        daysToBeSkipped: number,
+        offset: number,
+        lastDate?: number,
+        targetLastDate?: number
+      ) => void
     }
   }
 }
