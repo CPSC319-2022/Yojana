@@ -23,7 +23,7 @@ Cypress.Commands.add(
     const daysToSkip = 7 - consecutiveDays
 
     function checkDay(day: number, skipDaysLeft: number, consDaysLeft: number) {
-      if (day >= lastDate) return
+      if (day > lastDate) return
 
       const currentSelectedDateId = `2023-${day}`
       const currentDivId = `div#${currentSelectedDateId}`
