@@ -278,6 +278,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     return (
       <Modal.Minimized>
         <button
+          id='cancel-btn-during-selecting'
           type='button'
           className='mr-3 inline-flex animate-pulse items-center justify-center rounded-md border border-transparent bg-slate-100 py-2 px-4 text-slate-900 enabled:hover:bg-slate-200 disabled:opacity-75'
           onClick={() => {
@@ -287,7 +288,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         >
           Cancel
         </button>
-        <Button text='Save' onClick={() => setIsMinimizedCallback(false)} className='animate-pulse' />
+        <Button
+          id='save-btn-during-selecting'
+          text='Save'
+          onClick={() => setIsMinimizedCallback(false)}
+          className='animate-pulse'
+        />
       </Modal.Minimized>
     )
   }, [dispatch, setIsMinimizedCallback])
@@ -466,6 +472,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     return (
       <div className='flex justify-end'>
         <Button
+          id='select-individual-dates-btn'
           type='button'
           text={'Select Individual Dates'}
           className='mr-3 items-center'
