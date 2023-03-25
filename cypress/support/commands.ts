@@ -10,13 +10,13 @@ Cypress.Commands.add('resetDb', () => {
 
 /* 
 checks:
-  - if consecutiveDays have the new icon (span#id or idToSearch)
-  - if the next daysToBeSkipped or 7-consecutiveDays do not have the new icon 
+  - assert that consecutiveDays have the new icon (span#id or idToSearch)
+  - assert that the next daysToBeSkipped or 7-consecutiveDays do not have the new icon 
   - repeat
 
   - starts with startingDate (expects to start with the new icon), and optionally stops at lastDate
   - iterates using the offset (eg. 0 then 0+offset then 0+2*offset ...)
-  - checks only the first 28 days of each month (works in 2023 right now, not sure about others)
+  - checks only till the first 28 days of each month (works in 2023 right now, not sure about others)
 */
 Cypress.Commands.add(
   'checkIconsInDays',
