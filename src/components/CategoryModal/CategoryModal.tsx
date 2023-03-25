@@ -401,11 +401,21 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       <div className='grid grid-cols-2 gap-4' id='recurring-dates-tab-start-end'>
         <div>
           <label className='mb-2 block text-sm'>Start Date</label>
-          <input className='cursor-pointer text-sm' type='date' {...register('repeating.startDate')} />
+          <input
+            id='recurring-dates-tab-start-input'
+            className='cursor-pointer text-sm'
+            type='date'
+            {...register('repeating.startDate')}
+          />
         </div>
         <div>
           <label className='mb-2 block text-sm'>End Date</label>
-          <input className='cursor-pointer text-sm' type='date' {...register('repeating.endDate')} />
+          <input
+            id='recurring-dates-tab-end-input'
+            className='cursor-pointer text-sm'
+            type='date'
+            {...register('repeating.endDate')}
+          />
         </div>
       </div>
     )
