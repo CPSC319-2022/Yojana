@@ -1,6 +1,6 @@
+import { Dayjs } from 'dayjs'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useController } from 'react-hook-form'
-import { Dayjs } from 'dayjs'
 
 interface DayOfMonthPickerProps {
   control: any
@@ -80,23 +80,32 @@ export const DayOfMonthPicker = ({
 
   const availableMenuItems = useMemo(() => {
     return {
-      NONE: { key: MonthRecurrence.NONE, label: 'None', onClick: () => handleRecurrenceChange(MonthRecurrence.NONE) },
+      NONE: {
+        id: 'recurring-monthly-no-day',
+        key: MonthRecurrence.NONE,
+        label: 'None',
+        onClick: () => handleRecurrenceChange(MonthRecurrence.NONE)
+      },
       ON_DATE_Y: {
+        id: 'recurring-monthly-some-day',
         key: MonthRecurrence.ON_DATE_Y,
         label: `Monthly on day ${dateOfMonth}`,
         onClick: () => handleRecurrenceChange(MonthRecurrence.ON_DATE_Y)
       },
       ON_LAST_DAY: {
+        id: 'recurring-monthly-last-day',
         key: MonthRecurrence.ON_LAST_DAY,
         label: `Monthly on the last day`,
         onClick: () => handleRecurrenceChange(MonthRecurrence.ON_LAST_DAY)
       },
       ON_YTH_XDAY: {
+        id: 'recurring-monthly-someX-day',
         key: MonthRecurrence.ON_YTH_XDAY,
         label: `Monthly on the ${ordinals[weekNum - 1]} ${startDate.format('dddd')}`,
         onClick: () => handleRecurrenceChange(MonthRecurrence.ON_YTH_XDAY)
       },
       ON_LAST_XDAY: {
+        id: 'recurring-monthly-lastX-day',
         key: MonthRecurrence.ON_LAST_XDAY,
         label: `Monthly on the last ${startDate.format('dddd')}`,
         onClick: () => handleRecurrenceChange(MonthRecurrence.ON_LAST_XDAY)
@@ -122,6 +131,7 @@ export const DayOfMonthPicker = ({
         const isActive = recurrenceType === item.key
         return (
           <button
+            id={item.id}
             key={item.key}
             type='button'
             onClick={item.onClick}

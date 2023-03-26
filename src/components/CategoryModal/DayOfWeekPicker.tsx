@@ -53,6 +53,7 @@ export const DayOfWeekPicker = ({
     <div className='flex flex-wrap justify-center gap-4 pt-3'>
       {daysOfWeek.map((day) => (
         <button
+          id={`${day}-in-weekly`}
           key={day}
           className={`h-8 w-8 rounded-full text-sm focus:outline-none ${
             selectedDays.includes(day)

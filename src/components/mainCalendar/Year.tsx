@@ -1,13 +1,13 @@
 import { Icon, IconName } from '@/components/common'
+import { Tooltip } from '@/components/common/Tooltip'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getYear } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates, getYearSelectedDates, toggleIndividualDate } from '@/redux/reducers/DateSelectorReducer'
 import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
+import { getDayStyling } from '@/utils/day'
 import dayjs, { Dayjs } from 'dayjs'
 import { useCallback, useMemo } from 'react'
-import { getDayStyling } from '@/utils/day'
-import { Tooltip } from '@/components/common/Tooltip'
 import { DescriptionPopover } from '../DescriptionPopover'
 
 export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) => {
@@ -33,7 +33,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
           const category = categoryMap[calEvent.categoryId]
           if (category.show) {
             return (
-              <span className={'px-0.5 font-bold'} key={`${calEvent.id}-${key}`}>
+              <span className={'px-0.5 font-bold'} key={`${calEvent.id}-${key}`} id={`${category.name}-icon`}>
                 <style jsx>{`
                   * {
                     color: ${category.color};
@@ -67,7 +67,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
     },
     [dispatch]
   )
-
+  let currentIndexForId = 0
   const renderDay = useCallback(
     (monthNum: number, dateOffset: number) => {
       const monthStartDate = dayjs(yearStartDate).add(monthNum, 'month')
@@ -82,6 +82,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       const dayContent = isSelectingDates ? (
         <Tooltip text={day.format('MMM D')} boundingClassName='inline-block w-full' popoverClassName='min-w-max'>
           <span
+            id={`${yearNum}-${currentIndexForId}-during-selecting`}
             className={`flex justify-center align-middle font-semibold ${
               selected?.isSelected ? 'text-emerald-600' : 'text-slate-300'
             }`}
@@ -95,6 +96,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
 
       return (
         <div
+          id={`${yearNum}-${currentIndexForId++}`}
           className={`tile px-0.5 
             ${getDayStyling(day.day(), isSelectingDates, selected)} 
             ${!isSelectingDates && isToday && !getForPrinting ? 'ring-2 ring-inset ring-emerald-300' : ''}
