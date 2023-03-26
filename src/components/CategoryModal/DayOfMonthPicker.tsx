@@ -9,8 +9,8 @@ interface DayOfMonthPickerProps {
   name: string
   rules?: any
   startDate: Dayjs
-  selectedRecurrenceType: MonthRecurrenceType
-  setSelectedRecurrenceType: React.Dispatch<React.SetStateAction<MonthRecurrenceType>>
+  selectedRecurrenceType: MonthRecurrenceType | null
+  setSelectedRecurrenceType: React.Dispatch<React.SetStateAction<MonthRecurrenceType | null>>
   updateState?: (cron: string) => void
 }
 
@@ -57,7 +57,7 @@ export const DayOfMonthPicker = ({
   const [dateOfMonth, setDateOfMonth] = useState(startDate.date())
   const [weekNum, setWeekNum] = useState(Math.ceil(startDate.date() / 7))
   const [dayOfWeek, setDayOfWeek] = useState(startDate.day())
-  const [recurrenceType, setRecurrenceType] = useState(selectedRecurrenceType)
+  const [recurrenceType, setRecurrenceType] = useState<MonthRecurrenceType | null>(selectedRecurrenceType)
   const isSelectingDates = useAppSelector(getIsSelectingDates)
 
   useEffect(() => {
@@ -123,7 +123,8 @@ export const DayOfMonthPicker = ({
     if (weekNum <= 4) includeItems.push(MonthRecurrence.ON_YTH_XDAY)
     if (dateOfMonth > startDate.daysInMonth() - 7) includeItems.push(MonthRecurrence.ON_LAST_XDAY)
 
-    if (!includeItems.includes(MonthRecurrence[recurrenceType])) setRecurrenceType(MonthRecurrence.NONE)
+    if (recurrenceType !== null && !includeItems.includes(MonthRecurrence[recurrenceType]))
+      setRecurrenceType(MonthRecurrence.NONE)
 
     return includeItems.map((item) => availableMenuItems[item])
   }, [availableMenuItems, dateOfMonth, recurrenceType, startDate, weekNum])
@@ -134,7 +135,7 @@ export const DayOfMonthPicker = ({
       ${isSelectingDates ? 'grid-cols-1 gap-1' : 'grid-cols-2  gap-3'}`}
     >
       {getMenuItems.map((item) => {
-        const isActive = recurrenceType === item.key
+        const isActive = recurrenceType === item.key || (recurrenceType === null && item.key === MonthRecurrence.NONE)
         return (
           <button
             id={item.id}

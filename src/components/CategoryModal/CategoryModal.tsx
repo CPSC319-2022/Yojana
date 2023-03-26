@@ -62,26 +62,25 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const [dirtyDates, setDirtyDates] = useState(false)
   const [currentCron, setCurrentCron] = useState<string>('')
   const [selectedDaysOfTheWeek, setSelectedDaysOfTheWeek] = useState<DayOfWeek>([])
-  const [selectedMonthRecurrenceCron, setSelectedMonthRecurrenceCron] = useState<MonthRecurrenceType>(
-    MonthRecurrence.NONE
-  )
+  const [selectedMonthRecurrenceCron, setSelectedMonthRecurrenceCron] = useState<MonthRecurrenceType | null>(null)
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
 
-  const getInitialMonthlyCronState = useCallback((cron: string | null | undefined): MonthRecurrenceType => {
-    if (!cron) return MonthRecurrence.NONE
+  const getInitialMonthlyCronState = useCallback((cron: string | null | undefined): MonthRecurrenceType | null => {
+    if (cron === null || cron === undefined) return null
+    if (cron === '') return MonthRecurrence.NONE
     if (cron === monthRecurrenceCrons[MonthRecurrence.ON_LAST_DAY]) return MonthRecurrence.ON_LAST_DAY
     if (cron.slice(-1) === 'L') return MonthRecurrence.ON_LAST_XDAY
     if (cron.slice(-2, -1) === '#') return MonthRecurrence.ON_YTH_XDAY
     if (cron.startsWith('0 0 ') && cron.endsWith(' * *')) return MonthRecurrence.ON_DATE_Y
-    return MonthRecurrence.NONE
+    return null
   }, [])
 
   // these two have to go above the initial load useEffect to avoid overwriting the stored values
   useEffect(() => {
-    if (selectedDaysOfTheWeek.length !== 0) setSelectedMonthRecurrenceCron(MonthRecurrence.NONE)
+    if (selectedDaysOfTheWeek.length !== 0) setSelectedMonthRecurrenceCron(null)
   }, [selectedDaysOfTheWeek])
   useEffect(() => {
-    if (selectedMonthRecurrenceCron !== MonthRecurrence.NONE) setSelectedDaysOfTheWeek([])
+    if (selectedMonthRecurrenceCron !== null) setSelectedDaysOfTheWeek([])
   }, [selectedMonthRecurrenceCron])
 
   // intended strictly for initial load
@@ -185,7 +184,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       isMaster: false
     }))
     setSelectedDaysOfTheWeek([])
-    setSelectedMonthRecurrenceCron(MonthRecurrence.NONE)
+    setSelectedMonthRecurrenceCron(null)
     dispatch(resetSelectedDates())
   }, [dispatch, reset])
 
