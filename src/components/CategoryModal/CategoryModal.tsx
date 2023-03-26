@@ -1,5 +1,5 @@
 import CategoryTypePicker from '@/components/CategoryModal/CategoryTypePicker'
-import { Button, Icon, Modal, Tabs } from '@/components/common'
+import { Button, Icon, IconName, Modal, Tabs } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setAlert } from '@/redux/reducers/AlertReducer'
 import { addCategory, getCategory, updateCategory } from '@/redux/reducers/AppDataReducer'
@@ -161,6 +161,10 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     reValidateMode: 'onBlur',
     defaultValues: defaultValues
   })
+
+  const watchIcon = watch('icon') as IconName
+
+  const watchName = watch('name')
 
   const watchColor = watch('color')
 
@@ -504,6 +508,11 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const saveCancelWhenMinimized = useMemo(() => {
     return (
       <Modal.Minimized className={'w-[17vw] rounded-md border-2 border-slate-200 bg-white p-2'}>
+        <span className='flex w-full items-center truncate px-2 pb-1'>
+          <p className='text-slate-700'>Editing:</p>
+          <Icon iconName={watchIcon} color={watchColor} className='mx-1 min-w-fit' />
+          <p className='font-semibold'>{watchName}</p>
+        </span>
         {recurringPanel}
         <span className='flex w-full'>
           <button
@@ -526,7 +535,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         </span>
       </Modal.Minimized>
     )
-  }, [dispatch, recurringPanel, setIsMinimizedCallback])
+  }, [dispatch, recurringPanel, setIsMinimizedCallback, watchColor, watchIcon, watchName])
 
   return (
     <>
