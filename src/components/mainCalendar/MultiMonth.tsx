@@ -23,7 +23,7 @@ export const MultiMonth = () => {
             <h3 className='px-2'>•</h3>
             <h3>{dateInMonth.format('MMMM')}</h3>
           </div>
-          <div className='text-sm text-gray-400'>{hoursInMonth} hrs</div>
+          <div className='pt-1 text-sm text-gray-400'>{hoursInMonth} hrs</div>
         </div>
         <Month className='h-full w-5/6' monthOffset={monthOffset} key={monthOffset}></Month>
       </div>
