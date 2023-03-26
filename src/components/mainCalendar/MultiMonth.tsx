@@ -35,10 +35,8 @@ export const MultiMonth = () => {
     const hoursInMonth = getHoursInMonth(dateInMonth)
     return (
       <div key={monthNum}>
-        <h3 className='flex-grow pl-1'>
-          {dateInMonth.format('MMMM')}
-          <h4 className='inline-flex pl-1 text-sm text-gray-400'>{hoursInMonth}</h4>
-        </h3>
+        <h3 className='inline-flex flex-grow pl-1'>{dateInMonth.format('MMMM')}</h3>
+        <h4 className='inline-flex pl-1 text-sm text-gray-400'>{hoursInMonth}</h4>
         <Month className='h-[90%] flex-grow' monthOffset={monthNum} key={monthNum}></Month>
       </div>
     )
