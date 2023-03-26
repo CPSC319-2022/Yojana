@@ -82,7 +82,7 @@ export const IconPicker = ({ control, name, color, rules }: IconPickerProps) => 
   }, [value, icons])
 
   return (
-    <div className='flex flex-wrap justify-center shadow-md'>
+    <div className='flex flex-wrap justify-center shadow-md' id='icon-picker'>
       {icons.map((icon) => (
         <span
           key={icon}
