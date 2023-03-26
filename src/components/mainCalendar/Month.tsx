@@ -22,6 +22,9 @@ import dayjs, { Dayjs } from 'dayjs'
 import { Popover, Transition } from '@headlessui/react'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 import { useIsomorphicLayoutEffect } from '@/utils/useIsomorphicLayoutEffect'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
+
+dayjs.extend(weekOfYear)
 
 interface MonthProps {
   monthOffset: number
@@ -357,7 +360,7 @@ export const Month = (props: MonthProps) => {
           >
             <style jsx>{`
               .use-grid {
-                grid-template-columns: repeat(${useBanners ? 1 : colsPerDay}, minmax(0, 1fr));
+                grid-template-columns: repeat(${useBanners ? 1 : colsPerDay}, minmax(0, 1fr)) calc(0.2fr);
               }
             `}</style>
             <div className={`${isQuarterlyView ? 'inline-flex' : 'use-grid grid'}`}>
@@ -384,16 +387,19 @@ export const Month = (props: MonthProps) => {
 
   // monthOffset is the offset of the Sunday from the beginning of the month.
   const renderWeek = useCallback(
-    (firstDateOfWeek: number) => {
+    (firstDateOfWeek: number, weekNumber: number) => {
       const generatedDays = Array.from(Array(7).keys()).map((dayNum) => {
         return renderDay(firstDateOfWeek, dayNum)
       })
       return (
         <div
-          className={(numWeeks === 6 ? 'h-1/6' : 'h-1/5') + ' ' + 'grid h-1/5 grid-cols-7 gap-px pt-0.5'}
+          className={(numWeeks === 6 ? 'h-1/6' : 'h-1/5') + ' ' + 'grid h-1/5 grid-cols-8 gap-px pt-0.5'}
           key={firstDateOfWeek}
         >
           {generatedDays}
+          <div className='col-span-0.2 flex items-center  justify-center bg-white' style={{ fontSize: '12px' }}>
+            {weekNumber}
+          </div>
         </div>
       )
     },
@@ -404,14 +410,16 @@ export const Month = (props: MonthProps) => {
     const weeks = []
     const target = numWeeks <= 4 ? 30 : daysInMonth
     for (let i = 0 - monthStartDate.day(); i < target; i += 7) {
-      weeks.push(renderWeek(i))
+      const date = dayjs(monthStartDate).add(i, 'day')
+      const weekOfYear = date.week()
+      weeks.push(renderWeek(i, weekOfYear))
     }
     return <div className={`${isMonthView ? 'h-[95%]' : 'h-full'}`}>{weeks}</div>
   }, [daysInMonth, monthStartDate, isMonthView, numWeeks, renderWeek])
 
   const generateDayNames = useMemo(() => {
     return (
-      <div className='grid grid-cols-7'>
+      <div className='grid grid-cols-8'>
         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((letter, index) => (
           <span className='tile text-m text-center text-slate-500' key={index}>
             {letter}
