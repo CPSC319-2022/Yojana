@@ -117,8 +117,8 @@ export const DayOfMonthPicker = ({
   }, [dateOfMonth, handleRecurrenceChange, startDate, weekNum])
 
   const getMenuItems = useMemo(() => {
-    const includeItems = [MonthRecurrence.NONE, MonthRecurrence.ON_DATE_Y]
-
+    const includeItems = [MonthRecurrence.NONE]
+    if (!isNaN(dateOfMonth)) includeItems.push(MonthRecurrence.ON_DATE_Y)
     if (dateOfMonth === startDate.daysInMonth()) includeItems.push(MonthRecurrence.ON_LAST_DAY)
     if (weekNum <= 4) includeItems.push(MonthRecurrence.ON_YTH_XDAY)
     if (dateOfMonth > startDate.daysInMonth() - 7) includeItems.push(MonthRecurrence.ON_LAST_XDAY)
