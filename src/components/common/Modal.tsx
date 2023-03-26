@@ -161,10 +161,10 @@ export const Modal = ({
   )
 }
 
-const Minimized = ({ children }: { children: ReactNode }) => {
+const Minimized = ({ children, className }: { children: ReactNode; className?: string }) => {
   // headlessui 1.17.13 sets that main div (__next) to inert (unresponsive) when Modal is open (over the main div)
   document.getElementById('__next')?.removeAttribute('inert')
-  return <>{children}</>
+  return <div className={className}>{children}</div>
 }
 
 Modal.Minimized = Minimized

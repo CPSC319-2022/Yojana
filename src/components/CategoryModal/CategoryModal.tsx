@@ -274,30 +274,6 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     [dispatch]
   )
 
-  const saveCancelWhenMinimized = useMemo(() => {
-    return (
-      <Modal.Minimized>
-        <button
-          id='cancel-btn-during-selecting'
-          type='button'
-          className='mr-3 inline-flex animate-pulse items-center justify-center rounded-md border border-transparent bg-slate-100 py-2 px-4 text-slate-900 enabled:hover:bg-slate-200 disabled:opacity-75'
-          onClick={() => {
-            setIsMinimizedCallback(false)
-            dispatch(cancelDateSelection())
-          }}
-        >
-          Cancel
-        </button>
-        <Button
-          id='save-btn-during-selecting'
-          text='Save'
-          onClick={() => setIsMinimizedCallback(false)}
-          className='animate-pulse'
-        />
-      </Modal.Minimized>
-    )
-  }, [dispatch, setIsMinimizedCallback])
-
   const nameField = useMemo(() => {
     return (
       <div className='mb-4'>
@@ -427,6 +403,23 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     )
   }, [register])
 
+  const recurringPanel = useMemo(() => {
+    return (
+      <>
+        <div className='pb-5'>
+          <Tabs currentIndex={currentTabIndex}>
+            <Tabs.Title id='recurring-dates-tab-weekly'>Weekly</Tabs.Title>
+            {weeklyRecurringField}
+            <Tabs.Title id='recurring-dates-tab-monthly'>Monthly</Tabs.Title>
+            {monthlyRecurringField}
+          </Tabs>
+        </div>
+        {startAndEndDatesRecurringField}
+        {errors.repeating && <p className='mt-2 text-sm text-red-500'>{errors.repeating.message}</p>}
+      </>
+    )
+  }, [currentTabIndex, errors.repeating, monthlyRecurringField, startAndEndDatesRecurringField, weeklyRecurringField])
+
   const recurringDatesFields = useMemo(() => {
     return (
       <div className='mb-4'>
@@ -449,16 +442,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                 leaveTo='transform scale-95 opacity-0'
               >
                 <Disclosure.Panel id='recurring-dates-panel' className='pt-4 pb-2'>
-                  <div className='pb-5'>
-                    <Tabs currentIndex={currentTabIndex}>
-                      <Tabs.Title id='recurring-dates-tab-weekly'>Weekly</Tabs.Title>
-                      {weeklyRecurringField}
-                      <Tabs.Title id='recurring-dates-tab-monthly'>Monthly</Tabs.Title>
-                      {monthlyRecurringField}
-                    </Tabs>
-                  </div>
-                  {startAndEndDatesRecurringField}
-                  {errors.repeating && <p className='mt-2 text-sm text-red-500'>{errors.repeating.message}</p>}
+                  {recurringPanel}
                 </Disclosure.Panel>
               </Transition>
             </>
@@ -466,7 +450,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         </Disclosure>
       </div>
     )
-  }, [currentTabIndex, errors.repeating, monthlyRecurringField, startAndEndDatesRecurringField, weeklyRecurringField])
+  }, [recurringPanel])
 
   const buttonsAtBottom = useMemo(() => {
     return (
@@ -513,6 +497,30 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       </div>
     )
   }, [dirtyDates, dispatch, getValues, handleSubmit, isDirty, isSubmitting, method, onSubmit])
+
+  const saveCancelWhenMinimized = useMemo(() => {
+    return (
+      <Modal.Minimized>
+        <button
+          id='cancel-btn-during-selecting'
+          type='button'
+          className='mr-3 inline-flex animate-pulse items-center justify-center rounded-md border border-transparent bg-slate-100 py-2 px-4 text-slate-900 enabled:hover:bg-slate-200 disabled:opacity-75'
+          onClick={() => {
+            setIsMinimizedCallback(false)
+            dispatch(cancelDateSelection())
+          }}
+        >
+          Cancel
+        </button>
+        <Button
+          id='save-btn-during-selecting'
+          text='Save'
+          onClick={() => setIsMinimizedCallback(false)}
+          className='animate-pulse'
+        />
+      </Modal.Minimized>
+    )
+  }, [dispatch, setIsMinimizedCallback])
 
   return (
     <>
