@@ -360,7 +360,7 @@ export const Month = (props: MonthProps) => {
           >
             <style jsx>{`
               .use-grid {
-                grid-template-columns: repeat(${useBanners ? 1 : colsPerDay}, minmax(0, 1fr)) calc(0.2fr);
+                grid-template-columns: repeat(${useBanners ? 1 : colsPerDay}, minmax(0, 1fr));
               }
             `}</style>
             <div className={`${isQuarterlyView ? 'inline-flex' : 'use-grid grid'}`}>
@@ -393,11 +393,15 @@ export const Month = (props: MonthProps) => {
       })
       return (
         <div
-          className={(numWeeks === 6 ? 'h-1/6' : 'h-1/5') + ' ' + 'grid h-1/5 grid-cols-8 gap-px pt-0.5'}
+          className={
+            (numWeeks === 6 ? 'h-1/6' : 'h-1/5') +
+            ' ' +
+            'grid h-1/5 grid-cols-[13.43%,13.43%,13.43%,13.43%,13.43%,13.43%,13.43%,6%] gap-px pt-0.5'
+          }
           key={firstDateOfWeek}
         >
           {generatedDays}
-          <div className='col-span-0.2 flex items-center  justify-center bg-white' style={{ fontSize: '12px' }}>
+          <div className='col-span-0.2 flex items-center justify-center bg-white ' style={{ fontSize: '12px' }}>
             {weekNumber}
           </div>
         </div>
@@ -419,7 +423,7 @@ export const Month = (props: MonthProps) => {
 
   const generateDayNames = useMemo(() => {
     return (
-      <div className='grid grid-cols-8'>
+      <div className='grid grid-cols-[13.5%,13.5%,13.5%,13.5%,13.5%,13.5%,13.5%,5.5%]'>
         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((letter, index) => (
           <span className='tile text-m text-center text-slate-500' key={index}>
             {letter}
