@@ -1,6 +1,6 @@
 import { useAppSelector } from '@/redux/hooks'
 import { getDate, getInterval, isQuarterlyInterval } from '@/redux/reducers/MainCalendarReducer'
-import { intervalToNumMonths } from '@/utils/month'
+import { intervalToNumMonths, useGetHoursInMonth } from '@/utils/month'
 import { Month } from '@/components/mainCalendar/Month'
 import dayjs from 'dayjs'
 import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
@@ -10,18 +10,17 @@ export const MultiMonth = () => {
   const activeCalView = useAppSelector(getInterval)
   const isQuarterlyView = useAppSelector(isQuarterlyInterval)
   const isSelectingDates = useAppSelector(getIsSelectingDates)
-
+  const getHoursInMonth = useGetHoursInMonth()
   const quarterlyMonths = Array.from(Array(intervalToNumMonths(activeCalView)).keys()).map((index) => {
     const monthOffset = index - (targetDate.month() % 3)
     const dateInMonth = dayjs(targetDate).add(monthOffset, 'month')
+    const hoursInMonth = getHoursInMonth(dateInMonth)
     return (
       <div key={index} className='flex flex-row items-center py-1'>
         <div className='flex w-1/6 flex-row pl-2 text-lg'>
           <div>
             <h3 className='font-medium'>{dateInMonth.format('MM')}</h3>
-            <div className='pr-1 text-sm text-gray-400'>
-              {['January', 'May', 'August', 'October'].includes(dateInMonth.format('MMMM')) ? '200' : '160'}
-            </div>
+            <div className='text-sm text-gray-400'>{hoursInMonth}</div>
           </div>
           <h3 className='px-2'>•</h3>
           <h3>{dateInMonth.format('MMMM')}</h3>
@@ -32,15 +31,13 @@ export const MultiMonth = () => {
   })
 
   const fourMonthMonths = Array.from(Array(intervalToNumMonths(activeCalView)).keys()).map((monthNum) => {
+    const dateInMonth = dayjs(targetDate).add(monthNum, 'month')
+    const hoursInMonth = getHoursInMonth(dateInMonth)
     return (
       <div key={monthNum}>
         <h3 className='flex-grow pl-1'>
-          {dayjs(targetDate).add(monthNum, 'month').format('MMMM')}
-          <h4 className='inline-flex pl-1 text-sm text-gray-400'>
-            {['January', 'May', 'August', 'October'].includes(dayjs(targetDate).add(monthNum, 'month').format('MMMM'))
-              ? '200'
-              : '160'}
-          </h4>
+          {dateInMonth.format('MMMM')}
+          <h4 className='inline-flex pl-1 text-sm text-gray-400'>{hoursInMonth}</h4>
         </h3>
         <Month className='h-[90%] flex-grow' monthOffset={monthNum} key={monthNum}></Month>
       </div>

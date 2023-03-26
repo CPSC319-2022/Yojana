@@ -1,4 +1,6 @@
 import { CalendarInterval } from '@/constants/enums'
+import { useCallback } from 'react'
+import { Dayjs } from 'dayjs'
 
 export const intervalToNumMonths = (interval: CalendarInterval) => {
   switch (interval) {
@@ -11,4 +13,10 @@ export const intervalToNumMonths = (interval: CalendarInterval) => {
     case CalendarInterval.MONTH:
       return 1
   }
+}
+
+export const useGetHoursInMonth = () => {
+  return useCallback((dateInMonth: Dayjs) => {
+    return ['January', 'May', 'August', 'October'].includes(dateInMonth.format('MMMM')) ? '200' : '160'
+  }, [])
 }

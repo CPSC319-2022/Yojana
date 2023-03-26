@@ -8,6 +8,7 @@ import { AccountDropdown } from '@/components/navBar/AccountDropdown'
 import { CalendarInterval } from '@/constants/enums'
 import { Session } from 'next-auth'
 import { getPreferences, setIsSidebarOpen } from '@/redux/reducers/PreferencesReducer'
+import { useGetHoursInMonth } from '@/utils/month'
 
 interface NavBarProps {
   session: Session
@@ -20,6 +21,8 @@ export const NavBar = ({ session }: NavBarProps) => {
   const sidebarOpen = useAppSelector(getPreferences).sidebarOpen.value
   const router = useRouter()
   const [mounted, setMounted] = useState(false)
+  const getHoursInMonth = useGetHoursInMonth()
+  const hoursInMonth = getHoursInMonth(targetDate)
 
   useEffect(() => {
     // mounted ensures that the router push does not happen on the first render
@@ -73,6 +76,12 @@ export const NavBar = ({ session }: NavBarProps) => {
         <Button iconName='CaretLeftFill' onClick={() => dispatch(decrementDate())} className='mr-3 py-3' />
         <Button iconName='CaretRightFill' onClick={() => dispatch(incrementDate())} className='mr-3 py-3' />
         <h4 className='flex-none text-center text-lg'>{getIntervalDescription}</h4>
+        {interval === CalendarInterval.MONTH && (
+          <>
+            <h3 className='px-2'>•</h3>
+            <h4 className='flex-none text-center text-lg'>{hoursInMonth} Hours</h4>
+          </>
+        )}
       </div>
       <CalViewDropdown />
       <AccountDropdown session={session} />
