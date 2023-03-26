@@ -17,7 +17,12 @@ export const MultiMonth = () => {
     return (
       <div key={index} className='flex flex-row items-center py-1'>
         <div className='flex w-1/6 flex-row pl-2 text-lg'>
-          <h3 className='font-medium'>{dateInMonth.format('MM')}</h3>
+          <div>
+            <h3 className='font-medium'>{dateInMonth.format('MM')}</h3>
+            <div className='pr-1 text-sm text-gray-400'>
+              {['January', 'May', 'August', 'October'].includes(dateInMonth.format('MMMM')) ? '200' : '160'}
+            </div>
+          </div>
           <h3 className='px-2'>•</h3>
           <h3>{dateInMonth.format('MMMM')}</h3>
         </div>
