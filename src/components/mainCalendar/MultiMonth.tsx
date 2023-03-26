@@ -17,13 +17,13 @@ export const MultiMonth = () => {
     const hoursInMonth = getHoursInMonth(dateInMonth)
     return (
       <div key={index} className='flex flex-row items-center py-1'>
-        <div className='flex w-1/6 flex-row pl-2 text-lg'>
-          <div>
+        <div className='w-1/6 pl-2 text-lg'>
+          <div className='flex flex-row'>
             <h3 className='font-medium'>{dateInMonth.format('MM')}</h3>
-            <div className='text-sm text-gray-400'>{hoursInMonth}</div>
+            <h3 className='px-2'>•</h3>
+            <h3>{dateInMonth.format('MMMM')}</h3>
           </div>
-          <h3 className='px-2'>•</h3>
-          <h3>{dateInMonth.format('MMMM')}</h3>
+          <div className='text-sm text-gray-400'>{hoursInMonth} hrs</div>
         </div>
         <Month className='h-full w-5/6' monthOffset={monthOffset} key={monthOffset}></Month>
       </div>
