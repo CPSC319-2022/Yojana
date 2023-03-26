@@ -401,7 +401,10 @@ export const Month = (props: MonthProps) => {
           key={firstDateOfWeek}
         >
           {generatedDays}
-          <div className='col-span-0.2 flex items-center justify-center bg-white ' style={{ fontSize: '12px' }}>
+          <div
+            className='col-span-0.2 tile text-m flex items-center justify-center pr-1 text-slate-500 '
+            style={{ fontSize: '12px' }}
+          >
             {weekNumber}
           </div>
         </div>
