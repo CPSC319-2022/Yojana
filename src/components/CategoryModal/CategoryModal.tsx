@@ -380,9 +380,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
 
   const startAndEndDatesRecurringField = useMemo(() => {
     return (
-      <div className='grid grid-cols-2 gap-4' id='recurring-dates-tab-start-end'>
-        <div>
-          <label className='mb-2 block text-sm'>Start Date</label>
+      <div
+        className={`grid ${isMinimized ? 'grid-cols-1 pb-4' : 'grid-cols-2'} gap-4`}
+        id='recurring-dates-tab-start-end'
+      >
+        <div className={isMinimized ? 'flex justify-between' : ''}>
+          <label className={`${isMinimized ? 'mr-2 truncate pt-[1px]' : 'mb-2'} block text-sm`}>Start Date</label>
           <input
             id='recurring-dates-tab-start-input'
             className='cursor-pointer text-sm'
@@ -390,8 +393,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             {...register('repeating.startDate')}
           />
         </div>
-        <div>
-          <label className='mb-2 block text-sm'>End Date</label>
+        <div className={isMinimized ? 'flex justify-between' : ''}>
+          <label className={`${isMinimized ? 'mr-2 truncate pt-[1px]' : 'mb-2'} block text-sm`}>End Date</label>
           <input
             id='recurring-dates-tab-end-input'
             className='cursor-pointer text-sm'
@@ -401,7 +404,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         </div>
       </div>
     )
-  }, [register])
+  }, [isMinimized, register])
 
   const recurringPanel = useMemo(() => {
     return (
@@ -500,27 +503,30 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
 
   const saveCancelWhenMinimized = useMemo(() => {
     return (
-      <Modal.Minimized>
-        <button
-          id='cancel-btn-during-selecting'
-          type='button'
-          className='mr-3 inline-flex animate-pulse items-center justify-center rounded-md border border-transparent bg-slate-100 py-2 px-4 text-slate-900 enabled:hover:bg-slate-200 disabled:opacity-75'
-          onClick={() => {
-            setIsMinimizedCallback(false)
-            dispatch(cancelDateSelection())
-          }}
-        >
-          Cancel
-        </button>
-        <Button
-          id='save-btn-during-selecting'
-          text='Save'
-          onClick={() => setIsMinimizedCallback(false)}
-          className='animate-pulse'
-        />
+      <Modal.Minimized className={'w-[17vw] rounded-md border-2 border-slate-200 bg-white p-2'}>
+        {recurringPanel}
+        <span className='flex w-full'>
+          <button
+            id='cancel-btn-during-selecting'
+            type='button'
+            className='mr-3 inline-flex w-full animate-pulse items-center justify-center rounded-md border border-transparent bg-slate-100 py-2 px-4 text-slate-900 enabled:hover:bg-slate-200 disabled:opacity-75'
+            onClick={() => {
+              setIsMinimizedCallback(false)
+              dispatch(cancelDateSelection())
+            }}
+          >
+            Cancel
+          </button>
+          <Button
+            id='save-btn-during-selecting'
+            text='Save'
+            onClick={() => setIsMinimizedCallback(false)}
+            className='w-full animate-pulse'
+          />
+        </span>
       </Modal.Minimized>
     )
-  }, [dispatch, setIsMinimizedCallback])
+  }, [dispatch, recurringPanel, setIsMinimizedCallback])
 
   return (
     <>
