@@ -79,7 +79,7 @@ export const NavBar = ({ session }: NavBarProps) => {
         {interval === CalendarInterval.MONTH && (
           <>
             <h3 className='px-2'>•</h3>
-            <h4 className='flex-none text-center text-lg'>{hoursInMonth} Hours</h4>
+            <h4 className='flex-none text-center text-lg'>{hoursInMonth} hrs</h4>
           </>
         )}
       </div>
