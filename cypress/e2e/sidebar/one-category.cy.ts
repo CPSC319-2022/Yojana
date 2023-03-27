@@ -1,5 +1,3 @@
-import { iconPickerIcons } from '@/components/CategoryModal/IconPicker'
-
 describe('View all category', () => {
   const checkPersonalCategory = () => {
     cy.get('div[id="category-item-20"]').should('not.exist')
