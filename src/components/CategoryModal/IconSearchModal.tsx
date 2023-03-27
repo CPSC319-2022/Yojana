@@ -119,6 +119,7 @@ export const IconSearchModal = ({ buttonClassName, control, name, color, rules }
       <div className='h-[80vh] p-4'>
         <div className='flex'>
           <input
+            id='search-bar'
             placeholder='Start typing to search...'
             className='focus:shadow-outline static w-full appearance-none rounded-md border py-2 px-3 leading-tight text-slate-700 shadow invalid:border-red-500 invalid:bg-red-50 invalid:text-red-500 invalid:placeholder-red-500 focus:outline-none'
             defaultValue={inputValue}
@@ -151,7 +152,9 @@ export const IconSearchModal = ({ buttonClassName, control, name, color, rules }
             </div>
             <div className='flex grow'>
               {inputValue ? (
-                <div className='grow overflow-y-scroll p-1'>{searchIcons}</div>
+                <div className='grow overflow-y-scroll p-1' id='icon-result'>
+                  {searchIcons}
+                </div>
               ) : (
                 <Tab.Panels className='grow overflow-y-scroll p-1'>
                   {Object.entries(icons).map(([category, icon]) => (

@@ -1,6 +1,7 @@
 import { useController } from 'react-hook-form'
 import React, { useEffect } from 'react'
 import { Icon, IconName } from '@/components/common'
+import { iconPickerIcons } from '@/constants/icons'
 
 interface IconPickerProps {
   control: any
@@ -8,60 +9,6 @@ interface IconPickerProps {
   color: string
   rules?: any
 }
-
-// List of icons to display in the icon picker
-export const iconPickerIcons: IconName[] = [
-  'ChatFill',
-  'PencilFill',
-  'Truck',
-  'TelephoneFill',
-  'ChevronLeft',
-  'ChevronRight',
-  'ArrowUp',
-  'ArrowDown',
-  'ArrowClockwise',
-  'EnvelopeFill',
-  'FolderFill',
-  'VolumeUpFill',
-  'CurrencyEuro',
-  'CurrencyDollar',
-  'SunFill',
-  'Square',
-  'SquareFill',
-  'FlagFill',
-  'EyeFill',
-  'PrinterFill',
-  'ChatDotsFill',
-  'MapFill',
-  'CheckCircle',
-  'Circle',
-  'CircleFill',
-  'Hexagon',
-  'HexagonFill',
-  'PuzzleFill',
-  'StarFill',
-  'Film',
-  'CaretUp',
-  'CaretDown',
-  'CaretLeft',
-  'CaretRight',
-  'CloudFill',
-  'CloudDownloadFill',
-  'CloudUploadFill',
-  'Code',
-  'ClipboardFill',
-  'CollectionFill',
-  'GearFill',
-  'Heart',
-  'HouseFill',
-  'BalloonFill',
-  'AirplaneFill',
-  'SuitClubFill',
-  'SuitDiamondFill',
-  'SuitHeartFill',
-  'SuitSpadeFill',
-  'CalendarDateFill'
-]
 
 export const IconPicker = ({ control, name, color, rules }: IconPickerProps) => {
   // Use react-hook-form's useController to get the onChange and value props
@@ -82,7 +29,7 @@ export const IconPicker = ({ control, name, color, rules }: IconPickerProps) => 
   }, [value, icons])
 
   return (
-    <div className='flex flex-wrap justify-center shadow-md'>
+    <div className='flex flex-wrap justify-center shadow-md' id='icon-picker'>
       {icons.map((icon) => (
         <span
           key={icon}

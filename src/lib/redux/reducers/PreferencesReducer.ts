@@ -23,6 +23,10 @@ interface State {
       value: boolean
       cookieName: string
     }
+    showWeekNumbers: {
+      value: boolean
+      cookieName: string
+    }
   }
 }
 
@@ -42,6 +46,10 @@ export const defaultPreferences = {
   sidebarOpen: {
     value: true,
     cookieName: 'yojana.sidebar-open'
+  },
+  showWeekNumbers: {
+    value: false,
+    cookieName: 'yojana.show-week-numbers'
   }
 }
 
@@ -61,6 +69,9 @@ const preferencesSlice = createSlice({
     setIsSidebarOpen: (state, action: PayloadAction<boolean>) => {
       state.sidebarOpen.value = action.payload
       setCookieMaxAge(state.sidebarOpen.cookieName, action.payload)
+    },
+    setShowWeekNumbers: (state, action: PayloadAction<boolean>) => {
+      state.showWeekNumbers.value = action.payload
     }
   },
   extraReducers: {
@@ -74,6 +85,6 @@ const preferencesSlice = createSlice({
 })
 
 export const getPreferences = (state: State) => state.preferences
-export const { setMonthCategoryAppearance, setYearShowGrid, setYearOverflow, setIsSidebarOpen } =
+export const { setMonthCategoryAppearance, setYearShowGrid, setYearOverflow, setIsSidebarOpen, setShowWeekNumbers } =
   preferencesSlice.actions
 export const preferencesReducer = preferencesSlice.reducer

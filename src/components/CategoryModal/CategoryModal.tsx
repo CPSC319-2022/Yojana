@@ -26,8 +26,9 @@ import * as z from 'zod'
 import { ColorPicker } from './ColorPicker'
 import { DayOfMonthPicker, MonthRecurrence, monthRecurrenceCrons, MonthRecurrenceType } from './DayOfMonthPicker'
 import { DayOfWeek, DayOfWeekPicker } from './DayOfWeekPicker'
-import { IconPicker, iconPickerIcons } from './IconPicker'
+import { IconPicker } from './IconPicker'
 import { IconSearchModal } from './IconSearchModal'
+import { iconPickerIcons } from '@/constants/icons'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
@@ -317,7 +318,10 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       <div className='mb-6'>
         <label className='mb-2 block flex w-full items-center'>
           Icon
-          <div className='focus:shadow-outline ml-3 mr-3 h-max max-w-full flex-1 rounded-md border text-slate-400 hover:cursor-pointer'>
+          <div
+            id='icon-search'
+            className='focus:shadow-outline ml-3 mr-3 h-max max-w-full flex-1 rounded-md border text-slate-400 hover:cursor-pointer'
+          >
             <IconSearchModal
               buttonClassName='mx-auto inline-block text-xs ml-2 mr-2'
               control={control}
