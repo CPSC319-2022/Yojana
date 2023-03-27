@@ -10,11 +10,15 @@ export const CalViewDropdown = () => {
 
   return (
     <Dropdown text={activeCalView} containerClassName='w-[12vw]'>
-      {[CalendarInterval.MONTH, CalendarInterval.QUARTERLY, CalendarInterval.FOUR_MONTHS, CalendarInterval.YEAR].map(
-        (interval) => (
-          <Dropdown.Button key={interval} label={interval} onClick={() => dispatch(setInterval(interval))} />
-        )
-      )}
+      {[
+        CalendarInterval.MONTH,
+        CalendarInterval.QUARTERLY,
+        CalendarInterval.FOUR_MONTHS,
+        CalendarInterval.YEAR_SCROLL,
+        CalendarInterval.YEAR
+      ].map((interval) => (
+        <Dropdown.Button key={interval} label={interval} onClick={() => dispatch(setInterval(interval))} />
+      ))}
     </Dropdown>
   )
 }

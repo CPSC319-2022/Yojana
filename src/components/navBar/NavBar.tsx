@@ -78,8 +78,8 @@ export const NavBar = ({ session }: NavBarProps) => {
         <h4 className='flex-none text-center text-lg'>{getIntervalDescription}</h4>
         {interval === CalendarInterval.MONTH && (
           <>
-            <h3 className='px-2'>•</h3>
-            <h4 className='flex-none text-center text-lg'>{hoursInMonth} hrs</h4>
+            <h3 className='px-2 text-slate-400'>•</h3>
+            <h4 className='flex-none text-center text-lg text-slate-400'>{hoursInMonth} hrs</h4>
           </>
         )}
       </div>
