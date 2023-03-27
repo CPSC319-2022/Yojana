@@ -12,8 +12,6 @@ describe('View all category', () => {
     cy.get('div#personal-calendar-accordion-item').eq(0).children().should('contain', 'new cat')
     cy.get(`div#category-item-${categoryItemNumber}`).should('exist')
     cy.get(`div#category-item-${categoryItemNumber}`).find(`input[type="checkbox"]`).should('be.checked')
-    cy.get(`div#category-item-${categoryItemNumber}`).find(`input[type="checkbox"]`).uncheck()
-    cy.get(`div#category-item-${categoryItemNumber}`).find(`input[type="checkbox"]`).should('be.unchecked')
   }
 
   const checkMasterCategory = (categoryItemNumber) => {
@@ -28,7 +26,9 @@ describe('View all category', () => {
     cy.get('div#personal-calendar-accordion-item').eq(0).children().should('contain', 'new cat')
     cy.get(`div#category-item-${categoryItemNumber}`).should('exist')
     cy.get(`div#category-item-${categoryItemNumber}`).find(`input[type="checkbox"]`).should('be.checked')
-    cy.get(`div#category-item-${categoryItemNumber}`).find(`input[type="checkbox"]`).uncheck()
+  }
+
+  const checkStatus = (categoryItemNumber) => {
     cy.get(`div#category-item-${categoryItemNumber}`).find(`input[type="checkbox"]`).should('be.unchecked')
   }
 
@@ -42,15 +42,23 @@ describe('View all category', () => {
       cy.resetDb()
     })
 
-    it('should create and unselect 10 categories in master accordion', () => {
-      for (let i = 20; i < 25; i++) {
+    it('should uncheck all checkboxes when second icon is clicked', () => {
+      for (let i = 20; i < 31; i++) {
         checkMasterCategory(i)
+      }
+      cy.get(`#master-calendar-accordion-item`).find('button').eq(1).click()
+      for (let i = 20; i < 31; i++) {
+        checkStatus(i)
       }
     })
 
-    it('should create and unselect 10 category in personal accordion', () => {
-      for (let i = 20; i < 25; i++) {
+    it('should uncheck all checkboxes when second icon is clicked', () => {
+      for (let i = 20; i < 31; i++) {
         checkPersonalCategory(i)
+      }
+      cy.get(`#personal-calendar-accordion-item`).find('button').eq(1).click()
+      for (let i = 20; i < 31; i++) {
+        checkStatus(i)
       }
     })
   })
@@ -65,9 +73,13 @@ describe('View all category', () => {
       cy.resetDb()
     })
 
-    it('should create and unselect 10 category in personal accordion', () => {
+    it('should uncheck all checkboxes when second icon is clicked', () => {
       for (let i = 20; i < 31; i++) {
         checkPersonalCategory(i)
+      }
+      cy.get(`#personal-calendar-accordion-item`).find('button').eq(1).click()
+      for (let i = 20; i < 31; i++) {
+        checkStatus(i)
       }
     })
   })

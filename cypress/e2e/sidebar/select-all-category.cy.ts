@@ -28,6 +28,13 @@ describe('View all category', () => {
     cy.get(`div#category-item-${categoryItemNumber}`).find(`input[type="checkbox"]`).should('be.checked')
   }
 
+  const checkStatus = (categoryItemNumber) => {
+    cy.get(`div#category-item-${categoryItemNumber}`).find(`input[type="checkbox"]`).should('be.unchecked')
+  }
+  const checkStatusChecked = (categoryItemNumber) => {
+    cy.get(`div#category-item-${categoryItemNumber}`).find(`input[type="checkbox"]`).should('be.checked')
+  }
+
   describe('admin', () => {
     beforeEach(() => {
       cy.login('admin')
@@ -38,15 +45,31 @@ describe('View all category', () => {
       cy.resetDb()
     })
 
-    it('should create and display 10 categories in master accordion', () => {
+    it('should uncheck all checkboxes when second icon is clicked', () => {
       for (let i = 20; i < 31; i++) {
         checkMasterCategory(i)
       }
+      cy.get(`#master-calendar-accordion-item`).find('button').eq(1).click()
+      for (let i = 20; i < 31; i++) {
+        checkStatus(i)
+      }
+      cy.get(`#master-calendar-accordion-item`).find('button').eq(1).click()
+      for (let i = 20; i < 31; i++) {
+        checkStatusChecked(i)
+      }
     })
 
-    it('should create and display 10 categories in personal accordion', () => {
+    it('should uncheck all checkboxes when second icon is clicked', () => {
       for (let i = 20; i < 31; i++) {
         checkPersonalCategory(i)
+      }
+      cy.get(`#personal-calendar-accordion-item`).find('button').eq(1).click()
+      for (let i = 20; i < 31; i++) {
+        checkStatus(i)
+      }
+      cy.get(`#personal-calendar-accordion-item`).find('button').eq(1).click()
+      for (let i = 20; i < 31; i++) {
+        checkStatusChecked(i)
       }
     })
   })
@@ -61,9 +84,17 @@ describe('View all category', () => {
       cy.resetDb()
     })
 
-    it('should create and display 10 categories in personal accordion', () => {
+    it('should uncheck all checkboxes when second icon is clicked', () => {
       for (let i = 20; i < 31; i++) {
         checkPersonalCategory(i)
+      }
+      cy.get(`#personal-calendar-accordion-item`).find('button').eq(1).click()
+      for (let i = 20; i < 31; i++) {
+        checkStatus(i)
+      }
+      cy.get(`#personal-calendar-accordion-item`).find('button').eq(1).click()
+      for (let i = 20; i < 31; i++) {
+        checkStatusChecked(i)
       }
     })
   })

@@ -43,7 +43,7 @@ describe('View all category', () => {
       cy.resetDb()
     })
 
-    it('should create and unselect 10 categories in master accordion', () => {
+    it('should create and unselect multiple categories in master accordion', () => {
       for (let i = 20; i < 31; i++) {
         checkMasterCategory(i)
       }
@@ -52,7 +52,7 @@ describe('View all category', () => {
       }
     })
 
-    it('should create and unselect 10 category in personal accordion', () => {
+    it('should create and unselect multiple categories in personal accordion', () => {
       for (let i = 20; i < 31; i++) {
         checkPersonalCategory(i)
       }
@@ -72,7 +72,7 @@ describe('View all category', () => {
       cy.resetDb()
     })
 
-    it('should create and unselect 10 category in personal accordion', () => {
+    it('should create and unselect multiple categories in personal accordion', () => {
       for (let i = 20; i < 31; i++) {
         checkPersonalCategory(i)
       }
