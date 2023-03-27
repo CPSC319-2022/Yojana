@@ -8,6 +8,7 @@ import { AccountDropdown } from '@/components/navBar/AccountDropdown'
 import { CalendarInterval } from '@/constants/enums'
 import { Session } from 'next-auth'
 import { getPreferences, setIsSidebarOpen } from '@/redux/reducers/PreferencesReducer'
+import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 
 interface NavBarProps {
   session: Session
@@ -20,6 +21,7 @@ export const NavBar = ({ session }: NavBarProps) => {
   const sidebarOpen = useAppSelector(getPreferences).sidebarOpen.value
   const router = useRouter()
   const [mounted, setMounted] = useState(false)
+  const disable = useAppSelector(getIsSelectingDates)
 
   useEffect(() => {
     // mounted ensures that the router push does not happen on the first render
@@ -58,6 +60,7 @@ export const NavBar = ({ session }: NavBarProps) => {
     <div className='box-border flex h-[10vh] w-full flex-row items-center justify-between border-b px-5'>
       <div className='flex flex-row items-center'>
         <Button
+          disabled={disable}
           text='&#9776;'
           onClick={() => {
             dispatch(setIsSidebarOpen(!sidebarOpen))
