@@ -14,7 +14,8 @@ import {
   getInterval,
   isMonthInterval,
   isQuarterlyInterval,
-  isYearInterval
+  isYearInterval,
+  isYearScrollInterval
 } from '@/redux/reducers/MainCalendarReducer'
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DescriptionPopover } from '../DescriptionPopover'
@@ -41,6 +42,7 @@ export const Month = (props: MonthProps) => {
   const startingMonthNum = props.monthOffset
   const isMonthView = useAppSelector(isMonthInterval)
   const isQuarterlyView = useAppSelector(isQuarterlyInterval)
+  const isYearScrollView = useAppSelector(isYearScrollInterval)
   const stateDate = useAppSelector(getDate)
   const referenceDate = useAppSelector(isYearInterval) ? dayjs(stateDate).startOf('year') : stateDate
   const isSelectingDates = useAppSelector(getIsSelectingDates)
@@ -202,7 +204,7 @@ export const Month = (props: MonthProps) => {
     (day: Dayjs, offsetFromMonthStart: number) => {
       const allDayBanners = getBannersOrIcons(day, offsetFromMonthStart, true, { isForPopover: true }) || []
       return (
-        <div className='lg:grid-rows grid gap-1 p-2 pb-3'>
+        <div className='lg:grid-rows grid gap-1 overflow-x-hidden p-2 pb-3'>
           <span
             className={`${
               offsetFromMonthStart < 0 || offsetFromMonthStart >= daysInMonth ? 'text-slate-400' : ''
@@ -266,7 +268,11 @@ export const Month = (props: MonthProps) => {
             leaveFrom={`opacity-100 ${below ? 'translate-y-0' : ''}`}
             leaveTo={`opacity-0 ${below ? 'translate-y-1' : ''}`}
           >
-            <Popover.Panel className={`${translateXClass} ${translateYClass} absolute z-50 transform`}>
+            <Popover.Panel
+              className={`${
+                isYearScrollView ? 'fixed bottom-10 left-10' : `absolute ${translateXClass} ${translateYClass}`
+              } z-50 transform`}
+            >
               <style jsx>{`
                 div {
                   box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
@@ -282,7 +288,7 @@ export const Month = (props: MonthProps) => {
         </Popover>
       )
     },
-    [appearBelow, getPopoverContent, renderPopoverButton, useBanners]
+    [appearBelow, getPopoverContent, isYearScrollView, renderPopoverButton, useBanners]
   )
 
   const renderDateNum = useCallback(

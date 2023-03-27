@@ -85,7 +85,7 @@ export const DescriptionPopover = ({
       }
 
       return (
-        <Popover className={`${type === 'icon' ? 'inline-flex ' + className : ''}`}>
+        <Popover className={`overflow-x-hidden ${type === 'icon' ? 'inline-flex ' + className : ''}`}>
           <Popover.Button className={`w-full text-left ${type === 'icon' ? 'focus:outline-none' : ''}`}>
             {catComponent}
           </Popover.Button>
