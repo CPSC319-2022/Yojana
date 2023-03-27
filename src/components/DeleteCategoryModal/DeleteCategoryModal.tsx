@@ -27,6 +27,7 @@ export const DeleteCategoryModal = ({ id, onClose }: { id: number; onClose: () =
   }
   return (
     <Modal
+      buttonId='delete-category-btn'
       buttonText='Delete'
       title=''
       isOpen={isModalOpen}
@@ -41,7 +42,7 @@ export const DeleteCategoryModal = ({ id, onClose }: { id: number; onClose: () =
       showCloseBtn={false}
       overrideDefaultButtonStyle={true}
     >
-      <div className='mt-2 p-3'>
+      <div className='mt-2 p-3' id='confirm-delete'>
         <div className='flex justify-center text-center text-lg'>
           Are you sure you want to delete {`"${currentState?.name}"`}?
         </div>
@@ -56,6 +57,7 @@ export const DeleteCategoryModal = ({ id, onClose }: { id: number; onClose: () =
           </button>
           <button
             type='button'
+            id='confirm-delete-category'
             className='inline-flex justify-center rounded-md border border-transparent bg-red-100 py-2 px-4 text-red-900 enabled:hover:bg-red-200 disabled:opacity-75'
             disabled={isSubmitting}
             onClick={handleDelete}
