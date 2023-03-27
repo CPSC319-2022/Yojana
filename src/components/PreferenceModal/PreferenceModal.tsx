@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import {
   getPreferences,
   setMonthCategoryAppearance,
+  setShowWeekNumbers,
   setYearOverflow,
   setYearShowGrid
 } from '@/redux/reducers/PreferencesReducer'
@@ -16,7 +17,7 @@ export const PreferenceModal = ({
   setIsModalOpen: (isModalOpen: boolean) => void
 }) => {
   const dispatch = useAppDispatch()
-  const { yearShowGrid, yearOverflow, monthCategoryAppearance } = useAppSelector(getPreferences)
+  const { yearShowGrid, yearOverflow, monthCategoryAppearance, showWeekNumbers } = useAppSelector(getPreferences)
 
   return (
     <Modal
@@ -86,6 +87,24 @@ export const PreferenceModal = ({
                   }}
                   tooltipIcon='QuestionCircle'
                   tooltipText='Show categories as icons or banners.'
+                />
+              </div>
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item>
+            <Accordion.Header>Other</Accordion.Header>
+            <Accordion.Body>
+              <div className='mt-2 flex flex-col space-y-2'>
+                <Toggle
+                  textToToggle={['Show week numbers', 'Hide week numbers']}
+                  name={showWeekNumbers.cookieName}
+                  preference={showWeekNumbers.value}
+                  onChange={() => {
+                    dispatch(setShowWeekNumbers(!showWeekNumbers.value))
+                    setCookieMaxAge(showWeekNumbers.cookieName, !showWeekNumbers.value)
+                  }}
+                  tooltipIcon='QuestionCircle'
+                  tooltipText='Show week numbers in the month, quarterly and 4-month views.'
                 />
               </div>
             </Accordion.Body>

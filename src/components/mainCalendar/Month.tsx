@@ -22,6 +22,9 @@ import dayjs, { Dayjs } from 'dayjs'
 import { Popover, Transition } from '@headlessui/react'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 import { useIsomorphicLayoutEffect } from '@/utils/useIsomorphicLayoutEffect'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
+
+dayjs.extend(weekOfYear)
 
 interface MonthProps {
   monthOffset: number
@@ -340,7 +343,8 @@ export const Month = (props: MonthProps) => {
       return (
         <div
           key={day.format('YY-MM-DD')}
-          className={`tile flex overflow-hidden px-0.5 
+          className={`tile flex overflow-hidden px-0.5
+          ${preferences.showWeekNumbers.value ? 'col-span-3' : ''}
             ${isMonthView ? 'flex-col' : 'flex-row'}
             ${isQuarterlyView ? 'items-center' : ''}
             ${getDayStyling(day.day(), isSelectingDates, selected)}  `}
@@ -371,6 +375,7 @@ export const Month = (props: MonthProps) => {
       monthStartDate,
       getSelectedSettings,
       daysInMonth,
+      preferences.showWeekNumbers.value,
       isMonthView,
       isQuarterlyView,
       isSelectingDates,
@@ -384,42 +389,56 @@ export const Month = (props: MonthProps) => {
 
   // monthOffset is the offset of the Sunday from the beginning of the month.
   const renderWeek = useCallback(
-    (firstDateOfWeek: number) => {
+    (firstDateOfWeek: number, weekNumber: number) => {
       const generatedDays = Array.from(Array(7).keys()).map((dayNum) => {
         return renderDay(firstDateOfWeek, dayNum)
       })
       return (
         <div
-          className={(numWeeks === 6 ? 'h-1/6' : 'h-1/5') + ' ' + 'grid h-1/5 grid-cols-7 gap-px pt-0.5'}
+          className={
+            (numWeeks === 6 ? 'h-1/6' : 'h-1/5') +
+            ' ' +
+            (preferences.showWeekNumbers.value ? 'grid grid-cols-22 gap-px pt-0.5' : 'grid grid-cols-7 gap-px pt-0.5')
+          }
           key={firstDateOfWeek}
         >
           {generatedDays}
+          {preferences.showWeekNumbers.value && (
+            <div className='tile text-m flex items-center justify-center text-xs text-slate-500'>{weekNumber}</div>
+          )}
         </div>
       )
     },
-    [numWeeks, renderDay]
+    [numWeeks, preferences.showWeekNumbers.value, renderDay]
   )
 
   const generateWeeks = useCallback(() => {
     const weeks = []
     const target = numWeeks <= 4 ? 30 : daysInMonth
     for (let i = 0 - monthStartDate.day(); i < target; i += 7) {
-      weeks.push(renderWeek(i))
+      const date = dayjs(monthStartDate).add(i, 'day')
+      const weekOfYear = date.week()
+      weeks.push(renderWeek(i, weekOfYear))
     }
     return <div className={`${isMonthView ? 'h-[95%]' : 'h-full'}`}>{weeks}</div>
   }, [daysInMonth, monthStartDate, isMonthView, numWeeks, renderWeek])
 
   const generateDayNames = useMemo(() => {
     return (
-      <div className='grid grid-cols-7'>
+      <div className={preferences.showWeekNumbers.value ? 'grid grid-cols-22' : 'grid grid-cols-7'}>
         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((letter, index) => (
-          <span className='tile text-m text-center text-slate-500' key={index}>
+          <span
+            className={`tile text-m text-center text-slate-500 ${
+              preferences.showWeekNumbers.value ? 'col-span-3' : ''
+            }`}
+            key={index}
+          >
             {letter}
           </span>
         ))}
       </div>
     )
-  }, [])
+  }, [preferences.showWeekNumbers.value])
 
   return (
     <div className={`box-border bg-slate-200 ${isMonthView ? 'h-full' : ''} ${props.className}`}>

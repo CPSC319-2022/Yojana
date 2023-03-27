@@ -30,6 +30,9 @@ module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      gridTemplateColumns: {
+        22: 'repeat(22, minmax(0, 1fr))'
+      },
       colors: {
         azure: {
           DEFAULT: '#0078D4',
