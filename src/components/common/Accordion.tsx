@@ -3,10 +3,10 @@ import { Disclosure } from '@headlessui/react'
 import { Icon, IconName } from '@/components/common/Icon'
 import React from 'react'
 
-export const Accordion = ({ children }: { children: React.ReactNode }) => {
+export const Accordion = ({ children, disable }: { children: React.ReactNode; disable: boolean }) => {
   const items = getChildrenByType(children, Accordion.Item)
   return (
-    <div className='w-full'>
+    <div className={`w-full ${disable ? 'pointer-events-none' : ''}`}>
       {items.map((item, index) => (
         <div key={`accordion-item-${index}`} className={index !== 0 ? 'mt-2' : ''}>
           {item}
