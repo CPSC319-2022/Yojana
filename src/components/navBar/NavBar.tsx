@@ -74,7 +74,12 @@ export const NavBar = ({ session }: NavBarProps) => {
       <div className='flex w-[25vw] flex-row items-center'>
         <Button text='Today' onClick={() => dispatch(jumpToToday())} className='mr-10' />
         <Button iconName='CaretLeftFill' onClick={() => dispatch(decrementDate())} className='mr-3 py-3' />
-        <Button iconName='CaretRightFill' onClick={() => dispatch(incrementDate())} className='mr-3 py-3' />
+        <Button
+          iconName='CaretRightFill'
+          onClick={() => dispatch(incrementDate())}
+          className='mr-3 py-3'
+          id='move-right'
+        />
         <h4 className='flex-none text-center text-lg'>{getIntervalDescription}</h4>
         {interval === CalendarInterval.MONTH && (
           <>
