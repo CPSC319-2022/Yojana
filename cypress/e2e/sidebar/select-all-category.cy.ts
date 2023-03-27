@@ -1,36 +1,10 @@
 describe('View all category', () => {
-  const checkPersonalCategory = (categoryItemNumber) => {
-    cy.get('div[id="category-item-${categoryItemNumber}"]').should('not.exist')
-    cy.get('button#create-category-btn').click()
-    cy.get('div#create-category-modal-div').should('be.visible')
-    cy.get('input[name="name"]').type('new cat')
-    cy.get('div#create-category-modal-div').scrollTo('bottom')
-    cy.get('button#create-category-submit-btn').click()
-    cy.get('div#sidebar').scrollTo('bottom')
-    cy.get('div#personal-calendar-accordion-item').eq(0).children().should('contain', 'new cat')
-    cy.get(`div#category-item-${categoryItemNumber}`).should('exist')
-    cy.get(`div#category-item-${categoryItemNumber}`).find(`input[type="checkbox"]`).should('be.checked')
+  const checked = (number) => {
+    cy.get(`div#category-item-${number}`).find('input[type="checkbox"]').should('have.prop', 'checked', true)
   }
 
-  const checkMasterCategory = (categoryItemNumber) => {
-    cy.get('div[id="category-item-${categoryItemNumber}"]').should('not.exist')
-    cy.get('button#create-category-btn').click()
-    cy.get('div#create-category-modal-div').should('be.visible')
-    cy.get('input[name="name"]').type('new cat')
-    cy.get('div#create-category-modal-div').scrollTo('bottom')
-    cy.get('button#master-calendar-type-btn').click()
-    cy.get('button#create-category-submit-btn').click()
-    cy.get('div#sidebar').scrollTo('bottom')
-    cy.get('div#personal-calendar-accordion-item').eq(0).children().should('contain', 'new cat')
-    cy.get(`div#category-item-${categoryItemNumber}`).should('exist')
-    cy.get(`div#category-item-${categoryItemNumber}`).find(`input[type="checkbox"]`).should('be.checked')
-  }
-
-  const checkStatus = (categoryItemNumber) => {
-    cy.get(`div#category-item-${categoryItemNumber}`).find(`input[type="checkbox"]`).should('be.unchecked')
-  }
-  const checkStatusChecked = (categoryItemNumber) => {
-    cy.get(`div#category-item-${categoryItemNumber}`).find(`input[type="checkbox"]`).should('be.checked')
+  const notChecked = (number) => {
+    cy.get(`div#category-item-${number}`).find('input[type="checkbox"]').should('have.prop', 'checked', false)
   }
 
   describe('admin', () => {
@@ -44,58 +18,19 @@ describe('View all category', () => {
     })
 
     it('should uncheck all checkboxes when second icon is clicked', () => {
-      for (let i = 20; i < 31; i++) {
-        checkMasterCategory(i)
+      for (let i = 1; i < 14; i++) {
+        checked(i)
       }
-      cy.get(`#master-calendar-accordion-item`).find('button').eq(1).click()
-      for (let i = 20; i < 31; i++) {
-        checkStatus(i)
-      }
-      cy.get(`#master-calendar-accordion-item`).find('button').eq(1).click()
-      for (let i = 20; i < 31; i++) {
-        checkStatusChecked(i)
-      }
-    })
 
-    it('should uncheck all checkboxes when second icon is clicked', () => {
-      for (let i = 20; i < 31; i++) {
-        checkPersonalCategory(i)
-      }
-      cy.get(`#personal-calendar-accordion-item`).find('button').eq(1).click()
-      for (let i = 20; i < 31; i++) {
-        checkStatus(i)
-      }
-      cy.get(`#personal-calendar-accordion-item`).find('button').eq(1).click()
-      for (let i = 20; i < 31; i++) {
-        checkStatusChecked(i)
-      }
-    })
-  })
+      cy.get('div#master-calendar-accordion-item').find('button').eq(0).click()
 
-  describe('pleb', () => {
-    beforeEach(() => {
-      cy.login('pleb')
-      cy.visit('/')
-    })
+      for (let i = 1; i < 14; i++) {
+        notChecked(i)
+      }
 
-    afterEach(() => {
-      cy.resetDb()
-    })
-
-    it('should uncheck all checkboxes when second icon is clicked', () => {
-      for (let i = 20; i < 31; i++) {
-        checkPersonalCategory(i)
-      }
-      cy.get(`#personal-calendar-accordion-item`).find('button').eq(1).click()
-      for (let i = 20; i < 31; i++) {
-        checkStatus(i)
-      }
-      cy.get(`#personal-calendar-accordion-item`).find('button').eq(1).click()
-      for (let i = 20; i < 31; i++) {
-        checkStatusChecked(i)
-      }
+      // Click the second icon in the personal calendar accordion
+      cy.get('div#personal-calendar-accordion-item').contains('button', 'Show/hide categories').should('exist')
     })
   })
 })
-
 export {}

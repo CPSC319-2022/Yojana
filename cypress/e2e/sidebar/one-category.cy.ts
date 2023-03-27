@@ -8,8 +8,8 @@ describe('View all category', () => {
     cy.get('button#create-category-submit-btn').click()
     cy.get('div#sidebar').scrollTo('bottom')
     cy.get('div#personal-calendar-accordion-item').eq(0).children().should('contain', 'new cat')
-    cy.get(`div#category-item-20`).should('exist')
-    cy.get(`div#category-item-20`).find(`input[type="checkbox"]`).should('be.checked')
+    cy.get('div[id="category-item-20"]').should('exist')
+    cy.get(`div#category-item-20`).find(`input[type="checkbox"]`).should('have.prop', 'checked', true)
   }
 
   describe('admin', () => {
@@ -31,9 +31,9 @@ describe('View all category', () => {
       cy.get('button#master-calendar-type-btn').click()
       cy.get('button#create-category-submit-btn').click()
       cy.get('div#sidebar').scrollTo('bottom')
-      cy.get('div#personal-calendar-accordion-item').eq(0).children().should('contain', 'new cat')
-      cy.get(`div#category-item-20`).should('exist')
-      cy.get(`div#category-item-20`).find(`input[type="checkbox"]`).should('be.checked')
+      cy.get('div#master-calendar-accordion-item').eq(0).children().should('contain', 'new cat')
+      cy.get('div[id="category-item-20"]').should('exist')
+      cy.get(`div#category-item-20`).find(`input[type="checkbox"]`).should('have.prop', 'checked', true)
     })
 
     it('should display 1 category in personal accordion', () => {

@@ -2,6 +2,7 @@ import { defineConfig } from 'cypress'
 import dotenvPlugin from 'cypress-dotenv'
 
 export default defineConfig({
+  projectId: 'j1od9m',
   e2e: {
     baseUrl: 'http://localhost:3000',
     experimentalRunAllSpecs: true,
