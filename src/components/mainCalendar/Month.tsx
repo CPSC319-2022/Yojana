@@ -396,21 +396,25 @@ export const Month = (props: MonthProps) => {
           className={
             (numWeeks === 6 ? 'h-1/6' : 'h-1/5') +
             ' ' +
-            'grid h-1/5 grid-cols-[13.43%,13.43%,13.43%,13.43%,13.43%,13.43%,13.43%,6%] gap-px pt-0.5'
+            (preferences.showWeekNumbers.value
+              ? 'grid h-1/5 grid-cols-[13.43%,13.43%,13.43%,13.43%,13.43%,13.43%,13.43%,6%] gap-px pt-0.5'
+              : 'grid h-1/5 grid-cols-7 gap-px pt-0.5')
           }
           key={firstDateOfWeek}
         >
           {generatedDays}
-          <div
-            className='col-span-0.2 tile text-m flex items-center justify-center text-slate-500 '
-            style={{ fontSize: '12px' }}
-          >
-            {weekNumber}
-          </div>
+          {preferences.showWeekNumbers.value && (
+            <div
+              className='col-span-0.2 tile text-m flex items-center justify-center text-slate-500 '
+              style={{ fontSize: '12px' }}
+            >
+              {weekNumber}
+            </div>
+          )}
         </div>
       )
     },
-    [numWeeks, renderDay]
+    [numWeeks, preferences.showWeekNumbers.value, renderDay]
   )
 
   const generateWeeks = useCallback(() => {
@@ -426,7 +430,13 @@ export const Month = (props: MonthProps) => {
 
   const generateDayNames = useMemo(() => {
     return (
-      <div className='grid grid-cols-[13.5%,13.5%,13.5%,13.5%,13.5%,13.5%,13.5%,5.5%]'>
+      <div
+        className={
+          preferences.showWeekNumbers.value
+            ? 'grid grid-cols-[13.5%,13.5%,13.5%,13.5%,13.5%,13.5%,13.5%,5.5%]'
+            : 'grid grid-cols-7'
+        }
+      >
         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((letter, index) => (
           <span className='tile text-m text-center text-slate-500' key={index}>
             {letter}
@@ -434,7 +444,7 @@ export const Month = (props: MonthProps) => {
         ))}
       </div>
     )
-  }, [])
+  }, [preferences.showWeekNumbers.value])
 
   return (
     <div className={`box-border bg-slate-200 ${isMonthView ? 'h-full' : ''} ${props.className}`}>

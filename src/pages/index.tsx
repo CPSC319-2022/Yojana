@@ -21,6 +21,7 @@ import {
   getPreferences,
   setIsSidebarOpen,
   setMonthCategoryAppearance,
+  setShowWeekNumbers,
   setYearOverflow,
   setYearShowGrid
 } from '@/redux/reducers/PreferencesReducer'
@@ -83,12 +84,12 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     // get cookies
     const cookies = getCookies({ req, res })
 
-    const { yearShowGrid, yearOverflow, monthCategoryAppearance } = defaultPreferences
+    const { yearShowGrid, yearOverflow, monthCategoryAppearance, sidebarOpen, showWeekNumbers } = defaultPreferences
 
     // if sidebar cookie is undefined, set it to true
-    const sidebarOpenInitial = cookies['yojana.sidebar-open']
+    const sidebarOpenInitial = cookies[sidebarOpen.cookieName]
     if (sidebarOpenInitial === undefined) {
-      setCookieMaxAge('yojana.sidebar-open', true, { req, res })
+      setCookieMaxAge(sidebarOpen.cookieName, true, { req, res })
     } else {
       // if sidebar cookie is defined, set sidebarOpenInitial to the value of the cookie
       store.dispatch(setIsSidebarOpen(sidebarOpenInitial === 'true'))
@@ -120,6 +121,15 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     } else {
       // if the monthCategoryAppearance cookie is defined, set monthCategoryAppearance to icons or banners based on the value of the cookie
       store.dispatch(setMonthCategoryAppearance(monthCategoryAppearanceCookie === 'icons' ? 'icons' : 'banners'))
+    }
+
+    // set cookie for setShowWeekNumbers
+    const setShowWeekNumbersCookie = cookies[showWeekNumbers.cookieName]
+    if (setShowWeekNumbersCookie === undefined) {
+      setCookieMaxAge(showWeekNumbers.cookieName, showWeekNumbers.value, { req, res })
+    } else {
+      // if the setShowWeekNumbers cookie is defined, set setShowWeekNumbers to true or false based on the value of the cookie
+      store.dispatch(setShowWeekNumbers(setShowWeekNumbersCookie === 'true'))
     }
 
     // current session
