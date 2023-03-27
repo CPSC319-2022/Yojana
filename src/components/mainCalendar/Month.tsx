@@ -398,9 +398,7 @@ export const Month = (props: MonthProps) => {
           className={
             (numWeeks === 6 ? 'h-1/6' : 'h-1/5') +
             ' ' +
-            (preferences.showWeekNumbers.value
-              ? 'grid h-1/5 grid-cols-22 gap-px pt-0.5'
-              : 'grid h-1/5 grid-cols-7 gap-px pt-0.5')
+            (preferences.showWeekNumbers.value ? 'grid grid-cols-22 gap-px pt-0.5' : 'grid grid-cols-7 gap-px pt-0.5')
           }
           key={firstDateOfWeek}
         >
