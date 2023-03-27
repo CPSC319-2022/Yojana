@@ -349,7 +349,7 @@ export const Month = (props: MonthProps) => {
       return (
         <div
           key={day.format('YY-MM-DD')}
-          className={`tile flex overflow-hidden px-0.5
+          className={`tile flex  px-0.5
           ${preferences.showWeekNumbers.value ? 'col-span-3' : ''}
             ${isMonthView ? 'flex-col' : 'flex-row'}
             ${isQuarterlyView ? 'items-center' : ''}
@@ -361,10 +361,7 @@ export const Month = (props: MonthProps) => {
           }}
         >
           {renderDateNum(day, isCurrentMonth)}
-          <div
-            className={`flex-grow overflow-hidden`}
-            ref={offsetFromMonthStart === 0 ? categoryContainerRef : undefined}
-          >
+          <div className={`flex-grow `} ref={offsetFromMonthStart === 0 ? categoryContainerRef : undefined}>
             <style jsx>{`
               .use-grid {
                 grid-template-columns: repeat(${useBanners ? 1 : colsPerDay}, minmax(0, 1fr));
