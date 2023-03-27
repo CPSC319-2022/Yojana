@@ -473,7 +473,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         <Button
           id='select-individual-dates-btn'
           type='button'
-          text={'Select Individual Dates'}
+          text={'Select Dates'}
           className='mr-3 items-center'
           onClick={() => {
             const startDate = getValues('repeating.startDate')
@@ -516,11 +516,13 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const saveCancelWhenMinimized = useMemo(() => {
     return (
       <Modal.Minimized className={'w-[17vw] rounded-md border-2 border-slate-200 bg-white p-2'}>
-        <span className='flex w-full items-center truncate px-2 pb-1'>
-          <p className='text-slate-700'>{method === 'POST' ? 'Creating:' : 'Editing:'}</p>
-          <Icon iconName={watchIcon} color={watchColor} className='mx-1 min-w-fit' />
-          <p className='font-semibold'>{watchName}</p>
-        </span>
+        {method !== 'POST' && (
+          <span className='flex w-full items-center truncate px-2 pb-1'>
+            <p className='text-slate-700'>Editing:</p>
+            <Icon iconName={watchIcon} color={watchColor} className='mx-1 min-w-fit' />
+            <p className='font-semibold'>{watchName}</p>
+          </span>
+        )}
         {recurringPanel}
         <span className='flex w-full'>
           <button
