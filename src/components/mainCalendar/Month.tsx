@@ -343,7 +343,8 @@ export const Month = (props: MonthProps) => {
       return (
         <div
           key={day.format('YY-MM-DD')}
-          className={`tile flex overflow-hidden px-0.5 
+          className={`tile flex overflow-hidden px-0.5
+          ${preferences.showWeekNumbers.value ? 'col-span-3' : ''}
             ${isMonthView ? 'flex-col' : 'flex-row'}
             ${isQuarterlyView ? 'items-center' : ''}
             ${getDayStyling(day.day(), isSelectingDates, selected)}  `}
@@ -374,6 +375,7 @@ export const Month = (props: MonthProps) => {
       monthStartDate,
       getSelectedSettings,
       daysInMonth,
+      preferences.showWeekNumbers.value,
       isMonthView,
       isQuarterlyView,
       isSelectingDates,
@@ -397,19 +399,14 @@ export const Month = (props: MonthProps) => {
             (numWeeks === 6 ? 'h-1/6' : 'h-1/5') +
             ' ' +
             (preferences.showWeekNumbers.value
-              ? 'grid h-1/5 grid-cols-[13.43%,13.43%,13.43%,13.43%,13.43%,13.43%,13.43%,6%] gap-px pt-0.5'
+              ? 'grid h-1/5 grid-cols-22 gap-px pt-0.5'
               : 'grid h-1/5 grid-cols-7 gap-px pt-0.5')
           }
           key={firstDateOfWeek}
         >
           {generatedDays}
           {preferences.showWeekNumbers.value && (
-            <div
-              className='col-span-0.2 tile text-m flex items-center justify-center text-slate-500 '
-              style={{ fontSize: '12px' }}
-            >
-              {weekNumber}
-            </div>
+            <div className='tile text-m flex items-center justify-center text-xs text-slate-500'>{weekNumber}</div>
           )}
         </div>
       )
@@ -430,15 +427,14 @@ export const Month = (props: MonthProps) => {
 
   const generateDayNames = useMemo(() => {
     return (
-      <div
-        className={
-          preferences.showWeekNumbers.value
-            ? 'grid grid-cols-[13.5%,13.5%,13.5%,13.5%,13.5%,13.5%,13.5%,5.5%]'
-            : 'grid grid-cols-7'
-        }
-      >
+      <div className={preferences.showWeekNumbers.value ? 'grid grid-cols-22' : 'grid grid-cols-7'}>
         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((letter, index) => (
-          <span className='tile text-m text-center text-slate-500' key={index}>
+          <span
+            className={`tile text-m text-center text-slate-500 ${
+              preferences.showWeekNumbers.value ? 'col-span-3' : ''
+            }`}
+            key={index}
+          >
             {letter}
           </span>
         ))}
