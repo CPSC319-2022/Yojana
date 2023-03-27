@@ -26,8 +26,9 @@ import * as z from 'zod'
 import { ColorPicker } from './ColorPicker'
 import { DayOfMonthPicker, MonthRecurrence, monthRecurrenceCrons, MonthRecurrenceType } from './DayOfMonthPicker'
 import { DayOfWeek, DayOfWeekPicker } from './DayOfWeekPicker'
-import { IconPicker, iconPickerIcons } from './IconPicker'
+import { IconPicker } from './IconPicker'
 import { IconSearchModal } from './IconSearchModal'
+import { iconPickerIcons } from '@/constants/icons'
 
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
