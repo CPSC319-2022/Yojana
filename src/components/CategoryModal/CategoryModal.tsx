@@ -92,7 +92,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       setSelectedDaysOfTheWeek(currentRepeatingDays || [])
     }
     const currentMonthly = getInitialMonthlyCronState(currentState?.cron)
-    currentMonthly !== MonthRecurrence.NONE ? setCurrentTabIndex(1) : setCurrentTabIndex(0)
+    currentMonthly !== null ? setCurrentTabIndex(1) : setCurrentTabIndex(0)
     setSelectedMonthRecurrenceCron(currentMonthly)
   }, [currentState?.cron, getInitialMonthlyCronState, method])
 
