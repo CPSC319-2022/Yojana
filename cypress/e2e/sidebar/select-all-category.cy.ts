@@ -17,19 +17,39 @@ describe('View all category', () => {
       cy.resetDb()
     })
 
-    it('should uncheck all checkboxes when second icon is clicked', () => {
+    it('should uncheck all checkboxes in master when eye is clicked and when eye clicked again all should be checked', () => {
+      cy.get('#master-toggle-all').click()
+      cy.get('#master-toggle-all').click()
       for (let i = 1; i < 14; i++) {
         checked(i)
       }
+    })
 
-      cy.get('div#master-calendar-accordion-item').find('button').eq(0).click()
-
-      for (let i = 1; i < 14; i++) {
-        notChecked(i)
+    it('should uncheck all checkboxes in personal when eye is clicked and when eye clicked again all should be checked', () => {
+      cy.get('#personal-toggle-all').click()
+      cy.get('#personal-toggle-all').click()
+      for (let i = 14; i < 20; i++) {
+        checked(i)
       }
+    })
+  })
 
-      // Click the second icon in the personal calendar accordion
-      cy.get('div#personal-calendar-accordion-item').contains('button', 'Show/hide categories').should('exist')
+  describe('pleb', () => {
+    beforeEach(() => {
+      cy.login('pleb')
+      cy.visit('/')
+    })
+
+    afterEach(() => {
+      cy.resetDb()
+    })
+
+    it('should uncheck all checkboxes in master when eye is clicked and when eye clicked again all should be checked', () => {
+      cy.get('#master-toggle-all').click()
+      cy.get('#master-toggle-all').click()
+      for (let i = 1; i < 14; i++) {
+        checked(i)
+      }
     })
   })
 })
