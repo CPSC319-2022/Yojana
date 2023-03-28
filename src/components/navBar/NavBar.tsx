@@ -47,6 +47,7 @@ export const NavBar = ({ session }: NavBarProps) => {
   const getIntervalDescription = useMemo(() => {
     switch (interval) {
       case CalendarInterval.YEAR:
+      case CalendarInterval.YEAR_SCROLL:
         return targetDate.format('YYYY')
       case CalendarInterval.FOUR_MONTHS:
         return `${targetDate.format('MMM YYYY')} - ${targetDate.add(3, 'M').format('MMM YYYY')}`
