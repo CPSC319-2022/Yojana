@@ -103,7 +103,12 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
             ${getDayStyling(day.day(), isSelectingDates, selected)} 
             ${!isSelectingDates && isToday && !getForPrinting ? 'ring-2 ring-inset ring-emerald-300' : ''}
             ${preferences.yearOverflow.value === 'wrap' || getForPrinting ? 'inline-flow break-all' : 'flex'}
-            ${dateOffset + 1 === popoverOpen ? 'flex-wrap overflow-x-visible' : 'overflow-x-scroll'}
+            ${
+              !(dateOffset + 1 === popoverOpen) && !(preferences.yearOverflow.value === 'wrap' || getForPrinting)
+                ? 'overflow-x-scroll'
+                : ''
+            }
+            ${dateOffset + 1 === popoverOpen ? 'flex-wrap overflow-x-visible' : ''}
             `}
           key={`${yearNum}-${monthNum}-${dateOffset}`}
           onClick={() => onDayClicked(day, !selected || !selected?.isRecurring)}

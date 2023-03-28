@@ -46,21 +46,22 @@ export const DescriptionPopover = ({
 
       let translateXClass
       let translateYClass
+      let leftOrRight
       if (type === 'icon') {
         switch (currentInterval) {
           case CalendarInterval.YEAR:
-            translateXClass = monthOffset >= 8 ? '-translate-x-60' : currentDay >= 15 ? 'translate-x-5' : ''
+            translateXClass = monthOffset >= 8 ? '-translate-x-40' : currentDay >= 15 ? 'translate-x-5' : ''
             translateYClass =
               currentDay >= 15 ? (titleLength * 2 + descText.length >= 128 ? '-translate-y-40' : '-translate-y-32') : ''
             break
           case CalendarInterval.FOUR_MONTHS:
             translateXClass =
-              monthOffset % 2 !== 0 ? '-translate-x-60' : monthOffset && monthOffset === 2 ? 'translate-x-5' : ''
+              monthOffset % 2 !== 0 ? '-translate-x-40' : monthOffset && monthOffset === 2 ? 'translate-x-5' : ''
             translateYClass =
               monthOffset >= 2 ? (titleLength * 2 + descText.length >= 128 ? '-translate-y-40' : '-translate-y-32') : ''
             break
           case CalendarInterval.MONTH:
-            translateXClass = dayOffset && dayOffset >= 6 ? '-translate-x-60' : ''
+            translateXClass = dayOffset && dayOffset >= 6 ? '-translate-x-40' : ''
             translateYClass =
               monthOffset >= 15
                 ? titleLength * 2 + descText.length >= 128
@@ -69,15 +70,15 @@ export const DescriptionPopover = ({
                 : ''
             break
           case CalendarInterval.QUARTERLY:
-            translateXClass = '-translate-x-60'
+            translateXClass = '-translate-x-40'
             translateYClass =
               monthOffset === 0
                 ? titleLength * 2 + descText.length >= 128
                   ? '-translate-y-40'
                   : '-translate-y-32'
                 : monthOffset === -1
-                  ? '-translate-y-12'
-                  : ''
+                ? '-translate-y-12'
+                : ''
             break
           case CalendarInterval.YEAR_SCROLL:
             translateXClass =
@@ -99,7 +100,7 @@ export const DescriptionPopover = ({
             : '-translate-y-24'
           : translateYClass
       }
-
+      leftOrRight = translateXClass?.startsWith('-') ? 'right-5' : 'left-5'
       return (
         <div className={`${type === 'icon' ? 'inline-flex' : ''}`}>
           {!isNested && closeWhenClickOutside && (
@@ -129,7 +130,8 @@ export const DescriptionPopover = ({
               leaveTo='transform opacity-0 scale-95'
             >
               <Popover.Panel
-                className={`${isNested ? 'fixed' : 'absolute'} z-40 transform ${translateXClass} ${translateYClass}`}
+                className={`${isNested ? 'fixed' : 'absolute'} z-40 transform ${translateYClass} 
+                  ${type === 'icon' ? leftOrRight : translateXClass}`}
               >
                 <style jsx>{`
                   div {
@@ -145,8 +147,9 @@ export const DescriptionPopover = ({
                   <p className='text-center text-base text-slate-400'>{currentDay}</p>
                   <h1 className='pt-1 text-base'>{category?.name + ' #' + category?.id}</h1>
                   <p
-                    className={`pt-1 text-sm ${descText === 'No description provided.' ? 'italic text-slate-500' : 'text-slate-700'
-                      }`}
+                    className={`pt-1 text-sm ${
+                      descText === 'No description provided.' ? 'italic text-slate-500' : 'text-slate-700'
+                    }`}
                   >
                     {descText}
                   </p>

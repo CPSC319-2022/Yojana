@@ -228,7 +228,10 @@ export const Month = (props: MonthProps) => {
       if (useBanners) {
         const hiddenElemCount = allDayBlocksLength - nonOverflowElemCount + 1
         return (
-          <Popover.Button className={'border-box flex w-full rounded-md px-1 hover:bg-slate-100 focus:outline-none'}>
+          <Popover.Button
+            onClick={() => setOverflowVisible(day.date())}
+            className={'border-box flex w-full rounded-md px-1 hover:bg-slate-100 focus:outline-none'}
+          >
             {hiddenElemCount + ' more'}
           </Popover.Button>
         )
@@ -244,7 +247,7 @@ export const Month = (props: MonthProps) => {
         </Popover.Button>
       )
     },
-    [nonOverflowElemCount, useBanners]
+    [nonOverflowElemCount, useBanners, setOverflowVisible]
   )
 
   const appearBelow = useCallback(
@@ -259,7 +262,8 @@ export const Month = (props: MonthProps) => {
 
   const renderPopover = useCallback(
     (day: Dayjs, offsetFromMonthStart: number, allDayBlocksLength: number) => {
-      const translateXClass = day.day() > 4 ? (useBanners ? '-translate-x-32' : '-translate-x-60') : ''
+      const translateXClass =
+        day.day() > 4 || day.month() % 2 !== 0 ? (useBanners ? '-translate-x-32' : '-translate-x-60') : ''
       const below = appearBelow(offsetFromMonthStart)
       const translateYClass = below ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
       return (
