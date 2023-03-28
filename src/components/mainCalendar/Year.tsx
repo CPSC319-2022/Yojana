@@ -33,7 +33,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
           const category = categoryMap[calEvent.categoryId]
           if (category.show) {
             return (
-              <span className={'px-0.5 font-bold'} key={`${calEvent.id}-${key}`} id={`${category.name}-icon`}>
+              <span className={`px-0.5 font-bold ${category.name}-icon`} key={`${calEvent.id}-${key}`}>
                 <style jsx>{`
                   * {
                     color: ${category.color};

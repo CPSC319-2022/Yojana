@@ -54,6 +54,7 @@ const AccordionItem = ({
                   iconName={secondIcon}
                   className={`mr-3 h-5 w-5`}
                   onClick={(e) => {
+                    // prevent the accordion from toggling
                     e.stopPropagation()
                     e.preventDefault()
                     secondIconOnClick()
