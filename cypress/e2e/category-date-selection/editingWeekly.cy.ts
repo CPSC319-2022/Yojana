@@ -32,6 +32,8 @@ describe('edit weekly recurring tests', () => {
     // select WED
     cy.get('div#edit-category-modal-div').scrollTo('bottom')
     cy.get('button#recurring-dates-disclosure-btn').click()
+    cy.get('button#recurring-dates-tab-weekly').click()
+    cy.get('div#edit-category-modal-div').scrollTo('bottom')
     cy.get('button#WED-in-weekly').click()
 
     // Type the desired start date and end date
