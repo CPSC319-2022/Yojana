@@ -8,9 +8,7 @@ interface IconProps extends icons.IconProps {
 
 export const Icon = ({ iconName, ...props }: IconProps) => {
   const BootstrapIcon = icons[iconName]
-  // set title prop to iconName if not set
-  if (!props.title) {
-    props.title = iconName
-  }
+  // set add iconName to className
+  props.className = props.className ? `${props.className} ${iconName}` : iconName
   return <BootstrapIcon {...props} />
 }
