@@ -1,5 +1,5 @@
 import CategoryTypePicker from '@/components/CategoryModal/CategoryTypePicker'
-import { Button, Icon, Modal, Tabs } from '@/components/common'
+import { Button, Icon, IconName, Modal, Tabs } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { setAlert } from '@/redux/reducers/AlertReducer'
 import { addCategory, getCategory, updateCategory } from '@/redux/reducers/AppDataReducer'
@@ -63,26 +63,25 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const [dirtyDates, setDirtyDates] = useState(false)
   const [currentCron, setCurrentCron] = useState<string>('')
   const [selectedDaysOfTheWeek, setSelectedDaysOfTheWeek] = useState<DayOfWeek>([])
-  const [selectedMonthRecurrenceCron, setSelectedMonthRecurrenceCron] = useState<MonthRecurrenceType>(
-    MonthRecurrence.NONE
-  )
+  const [selectedMonthRecurrenceCron, setSelectedMonthRecurrenceCron] = useState<MonthRecurrenceType | null>(null)
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
 
-  const getInitialMonthlyCronState = useCallback((cron: string | null | undefined): MonthRecurrenceType => {
-    if (!cron) return MonthRecurrence.NONE
+  const getInitialMonthlyCronState = useCallback((cron: string | null | undefined): MonthRecurrenceType | null => {
+    if (cron === null || cron === undefined) return null
+    if (cron === '') return MonthRecurrence.NONE
     if (cron === monthRecurrenceCrons[MonthRecurrence.ON_LAST_DAY]) return MonthRecurrence.ON_LAST_DAY
     if (cron.slice(-1) === 'L') return MonthRecurrence.ON_LAST_XDAY
     if (cron.slice(-2, -1) === '#') return MonthRecurrence.ON_YTH_XDAY
     if (cron.startsWith('0 0 ') && cron.endsWith(' * *')) return MonthRecurrence.ON_DATE_Y
-    return MonthRecurrence.NONE
+    return null
   }, [])
 
   // these two have to go above the initial load useEffect to avoid overwriting the stored values
   useEffect(() => {
-    if (selectedDaysOfTheWeek.length !== 0) setSelectedMonthRecurrenceCron(MonthRecurrence.NONE)
+    if (selectedDaysOfTheWeek.length !== 0) setSelectedMonthRecurrenceCron(null)
   }, [selectedDaysOfTheWeek])
   useEffect(() => {
-    if (selectedMonthRecurrenceCron !== MonthRecurrence.NONE) setSelectedDaysOfTheWeek([])
+    if (selectedMonthRecurrenceCron !== null) setSelectedDaysOfTheWeek([])
   }, [selectedMonthRecurrenceCron])
 
   // intended strictly for initial load
@@ -94,7 +93,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       setSelectedDaysOfTheWeek(currentRepeatingDays || [])
     }
     const currentMonthly = getInitialMonthlyCronState(currentState?.cron)
-    currentMonthly !== MonthRecurrence.NONE ? setCurrentTabIndex(1) : setCurrentTabIndex(0)
+    currentMonthly !== null ? setCurrentTabIndex(1) : setCurrentTabIndex(0)
     setSelectedMonthRecurrenceCron(currentMonthly)
   }, [currentState?.cron, getInitialMonthlyCronState, method])
 
@@ -163,6 +162,10 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     defaultValues: defaultValues
   })
 
+  const watchIcon = watch('icon') as IconName
+
+  const watchName = watch('name')
+
   const watchColor = watch('color')
 
   const watchStartDate = watch('repeating.startDate')
@@ -182,7 +185,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       isMaster: false
     }))
     setSelectedDaysOfTheWeek([])
-    setSelectedMonthRecurrenceCron(MonthRecurrence.NONE)
+    setSelectedMonthRecurrenceCron(null)
     dispatch(resetSelectedDates())
   }, [dispatch, reset])
 
@@ -275,30 +278,6 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     [dispatch]
   )
 
-  const saveCancelWhenMinimized = useMemo(() => {
-    return (
-      <Modal.Minimized>
-        <button
-          id='cancel-btn-during-selecting'
-          type='button'
-          className='mr-3 inline-flex animate-pulse items-center justify-center rounded-md border border-transparent bg-slate-100 py-2 px-4 text-slate-900 enabled:hover:bg-slate-200 disabled:opacity-75'
-          onClick={() => {
-            setIsMinimizedCallback(false)
-            dispatch(cancelDateSelection())
-          }}
-        >
-          Cancel
-        </button>
-        <Button
-          id='save-btn-during-selecting'
-          text='Save'
-          onClick={() => setIsMinimizedCallback(false)}
-          className='animate-pulse'
-        />
-      </Modal.Minimized>
-    )
-  }, [dispatch, setIsMinimizedCallback])
-
   const nameField = useMemo(() => {
     return (
       <div className='mb-4'>
@@ -369,6 +348,13 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     }
   }, [control, session?.user.isAdmin])
 
+  const updateRecurringDates = useCallback(() => {
+    const startDate = getValues('repeating.startDate')
+    const endDate = getValues('repeating.endDate')
+    const cron = getValues('repeating.cron')
+    dispatch(setRepeatingDates(generateDatesFromCron(cron, startDate, endDate)))
+  }, [dispatch, getValues])
+
   const weeklyRecurringField = useMemo(() => {
     return (
       <Tabs.Content>
@@ -381,11 +367,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           updateState={(cron) => {
             setCurrentTabIndex(0)
             setCurrentCron(cron)
+            updateRecurringDates()
           }}
         />
       </Tabs.Content>
     )
-  }, [control, selectedDaysOfTheWeek])
+  }, [control, selectedDaysOfTheWeek, updateRecurringDates])
 
   const monthlyRecurringField = useMemo(() => {
     return (
@@ -400,17 +387,21 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           updateState={(cron) => {
             setCurrentTabIndex(1)
             setCurrentCron(cron)
+            updateRecurringDates()
           }}
         />
       </Tabs.Content>
     )
-  }, [control, selectedMonthRecurrenceCron, watchStartDate])
+  }, [control, selectedMonthRecurrenceCron, updateRecurringDates, watchStartDate])
 
   const startAndEndDatesRecurringField = useMemo(() => {
     return (
-      <div className='grid grid-cols-2 gap-4' id='recurring-dates-tab-start-end'>
-        <div>
-          <label className='mb-2 block text-sm'>Start Date</label>
+      <div
+        className={`grid ${isMinimized ? 'grid-cols-1 pb-4' : 'grid-cols-2'} gap-4`}
+        id='recurring-dates-tab-start-end'
+      >
+        <div className={isMinimized ? 'flex justify-between' : ''}>
+          <label className={`${isMinimized ? 'mr-2 truncate pt-[1px]' : 'mb-2'} block text-sm`}>Start Date</label>
           <input
             id='recurring-dates-tab-start-input'
             className='cursor-pointer text-sm'
@@ -418,8 +409,8 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             {...register('repeating.startDate')}
           />
         </div>
-        <div>
-          <label className='mb-2 block text-sm'>End Date</label>
+        <div className={isMinimized ? 'flex justify-between' : ''}>
+          <label className={`${isMinimized ? 'mr-2 truncate pt-[1px]' : 'mb-2'} block text-sm`}>End Date</label>
           <input
             id='recurring-dates-tab-end-input'
             className='cursor-pointer text-sm'
@@ -429,7 +420,24 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         </div>
       </div>
     )
-  }, [register])
+  }, [isMinimized, register])
+
+  const recurringPanel = useMemo(() => {
+    return (
+      <>
+        <div className='pb-5'>
+          <Tabs currentIndex={currentTabIndex}>
+            <Tabs.Title id='recurring-dates-tab-weekly'>Weekly</Tabs.Title>
+            {weeklyRecurringField}
+            <Tabs.Title id='recurring-dates-tab-monthly'>Monthly</Tabs.Title>
+            {monthlyRecurringField}
+          </Tabs>
+        </div>
+        {startAndEndDatesRecurringField}
+        {errors.repeating && <p className='mt-2 text-sm text-red-500'>{errors.repeating.message}</p>}
+      </>
+    )
+  }, [currentTabIndex, errors.repeating, monthlyRecurringField, startAndEndDatesRecurringField, weeklyRecurringField])
 
   const recurringDatesFields = useMemo(() => {
     return (
@@ -453,16 +461,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                 leaveTo='transform scale-95 opacity-0'
               >
                 <Disclosure.Panel id='recurring-dates-panel' className='pt-4 pb-2'>
-                  <div className='pb-5'>
-                    <Tabs currentIndex={currentTabIndex}>
-                      <Tabs.Title id='recurring-dates-tab-weekly'>Weekly</Tabs.Title>
-                      {weeklyRecurringField}
-                      <Tabs.Title id='recurring-dates-tab-monthly'>Monthly</Tabs.Title>
-                      {monthlyRecurringField}
-                    </Tabs>
-                  </div>
-                  {startAndEndDatesRecurringField}
-                  {errors.repeating && <p className='mt-2 text-sm text-red-500'>{errors.repeating.message}</p>}
+                  {recurringPanel}
                 </Disclosure.Panel>
               </Transition>
             </>
@@ -470,7 +469,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         </Disclosure>
       </div>
     )
-  }, [currentTabIndex, errors.repeating, monthlyRecurringField, startAndEndDatesRecurringField, weeklyRecurringField])
+  }, [recurringPanel])
 
   const buttonsAtBottom = useMemo(() => {
     return (
@@ -478,7 +477,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         <Button
           id='select-individual-dates-btn'
           type='button'
-          text={'Select Individual Dates'}
+          text={'Select Dates'}
           className='mr-3 items-center'
           onClick={() => {
             const startDate = getValues('repeating.startDate')
@@ -517,6 +516,40 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       </div>
     )
   }, [dirtyDates, dispatch, getValues, handleSubmit, isDirty, isSubmitting, method, onSubmit])
+
+  const saveCancelWhenMinimized = useMemo(() => {
+    return (
+      <Modal.Minimized className={'w-[17vw] rounded-md border-2 border-slate-200 bg-white p-2'}>
+        {method !== 'POST' && (
+          <span className='flex w-full items-center truncate px-2 pb-1'>
+            <p className='text-slate-700'>Editing:</p>
+            <Icon iconName={watchIcon} color={watchColor} className='mx-1 min-w-fit' />
+            <p className='font-semibold'>{watchName}</p>
+          </span>
+        )}
+        {recurringPanel}
+        <span className='flex w-full'>
+          <button
+            id='cancel-btn-during-selecting'
+            type='button'
+            className='mr-3 inline-flex w-full animate-pulse items-center justify-center rounded-md border border-transparent bg-slate-100 py-2 px-4 text-slate-900 enabled:hover:bg-slate-200 disabled:opacity-75'
+            onClick={() => {
+              setIsMinimizedCallback(false)
+              dispatch(cancelDateSelection())
+            }}
+          >
+            Cancel
+          </button>
+          <Button
+            id='save-btn-during-selecting'
+            text='Save'
+            onClick={() => setIsMinimizedCallback(false)}
+            className='w-full animate-pulse'
+          />
+        </span>
+      </Modal.Minimized>
+    )
+  }, [dispatch, method, recurringPanel, setIsMinimizedCallback, watchColor, watchIcon, watchName])
 
   return (
     <>

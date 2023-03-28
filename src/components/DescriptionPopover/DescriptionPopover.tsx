@@ -40,7 +40,7 @@ export const DescriptionPopover = ({
   }
   const renderPopover = useCallback(
     (catComponent: JSX.Element, category: CategoryFullState) => {
-      const descText = category?.description.trim().length === 0 ? 'No description provided!' : category?.description
+      const descText = category?.description.trim().length === 0 ? 'No description provided.' : category?.description
       const titleLength = category?.name.length + category?.creator.name.length
       const email = 'mailto:' + category?.creator.email
 
@@ -76,8 +76,8 @@ export const DescriptionPopover = ({
                   ? '-translate-y-40'
                   : '-translate-y-32'
                 : monthOffset === -1
-                ? '-translate-y-12'
-                : ''
+                  ? '-translate-y-12'
+                  : ''
             break
           case CalendarInterval.YEAR_SCROLL:
             translateXClass =
@@ -144,7 +144,12 @@ export const DescriptionPopover = ({
                 <div className='max-w-60 h-fit max-h-60 w-60 overflow-y-auto break-words rounded-lg rounded-md bg-white p-3 font-normal leading-7'>
                   <p className='text-center text-base text-slate-400'>{currentDay}</p>
                   <h1 className='pt-1 text-base'>{category?.name + ' #' + category?.id}</h1>
-                  <p className='pt-1 text-sm text-slate-700'>{descText}</p>
+                  <p
+                    className={`pt-1 text-sm ${descText === 'No description provided.' ? 'italic text-slate-500' : 'text-slate-700'
+                      }`}
+                  >
+                    {descText}
+                  </p>
                   <p className='pt-2 text-xs text-slate-500'>
                     creator:{' '}
                     <a className='text-blue-600 underline visited:text-purple-600 hover:text-blue-800' href={email}>

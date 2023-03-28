@@ -63,7 +63,7 @@ export const CsvModal = () => {
       const categories = response?.success?.appData
       const appData = setCategoryShow(categories!)
       dispatch(setAppData(appData))
-      dispatch(setAlert({ message: `successfully added ${createdEntries} entries`, type: 'success', show: true }))
+      dispatch(setAlert({ message: `Successfully added ${createdEntries} entries`, type: 'success', show: true }))
     }
   }
 
@@ -81,6 +81,8 @@ export const CsvModal = () => {
         showCloseBtn={false}
         bodyPadding='p-6'
         minWidth='35vw'
+        buttonId={'csv-import-modal-button'}
+        id='import-modal-div'
       >
         <div className='flex h-full w-full flex-col'>
           <h3 className='mb-2 text-lg font-medium'>Import from CSV</h3>

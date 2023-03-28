@@ -88,7 +88,7 @@ describe('Edit Category', () => {
         .children('label')
         .children('span')
         .children('svg')
-        .children('title')
+        .invoke('attr', 'class')
         .should('contain', iconPickerIcons[0])
     })
     it('should edit a new master category and icon search', () => {
@@ -110,7 +110,7 @@ describe('Edit Category', () => {
         .children('label')
         .children('span')
         .children('svg')
-        .children('title')
+        .invoke('attr', 'class')
         .should('contain', 'Airplane')
     })
   })

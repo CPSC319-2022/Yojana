@@ -80,7 +80,7 @@ describe('Create Category', () => {
         .children('label')
         .children('span')
         .children('svg')
-        .children('title')
+        .invoke('attr', 'class')
         .should('contain', iconPickerIcons[0])
     })
 
@@ -102,7 +102,7 @@ describe('Create Category', () => {
         .children('label')
         .children('span')
         .children('svg')
-        .children('title')
+        .invoke('attr', 'class')
         .should('contain', 'Airplane')
     })
   })
