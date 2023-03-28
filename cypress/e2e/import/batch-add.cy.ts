@@ -3,10 +3,6 @@
 import 'cypress-file-upload'
 
 describe('Batch Import Entries Tests', () => {
-  before(() => {
-    cy.resetDb()
-  })
-
   function runImportProcess(fileName: string, iconString: string) {
     cy.get('div#category-item-1').should('exist')
     cy.get('div#category-item-1').should('be.visible')
