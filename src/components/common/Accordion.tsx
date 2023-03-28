@@ -3,7 +3,7 @@ import { Disclosure } from '@headlessui/react'
 import { Icon, IconName } from '@/components/common/Icon'
 import React from 'react'
 
-export const Accordion = ({ children, disable }: { children: React.ReactNode; disable: boolean }) => {
+export const Accordion = ({ children, disable }: { children: React.ReactNode; disable?: boolean }) => {
   const items = getChildrenByType(children, Accordion.Item)
   return (
     <div className={`w-full ${disable ? 'pointer-events-none' : ''}`}>
