@@ -46,7 +46,7 @@ describe('edit weekly recurring tests', () => {
     cy.get('button#create-category-submit-btn').trigger('click').click()
 
     // checks October 2023 column
-    cy.checkIconsInDays('span.newWeeklyCat-icon', 129, 1, 6, 12)
+    cy.checkIconsInDays('span.20-icon', 129, 1, 6, 12)
   }
 
   describe('admin', () => {
