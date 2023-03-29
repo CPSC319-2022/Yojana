@@ -1,3 +1,4 @@
+import { Icon, IconName } from '@/components/common'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
@@ -6,7 +7,6 @@ import {
   getPrevCurrNextMonthSelectedDates,
   toggleIndividualDate
 } from '@/redux/reducers/DateSelectorReducer'
-import { Icon, IconName } from '@/components/common'
 import { getDayStyling } from '@/utils/day'
 
 import {
@@ -17,13 +17,13 @@ import {
   isYearInterval,
   isYearScrollInterval
 } from '@/redux/reducers/MainCalendarReducer'
-import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { DescriptionPopover } from '../DescriptionPopover'
-import dayjs, { Dayjs } from 'dayjs'
-import { Popover, Transition } from '@headlessui/react'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 import { useIsomorphicLayoutEffect } from '@/utils/useIsomorphicLayoutEffect'
+import { Popover, Transition } from '@headlessui/react'
+import dayjs, { Dayjs } from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { DescriptionPopover } from '../DescriptionPopover'
 
 dayjs.extend(weekOfYear)
 
@@ -251,10 +251,10 @@ export const Month = (props: MonthProps) => {
   )
 
   const appearBelow = useCallback(
-    (offsetFromMonthStart: number) => {
+    (offsetFromMonthStart: number, month: number) => {
       if (isMonthView) return offsetFromMonthStart < 15
-      if (isQuarterlyView) return props.monthOffset === -2 || (props.monthOffset === -1 && offsetFromMonthStart < 21)
-      if (isYearScrollView) return props.monthOffset < 5
+      if (isQuarterlyView) return props.monthOffset === -2 || (props.monthOffset === -1 && offsetFromMonthStart < 15)
+      if (isYearScrollView) return month % 2 == 0 || props.monthOffset < 5
       else return props.monthOffset < 2
     },
     [isMonthView, isQuarterlyView, props.monthOffset]
@@ -262,14 +262,22 @@ export const Month = (props: MonthProps) => {
 
   const renderPopover = useCallback(
     (day: Dayjs, offsetFromMonthStart: number, allDayBlocksLength: number) => {
-      const translateXClass =
-        day.day() > 4 || (day.month() % 2 !== 0 && !isMonthView)
-          ? useBanners
-            ? '-translate-x-32'
-            : '-translate-x-60'
-          : ''
-      const below = appearBelow(offsetFromMonthStart)
-      const translateYClass = below ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
+      const translateXClass = !(isMonthView || isQuarterlyView || isYearScrollView)
+        ? day.day() <= 3
+          ? ''
+          : '-translate-x-60'
+        : (day.day() > 4 || (day.month() % 2 !== 0 && !isMonthView)) && !isYearScrollView
+        ? useBanners
+          ? '-translate-x-32'
+          : '-translate-x-60'
+        : day.day() > 3 && isYearScrollView
+        ? '-translate-x-60'
+        : ''
+      const below = appearBelow(offsetFromMonthStart, day.month())
+      let translateYClass = below ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
+      if (isYearScrollView) translateYClass = day.month() <= 1 ? '-translate-y-64 flex h-60 flex-col justify-end' : ''
+
+      // November, December = month() 0, 1
       return (
         <Popover className={`${useBanners ? 'mx-1 mt-1' : 'h-6 w-6'} relative`} key={day.format('YY-MM-DD')}>
           {renderPopoverButton(allDayBlocksLength, day)}

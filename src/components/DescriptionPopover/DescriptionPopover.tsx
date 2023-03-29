@@ -55,13 +55,12 @@ export const DescriptionPopover = ({
               currentDay >= 15 ? (titleLength * 2 + descText.length >= 128 ? '-translate-y-40' : '-translate-y-32') : ''
             break
           case CalendarInterval.FOUR_MONTHS:
-            translateXClass =
-              monthOffset % 2 !== 0 ? '-translate-x-40' : monthOffset && monthOffset === 2 ? 'translate-x-5' : ''
+            translateXClass = dayOffset >= 3 ? '-translate-x-40' : ''
             translateYClass =
               monthOffset >= 2 ? (titleLength * 2 + descText.length >= 128 ? '-translate-y-40' : '-translate-y-32') : ''
             break
           case CalendarInterval.MONTH:
-            translateXClass = dayOffset && dayOffset >= 6 ? '-translate-x-40' : ''
+            translateXClass = dayOffset >= 3 ? '-translate-x-40' : ''
             translateYClass =
               monthOffset >= 15
                 ? titleLength * 2 + descText.length >= 128
@@ -70,7 +69,7 @@ export const DescriptionPopover = ({
                 : ''
             break
           case CalendarInterval.QUARTERLY:
-            translateXClass = '-translate-x-40'
+            translateXClass = dayOffset >= 3 ? '-translate-x-40' : ''
             translateYClass =
               monthOffset === 0
                 ? titleLength * 2 + descText.length >= 128
@@ -81,8 +80,7 @@ export const DescriptionPopover = ({
                 : ''
             break
           case CalendarInterval.YEAR_SCROLL:
-            translateXClass =
-              monthOffset % 2 !== 0 ? '-translate-x-60' : monthOffset && monthOffset === 2 ? 'translate-x-5' : ''
+            translateXClass = dayOffset <= 3 ? '' : '-translate-x-60'
             translateYClass =
               monthOffset >= 6 ? (titleLength * 2 + descText.length >= 128 ? '-translate-y-40' : '-translate-y-32') : ''
             break
@@ -90,7 +88,7 @@ export const DescriptionPopover = ({
         translateXClass = isNested ? '-translate-x-60' : translateXClass
         translateYClass = isNested ? '-translate-y-40' : translateYClass
       } else if (type === 'block') {
-        translateXClass = dayOffset >= 6 ? '-translate-x-60' : 'translate-x-6'
+        translateXClass = dayOffset >= 3 ? '-translate-x-40' : 'translate-x-6'
         translateYClass =
           monthOffset >= 15 ? (titleLength * 2 + descText.length >= 128 ? '-translate-y-40' : '-translate-y-32') : ''
         translateXClass = isNested ? (dayOffset < 3 ? 'translate-x-60' : '-translate-x-60') : translateXClass
