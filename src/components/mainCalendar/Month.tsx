@@ -252,7 +252,7 @@ export const Month = (props: MonthProps) => {
 
   const appearBelow = useCallback(
     (offsetFromMonthStart: number) => {
-      if (isMonthView) return offsetFromMonthStart < 21
+      if (isMonthView) return offsetFromMonthStart < 15
       if (isQuarterlyView) return props.monthOffset === -2 || (props.monthOffset === -1 && offsetFromMonthStart < 21)
       if (isYearScrollView) return props.monthOffset < 5
       else return props.monthOffset < 2
@@ -263,7 +263,11 @@ export const Month = (props: MonthProps) => {
   const renderPopover = useCallback(
     (day: Dayjs, offsetFromMonthStart: number, allDayBlocksLength: number) => {
       const translateXClass =
-        day.day() > 4 || day.month() % 2 !== 0 ? (useBanners ? '-translate-x-32' : '-translate-x-60') : ''
+        day.day() > 4 || (day.month() % 2 !== 0 && !isMonthView)
+          ? useBanners
+            ? '-translate-x-32'
+            : '-translate-x-60'
+          : ''
       const below = appearBelow(offsetFromMonthStart)
       const translateYClass = below ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
       return (
@@ -277,6 +281,7 @@ export const Month = (props: MonthProps) => {
             leave='transition ease-in duration-150'
             leaveFrom={`opacity-100 ${below ? 'translate-y-0' : ''}`}
             leaveTo={`opacity-0 ${below ? 'translate-y-1' : ''}`}
+            beforeLeave={() => setOverflowVisible(-1)}
           >
             <Popover.Panel className={`absolute z-50 transform ${translateXClass} ${translateYClass}`}>
               <style jsx>{`
@@ -391,6 +396,7 @@ export const Month = (props: MonthProps) => {
       getSelectedSettings,
       daysInMonth,
       overflowVisible,
+      popoverOpen,
       preferences.showWeekNumbers.value,
       isMonthView,
       isQuarterlyView,
