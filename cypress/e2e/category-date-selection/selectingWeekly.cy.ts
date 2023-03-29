@@ -38,7 +38,7 @@ describe('select weekly recurring tests', () => {
       cy.get('button#create-category-submit-btn').trigger('click').click()
 
       // Check each column in year view to match the selected weekly recurring dates
-      cy.checkIconsInDays('span.newWeeklyCat-icon', 0, 2, -1, 12)
+      cy.checkIconsInDays('span.20-icon', 0, 2, -1, 12)
     })
 
     it('should be able to change start and end date for weekly recurring during creation in 2023 (MASTER)', () => {
@@ -60,7 +60,7 @@ describe('select weekly recurring tests', () => {
       cy.get('button#create-category-submit-btn').trigger('click').click()
 
       // checks February 2023 column
-      cy.checkIconsInDays('span.newWeeklyCat-icon', 25, 1, -1, 12, 325)
+      cy.checkIconsInDays('span.20-icon', 25, 1, -1, 12, 325)
     })
   })
 
@@ -85,7 +85,7 @@ describe('select weekly recurring tests', () => {
       cy.get('button#create-category-submit-btn').trigger('click').click()
 
       // Check each column in year view to match the selected weekly recurring dates
-      cy.checkIconsInDays('span.newWeeklyCat-icon', 24, 2, -1, 12)
+      cy.checkIconsInDays('span.20-icon', 24, 2, -1, 12)
     })
 
     it('should be able to change start and end date for weekly recurring during creation in 2023 (PERSONAL)', () => {
@@ -104,7 +104,7 @@ describe('select weekly recurring tests', () => {
       cy.get('button#create-category-submit-btn').trigger('click').click()
 
       // checks April 2023 column
-      cy.checkIconsInDays('span.newWeeklyCat-icon', 3, 1, -1, 12, 327)
+      cy.checkIconsInDays('span.20-icon', 3, 1, -1, 12, 327)
     })
   })
 })
