@@ -1,9 +1,9 @@
-describe('View all category', () => {
-  const checked = (number) => {
+describe('Select all category', () => {
+  const checked = (number: number) => {
     cy.get(`div#category-item-${number}`).find('input[type="checkbox"]').should('have.prop', 'checked', true)
   }
 
-  const notChecked = (number) => {
+  const notChecked = (number: number) => {
     cy.get(`div#category-item-${number}`).find('input[type="checkbox"]').should('have.prop', 'checked', false)
   }
 
@@ -11,10 +11,6 @@ describe('View all category', () => {
     beforeEach(() => {
       cy.login('admin')
       cy.visit('/')
-    })
-
-    afterEach(() => {
-      cy.resetDb()
     })
 
     it('should uncheck all checkboxes in master when eye is clicked and when eye clicked again all should be checked', () => {
@@ -38,10 +34,6 @@ describe('View all category', () => {
     beforeEach(() => {
       cy.login('pleb')
       cy.visit('/')
-    })
-
-    afterEach(() => {
-      cy.resetDb()
     })
 
     it('should uncheck all checkboxes in master when eye is clicked and when eye clicked again all should be checked', () => {

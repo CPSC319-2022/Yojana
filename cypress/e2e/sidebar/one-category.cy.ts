@@ -1,4 +1,4 @@
-describe('View all category', () => {
+describe('One category', () => {
   const checkPersonalCategory = () => {
     cy.get('div[id="category-item-20"]').should('not.exist')
     cy.get('button#create-category-btn').click()

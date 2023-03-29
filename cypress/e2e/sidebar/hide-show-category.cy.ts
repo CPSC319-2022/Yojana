@@ -1,8 +1,8 @@
 describe('Accordian Drop Down category', () => {
-  const checkExist = (number) => {
+  const checkExist = (number: number) => {
     cy.get(`div#category-item-${number}`).should('exist')
   }
-  const checkNotExist = (number) => {
+  const checkNotExist = (number: number) => {
     cy.get(`div#category-item-${number}`).should('not.exist')
   }
 
@@ -10,10 +10,6 @@ describe('Accordian Drop Down category', () => {
     beforeEach(() => {
       cy.login('admin')
       cy.visit('/')
-    })
-
-    afterEach(() => {
-      cy.resetDb()
     })
 
     it('should collapse the view when arrow is clicked Master', () => {
@@ -41,10 +37,6 @@ describe('Accordian Drop Down category', () => {
     beforeEach(() => {
       cy.login('pleb')
       cy.visit('/')
-    })
-
-    afterEach(() => {
-      cy.resetDb()
     })
 
     it('should collapse the view when arrow is clicked Master', () => {
