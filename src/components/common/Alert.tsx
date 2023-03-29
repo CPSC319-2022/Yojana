@@ -27,7 +27,7 @@ export const Alert = () => {
         leaveFrom='opacity-100'
         leaveTo='opacity-0'
       >
-        <div className='fixed top-10 left-0 right-0 z-50 mx-auto w-3/4 md:w-1/2'>
+        <div className='fixed top-10 left-0 right-0 z-50 mx-auto w-3/4 md:w-1/2' id='alert'>
           <style jsx>
             {`
               .alert {

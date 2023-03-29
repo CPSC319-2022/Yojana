@@ -10,7 +10,7 @@ Cypress.Commands.add('resetDb', () => {
 
 /* 
 checks:
-  - assert that consecutiveDays have the new icon (span#id or idToSearch)
+  - assert that consecutiveDays have the new icon (span.id or classToSearch)
   - assert that the next daysToBeSkipped or 7-consecutiveDays do not have the new icon 
   - repeat
 
@@ -21,7 +21,7 @@ checks:
 Cypress.Commands.add(
   'checkIconsInDays',
   (
-    idToSearch: string,
+    classToSearch: string,
     startingDate: number,
     consecutiveDays: number,
     daysToBeSkipped: number,
@@ -39,9 +39,9 @@ Cypress.Commands.add(
 
       cy.get(currentDivId).within(() => {
         if (consDaysLeft > 0) {
-          cy.get(idToSearch).should('exist')
+          cy.get(classToSearch).should('exist')
         } else {
-          cy.get(idToSearch).should('not.exist')
+          cy.get(classToSearch).should('not.exist')
         }
       })
 
@@ -67,8 +67,6 @@ Cypress.Commands.add(
 declare global {
   namespace Cypress {
     interface Chainable {
-      login(type: 'admin' | 'pleb'): Chainable<Element>
-      resetDb(): Chainable<Element>
       checkIconsInDays: (
         idToSearch: string,
         startingDate: number,
@@ -78,6 +76,10 @@ declare global {
         lastDate?: number,
         targetLastDate?: number
       ) => void
+
+      login(type: 'admin' | 'pleb'): Chainable<Element>
+
+      resetDb(): Chainable<Element>
     }
   }
 }

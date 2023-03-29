@@ -23,7 +23,7 @@ describe('manual selecting individual dates tests', () => {
     cy.get('button#create-category-submit-btn').trigger('click').click()
 
     // check if the icon is added to Jan 1 2023 ONLY
-    cy.checkIconsInDays('span#newCat-icon', 0, 1, 364, 12)
+    cy.checkIconsInDays('span.newCat-icon', 0, 1, 364, 12)
   }
 
   const doubleClick1Date = (forAdmin: boolean) => {
@@ -45,7 +45,7 @@ describe('manual selecting individual dates tests', () => {
     cy.get('button#create-category-submit-btn').trigger('click').click()
 
     // check if the icon is added to Jan 1 2023 ONLY
-    cy.checkIconsInDays('span#newCat-icon', 0, 1, 364, 12)
+    cy.checkIconsInDays('span.newCat-icon', 0, 1, 364, 12)
   }
 
   const selectThreeDatesFEB = (forAdmin: boolean) => {
@@ -66,7 +66,7 @@ describe('manual selecting individual dates tests', () => {
     cy.get('button#create-category-submit-btn').trigger('click').click()
 
     // check if the icon is added to Feb (1, 5, 9) 2023 ONLY
-    cy.checkIconsInDays('span#newCat-icon', 1, 1, 3, 12, 333, 97)
+    cy.checkIconsInDays('span.newCat-icon', 1, 1, 3, 12, 333, 97)
   }
 
   describe('admin', () => {
@@ -156,7 +156,7 @@ describe('manual editing individual dates tests', () => {
     cy.get('div#edit-category-modal-div').scrollTo('bottom')
     cy.get('button#create-category-submit-btn').trigger('click').click()
     // check if the icon is added to Jan 1 2023 ONLY
-    cy.checkIconsInDays('span#newCat-icon', 0, 1, 364, 12)
+    cy.checkIconsInDays('span.newCat-icon', 0, 1, 364, 12)
   }
 
   const selectDuringEditThreeDatesFEB = (forAdmin: boolean) => {
@@ -188,7 +188,7 @@ describe('manual editing individual dates tests', () => {
     cy.get('button#create-category-submit-btn').trigger('click').click()
 
     // check if the icon is added to Feb (1, 5, 9) 2023 ONLY
-    cy.checkIconsInDays('span#newCat-icon', 1, 1, 3, 12, 333, 97)
+    cy.checkIconsInDays('span.newCat-icon', 1, 1, 3, 12, 333, 97)
   }
 
   describe('admin', () => {
