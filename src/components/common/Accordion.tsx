@@ -23,6 +23,7 @@ interface AccordionItemProps {
   id?: string
   secondIcon?: IconName
   secondIconOnClick?: () => void
+  secondIconId?: string
 }
 
 const AccordionItem = ({
@@ -31,6 +32,7 @@ const AccordionItem = ({
   size = 'sm',
   id,
   secondIcon,
+  secondIconId,
   secondIconOnClick = () => {}
 }: AccordionItemProps) => {
   const header = getChildByType(children, Accordion.Header)
@@ -53,6 +55,7 @@ const AccordionItem = ({
                 <Icon
                   iconName={secondIcon}
                   className={`mr-3 h-5 w-5`}
+                  id={secondIconId}
                   onClick={(e) => {
                     // prevent the accordion from toggling
                     e.stopPropagation()
