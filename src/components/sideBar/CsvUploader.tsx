@@ -96,11 +96,12 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchRespons
               <p className='ml-2 text-slate-600'>Uploaded: {csvFileName}</p>
             </div>
             <div className='flex space-x-4'>
-              <Button onClick={() => handleSubmit()} text='Import' />
+              <Button onClick={() => handleSubmit()} id='import-submit' text='Import' />
               <button
                 type='button'
                 className='mr-3 inline-flex justify-center rounded-md border border-transparent bg-slate-100 py-2 px-4 text-slate-900 enabled:hover:bg-slate-200 disabled:opacity-75'
                 onClick={() => setCsvFileName('')}
+                id='import-cancel'
               >
                 Cancel
               </button>
@@ -109,10 +110,10 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchRespons
         </div>
       ) : (
         <div
-          {...getRootProps()}
+          {...getRootProps({ 'data-cy': 'dropzone' })}
           className='flex h-48 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-slate-300 hover:border-emerald-500'
         >
-          <input {...getInputProps()} accept='.csv' />
+          <input {...getInputProps()} accept='.csv' id='dropzone' />
           <div className='text-center'>
             {isDragActive ? (
               <p className='text-slate-600'>Drop the file here ...</p>
