@@ -134,21 +134,21 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       const hours = hoursInMonth(monthStartDate)
       return (
         <span key={`col-${columnNum}-header`}>
-          <h6
+          <h3
             className={`top-0 z-10 bg-slate-100 text-center text-xs text-slate-400 ${
-              preferences.showWorkingHours.value ? '' : 'hidden'
+              preferences.showWorkingHours.value ? '' : 'hidden' && getForPrinting ? '' : 'hidden'
             }`}
             key={`col-${columnNum}-header`}
           >
             {columnNum % 5 === 0 ? '\u00A0' : `${hours} hrs`}
-          </h6>
+          </h3>
           <h3 className='sticky top-0 z-10 bg-slate-100 text-center text-slate-400' key={`col-${columnNum}-header`}>
             {columnNum % 5 === 0 ? '\u00A0' : monthStartDate.format('MMM')}
           </h3>
         </span>
       )
     })
-  }, [yearStartDate, hoursInMonth])
+  }, [yearStartDate, hoursInMonth, getForPrinting, preferences.showWorkingHours.value])
 
   const days = useMemo(() => {
     return Array.from(Array(31).keys()).map((dateNum) => {
