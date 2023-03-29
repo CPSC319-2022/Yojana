@@ -1,10 +1,10 @@
+import { Month } from '@/components/mainCalendar/Month'
+import { CalendarInterval } from '@/constants/enums'
 import { useAppSelector } from '@/redux/hooks'
+import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import { getDate, getInterval, isQuarterlyInterval, isYearScrollInterval } from '@/redux/reducers/MainCalendarReducer'
 import { intervalToNumMonths, useGetHoursInMonth } from '@/utils/month'
-import { Month } from '@/components/mainCalendar/Month'
 import dayjs from 'dayjs'
-import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
-import { CalendarInterval } from '@/constants/enums'
 import { useMemo } from 'react'
 
 export const MultiMonth = () => {
@@ -45,7 +45,11 @@ export const MultiMonth = () => {
       <div key={index} className='h-full'>
         <h3 className='inline-flex flex-grow pl-1'>{dateInMonth.format('MMMM')}</h3>
         <h4 className='inline-flex pl-1 text-sm text-slate-400'>{hoursInMonth} hrs</h4>
-        <Month className='h-[90%] flex-grow' monthOffset={index} key={index}></Month>
+        <Month
+          className='h-[90%] flex-grow'
+          monthOffset={isYearScrollView ? monthOffset : index}
+          key={isYearScrollView ? monthOffset : index}
+        />
       </div>
     )
   })
