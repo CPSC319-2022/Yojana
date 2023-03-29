@@ -5,7 +5,8 @@ import {
   setMonthCategoryAppearance,
   setShowWeekNumbers,
   setYearOverflow,
-  setYearShowGrid
+  setYearShowGrid,
+  setShowWorkingHours
 } from '@/redux/reducers/PreferencesReducer'
 import { setCookieMaxAge } from '@/utils/cookies'
 
@@ -17,7 +18,8 @@ export const PreferenceModal = ({
   setIsModalOpen: (isModalOpen: boolean) => void
 }) => {
   const dispatch = useAppDispatch()
-  const { yearShowGrid, yearOverflow, monthCategoryAppearance, showWeekNumbers } = useAppSelector(getPreferences)
+  const { yearShowGrid, yearOverflow, monthCategoryAppearance, showWeekNumbers, showWorkingHours } =
+    useAppSelector(getPreferences)
 
   return (
     <Modal
@@ -64,6 +66,17 @@ export const PreferenceModal = ({
                   }}
                   tooltipIcon='QuestionCircle'
                   tooltipText='Show or hide the grid lines for days.'
+                />
+                <Toggle
+                  textToToggle={['Show working hours', 'Hide working hours']}
+                  name={showWorkingHours.cookieName}
+                  preference={showWorkingHours.value}
+                  onChange={() => {
+                    dispatch(setShowWorkingHours(!showWorkingHours.value))
+                    setCookieMaxAge(showWorkingHours.cookieName, !showWorkingHours.value)
+                  }}
+                  tooltipIcon='QuestionCircle'
+                  tooltipText='Show working hours in the year view.'
                 />
               </div>
             </Accordion.Body>

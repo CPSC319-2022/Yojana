@@ -134,7 +134,12 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       const hours = hoursInMonth(monthStartDate)
       return (
         <span key={`col-${columnNum}-header`}>
-          <h6 className='top-0 z-10 bg-slate-100 text-center text-xs text-slate-400' key={`col-${columnNum}-header`}>
+          <h6
+            className={`top-0 z-10 bg-slate-100 text-center text-xs text-slate-400 ${
+              preferences.showWorkingHours.value ? '' : 'hidden'
+            }`}
+            key={`col-${columnNum}-header`}
+          >
             {columnNum % 5 === 0 ? '\u00A0' : `${hours} hrs`}
           </h6>
           <h3 className='sticky top-0 z-10 bg-slate-100 text-center text-slate-400' key={`col-${columnNum}-header`}>

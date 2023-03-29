@@ -39,7 +39,7 @@ export const AccountDropdown = ({ session }: { session: Session }) => {
 
   return (
     <div id='account-dropdown'>
-      <Dropdown text='Account' containerClassName='w-[12vw]'>
+      <Dropdown id='account-dropdown-menu' text='Account' containerClassName='w-[12vw]'>
         <Dropdown.Button label={userName} onClick={() => {}} clickable={false} />
         <Dropdown.Divider />
         <Dropdown.Button label='Preferences' onClick={() => setIsModalOpen(true)} />
@@ -63,7 +63,7 @@ export const AccountDropdown = ({ session }: { session: Session }) => {
             }}
           />
         </Dropdown.Accordion>
-        <Dropdown.Button label='Print Calendar' onClick={handlePrint} />
+        <Dropdown.Button id='print-cal-btn' label='Print Calendar' onClick={handlePrint} />
         <Dropdown.Button label='Logout' onClick={() => signOut()} />
       </Dropdown>
       <ComponentToPrint ref={printComponentRef} />

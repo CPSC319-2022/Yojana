@@ -27,6 +27,10 @@ interface State {
       value: boolean
       cookieName: string
     }
+    showWorkingHours: {
+      value: boolean
+      cookieName: string
+    }
   }
 }
 
@@ -50,6 +54,10 @@ export const defaultPreferences = {
   showWeekNumbers: {
     value: false,
     cookieName: 'yojana.show-week-numbers'
+  },
+  showWorkingHours: {
+    value: false,
+    cookieName: 'yojana.show-working-hours'
   }
 }
 
@@ -72,6 +80,9 @@ const preferencesSlice = createSlice({
     },
     setShowWeekNumbers: (state, action: PayloadAction<boolean>) => {
       state.showWeekNumbers.value = action.payload
+    },
+    setShowWorkingHours: (state, action: PayloadAction<boolean>) => {
+      state.showWorkingHours.value = action.payload
     }
   },
   extraReducers: {
@@ -85,6 +96,12 @@ const preferencesSlice = createSlice({
 })
 
 export const getPreferences = (state: State) => state.preferences
-export const { setMonthCategoryAppearance, setYearShowGrid, setYearOverflow, setIsSidebarOpen, setShowWeekNumbers } =
-  preferencesSlice.actions
+export const {
+  setMonthCategoryAppearance,
+  setYearShowGrid,
+  setYearOverflow,
+  setIsSidebarOpen,
+  setShowWeekNumbers,
+  setShowWorkingHours
+} = preferencesSlice.actions
 export const preferencesReducer = preferencesSlice.reducer
