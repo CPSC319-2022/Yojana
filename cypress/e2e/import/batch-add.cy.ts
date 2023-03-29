@@ -3,7 +3,7 @@
 import 'cypress-file-upload'
 
 describe('Batch Import Entries Tests', () => {
-  function runImportProcess(fileName: string, iconString: string) {
+  function runImportProcess(fileName: string, id: number) {
     cy.get('div#category-item-1').should('exist')
     cy.get('div#category-item-1').should('be.visible')
 
@@ -44,16 +44,7 @@ describe('Batch Import Entries Tests', () => {
     cy.get('div#2025-0')
       .children()
       .then((children) => {
-        // Get the count of child elements
-        const count = children.length
-        console.log(count) // Output the count of child elements
-        expect(count).to.equal(2)
-
-        children.each((index, child) => {
-          // Get the text of each child element
-          const text = Cypress.$(child).text()
-          if (index === 0) expect(text).to.equal(`${iconString}`)
-        })
+        cy.wrap(children).get(`span.${id}-icon`).invoke('attr', 'class').should('contain', `${id}-icon`)
       })
   }
 
@@ -68,11 +59,11 @@ describe('Batch Import Entries Tests', () => {
     })
 
     it('should be able to batch add to master category', () => {
-      runImportProcess('test-master.csv', 'Circle')
+      runImportProcess('test-master.csv', 1)
     })
 
     it('should be able to batch add to personal category', () => {
-      runImportProcess('test-personal.csv', 'CurrencyDollar')
+      runImportProcess('test-personal.csv', 14)
     })
   })
 })
