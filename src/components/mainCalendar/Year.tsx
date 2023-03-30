@@ -115,15 +115,15 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       )
     },
     [
-      getForPrinting,
-      isSelectingDates,
-      onDayClicked,
-      renderDayCategories,
-      yearNum,
-      yearSelected,
       yearStartDate,
+      yearSelected,
+      isSelectingDates,
+      yearNum,
+      currentIndexForId,
+      renderDayCategories,
+      getForPrinting,
       preferences.yearOverflow.value,
-      currentIndexForId
+      onDayClicked
     ]
   )
 
