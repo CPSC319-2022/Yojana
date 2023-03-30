@@ -150,7 +150,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     register,
     handleSubmit,
     control,
-    formState: { isSubmitting, errors, isDirty },
+    formState: { isSubmitting, isDirty },
     getValues,
     reset,
     watch
@@ -169,6 +169,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const watchColor = watch('color')
 
   const watchStartDate = watch('repeating.startDate')
+  const watchEndDate = watch('repeating.endDate')
 
   const resetForm = useCallback(() => {
     reset(() => ({
@@ -349,11 +350,15 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   }, [control, session?.user.isAdmin])
 
   const updateRecurringDates = useCallback(() => {
-    const startDate = getValues('repeating.startDate')
-    const endDate = getValues('repeating.endDate')
-    const cron = getValues('repeating.cron')
-    dispatch(setRepeatingDates(generateDatesFromCron(cron, startDate, endDate)))
-  }, [dispatch, getValues])
+    if (dayjs(watchEndDate).isAfter(watchStartDate)) {
+      const cron = getValues('repeating.cron')
+      dispatch(setRepeatingDates(generateDatesFromCron(cron, watchStartDate, watchEndDate)))
+    }
+  }, [getValues, dispatch, watchStartDate, watchEndDate])
+
+  useEffect(() => {
+    updateRecurringDates()
+  }, [watchStartDate, watchEndDate, updateRecurringDates])
 
   const weeklyRecurringField = useMemo(() => {
     return (
@@ -423,6 +428,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   }, [isMinimized, register])
 
   const recurringPanel = useMemo(() => {
+    const errorMsg = dayjs(watchEndDate).isAfter(watchStartDate) ? '' : 'End date must be after start date.'
     return (
       <>
         <div className='pb-5'>
@@ -434,10 +440,17 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           </Tabs>
         </div>
         {startAndEndDatesRecurringField}
-        {errors.repeating && <p className='mt-2 text-sm text-red-500'>{errors.repeating.message}</p>}
+        {errorMsg && <p className='my-1 text-sm text-red-500'>{errorMsg}</p>}
       </>
     )
-  }, [currentTabIndex, errors.repeating, monthlyRecurringField, startAndEndDatesRecurringField, weeklyRecurringField])
+  }, [
+    currentTabIndex,
+    monthlyRecurringField,
+    startAndEndDatesRecurringField,
+    watchEndDate,
+    watchStartDate,
+    weeklyRecurringField
+  ])
 
   const recurringDatesFields = useMemo(() => {
     return (
