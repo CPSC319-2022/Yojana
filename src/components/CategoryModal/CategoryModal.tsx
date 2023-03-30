@@ -436,7 +436,9 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   }, [isMinimized, register])
 
   const recurringPanel = useCallback(() => {
-    const errorMsg = dayjs(watchEndDate).isAfter(watchStartDate) ? '' : 'End date must be after start date.'
+    const startDate = getValues('repeating.startDate')
+    const endDate = getValues('repeating.endDate')
+    const errorMsg = dayjs(endDate).isAfter(startDate) ? '' : 'End date must be after start date.'
     return (
       <>
         <div className='pb-5'>
@@ -451,14 +453,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         {errorMsg && <p className='my-1 text-sm text-red-500'>{errorMsg}</p>}
       </>
     )
-  }, [
-    currentTabIndex,
-    monthlyRecurringField,
-    startAndEndDatesRecurringField,
-    watchEndDate,
-    watchStartDate,
-    weeklyRecurringField
-  ])
+  }, [currentTabIndex, getValues, monthlyRecurringField, startAndEndDatesRecurringField, weeklyRecurringField])
 
   const recurringDatesFields = useMemo(() => {
     return (
