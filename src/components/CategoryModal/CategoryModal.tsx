@@ -55,6 +55,12 @@ const schema = z.object({
 
 type Schema = z.infer<typeof schema>
 
+interface CronState {
+  startDate: string
+  endDate: string
+  cron: string | undefined
+}
+
 export const CategoryModal = ({ method, id, callBack }: { method: string; id: number; callBack: () => void }) => {
   const { data: session } = useSession()
   const dispatch = useAppDispatch()
@@ -65,6 +71,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const [selectedDaysOfTheWeek, setSelectedDaysOfTheWeek] = useState<DayOfWeek>([])
   const [selectedMonthRecurrenceCron, setSelectedMonthRecurrenceCron] = useState<MonthRecurrenceType | null>(null)
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
+  const [cronStateAtStart, setCronStateAtStart] = useState<CronState>({} as CronState)
 
   const getInitialMonthlyCronState = useCallback((cron: string | null | undefined): MonthRecurrenceType | null => {
     if (cron === null || cron === undefined) return null
@@ -152,6 +159,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     control,
     formState: { isSubmitting, isDirty },
     getValues,
+    setValue,
     reset,
     watch
   } = useForm<Schema>({
@@ -496,6 +504,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             const startDate = getValues('repeating.startDate')
             const endDate = getValues('repeating.endDate')
             const cron = getValues('repeating.cron')
+            setCronStateAtStart({ startDate, endDate, cron })
             dispatch(setRepeatingDates(generateDatesFromCron(cron, startDate, endDate)))
             setIsMinimized(true)
             dispatch(setIsSelectingDates(true))
@@ -549,6 +558,9 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             onClick={() => {
               setIsMinimizedCallback(false)
               dispatch(cancelDateSelection())
+              setValue('repeating.startDate', cronStateAtStart.startDate)
+              setValue('repeating.endDate', cronStateAtStart.endDate)
+              setValue('repeating.cron', cronStateAtStart.cron)
             }}
           >
             Cancel
@@ -562,7 +574,19 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         </span>
       </Modal.Minimized>
     )
-  }, [dispatch, method, recurringPanel, setIsMinimizedCallback, watchColor, watchIcon, watchName])
+  }, [
+    cronStateAtStart.cron,
+    cronStateAtStart.endDate,
+    cronStateAtStart.startDate,
+    dispatch,
+    method,
+    recurringPanel,
+    setIsMinimizedCallback,
+    setValue,
+    watchColor,
+    watchIcon,
+    watchName
+  ])
 
   return (
     <>
