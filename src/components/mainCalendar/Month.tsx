@@ -23,6 +23,7 @@ import { Popover, Transition } from '@headlessui/react'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 import { useIsomorphicLayoutEffect } from '@/utils/useIsomorphicLayoutEffect'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
+import { getLocalDateWithoutTime } from '@/utils/preprocessEntries'
 
 dayjs.extend(weekOfYear)
 
@@ -287,7 +288,8 @@ export const Month = (props: MonthProps) => {
 
   const renderDateNum = useCallback(
     (day: Dayjs, isCurrentMonth: boolean) => {
-      const isToday = dayjs().isSame(day, 'day')
+      const today = getLocalDateWithoutTime(new Date())
+      const isToday = day.isSame(today, 'day')
       const todayCircle = isToday && !isSelectingDates ? 'rounded-full bg-emerald-200 mt-1 ml-1' : ''
       return (
         <div className={`flex ${isMonthView ? 'items-center justify-center' : ''}`}>

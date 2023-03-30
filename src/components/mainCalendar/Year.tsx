@@ -9,6 +9,7 @@ import { getDayStyling } from '@/utils/day'
 import dayjs, { Dayjs } from 'dayjs'
 import { useCallback, useMemo } from 'react'
 import { DescriptionPopover } from '../DescriptionPopover'
+import { getLocalDateWithoutTime } from '@/utils/preprocessEntries'
 
 export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) => {
   const stateDate = useAppSelector(getDate)
@@ -76,7 +77,8 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       }
 
       const day = monthStartDate.add(dateOffset, 'days')
-      const isToday = day.isSame(dayjs(), 'day')
+      const today = getLocalDateWithoutTime(new Date())
+      const isToday = day.isSame(today, 'day')
       const selected = yearSelected?.[monthNum]?.[day.date()]
 
       const dayContent = isSelectingDates ? (
@@ -113,14 +115,15 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       )
     },
     [
-      getForPrinting,
-      isSelectingDates,
-      onDayClicked,
-      renderDayCategories,
-      yearNum,
-      yearSelected,
       yearStartDate,
-      preferences.yearOverflow.value
+      yearSelected,
+      isSelectingDates,
+      yearNum,
+      currentIndexForId,
+      renderDayCategories,
+      getForPrinting,
+      preferences.yearOverflow.value,
+      onDayClicked
     ]
   )
 
