@@ -78,6 +78,7 @@ export const CategoriesMenu = ({ session }: Props) => {
           secondIconOnClick={() => {
             dispatch(setCategoriesShow({ isMaster: isMaster, show: NumVisibleCategories === 0 }))
           }}
+          secondIconId={`${isMaster ? 'master' : 'personal'}-toggle-all`}
         >
           <Accordion.Header>{isMaster ? 'Master Calendar' : 'Personal Calendar'}</Accordion.Header>
           <Accordion.Body>{renderCategories(isMaster)}</Accordion.Body>

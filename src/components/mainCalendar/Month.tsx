@@ -24,6 +24,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DescriptionPopover } from '../DescriptionPopover'
+import { getLocalDateWithoutTime } from '@/utils/preprocessEntries'
 
 dayjs.extend(weekOfYear)
 
@@ -312,7 +313,8 @@ export const Month = (props: MonthProps) => {
 
   const renderDateNum = useCallback(
     (day: Dayjs, isCurrentMonth: boolean) => {
-      const isToday = dayjs().isSame(day, 'day')
+      const today = getLocalDateWithoutTime(new Date())
+      const isToday = day.isSame(today, 'day')
       const todayCircle = isToday && !isSelectingDates ? 'rounded-full bg-emerald-200 mt-1 ml-1' : ''
       return (
         <div className={`flex ${isMonthView ? 'items-center justify-center' : ''}`}>

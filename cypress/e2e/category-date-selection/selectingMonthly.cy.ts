@@ -25,11 +25,11 @@ describe('select monthly recurring tests', () => {
     cy.get('button#create-category-submit-btn').trigger('click').click()
 
     // checks column number 0 (january) of 2023
-    cy.checkIconsInDays('span.newMonthlyCat-icon', 0, 1, 27, 12)
+    cy.checkIconsInDays('span.20-icon', 0, 1, 27, 12)
     // checks column number 1 (february ) of 2023
-    cy.checkIconsInDays('span.newMonthlyCat-icon', 1, 1, 27, 12)
+    cy.checkIconsInDays('span.20-icon', 1, 1, 27, 12)
     // checks column number 6 (july) of 2023
-    cy.checkIconsInDays('span.newMonthlyCat-icon', 6, 1, 27, 12)
+    cy.checkIconsInDays('span.20-icon', 6, 1, 27, 12)
   }
 
   const createMONTHLYFIRSTSAT = (forAdmin: boolean) => {
@@ -43,11 +43,11 @@ describe('select monthly recurring tests', () => {
     cy.get('button#create-category-submit-btn').trigger('click').click()
 
     // checks column number 0 (january) of 2023
-    cy.checkIconsInDays('span.newMonthlyCat-icon', 0, 1, 27, 12)
+    cy.checkIconsInDays('span.20-icon', 0, 1, 27, 12)
     // checks column number 4 (may) of 2023
-    cy.checkIconsInDays('span.newMonthlyCat-icon', 76, 1, 27, 12)
+    cy.checkIconsInDays('span.20-icon', 76, 1, 27, 12)
     // checks column number 8 (september) of 2023
-    cy.checkIconsInDays('span.newMonthlyCat-icon', 32, 1, 27, 12)
+    cy.checkIconsInDays('span.20-icon', 32, 1, 27, 12)
   }
 
   const createMONTHLYLASTDAY = (forAdmin: boolean) => {
@@ -67,9 +67,9 @@ describe('select monthly recurring tests', () => {
     cy.get('button#create-category-submit-btn').trigger('click').click()
 
     // checks column number 6 (july) of 2023
-    cy.checkIconsInDays('span.newMonthlyCat-icon', 361, 1, 31, -12, 362, 1)
+    cy.checkIconsInDays('span.20-icon', 361, 1, 31, -12, 362, 1)
     // checks column number 7 (august) of 2023
-    cy.checkIconsInDays('span.newMonthlyCat-icon', 362, 1, 31, -12, 363, 2)
+    cy.checkIconsInDays('span.20-icon', 362, 1, 31, -12, 363, 2)
   }
 
   const createMONTHLYLASTSAT = (forAdmin: boolean) => {
@@ -89,11 +89,11 @@ describe('select monthly recurring tests', () => {
     cy.get('button#create-category-submit-btn').trigger('click').click()
 
     // checks column number 2 (march) of 2023
-    cy.checkIconsInDays('span.newMonthlyCat-icon', 290, 1, 31, 12)
+    cy.checkIconsInDays('span.20-icon', 290, 1, 31, 12)
     // checks column number 3 (april) of 2023
-    cy.checkIconsInDays('span.newMonthlyCat-icon', 338, 1, 31, 12, 339)
+    cy.checkIconsInDays('span.20-icon', 338, 1, 31, 12, 339)
     // checks column number 4 (may) of 2023
-    cy.checkIconsInDays('span.newMonthlyCat-icon', 316, 1, 31, -12, 317, 4)
+    cy.checkIconsInDays('span.20-icon', 316, 1, 31, -12, 317, 4)
   }
 
   describe('admin', () => {
