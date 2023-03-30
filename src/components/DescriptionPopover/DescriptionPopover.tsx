@@ -103,7 +103,7 @@ export const DescriptionPopover = ({
         <div className={`${type === 'icon' ? 'inline-flex' : ''}`}>
           {!isNested && closeWhenClickOutside && (
             <div
-              className='fixed absolute inset-0 top-[0vh] z-10 flex h-screen w-screen bg-transparent'
+              className='fixed absolute inset-0 top-0 z-10 flex h-screen w-screen bg-transparent transition-colors duration-300 ease-in-out'
               aria-hidden='true'
               onClick={doCloseWhenClickOutside}
             />

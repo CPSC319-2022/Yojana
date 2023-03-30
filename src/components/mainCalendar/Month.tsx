@@ -18,13 +18,13 @@ import {
   isYearScrollInterval
 } from '@/redux/reducers/MainCalendarReducer'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
+import { getLocalDateWithoutTime } from '@/utils/preprocessEntries'
 import { useIsomorphicLayoutEffect } from '@/utils/useIsomorphicLayoutEffect'
 import { Popover, Transition } from '@headlessui/react'
 import dayjs, { Dayjs } from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { DescriptionPopover } from '../DescriptionPopover'
-import { getLocalDateWithoutTime } from '@/utils/preprocessEntries'
 
 dayjs.extend(weekOfYear)
 
@@ -276,7 +276,9 @@ export const Month = (props: MonthProps) => {
         : ''
       const below = appearBelow(offsetFromMonthStart, day.month())
       let translateYClass = below ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
-      if (isYearScrollView) translateYClass = day.month() <= 1 ? '-translate-y-64 flex h-60 flex-col justify-end' : ''
+      if (isYearScrollView)
+        translateYClass =
+          day.month() <= 3 && offsetFromMonthStart <= 31 ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
 
       // November, December = month() 0, 1
       return (
@@ -284,12 +286,12 @@ export const Month = (props: MonthProps) => {
           {renderPopoverButton(allDayBlocksLength, day)}
           <Transition
             as={Fragment}
-            enter='transition ease-out duration-200'
-            enterFrom='opacity-0'
-            enterTo='opacity-100'
-            leave='transition ease-in duration-150'
-            leaveFrom={`opacity-100 ${below ? 'translate-y-0' : ''}`}
-            leaveTo={`opacity-0 ${below ? 'translate-y-1' : ''}`}
+            enter='transition ease-out duration-100'
+            enterFrom='transform opacity-0 scale-95'
+            enterTo='transform opacity-100 scale-100'
+            leave='transition ease-in duration-75'
+            leaveFrom='transform opacity-100 scale-100'
+            leaveTo='transform opacity-0 scale-95'
             beforeLeave={() => setOverflowVisible(-1)}
           >
             <Popover.Panel className={`absolute z-50 transform ${translateXClass} ${translateYClass}`}>
