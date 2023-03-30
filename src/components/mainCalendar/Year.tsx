@@ -7,7 +7,7 @@ import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 import { getDayStyling } from '@/utils/day'
 import dayjs, { Dayjs } from 'dayjs'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { DescriptionPopover } from '../DescriptionPopover'
 import { getLocalDateWithoutTime } from '@/utils/preprocessEntries'
 
@@ -23,6 +23,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
   const yearNum = yearStartDate.get('year')
 
   const dispatch = useAppDispatch()
+  const [popoverOpen, setPopoverOpen] = useState(-1)
 
   const renderDayCategories = useCallback(
     (day: Dayjs, monthNum: number, key: number) => {
@@ -48,6 +49,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
                   monthOffset={monthNum}
                   currentDay={day.date()}
                   className='inline'
+                  onClick={setPopoverOpen}
                 />
               </span>
             )
@@ -102,11 +104,14 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
           className={`tile px-0.5 
             ${getDayStyling(day.day(), isSelectingDates, selected)} 
             ${!isSelectingDates && isToday && !getForPrinting ? 'ring-2 ring-inset ring-emerald-300' : ''}
+            ${preferences.yearOverflow.value === 'wrap' || getForPrinting ? 'inline-flow break-all' : 'flex'}
             ${
-              preferences.yearOverflow.value === 'wrap' || getForPrinting
-                ? 'inline-flow break-all'
-                : 'flex overflow-x-scroll'
-            }`}
+              !(dateOffset + 1 === popoverOpen) && !(preferences.yearOverflow.value === 'wrap' || getForPrinting)
+                ? 'overflow-x-scroll'
+                : ''
+            }
+            ${dateOffset + 1 === popoverOpen ? 'flex-wrap overflow-x-visible' : ''}
+            `}
           key={`${yearNum}-${monthNum}-${dateOffset}`}
           onClick={() => onDayClicked(day, !selected || !selected?.isRecurring)}
         >
