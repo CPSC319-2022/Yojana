@@ -583,7 +583,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     watchName
   ])
 
-  const renderForm = useCallback(() => {
+  const renderForm = useMemo(() => {
     return (
       <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
         {nameField}
@@ -610,7 +610,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const modalContent = useMemo(() => {
     if (!isModalOpen) return <></>
     else if (isMinimized) return saveCancelWhenMinimized()
-    return renderForm()
+    return renderForm
   }, [isMinimized, isModalOpen, renderForm, saveCancelWhenMinimized])
 
   return (
