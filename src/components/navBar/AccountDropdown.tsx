@@ -1,13 +1,13 @@
 import { Dropdown } from '@/components/common'
+import ComponentToPrint from '@/components/navBar/ComponentToPrint'
+import { PreferenceModal } from '@/components/PreferenceModal'
+import { useAppSelector } from '@/redux/hooks'
+import { getCategories } from '@/redux/reducers/AppDataReducer'
+import { CategoryState } from '@/types/prisma'
+import { Session } from 'next-auth'
 import { signOut } from 'next-auth/react'
 import { useRef, useState } from 'react'
-import { useAppSelector } from '@/redux/hooks'
-import { CategoryState } from '@/types/prisma'
-import { getCategories } from '@/redux/reducers/AppDataReducer'
-import { PreferenceModal } from '@/components/PreferenceModal'
 import { useReactToPrint } from 'react-to-print'
-import ComponentToPrint from '@/components/navBar/ComponentToPrint'
-import { Session } from 'next-auth'
 
 export const AccountDropdown = ({ session }: { session: Session }) => {
   const userName = session?.user.name || ''
@@ -63,7 +63,15 @@ export const AccountDropdown = ({ session }: { session: Session }) => {
             }}
           />
         </Dropdown.Accordion>
-        <Dropdown.Button label='Print Calendar' onClick={handlePrint} />
+        <Dropdown.Accordion title='Print Calendar'>
+          <Dropdown.Button
+            label='Print Year View'
+            onClick={() => {
+              handlePrint()
+            }}
+          />
+          <Dropdown.Button label='Print Year Scroll View' onClick={() => {}} />
+        </Dropdown.Accordion>
         <Dropdown.Button label='Logout' onClick={() => signOut()} />
       </Dropdown>
       <ComponentToPrint ref={printComponentRef} />
