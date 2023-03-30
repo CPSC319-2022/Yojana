@@ -435,7 +435,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     )
   }, [isMinimized, register])
 
-  const recurringPanel = useMemo(() => {
+  const recurringPanel = useCallback(() => {
     const errorMsg = dayjs(watchEndDate).isAfter(watchStartDate) ? '' : 'End date must be after start date.'
     return (
       <>
@@ -482,7 +482,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                 leaveTo='transform scale-95 opacity-0'
               >
                 <Disclosure.Panel id='recurring-dates-panel' className='pt-4 pb-2'>
-                  {recurringPanel}
+                  {recurringPanel()}
                 </Disclosure.Panel>
               </Transition>
             </>
@@ -492,7 +492,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     )
   }, [recurringPanel])
 
-  const buttonsAtBottom = useMemo(() => {
+  const buttonsAtBottom = useCallback(() => {
     return (
       <div className='flex justify-end'>
         <Button
@@ -539,7 +539,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     )
   }, [dirtyDates, dispatch, getValues, handleSubmit, isDirty, isSubmitting, method, onSubmit])
 
-  const saveCancelWhenMinimized = useMemo(() => {
+  const saveCancelWhenMinimized = useCallback(() => {
     return (
       <Modal.Minimized className={'w-[17vw] rounded-md border-2 border-slate-200 bg-white p-2'}>
         {method !== 'POST' && (
@@ -549,7 +549,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             <p className='font-semibold'>{watchName}</p>
           </span>
         )}
-        {recurringPanel}
+        {recurringPanel()}
         <span className='flex w-full'>
           <button
             id='cancel-btn-during-selecting'
@@ -588,6 +588,36 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     watchName
   ])
 
+  const renderForm = useCallback(() => {
+    return (
+      <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
+        {nameField}
+        {descriptionField}
+        {colorPickerField}
+        {iconPickerField}
+        {categoryTypeField}
+        {recurringDatesFields}
+        {buttonsAtBottom()}
+      </form>
+    )
+  }, [
+    buttonsAtBottom,
+    categoryTypeField,
+    colorPickerField,
+    descriptionField,
+    handleSubmit,
+    iconPickerField,
+    nameField,
+    onSubmit,
+    recurringDatesFields
+  ])
+
+  const modalContent = useMemo(() => {
+    if (!isModalOpen) return <></>
+    else if (isMinimized) return saveCancelWhenMinimized()
+    return renderForm()
+  }, [isMinimized, isModalOpen, renderForm, saveCancelWhenMinimized])
+
   return (
     <>
       <Modal
@@ -614,16 +644,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         isMinimized={isMinimized}
         setIsMinimized={setIsMinimizedCallback}
       >
-        {saveCancelWhenMinimized}
-        <form onSubmit={handleSubmit(onSubmit)} className='mt-2'>
-          {nameField}
-          {descriptionField}
-          {colorPickerField}
-          {iconPickerField}
-          {categoryTypeField}
-          {recurringDatesFields}
-          {buttonsAtBottom}
-        </form>
+        {modalContent}
       </Modal>
     </>
   )
