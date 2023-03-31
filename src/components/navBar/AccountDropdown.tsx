@@ -6,7 +6,7 @@ import { getCategories } from '@/redux/reducers/AppDataReducer'
 import { CategoryState } from '@/types/prisma'
 import { Session } from 'next-auth'
 import { signOut } from 'next-auth/react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useReactToPrint } from 'react-to-print'
 
 export const AccountDropdown = ({ session }: { session: Session }) => {
@@ -22,6 +22,16 @@ export const AccountDropdown = ({ session }: { session: Session }) => {
     .join(',')
 
   const printComponentRef = useRef(null)
+  const [selectedView, setSelectedView] = useState('Year')
+  const [printTrigger, setPrintTrigger] = useState(false)
+
+  useEffect(() => {
+    if (printTrigger) {
+      handlePrint()
+      setPrintTrigger(false)
+    }
+  }, [printTrigger])
+
   const handlePrint = useReactToPrint({
     content: () => printComponentRef.current,
     pageStyle: `
@@ -67,14 +77,21 @@ export const AccountDropdown = ({ session }: { session: Session }) => {
           <Dropdown.Button
             label='Print Year View'
             onClick={() => {
-              handlePrint()
+              setSelectedView('Year')
+              setPrintTrigger(true)
             }}
           />
-          <Dropdown.Button label='Print Year Scroll View' onClick={() => {}} />
+          <Dropdown.Button
+            label='Print Year Scroll View'
+            onClick={() => {
+              setSelectedView('YearScroll')
+              setPrintTrigger(true)
+            }}
+          />
         </Dropdown.Accordion>
         <Dropdown.Button label='Logout' onClick={() => signOut()} />
       </Dropdown>
-      <ComponentToPrint ref={printComponentRef} />
+      <ComponentToPrint printType={selectedView} ref={printComponentRef} />
       <PreferenceModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </div>
   )

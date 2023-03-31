@@ -1,11 +1,16 @@
-import { useAppSelector } from '@/redux/hooks'
-import { getCategories } from '@/redux/reducers/AppDataReducer'
-import React from 'react'
-import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import { Icon, IconName } from '@/components/common'
 import { Year } from '@/components/mainCalendar/Year'
+import { useAppSelector } from '@/redux/hooks'
+import { getCategories } from '@/redux/reducers/AppDataReducer'
+import { getDate } from '@/redux/reducers/MainCalendarReducer'
+import React from 'react'
+import { MultiMonth } from '../mainCalendar/MultiMonth'
 
-const ComponentToPrint = React.forwardRef<HTMLDivElement>((props, ref) => {
+interface ComponentToPrintProps {
+  printType: string
+}
+
+const ComponentToPrint = React.forwardRef<HTMLDivElement, ComponentToPrintProps>(({ printType }, ref) => {
   const categories = useAppSelector(getCategories).filter((category) => category.show)
   const year = useAppSelector(getDate).year()
 
@@ -31,7 +36,7 @@ const ComponentToPrint = React.forwardRef<HTMLDivElement>((props, ref) => {
             ))}
           </div>
           <div className='mt-3 pb-3 text-center text-2xl font-bold'>{year}</div>
-          <Year getForPrinting={true} />
+          {printType === 'Year' ? <Year getForPrinting={true} /> : <MultiMonth getForPrinting={true} />}
         </div>
       </div>
     </span>
