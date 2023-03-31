@@ -5,6 +5,7 @@ import { Dayjs } from 'dayjs'
 export const intervalToNumMonths = (interval: CalendarInterval) => {
   switch (interval) {
     case CalendarInterval.YEAR:
+    case CalendarInterval.YEAR_SCROLL:
       return 12
     case CalendarInterval.FOUR_MONTHS:
       return 4

@@ -49,6 +49,7 @@ export const NavBar = ({ session }: NavBarProps) => {
   const getIntervalDescription = useMemo(() => {
     switch (interval) {
       case CalendarInterval.YEAR:
+      case CalendarInterval.YEAR_SCROLL:
         return targetDate.format('YYYY')
       case CalendarInterval.FOUR_MONTHS:
         return `${targetDate.format('MMM YYYY')} - ${targetDate.add(3, 'M').format('MMM YYYY')}`
@@ -86,8 +87,8 @@ export const NavBar = ({ session }: NavBarProps) => {
         <h4 className='flex-none text-center text-lg'>{getIntervalDescription}</h4>
         {interval === CalendarInterval.MONTH && (
           <>
-            <h3 className='px-2'>•</h3>
-            <h4 className='flex-none text-center text-lg'>{hoursInMonth} hrs</h4>
+            <h3 className='px-2 text-slate-400'>•</h3>
+            <h4 className='flex-none text-center text-lg text-slate-400'>{hoursInMonth} hrs</h4>
           </>
         )}
       </div>

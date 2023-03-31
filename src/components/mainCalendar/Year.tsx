@@ -7,8 +7,9 @@ import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 import { getDayStyling } from '@/utils/day'
 import dayjs, { Dayjs } from 'dayjs'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { DescriptionPopover } from '../DescriptionPopover'
+import { getLocalDateWithoutTime } from '@/utils/preprocessEntries'
 
 export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) => {
   const stateDate = useAppSelector(getDate)
@@ -22,6 +23,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
   const yearNum = yearStartDate.get('year')
 
   const dispatch = useAppDispatch()
+  const [popoverOpen, setPopoverOpen] = useState(-1)
 
   const renderDayCategories = useCallback(
     (day: Dayjs, monthNum: number, key: number) => {
@@ -33,7 +35,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
           const category = categoryMap[calEvent.categoryId]
           if (category.show) {
             return (
-              <span className={`px-0.5 font-bold ${category.name}-icon`} key={`${calEvent.id}-${key}`}>
+              <span className={`px-0.5 font-bold ${category.id}-icon`} key={`${calEvent.id}-${key}`}>
                 <style jsx>{`
                   * {
                     color: ${category.color};
@@ -47,6 +49,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
                   monthOffset={monthNum}
                   currentDay={day.date()}
                   className='inline'
+                  onClick={setPopoverOpen}
                 />
               </span>
             )
@@ -76,7 +79,8 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       }
 
       const day = monthStartDate.add(dateOffset, 'days')
-      const isToday = day.isSame(dayjs(), 'day')
+      const today = getLocalDateWithoutTime(new Date())
+      const isToday = day.isSame(today, 'day')
       const selected = yearSelected?.[monthNum]?.[day.date()]
 
       const dayContent = isSelectingDates ? (
@@ -100,11 +104,14 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
           className={`tile px-0.5 
             ${getDayStyling(day.day(), isSelectingDates, selected)} 
             ${!isSelectingDates && isToday && !getForPrinting ? 'ring-2 ring-inset ring-emerald-300' : ''}
+            ${preferences.yearOverflow.value === 'wrap' || getForPrinting ? 'inline-flow break-all' : 'flex'}
             ${
-              preferences.yearOverflow.value === 'wrap' || getForPrinting
-                ? 'inline-flow break-all'
-                : 'flex overflow-x-scroll'
-            }`}
+              !(dateOffset + 1 === popoverOpen) && !(preferences.yearOverflow.value === 'wrap' || getForPrinting)
+                ? 'overflow-x-scroll'
+                : ''
+            }
+            ${dateOffset + 1 === popoverOpen ? 'flex-wrap overflow-x-visible' : ''}
+            `}
           key={`${yearNum}-${monthNum}-${dateOffset}`}
           onClick={() => onDayClicked(day, !selected || !selected?.isRecurring)}
         >
@@ -113,14 +120,15 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       )
     },
     [
-      getForPrinting,
-      isSelectingDates,
-      onDayClicked,
-      renderDayCategories,
-      yearNum,
-      yearSelected,
       yearStartDate,
-      preferences.yearOverflow.value
+      yearSelected,
+      isSelectingDates,
+      yearNum,
+      currentIndexForId,
+      renderDayCategories,
+      getForPrinting,
+      preferences.yearOverflow.value,
+      onDayClicked
     ]
   )
 
