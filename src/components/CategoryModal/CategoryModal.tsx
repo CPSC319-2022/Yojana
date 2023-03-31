@@ -407,7 +407,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     )
   }, [control, selectedMonthRecurrenceCron, updateRecurringDates, watchStartDate])
 
-  const startAndEndDatesRecurringField = useMemo(() => {
+  const startAndEndDatesRecurringField = useCallback(() => {
     return (
       <div
         className={`grid ${isMinimized ? 'grid-cols-1 pb-4' : 'grid-cols-2'} gap-4`}
@@ -417,7 +417,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           <label className={`${isMinimized ? 'mr-2 truncate pt-[1px]' : 'mb-2'} block text-sm`}>Start Date</label>
           <input
             id='recurring-dates-tab-start-input'
-            className='cursor-pointer text-sm'
+            className={`cursor-pointer text-sm ${dayjs(watchStartDate).isValid() ? '' : 'bg-red-100'}`}
             type='date'
             {...register('repeating.startDate')}
           />
@@ -426,19 +426,22 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           <label className={`${isMinimized ? 'mr-2 truncate pt-[1px]' : 'mb-2'} block text-sm`}>End Date</label>
           <input
             id='recurring-dates-tab-end-input'
-            className='cursor-pointer text-sm'
+            className={`cursor-pointer text-sm ${dayjs(watchEndDate).isValid() ? '' : 'bg-red-100'}`}
             type='date'
             {...register('repeating.endDate')}
           />
         </div>
       </div>
     )
-  }, [isMinimized, register])
+  }, [isMinimized, register, watchEndDate, watchStartDate])
 
   const recurringPanel = useCallback(() => {
-    const startDate = getValues('repeating.startDate')
-    const endDate = getValues('repeating.endDate')
-    const errorMsg = dayjs(endDate).isAfter(startDate) ? '' : 'End date must be after start date.'
+    const startDate = dayjs(getValues('repeating.startDate'))
+    const endDate = dayjs(getValues('repeating.endDate'))
+    const errorMsg =
+      startDate.isValid() && endDate.isValid() && !endDate.isAfter(startDate)
+        ? 'End date must be after start date.'
+        : ''
     return (
       <>
         <div className='pb-5'>
@@ -449,7 +452,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             {monthlyRecurringField}
           </Tabs>
         </div>
-        {startAndEndDatesRecurringField}
+        {startAndEndDatesRecurringField()}
         {errorMsg && <p className='my-1 text-sm text-red-500'>{errorMsg}</p>}
       </>
     )
