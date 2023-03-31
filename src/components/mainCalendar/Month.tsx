@@ -258,7 +258,7 @@ export const Month = (props: MonthProps) => {
       if (isYearScrollView) return month % 2 == 0 || props.monthOffset < 5
       else return props.monthOffset < 2
     },
-    [isMonthView, isQuarterlyView, props.monthOffset]
+    [isMonthView, isQuarterlyView, isYearScrollView, props.monthOffset]
   )
 
   const renderPopover = useCallback(
@@ -310,14 +310,14 @@ export const Month = (props: MonthProps) => {
         </Popover>
       )
     },
-    [appearBelow, getPopoverContent, renderPopoverButton, useBanners]
+    [appearBelow, getPopoverContent, isMonthView, isQuarterlyView, isYearScrollView, renderPopoverButton, useBanners]
   )
 
   const renderDateNum = useCallback(
     (day: Dayjs, isCurrentMonth: boolean) => {
       const today = getLocalDateWithoutTime(new Date())
       const isToday = day.isSame(today, 'day')
-      const todayCircle = isToday && !isSelectingDates ? 'rounded-full bg-emerald-200 mt-1 ml-1' : ''
+      const todayCircle = isToday && !isSelectingDates ? `rounded-full bg-emerald-200 font-semibold` : ''
       return (
         <div className={`flex ${isMonthView ? 'items-center justify-center' : ''}`}>
           <div className={`flex h-7 w-7 items-center justify-center ${todayCircle} ${isMonthView ? 'mt-1' : ''}`}>
