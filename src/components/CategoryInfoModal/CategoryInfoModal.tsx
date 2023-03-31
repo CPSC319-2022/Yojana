@@ -23,6 +23,7 @@ export const CategoryInfoModal = ({ id, onClose }: { id: number; onClose: () => 
       buttonClassName={`group flex w-full items-center rounded-md px-2 py-2 hover:bg-slate-100`}
       showCloseBtn={false}
       overrideDefaultButtonStyle={true}
+      bodyPadding={''}
     >
       <div className='mt-0 p-0' id='category-info'>
         <style jsx>{`
