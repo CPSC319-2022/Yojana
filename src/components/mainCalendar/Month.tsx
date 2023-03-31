@@ -412,8 +412,8 @@ export const Month = (props: MonthProps) => {
           className={`tile flex px-0.5
           ${overflowVisible === day.date() || popoverOpen === day.date() ? '' : 'overflow-hidden'}
           ${preferences.showWeekNumbers.value ? 'col-span-3' : ''}
-            ${isMonthView && !props.getForPrinting ? 'flex-col' : 'flex-row'}
-            ${isQuarterlyView && !props.getForPrinting ? 'items-center' : ''}
+            ${props.getForPrinting ? 'flex-row' : isMonthView ? 'flex-col' : 'flex-row'}
+            ${props.getForPrinting ? '' : isQuarterlyView ? 'items-center' : ''}
             ${getDayStyling(day.day(), isSelectingDates, selected)}  
             `}
           onClick={() => {
@@ -435,10 +435,10 @@ export const Month = (props: MonthProps) => {
             `}</style>
             <div
               className={`${
-                isQuarterlyView && !props.getForPrinting
-                  ? 'inline-flex'
-                  : props.getForPrinting
+                props.getForPrinting
                   ? 'flex inline-flex flex-wrap overflow-y-hidden'
+                  : isQuarterlyView
+                  ? 'inline-flex'
                   : 'use-grid grid'
               }`}
             >
@@ -503,7 +503,7 @@ export const Month = (props: MonthProps) => {
       const weekOfYear = date.week()
       weeks.push(renderWeek(i, weekOfYear))
     }
-    return <div className={`${isMonthView && !props.getForPrinting ? 'h-[95%]' : 'h-full'}`}>{weeks}</div>
+    return <div className={`${isMonthView ? 'h-[95%]' : 'h-full'}`}>{weeks}</div>
   }, [daysInMonth, monthStartDate, isMonthView, numWeeks, renderWeek])
 
   const generateDayNames = useMemo(() => {
@@ -525,9 +525,9 @@ export const Month = (props: MonthProps) => {
 
   return (
     <div
-      className={`box-border bg-slate-200 ${isMonthView && !props.getForPrinting ? 'h-full' : ''} ${props.className}`}
+      className={`box-border bg-slate-200 ${isMonthView || props.getForPrinting ? 'h-full' : ''} ${props.className}`}
     >
-      {isMonthView && generateDayNames && !props.getForPrinting}
+      {(isMonthView && generateDayNames) || props.getForPrinting}
       {generateWeeks()}
     </div>
   )

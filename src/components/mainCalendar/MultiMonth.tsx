@@ -5,9 +5,11 @@ import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import {
   getDate,
   getInterval,
+  isFourMonthInterval,
+  isMonthInterval,
   isQuarterlyInterval,
-  isYearScrollInterval,
-  isYearInterval
+  isYearInterval,
+  isYearScrollInterval
 } from '@/redux/reducers/MainCalendarReducer'
 import { intervalToNumMonths, useGetHoursInMonth } from '@/utils/month'
 import dayjs from 'dayjs'
@@ -17,7 +19,9 @@ export const MultiMonth = ({ getForPrinting = false }: { getForPrinting?: boolea
   const targetDate = useAppSelector(getDate)
   const activeCalView = useAppSelector(getInterval)
   const isYearView = useAppSelector(isYearInterval)
+  const isMonthView = useAppSelector(isMonthInterval)
   const isQuarterlyView = useAppSelector(isQuarterlyInterval)
+  const isFourMonthView = useAppSelector(isFourMonthInterval)
   const isYearScrollView = useAppSelector(isYearScrollInterval)
   const isSelectingDates = useAppSelector(getIsSelectingDates)
   const getHoursInMonth = useGetHoursInMonth()
@@ -64,22 +68,16 @@ export const MultiMonth = ({ getForPrinting = false }: { getForPrinting?: boolea
   const twoByTwoMonthsForPrint = Array.from(Array(intervalToNumMonths(CalendarInterval.YEAR_SCROLL)).keys()).map(
     (index) => {
       const monthOffset = index - targetDate.month()
-      const dateInMonth = dayjs(targetDate).add(
-        activeCalView === CalendarInterval.YEAR_SCROLL ? monthOffset : index,
-        'month'
-      )
+      const offset = isMonthView || isQuarterlyView || isFourMonthView || isYearScrollView ? monthOffset : index
+
+      const dateInMonth = dayjs(targetDate).add(isYearView ? monthOffset : offset, 'month')
       const hoursInMonth = getHoursInMonth(dateInMonth)
 
       return (
-        <div key={index} className='h-full'>
+        <div key={index} className='my-6 h-full'>
           <h3 className='inline-flex flex-grow pl-1'>{dateInMonth.format('MMMM')}</h3>
           <h4 className='inline-flex pl-1 text-sm text-slate-400'>{hoursInMonth} hrs</h4>
-          <Month
-            className='h-[90%] flex-grow'
-            monthOffset={getForPrinting && !isYearView ? index - 10 : index}
-            key={getForPrinting && !isYearView ? index - 10 : index}
-            getForPrinting={getForPrinting}
-          />
+          <Month className='h-[90%] flex-grow' monthOffset={offset} key={offset} getForPrinting={getForPrinting} />
         </div>
       )
     }
@@ -104,7 +102,8 @@ export const MultiMonth = ({ getForPrinting = false }: { getForPrinting?: boolea
         ${isSelectingDates ? 'divide-y' : ''}
         ${viewClassNames}`}
       >
-        {getForPrinting ? twoByTwoMonthsForPrint : isQuarterlyView ? quarterlyMonths : twoByTwoMonths}
+        {getForPrinting && twoByTwoMonthsForPrint}
+        {!getForPrinting && (isQuarterlyView ? quarterlyMonths : twoByTwoMonths)}
       </div>
     </div>
   )
