@@ -6,6 +6,7 @@ import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import { Popover, Transition } from '@headlessui/react'
 import { Dispatch, Fragment, useState } from 'react'
 import { DropdownProps } from '../common/Dropdown'
+import { CategoryInfoModal } from '@/components/CategoryInfoModal/CategoryInfoModal'
 
 export const CategoriesDropdown = (props: {
   id: number
@@ -94,6 +95,7 @@ const HoverDropdown = ({
               static
             >
               <div className='space-y-1 px-1 py-1'>
+                <CategoryInfoModal id={Number(id)} onClose={handleClosePopover} />
                 <CategoryModal method='PUT' id={Number(id)} callBack={handleClosePopover} />
                 <DeleteCategoryModal id={Number(id)} onClose={handleClosePopover} />
               </div>
