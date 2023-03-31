@@ -3,6 +3,11 @@ import { useAppSelector } from '@/redux/hooks'
 import { getCategory } from '@/redux/reducers/AppDataReducer'
 import { useState } from 'react'
 
+/*
+ * This file creates the info modal which can accessed using the dropdown in the sidebar for each category. The info
+ * modal provides the category name, creator name, and creator email
+ */
+
 export const CategoryInfoModal = ({ id, onClose }: { id: number; onClose: () => void }) => {
   const category = useAppSelector((state) => getCategory(state, id))
   const [isModalOpen, setIsModalOpen] = useState(false)

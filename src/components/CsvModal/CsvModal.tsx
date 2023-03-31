@@ -8,6 +8,11 @@ import { BatchResponse, CategoryFull } from '@/types/prisma'
 import { getCookies } from 'cookies-next'
 import { setCookieMaxAge } from '@/utils/cookies'
 
+/*
+ * The CSV modal facilitates batch importing dates into the Yojana calendar, in the specified formats shown in the
+ * example. It takes in a .csv file as an input and updates the user on completion of the adding operation with how
+ * many entries were successfully added. A template is provided for users to follow the correct format for the csv.
+ */
 export const setCategoryShow = (categories: CategoryFull[]) => {
   const cookies = getCookies()
 

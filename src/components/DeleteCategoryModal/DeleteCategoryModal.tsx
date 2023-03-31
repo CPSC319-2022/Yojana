@@ -4,6 +4,11 @@ import { setAlert } from '@/redux/reducers/AlertReducer'
 import { deleteCategory, getCategory } from '@/redux/reducers/AppDataReducer'
 import { useState } from 'react'
 
+/*
+ * This file creates the modal for confirming deletion of a category which can accessed using the dropdown in the sidebar
+ *  for each category. On confirming delete, an HTTP request to delete specified category is made.
+ */
+
 export const DeleteCategoryModal = ({ id, onClose }: { id: number; onClose: () => void }) => {
   const dispatch = useAppDispatch()
   const currentState = useAppSelector((state) => getCategory(state, id))
