@@ -1,4 +1,4 @@
-import { Dayjs } from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useController } from 'react-hook-form'
 import { useAppSelector } from '@/redux/hooks'
@@ -8,7 +8,7 @@ interface DayOfMonthPickerProps {
   control: any
   name: string
   rules?: any
-  startDate: Dayjs
+  startDateString: string
   selectedRecurrenceType: MonthRecurrenceType | null
   setSelectedRecurrenceType: React.Dispatch<React.SetStateAction<MonthRecurrenceType | null>>
   updateState?: (cron: string) => void
@@ -41,7 +41,7 @@ export const DayOfMonthPicker = ({
   control,
   name,
   rules,
-  startDate,
+  startDateString,
   selectedRecurrenceType,
   setSelectedRecurrenceType,
   updateState = () => {}
@@ -54,20 +54,22 @@ export const DayOfMonthPicker = ({
     rules: rules
   })
 
-  const [dateOfMonth, setDateOfMonth] = useState(startDate.date())
-  const [weekNum, setWeekNum] = useState(Math.ceil(startDate.date() / 7))
-  const [dayOfWeek, setDayOfWeek] = useState(startDate.day())
+  const [startDate, setStartDate] = useState(dayjs(startDateString))
   const [recurrenceType, setRecurrenceType] = useState<MonthRecurrenceType | null>(selectedRecurrenceType)
   const isSelectingDates = useAppSelector(getIsSelectingDates)
 
   useEffect(() => {
-    setDateOfMonth(startDate.date())
-    setWeekNum(Math.ceil(startDate.date() / 7))
-    setDayOfWeek(startDate.day())
-  }, [startDate])
+    const newStartDate = dayjs(startDateString)
+    if (newStartDate.isValid()) {
+      setStartDate(newStartDate)
+    }
+  }, [startDateString])
 
   const handleRecurrenceChange = useCallback(
     (newType: MonthRecurrenceType | null) => {
+      const weekNum = Math.ceil(startDate.date() / 7)
+      const dayOfWeek = startDate.day()
+      const dateOfMonth = startDate.date()
       const cronString =
         newType === null
           ? ''
@@ -83,12 +85,12 @@ export const DayOfMonthPicker = ({
         setSelectedRecurrenceType(newType)
       }
     },
-    [dateOfMonth, dayOfWeek, onChange, setSelectedRecurrenceType, updateState, weekNum]
+    [startDate, onChange, setSelectedRecurrenceType, updateState]
   )
 
   useEffect(() => {
     handleRecurrenceChange(recurrenceType)
-  }, [startDate, handleRecurrenceChange, recurrenceType])
+  }, [handleRecurrenceChange, recurrenceType])
 
   // This needs to be a callback instead of a useMemo because deps updated in a chain causes flashing.
   const unfilteredMenuItems = useCallback(
@@ -132,6 +134,7 @@ export const DayOfMonthPicker = ({
   const getMenuItems = useMemo(() => {
     // Calculate weekNum internally to reduce flashing
     const weekNum = Math.ceil(startDate.date() / 7)
+    const dateOfMonth = startDate.date()
 
     const includeItems = [MonthRecurrence.NONE]
     if (!isNaN(dateOfMonth)) includeItems.push(MonthRecurrence.ON_DATE_Y)
@@ -144,7 +147,7 @@ export const DayOfMonthPicker = ({
 
     const menuItems = unfilteredMenuItems(weekNum, startDate)
     return includeItems.map((item) => menuItems[item])
-  }, [unfilteredMenuItems, dateOfMonth, recurrenceType, startDate])
+  }, [unfilteredMenuItems, recurrenceType, startDate])
 
   return (
     <div

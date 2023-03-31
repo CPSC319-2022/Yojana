@@ -394,7 +394,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           control={control}
           name='repeating.cron'
           rules={{ required: false }}
-          startDate={dayjs(watchStartDate)}
+          startDateString={watchStartDate}
           selectedRecurrenceType={selectedMonthRecurrenceCron}
           setSelectedRecurrenceType={setSelectedMonthRecurrenceCron}
           updateState={(cron) => {
