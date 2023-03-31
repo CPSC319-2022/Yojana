@@ -525,7 +525,9 @@ export const Month = (props: MonthProps) => {
 
   return (
     <div
-      className={`box-border bg-slate-200 ${isMonthView || props.getForPrinting ? 'h-full' : ''} ${props.className}`}
+      className={`box-border bg-slate-200 ${props.getForPrinting ? '' : isMonthView ? 'h-full' : ''} ${
+        props.className
+      }`}
     >
       {(isMonthView && generateDayNames) || props.getForPrinting}
       {generateWeeks()}

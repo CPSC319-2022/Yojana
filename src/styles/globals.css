@@ -25,3 +25,8 @@ body {
   width: 20px !important;
   height: 20px !important;
 }
+
+/* Avoid Month getting cutoff during print */
+.break-inside-avoid {
+  break-inside: avoid;
+}

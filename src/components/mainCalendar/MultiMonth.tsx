@@ -74,7 +74,7 @@ export const MultiMonth = ({ getForPrinting = false }: { getForPrinting?: boolea
       const hoursInMonth = getHoursInMonth(dateInMonth)
 
       return (
-        <div key={index} className='my-6 h-full'>
+        <div key={index} className={`h-full break-inside-avoid`}>
           <h3 className='inline-flex flex-grow pl-1'>{dateInMonth.format('MMMM')}</h3>
           <h4 className='inline-flex pl-1 text-sm text-slate-400'>{hoursInMonth} hrs</h4>
           <Month className='h-[90%] flex-grow' monthOffset={offset} key={offset} getForPrinting={getForPrinting} />
@@ -84,7 +84,7 @@ export const MultiMonth = ({ getForPrinting = false }: { getForPrinting?: boolea
   )
 
   const viewClassNames = useMemo(() => {
-    if (getForPrinting) return 'grid-cols-2 grid-rows-6 h-[300vh]'
+    if (getForPrinting) return 'grid-cols-2 grid-rows-6 h-[300]'
     switch (activeCalView) {
       case CalendarInterval.FOUR_MONTHS:
         return 'grid-cols-2 grid-rows-2 h-full'
@@ -96,9 +96,12 @@ export const MultiMonth = ({ getForPrinting = false }: { getForPrinting?: boolea
   }, [activeCalView])
 
   return (
-    <div className={`h-full w-full ${isYearScrollView || getForPrinting ? 'overflow-y-scroll' : ''}`}>
+    <div
+      className={`h-full w-full ${getForPrinting ? 'overflow-y-visible' : isYearScrollView ? 'overflow-y-scroll' : ''}`}
+    >
       <div
-        className={`box-border grid gap-x-4 overflow-y-hidden 
+        className={`box-border grid gap-x-4 
+        ${getForPrinting ? 'overflow-y-visible' : 'overflow-y-hidden '}
         ${isSelectingDates ? 'divide-y' : ''}
         ${viewClassNames}`}
       >
