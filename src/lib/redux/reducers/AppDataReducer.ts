@@ -24,12 +24,14 @@ interface State {
   appData: {
     data: AppData
     entryMap: EntryMap
+    isMobile: boolean
   }
 }
 
 const initialState = {
   data: [] as AppData,
-  entryMap: {} as EntryMap
+  entryMap: {} as EntryMap,
+  isMobile: false
 }
 
 const appDataSlice = createSlice({
@@ -82,6 +84,9 @@ const appDataSlice = createSlice({
       state.data.splice(index, 1)
       // update EntryMap
       state.entryMap = _createEntryMap(state.data)
+    },
+    setIsMobile: (state, action: PayloadAction<boolean>) => {
+      state.isMobile = action.payload
     }
   },
   extraReducers: {
@@ -131,8 +136,15 @@ const _addEntriesToEntryMap = (entryMap: EntryMap, entries: EntryWithoutCategory
   return entryMap
 }
 
-export const { setAppData, addCategory, updateCategory, toggleCategory, deleteCategory, setCategoriesShow } =
-  appDataSlice.actions
+export const {
+  setAppData,
+  addCategory,
+  updateCategory,
+  toggleCategory,
+  deleteCategory,
+  setCategoriesShow,
+  setIsMobile
+} = appDataSlice.actions
 
 export const getCategory = (state: State, id: number) => {
   const index = state.appData.data.findIndex((cat) => cat.id === id)
@@ -179,6 +191,10 @@ export const getPrevCurrNextMonth = (state: State, date: Dayjs) => {
 
 export const getYear = (state: State, date: Dayjs) => {
   return state.appData.entryMap[date.year()]
+}
+
+export const getIsMobile = (state: State) => {
+  return state.appData.isMobile
 }
 
 export const appDataReducer = appDataSlice.reducer
