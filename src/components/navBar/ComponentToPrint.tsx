@@ -5,6 +5,10 @@ import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import { Icon, IconName } from '@/components/common'
 import { Year } from '@/components/mainCalendar/Year'
 
+/*
+ * This component is responsible to complete all the configurations to print the calendar.
+ * It is used in the AccountDropdown component.
+ */
 const ComponentToPrint = React.forwardRef<HTMLDivElement>((props, ref) => {
   const categories = useAppSelector(getCategories).filter((category) => category.show)
   const year = useAppSelector(getDate).year()

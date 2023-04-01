@@ -1,5 +1,9 @@
 import { iconPickerIcons } from '@/constants/icons'
 
+/*
+ * These are edit category tests that verify all the following features are working as expected:
+ * - name, description, color, icon (picker), icon(search)
+ */
 describe('Edit Category', () => {
   const createNewCategory = () => {
     cy.get('div#master-calendar-accordion-item').should('be.visible')
