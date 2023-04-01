@@ -69,6 +69,8 @@ export const Month = (props: MonthProps) => {
   const [overflowVisible, setOverflowVisible] = useState(-1)
   const [popoverOpen, setPopoverOpen] = useState(-1)
 
+  const today = getLocalDateWithoutTime(new Date())
+
   useEffect(() => {
     setUseBanners(isMonthView && preferences.monthCategoryAppearance.value === 'banners')
   }, [isMonthView, preferences.monthCategoryAppearance.value])
@@ -315,7 +317,6 @@ export const Month = (props: MonthProps) => {
 
   const renderDateNum = useCallback(
     (day: Dayjs, isCurrentMonth: boolean) => {
-      const today = getLocalDateWithoutTime(new Date())
       const isToday = day.isSame(today, 'day')
       const todayCircle = isToday && !isSelectingDates ? `rounded-full bg-emerald-200 font-semibold` : ''
       return (
@@ -332,7 +333,7 @@ export const Month = (props: MonthProps) => {
         </div>
       )
     },
-    [isMonthView, isSelectingDates]
+    [isMonthView, isSelectingDates, today]
   )
 
   const getSelectedSettings = useCallback(
