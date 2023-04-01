@@ -63,7 +63,7 @@ export const Month = (props: MonthProps) => {
     getPrevCurrNextMonthSelectedDates(state, targetDate)
   )
 
-  const [nonOverflowElemCount, setNonOverflowElemCount] = useState(0)
+  const [nonOverflowElemCount, setNonOverflowElemCount] = useState(1)
   const categoryContainerRef = useRef<HTMLDivElement>(null)
   const [colsPerDay, setColsPerDay] = useState(1)
   const [overflowVisible, setOverflowVisible] = useState(-1)
@@ -86,7 +86,7 @@ export const Month = (props: MonthProps) => {
   }, [props.monthOffset, referenceDate])
 
   const recalculateItemsPerDay = useCallback(() => {
-    if (overflowVisible === -1 && categoryContainerRef.current !== null) {
+    if (typeof window !== 'undefined' && overflowVisible === -1 && categoryContainerRef.current !== null) {
       const { offsetHeight, offsetWidth } = categoryContainerRef.current
       if (useBanners) setNonOverflowElemCount(Math.floor(offsetHeight / CATEGORY_BANNER_HEIGHT_PX))
       else {

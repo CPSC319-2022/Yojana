@@ -12,7 +12,7 @@ interface State {
 }
 
 const initialState = {
-  interval: CalendarInterval.YEAR,
+  interval: CalendarInterval.YEAR_SCROLL,
   date: dayjs().unix()
 }
 

@@ -61,7 +61,7 @@ export const MultiMonth = () => {
       case CalendarInterval.QUARTERLY:
         return 'grid-cols-1 grid-rows-3 h-full'
       case CalendarInterval.YEAR_SCROLL:
-        return 'grid-cols-2 grid-rows-6 h-[270vh]'
+        return 'grid-cols-1 grid-rows-12 h-[540vh] lg:grid-cols-2 lg:grid-rows-6 lg:h-[270vh]'
     }
     return ''
   }, [activeCalView])
