@@ -29,18 +29,25 @@ const ComponentToPrint = React.forwardRef<HTMLDivElement, ComponentToPrintProps>
   }
 
   return (
-    <span className='relative hidden'>
+    <span className='relative hidden' id={'year-print'}>
       <div ref={ref} className='h-auto w-auto overflow-visible border'>
         <div className='pt-4'>
           <div className={`grid ${gridSize} gap-1 px-4`}>
             {categories.map((category) => (
               <div key={category.id} className='flex flex-row bg-white text-left'>
-                <Icon iconName={category.icon as IconName} color={category.color} className='mr-2 inline' />
-                <p>{category.name}</p>
+                <Icon
+                  iconName={category.icon as IconName}
+                  color={category.color}
+                  className='mr-2 inline'
+                  id={'icons-print'}
+                />
+                <p id={'category-names-print'}>{category.name}</p>
               </div>
             ))}
           </div>
-          <div className='mt-3 pb-3 text-center text-2xl font-bold'>{year}</div>
+          <div className='mt-3 pb-3 text-center text-2xl font-bold' id={'year-display-print'}>
+            {year}
+          </div>
           {printType === 'Year' ? <Year getForPrinting={true} /> : <MultiMonth getForPrinting={true} />}
         </div>
       </div>

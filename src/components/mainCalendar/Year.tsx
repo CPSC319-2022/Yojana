@@ -175,6 +175,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
           className={`box-border grid grow divide-x divide-y border-b border-r bg-slate-300
         ${colSpacing}
         ${preferences.yearShowGrid.value || getForPrinting ? '' : 'divide-transparent'}`}
+          id={'year-view'}
         >
           {monthHeaders}
           {days}
