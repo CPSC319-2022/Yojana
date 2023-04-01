@@ -28,15 +28,15 @@ export const AccountDropdown = ({ session }: { session: Session }) => {
   useEffect(() => {
     if (printTrigger) {
       handlePrint()
-      setPrintTrigger(false)
     }
-  }, [printTrigger])
+  }, [printTrigger, setPrintTrigger])
 
   const handlePrint = useReactToPrint({
     content: () => printComponentRef.current,
+    onAfterPrint: () => setPrintTrigger(false),
     pageStyle: `
       @page {
-        size: A4;
+        size: ${selectedView === 'YearScroll' ? 'A4 landscape' : 'A4'};
         margin: 0;
       }
       @media print {
@@ -77,21 +77,21 @@ export const AccountDropdown = ({ session }: { session: Session }) => {
           <Dropdown.Button
             label='Print Year View'
             onClick={() => {
-              setSelectedView('Year')
               setPrintTrigger(true)
+              setSelectedView('Year')
             }}
           />
           <Dropdown.Button
             label='Print Year Scroll View'
             onClick={() => {
-              setSelectedView('YearScroll')
               setPrintTrigger(true)
+              setSelectedView('YearScroll')
             }}
           />
         </Dropdown.Accordion>
         <Dropdown.Button label='Logout' onClick={() => signOut()} />
       </Dropdown>
-      <ComponentToPrint printType={selectedView} ref={printComponentRef} />
+      {printTrigger && <ComponentToPrint printType={selectedView} ref={printComponentRef} />}
       <PreferenceModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </div>
   )
