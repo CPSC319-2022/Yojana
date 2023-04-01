@@ -25,6 +25,8 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
   const dispatch = useAppDispatch()
   const [popoverOpen, setPopoverOpen] = useState(-1)
 
+  const today = getLocalDateWithoutTime(new Date())
+
   const renderDayCategories = useCallback(
     (day: Dayjs, monthNum: number, key: number) => {
       let icons: (JSX.Element | undefined)[] = []
@@ -79,7 +81,6 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       }
 
       const day = monthStartDate.add(dateOffset, 'days')
-      const today = getLocalDateWithoutTime(new Date())
       const isToday = day.isSame(today, 'day')
       const selected = yearSelected?.[monthNum]?.[day.date()]
 
@@ -128,7 +129,9 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       renderDayCategories,
       getForPrinting,
       preferences.yearOverflow.value,
-      onDayClicked
+      onDayClicked,
+      today,
+      popoverOpen
     ]
   )
 

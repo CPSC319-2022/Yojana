@@ -230,3 +230,6 @@ using [Azure Active Directory](https://azure.microsoft.com/en-us/products/active
 We use [Vercel](https://vercel.com/) to deploy our [Next.js app](https://vercel.com/solutions/nextjs).
 
 Visit [this](https://yojana-main.vercel.app/) link to see the latest deployed version of the app.
+
+## Usage Demos
+- Importing entries via CSV: [video](https://drive.google.com/file/d/1OdTF02FHYin3s2i62Gu28yntX-TM73iI/view?usp=share_link)

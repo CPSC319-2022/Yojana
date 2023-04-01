@@ -29,6 +29,7 @@ export const CategoryInfoModal = ({ id, onClose }: { id: number; onClose: () => 
       showCloseBtn={false}
       overrideDefaultButtonStyle={true}
       bodyPadding={''}
+      handle={'info-modal-handle'}
     >
       <div className='mt-0 p-0' id='category-info'>
         <style jsx>{`
