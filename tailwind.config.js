@@ -59,6 +59,14 @@ module.exports = {
         '.bg-stripes': {
           background:
             'repeating-linear-gradient(135deg, var(--stripes-color-1) 0px, var(--stripes-color-1) 4px, var(--stripes-color-2) 4px, var(--stripes-color-2) 8px)'
+        },
+        '.no-scrollbar': {
+          '-ms-overflow-style': 'none' /* IE and Edge */,
+          'scrollbar-width': 'none' /* Firefox */
+        },
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        '.no-scrollbar::-webkit-scrollbar': {
+          display: 'none'
         }
       }
 

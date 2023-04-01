@@ -15,7 +15,7 @@ dayjs.tz.setDefault('America/Vancouver')
 // Set the process timezone to UTC
 process.env.TZ = 'UTC'
 
-const getLocalDateWithoutTime = (date: Date) => {
+export const getLocalDateWithoutTime = (date: Date) => {
   return dayjs.utc(date).tz().startOf('day').toDate()
 }
 

@@ -12,7 +12,7 @@ interface State {
 }
 
 const initialState = {
-  interval: CalendarInterval.YEAR,
+  interval: CalendarInterval.YEAR_SCROLL,
   date: dayjs().unix()
 }
 
@@ -49,7 +49,9 @@ const mainCalendarSlice = createSlice({
 export const { setInterval, decrementDate, setDate, incrementDate, jumpToToday } = mainCalendarSlice.actions
 export const getInterval = (state: State) => state.mainCalendar.interval
 export const isYearInterval = (state: State) => state.mainCalendar.interval === CalendarInterval.YEAR
+export const isYearScrollInterval = (state: State) => state.mainCalendar.interval === CalendarInterval.YEAR_SCROLL
 export const isQuarterlyInterval = (state: State) => state.mainCalendar.interval === CalendarInterval.QUARTERLY
+export const isFourMonthInterval = (state: State) => state.mainCalendar.interval === CalendarInterval.FOUR_MONTHS
 export const isMonthInterval = (state: State) => state.mainCalendar.interval === CalendarInterval.MONTH
 export const getDate = (state: State) => dayjs.unix(state.mainCalendar.date)
 export const mainCalendarReducer = mainCalendarSlice.reducer

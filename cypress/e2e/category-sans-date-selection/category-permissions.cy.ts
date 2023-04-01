@@ -1,3 +1,8 @@
+/*
+ * These are tests that ensure that admins can create both master categories and personal categories, while other users
+ * can only create personal categories.
+ */
+
 describe('Category Permissions Test', () => {
   const createNewPersonalCategory = () => {
     cy.get('div[id="category-item-20"]').should('not.exist')

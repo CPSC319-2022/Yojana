@@ -1,5 +1,6 @@
 import { defineConfig } from 'cypress'
-import dotenvPlugin from 'cypress-dotenv'
+
+const dotenvPlugin = require('cypress-dotenv')
 
 export default defineConfig({
   e2e: {

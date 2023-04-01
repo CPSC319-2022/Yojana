@@ -1,11 +1,21 @@
-import { useAppSelector } from '@/redux/hooks'
-import { getCategories } from '@/redux/reducers/AppDataReducer'
-import React from 'react'
-import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import { Icon, IconName } from '@/components/common'
 import { Year } from '@/components/mainCalendar/Year'
+import { useAppSelector } from '@/redux/hooks'
+import { getCategories } from '@/redux/reducers/AppDataReducer'
+import { getDate } from '@/redux/reducers/MainCalendarReducer'
+import React from 'react'
+import { MultiMonth } from '../mainCalendar/MultiMonth'
 
-const ComponentToPrint = React.forwardRef<HTMLDivElement>((props, ref) => {
+interface ComponentToPrintProps {
+  printType: string
+}
+
+/*
+ * This component is responsible to complete all the configurations to print the calendar.
+ * It is used in the AccountDropdown component.
+ */
+
+const ComponentToPrint = React.forwardRef<HTMLDivElement, ComponentToPrintProps>(({ printType }, ref) => {
   const categories = useAppSelector(getCategories).filter((category) => category.show)
   const year = useAppSelector(getDate).year()
 
@@ -19,26 +29,19 @@ const ComponentToPrint = React.forwardRef<HTMLDivElement>((props, ref) => {
   }
 
   return (
-    <span className='relative hidden' id={'year-print'}>
-      <div ref={ref} className='h-auto w-auto overflow-visible border' id={'div-border'}>
-        <div className='pt-4' id={'div-pt'}>
+    <span className='relative hidden'>
+      <div ref={ref} className='h-auto w-auto overflow-visible border'>
+        <div className='pt-4'>
           <div className={`grid ${gridSize} gap-1 px-4`}>
             {categories.map((category) => (
               <div key={category.id} className='flex flex-row bg-white text-left'>
-                <Icon
-                  iconName={category.icon as IconName}
-                  color={category.color}
-                  className='mr-2 inline'
-                  id={'icons-print'}
-                />
-                <p id={'category-names-print'}>{category.name}</p>
+                <Icon iconName={category.icon as IconName} color={category.color} className='mr-2 inline' />
+                <p>{category.name}</p>
               </div>
             ))}
           </div>
-          <div className='mt-3 pb-3 text-center text-2xl font-bold' id={'year-display-print'}>
-            {year}
-          </div>
-          <Year id={'year-view-print'} getForPrinting={true} />
+          <div className='mt-3 pb-3 text-center text-2xl font-bold'>{year}</div>
+          {printType === 'Year' ? <Year getForPrinting={true} /> : <MultiMonth getForPrinting={true} />}
         </div>
       </div>
     </span>

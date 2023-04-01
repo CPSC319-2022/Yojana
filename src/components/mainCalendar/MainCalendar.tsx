@@ -13,6 +13,8 @@ export const MainCalendar = () => {
     switch (activeCalView) {
       case CalendarInterval.YEAR:
         return <Year />
+      case CalendarInterval.YEAR_SCROLL:
+        return <MultiMonth />
       case CalendarInterval.FOUR_MONTHS:
         return <MultiMonth />
       case CalendarInterval.QUARTERLY:

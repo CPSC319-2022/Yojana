@@ -47,9 +47,9 @@ describe('edit monthly recurring tests', () => {
     cy.get('button#create-category-submit-btn').trigger('click').click()
 
     // checks column number 2 (march) of 2023
-    cy.checkIconsInDays('span.newMonthlyCat-icon', 2, 1, 27, 12)
+    cy.checkIconsInDays('span.20-icon', 2, 1, 27, 12)
     // checks column number 5 (june) of 2023
-    cy.checkIconsInDays('span.newMonthlyCat-icon', 5, 1, 27, 12)
+    cy.checkIconsInDays('span.20-icon', 5, 1, 27, 12)
   }
 
   describe('admin', () => {

@@ -1,5 +1,9 @@
 import { iconPickerIcons } from '@/constants/icons'
 
+/*
+ * These are create category tests that verify all the following features are working as expected:
+ * - name, description, color, icon (picker), icon(search)
+ */
 describe('Create Category', () => {
   function submitNewCategory() {
     cy.get('div#create-category-modal-div').scrollTo('bottom')

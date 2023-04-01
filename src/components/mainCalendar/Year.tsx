@@ -7,9 +7,9 @@ import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 import { getDayStyling } from '@/utils/day'
 import dayjs, { Dayjs } from 'dayjs'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { DescriptionPopover } from '../DescriptionPopover'
-import { useGetHoursInMonth } from '@/utils/month'
+import { getLocalDateWithoutTime } from '@/utils/preprocessEntries'
 
 export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) => {
   const stateDate = useAppSelector(getDate)
@@ -19,12 +19,13 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
   const yearSelected = useAppSelector((state) => getYearSelectedDates(state, stateDate))
   const preferences = useAppSelector(getPreferences)
 
-  const hoursInMonth = useGetHoursInMonth()
-
   const yearStartDate = dayjs(stateDate).startOf('year')
   const yearNum = yearStartDate.get('year')
 
   const dispatch = useAppDispatch()
+  const [popoverOpen, setPopoverOpen] = useState(-1)
+
+  const today = getLocalDateWithoutTime(new Date())
 
   const renderDayCategories = useCallback(
     (day: Dayjs, monthNum: number, key: number) => {
@@ -36,7 +37,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
           const category = categoryMap[calEvent.categoryId]
           if (category.show) {
             return (
-              <span className={`px-0.5 font-bold ${category.name}-icon`} key={`${calEvent.id}-${key}`}>
+              <span className={`px-0.5 font-bold ${category.id}-icon`} key={`${calEvent.id}-${key}`}>
                 <style jsx>{`
                   * {
                     color: ${category.color};
@@ -50,6 +51,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
                   monthOffset={monthNum}
                   currentDay={day.date()}
                   className='inline'
+                  onClick={setPopoverOpen}
                 />
               </span>
             )
@@ -79,7 +81,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       }
 
       const day = monthStartDate.add(dateOffset, 'days')
-      const isToday = day.isSame(dayjs(), 'day')
+      const isToday = day.isSame(today, 'day')
       const selected = yearSelected?.[monthNum]?.[day.date()]
 
       const dayContent = isSelectingDates ? (
@@ -103,11 +105,14 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
           className={`tile px-0.5 
             ${getDayStyling(day.day(), isSelectingDates, selected)} 
             ${!isSelectingDates && isToday && !getForPrinting ? 'ring-2 ring-inset ring-emerald-300' : ''}
+            ${preferences.yearOverflow.value === 'wrap' || getForPrinting ? 'inline-flow break-all' : 'flex'}
             ${
-              preferences.yearOverflow.value === 'wrap' || getForPrinting
-                ? 'inline-flow break-all'
-                : 'flex overflow-x-scroll'
-            }`}
+              !(dateOffset + 1 === popoverOpen) && !(preferences.yearOverflow.value === 'wrap' || getForPrinting)
+                ? 'overflow-x-scroll'
+                : ''
+            }
+            ${dateOffset + 1 === popoverOpen ? 'flex-wrap overflow-x-visible' : ''}
+            `}
           key={`${yearNum}-${monthNum}-${dateOffset}`}
           onClick={() => onDayClicked(day, !selected || !selected?.isRecurring)}
         >
@@ -116,14 +121,17 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       )
     },
     [
-      getForPrinting,
-      isSelectingDates,
-      onDayClicked,
-      renderDayCategories,
-      yearNum,
-      yearSelected,
       yearStartDate,
-      preferences.yearOverflow.value
+      yearSelected,
+      isSelectingDates,
+      yearNum,
+      currentIndexForId,
+      renderDayCategories,
+      getForPrinting,
+      preferences.yearOverflow.value,
+      onDayClicked,
+      today,
+      popoverOpen
     ]
   )
 
@@ -131,36 +139,21 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
     return Array.from(Array(15).keys()).map((columnNum) => {
       const monthNum = columnNum - Math.ceil(columnNum / 5)
       const monthStartDate = dayjs(yearStartDate).add(monthNum, 'month')
-      const hours = hoursInMonth(monthStartDate)
       return (
-        <span key={`col-${columnNum}-header`}>
-          <h3
-            className={`top-0 z-10 bg-slate-100 text-center text-xs text-slate-400 ${
-              preferences.showWorkingHours.value ? '' : 'hidden' && getForPrinting ? '' : 'hidden'
-            }`}
-            key={`col-${columnNum}-header`}
-          >
-            {columnNum % 5 === 0 ? '\u00A0' : `${hours} hrs`}
-          </h3>
-          <h3 className='sticky top-0 z-10 bg-slate-100 text-center text-slate-400' key={`col-${columnNum}-header`}>
-            {columnNum % 5 === 0 ? '\u00A0' : monthStartDate.format('MMM')}
-          </h3>
-        </span>
+        <h3 className='sticky top-0 z-10 bg-slate-100 text-center text-slate-400' key={`col-${columnNum}-header`}>
+          {columnNum % 5 === 0 ? '\u00A0' : monthStartDate.format('MMM')}
+        </h3>
       )
     })
-  }, [yearStartDate, hoursInMonth, getForPrinting, preferences.showWorkingHours.value])
+  }, [yearStartDate])
 
   const days = useMemo(() => {
     return Array.from(Array(31).keys()).map((dateNum) => {
       return Array.from(Array(15).keys()).map((columnNum) => {
         if (columnNum % 5 === 0) {
           return (
-            <div
-              className={'bg-white px-1 pt-1 text-center text-xs'}
-              key={`${columnNum}-${dateNum + 1}`}
-              id={'year-dates'}
-            >
-              <span>{dateNum + 1} </span>
+            <div className={'bg-white px-1 pt-1 text-center text-xs'} key={`${columnNum}-${dateNum + 1}`}>
+              {dateNum + 1}
             </div>
           )
         }
@@ -182,7 +175,6 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
           className={`box-border grid grow divide-x divide-y border-b border-r bg-slate-300
         ${colSpacing}
         ${preferences.yearShowGrid.value || getForPrinting ? '' : 'divide-transparent'}`}
-          id={'year-view'}
         >
           {monthHeaders}
           {days}
