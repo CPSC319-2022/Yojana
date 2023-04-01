@@ -175,7 +175,10 @@ export const Month = (props: MonthProps) => {
           )
         } else {
           return (
-            <span className={`${isMonthView ? 'h-8 w-8' : 'h-6 w-6'} px-0.5 font-bold`} key={`${key}-${entry.id}`}>
+            <span
+              className={`${isMonthView ? 'h-8 w-8' : 'h-6 w-6'} px-0.5 text-center font-bold`}
+              key={`${key}-${entry.id}`}
+            >
               <style jsx>{`
                 * {
                   color: ${category.color};
