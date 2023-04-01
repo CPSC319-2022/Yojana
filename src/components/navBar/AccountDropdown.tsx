@@ -9,6 +9,10 @@ import { signOut } from 'next-auth/react'
 import { useEffect, useRef, useState } from 'react'
 import { useReactToPrint } from 'react-to-print'
 
+/*
+ * This is a dropdown menu that appears when the user clicks on 'account' in the navbar.
+ * It provides the user options to change the preferences, export the calendar, print the calendar, and log out
+ */
 export const AccountDropdown = ({ session }: { session: Session }) => {
   const userName = session?.user.name || ''
   const userID = session?.user.id || ''

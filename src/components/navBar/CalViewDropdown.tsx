@@ -4,6 +4,11 @@ import { CalendarInterval } from '@/constants/enums'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { Dropdown } from '@/components/common'
 
+/*
+ * This component provides functionality to change between different calendar views: Month, quarterly, four months,
+ * year(scroll), and year
+ */
+
 export const CalViewDropdown = () => {
   const dispatch = useAppDispatch()
   const activeCalView = useAppSelector(getInterval)

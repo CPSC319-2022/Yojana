@@ -11,6 +11,10 @@ import { getPreferences, setIsSidebarOpen } from '@/redux/reducers/PreferencesRe
 import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import { useGetHoursInMonth } from '@/utils/month'
 
+/*
+ * This component renders the top bar of the app. It contains the hamburger menu button,
+ * the calendar interval dropdown, the date navigation buttons, and the account dropdown.
+ */
 interface NavBarProps {
   session: Session
 }
