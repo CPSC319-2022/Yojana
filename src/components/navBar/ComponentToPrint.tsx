@@ -20,8 +20,8 @@ const ComponentToPrint = React.forwardRef<HTMLDivElement>((props, ref) => {
 
   return (
     <span className='relative hidden' id={'year-print'}>
-      <div ref={ref} className='h-auto w-auto overflow-visible border'>
-        <div className='pt-4'>
+      <div ref={ref} className='h-auto w-auto overflow-visible border' id={'div-border'}>
+        <div className='pt-4' id={'div-pt'}>
           <div className={`grid ${gridSize} gap-1 px-4`}>
             {categories.map((category) => (
               <div key={category.id} className='flex flex-row bg-white text-left'>
@@ -35,8 +35,10 @@ const ComponentToPrint = React.forwardRef<HTMLDivElement>((props, ref) => {
               </div>
             ))}
           </div>
-          <div className='mt-3 pb-3 text-center text-2xl font-bold'>{year}</div>
-          <Year getForPrinting={true} />
+          <div className='mt-3 pb-3 text-center text-2xl font-bold' id={'year-display-print'}>
+            {year}
+          </div>
+          <Year id={'year-view-print'} getForPrinting={true} />
         </div>
       </div>
     </span>

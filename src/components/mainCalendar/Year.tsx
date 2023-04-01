@@ -155,8 +155,12 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       return Array.from(Array(15).keys()).map((columnNum) => {
         if (columnNum % 5 === 0) {
           return (
-            <div className={'bg-white px-1 pt-1 text-center text-xs'} key={`${columnNum}-${dateNum + 1}`}>
-              {dateNum + 1}
+            <div
+              className={'bg-white px-1 pt-1 text-center text-xs'}
+              key={`${columnNum}-${dateNum + 1}`}
+              id={'year-dates'}
+            >
+              <span>{dateNum + 1} </span>
             </div>
           )
         }
@@ -178,6 +182,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
           className={`box-border grid grow divide-x divide-y border-b border-r bg-slate-300
         ${colSpacing}
         ${preferences.yearShowGrid.value || getForPrinting ? '' : 'divide-transparent'}`}
+          id={'year-view'}
         >
           {monthHeaders}
           {days}
