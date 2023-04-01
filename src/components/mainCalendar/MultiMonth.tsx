@@ -2,15 +2,26 @@ import { Month } from '@/components/mainCalendar/Month'
 import { CalendarInterval } from '@/constants/enums'
 import { useAppSelector } from '@/redux/hooks'
 import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
-import { getDate, getInterval, isQuarterlyInterval, isYearScrollInterval } from '@/redux/reducers/MainCalendarReducer'
+import {
+  getDate,
+  getInterval,
+  isFourMonthInterval,
+  isMonthInterval,
+  isQuarterlyInterval,
+  isYearInterval,
+  isYearScrollInterval
+} from '@/redux/reducers/MainCalendarReducer'
 import { intervalToNumMonths, useGetHoursInMonth } from '@/utils/month'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
 
-export const MultiMonth = () => {
+export const MultiMonth = ({ getForPrinting = false }: { getForPrinting?: boolean }) => {
   const targetDate = useAppSelector(getDate)
   const activeCalView = useAppSelector(getInterval)
+  const isYearView = useAppSelector(isYearInterval)
+  const isMonthView = useAppSelector(isMonthInterval)
   const isQuarterlyView = useAppSelector(isQuarterlyInterval)
+  const isFourMonthView = useAppSelector(isFourMonthInterval)
   const isYearScrollView = useAppSelector(isYearScrollInterval)
   const isSelectingDates = useAppSelector(getIsSelectingDates)
   const getHoursInMonth = useGetHoursInMonth()
@@ -54,26 +65,48 @@ export const MultiMonth = () => {
     )
   })
 
+  const twoByTwoMonthsForPrint = Array.from(Array(intervalToNumMonths(CalendarInterval.YEAR_SCROLL)).keys()).map(
+    (index) => {
+      const monthOffset = index - targetDate.month()
+      const offset = isMonthView || isQuarterlyView || isFourMonthView || isYearScrollView ? monthOffset : index
+
+      const dateInMonth = dayjs(targetDate).add(isYearView ? monthOffset : offset, 'month')
+      const hoursInMonth = getHoursInMonth(dateInMonth)
+
+      return (
+        <div key={index} className={`h-full break-inside-avoid`}>
+          <h3 className='inline-flex flex-grow pl-1'>{dateInMonth.format('MMMM')}</h3>
+          <h4 className='inline-flex pl-1 text-sm text-slate-400'>{hoursInMonth} hrs</h4>
+          <Month className='h-[90%] flex-grow' monthOffset={offset} key={offset} getForPrinting={getForPrinting} />
+        </div>
+      )
+    }
+  )
+
   const viewClassNames = useMemo(() => {
+    if (getForPrinting) return 'grid-cols-2 grid-rows-6 h-[300]'
     switch (activeCalView) {
       case CalendarInterval.FOUR_MONTHS:
         return 'grid-cols-2 grid-rows-2 h-full'
       case CalendarInterval.QUARTERLY:
         return 'grid-cols-1 grid-rows-3 h-full'
       case CalendarInterval.YEAR_SCROLL:
-        return 'grid-cols-2 grid-rows-6 h-[270vh]'
+        return 'grid-cols-1 grid-rows-12 h-[540vh] lg:grid-cols-2 lg:grid-rows-6 lg:h-[270vh]'
     }
-    return ''
   }, [activeCalView])
 
   return (
-    <div className={`h-full w-full ${isYearScrollView ? 'overflow-y-scroll' : ''}`}>
+    <div
+      className={`h-full w-full ${getForPrinting ? 'overflow-y-visible' : isYearScrollView ? 'overflow-y-scroll' : ''}`}
+    >
       <div
-        className={`box-border grid gap-x-4 overflow-y-hidden 
+        className={`box-border grid gap-x-4 
+        ${getForPrinting ? 'overflow-y-visible' : 'overflow-y-hidden '}
         ${isSelectingDates ? 'divide-y' : ''}
         ${viewClassNames}`}
       >
-        {isQuarterlyView ? quarterlyMonths : twoByTwoMonths}
+        {getForPrinting && twoByTwoMonthsForPrint}
+        {!getForPrinting && (isQuarterlyView ? quarterlyMonths : twoByTwoMonths)}
       </div>
     </div>
   )

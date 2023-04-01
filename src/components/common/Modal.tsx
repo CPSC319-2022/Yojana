@@ -85,78 +85,80 @@ export const Modal = ({
         disabled={disable}
       />
 
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog
-          as='div'
-          id={typeof bounds === 'string' ? bounds : undefined}
-          className={`pointer-events-none absolute top-0 z-10 flex h-screen w-screen p-5 ${
-            isMinimized ? 'items-end justify-start' : 'items-center justify-center'
-          }`}
-          onClose={() => {
-            if (closeWhenClickOutside) {
-              setIsOpen(false)
-              closeParent?.()
-            }
-          }}
-        >
-          {closeWhenClickOutside && <div className='fixed inset-0 bg-black/30' aria-hidden='true' />}
-          <DraggableDialog draggable={draggable} bounds={bounds} handleId={handle} isMinimized={isMinimized}>
-            <div className='pointer-events-auto'>
-              <Transition.Child
-                as={Fragment}
-                enter='ease-out duration-300'
-                enterFrom='opacity-0 scale-95'
-                enterTo='opacity-100 scale-100'
-                leave='ease-in duration-200'
-                leaveFrom='opacity-100 scale-100'
-                leaveTo='opacity-0 scale-95'
-              >
-                {!isMinimized ? (
-                  <Dialog.Panel
-                    className={`${directionClass} w-full max-w-md transform ${
-                      scrollable ? 'overflow-y-auto' : showOverflow ? 'overflow-visible' : 'overflow-y-hidden'
-                    } rounded-md bg-white text-left align-middle shadow-modal transition-all`}
-                    style={{ maxWidth: maxWidth, maxHeight: maxHeight, minWidth: minWidth }}
-                    id={id}
-                  >
-                    {showCloseBtn && (
-                      <div
-                        id={handle}
-                        className={`sticky top-0 z-20 w-full bg-slate-100 ${!isMinimized ? 'cursor-move' : ''}`}
-                      >
-                        {closeBtn && (
-                          <div className='flex justify-end'>
-                            <button
-                              type='button'
-                              className='px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
-                              onClick={() => {
-                                setIsOpen(false)
-                                closeParent?.()
-                              }}
-                            >
-                              ×
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    <div className={bodyPadding}>
-                      {title && (
-                        <Dialog.Title as='h3' className='text-lg font-medium leading-6 text-slate-900'>
-                          {title}
-                        </Dialog.Title>
+      {isOpen && (
+        <Transition appear show={isOpen} as={Fragment}>
+          <Dialog
+            as='div'
+            id={typeof bounds === 'string' ? bounds : undefined}
+            className={`pointer-events-none absolute top-0 z-10 flex h-screen w-screen p-5 ${
+              isMinimized ? 'items-end justify-start' : 'items-center justify-center'
+            }`}
+            onClose={() => {
+              if (closeWhenClickOutside) {
+                setIsOpen(false)
+                closeParent?.()
+              }
+            }}
+          >
+            {closeWhenClickOutside && <div className='fixed inset-0 bg-black/30' aria-hidden='true' />}
+            <DraggableDialog draggable={draggable} bounds={bounds} handleId={handle} isMinimized={isMinimized}>
+              <div className='pointer-events-auto'>
+                <Transition.Child
+                  as={Fragment}
+                  enter='ease-out duration-300'
+                  enterFrom='opacity-0 scale-95'
+                  enterTo='opacity-100 scale-100'
+                  leave='ease-in duration-200'
+                  leaveFrom='opacity-100 scale-100'
+                  leaveTo='opacity-0 scale-95'
+                >
+                  {!isMinimized ? (
+                    <Dialog.Panel
+                      className={`${directionClass} w-full max-w-md transform ${
+                        scrollable ? 'overflow-y-auto' : showOverflow ? 'overflow-visible' : 'overflow-y-hidden'
+                      } rounded-md bg-white text-left align-middle shadow-modal transition-all`}
+                      style={{ maxWidth: maxWidth, maxHeight: maxHeight, minWidth: minWidth }}
+                      id={id}
+                    >
+                      {showCloseBtn && (
+                        <div
+                          id={handle}
+                          className={`sticky top-0 z-20 w-full bg-slate-100 ${!isMinimized ? 'cursor-move' : ''}`}
+                        >
+                          {closeBtn && (
+                            <div className='flex justify-end'>
+                              <button
+                                type='button'
+                                className='px-2.5 text-3xl text-slate-400 hover:text-slate-500 focus:outline-none'
+                                onClick={() => {
+                                  setIsOpen(false)
+                                  closeParent?.()
+                                }}
+                              >
+                                ×
+                              </button>
+                            </div>
+                          )}
+                        </div>
                       )}
-                      <Dialog.Description as='div'>{body}</Dialog.Description>
-                    </div>
-                  </Dialog.Panel>
-                ) : (
-                  <>{minimized}</>
-                )}
-              </Transition.Child>
-            </div>
-          </DraggableDialog>
-        </Dialog>
-      </Transition>
+                      <div className={bodyPadding}>
+                        {title && (
+                          <Dialog.Title as='h3' className='text-lg font-medium leading-6 text-slate-900'>
+                            {title}
+                          </Dialog.Title>
+                        )}
+                        <Dialog.Description as='div'>{body}</Dialog.Description>
+                      </div>
+                    </Dialog.Panel>
+                  ) : (
+                    <>{minimized}</>
+                  )}
+                </Transition.Child>
+              </div>
+            </DraggableDialog>
+          </Dialog>
+        </Transition>
+      )}
     </>
   )
 }

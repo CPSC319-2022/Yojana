@@ -30,16 +30,18 @@ export const DescriptionPopover = ({
 }: DescriptionPopover) => {
   const currentInterval = useAppSelector(getInterval)
   const [closeWhenClickOutside, setCloseWhenClickOutside] = useState(false)
-  const shouldCloseWhenClickOutside = () => {
-    setCloseWhenClickOutside(true)
-    onClick(currentDay)
-  }
-  const doCloseWhenClickOutside = () => {
-    setCloseWhenClickOutside(false)
-    onClick(-1)
-  }
+
   const renderPopover = useCallback(
     (catComponent: JSX.Element, category: CategoryFullState) => {
+      const shouldCloseWhenClickOutside = () => {
+        setCloseWhenClickOutside(true)
+        onClick(currentDay)
+      }
+      const doCloseWhenClickOutside = () => {
+        setCloseWhenClickOutside(false)
+        onClick(-1)
+      }
+
       const descText = category?.description.trim().length === 0 ? 'No description provided.' : category?.description
       const titleLength = category?.name.length + category?.creator.name.length
       const email = 'mailto:' + category?.creator.email
@@ -100,7 +102,7 @@ export const DescriptionPopover = ({
       }
       leftOrRight = translateXClass?.startsWith('-') ? 'right-5' : 'left-5'
       return (
-        <div className={`${type === 'icon' ? 'inline-flex' : ''}`}>
+        <div className={`${type === 'icon' ? 'inline-flex' : 'overflow-x-hidden'}`}>
           {!isNested && closeWhenClickOutside && (
             <div
               className='fixed absolute inset-0 top-0 z-10 flex h-screen w-screen bg-transparent transition-colors duration-300 ease-in-out'
@@ -110,7 +112,7 @@ export const DescriptionPopover = ({
           )}
           <Popover
             className={`relative ${type === 'icon' ? 'inline-flex ' + className : ''}
-            ${closeWhenClickOutside ? '' : 'overflow-x-hidden'}`}
+            ${closeWhenClickOutside ? '' : 'overflow-x-hidden no-scrollbar'}`}
           >
             <Popover.Button
               onClick={shouldCloseWhenClickOutside}
@@ -164,19 +166,7 @@ export const DescriptionPopover = ({
         </div>
       )
     },
-    [
-      currentInterval,
-      className,
-      currentDay,
-      dayOffset,
-      isNested,
-      monthOffset,
-      type,
-      closeWhenClickOutside,
-      doCloseWhenClickOutside,
-      shouldCloseWhenClickOutside,
-      isNested
-    ]
+    [type, isNested, closeWhenClickOutside, className, currentDay, onClick, currentInterval, monthOffset, dayOffset]
   )
 
   return renderPopover(component, category)
