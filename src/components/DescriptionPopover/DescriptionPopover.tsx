@@ -110,7 +110,7 @@ export const DescriptionPopover = ({
           )}
           <Popover
             className={`relative ${type === 'icon' ? 'inline-flex ' + className : ''}
-            ${closeWhenClickOutside ? '' : 'overflow-x-hidden'}`}
+            ${closeWhenClickOutside ? '' : 'overflow-x-hidden no-scrollbar'}`}
           >
             <Popover.Button
               onClick={shouldCloseWhenClickOutside}
