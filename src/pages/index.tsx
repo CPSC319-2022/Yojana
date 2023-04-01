@@ -1,11 +1,11 @@
 import { Alert } from '@/components/common'
-import { MainCalendar } from '@/components/mainCalendar'
+import { MainCalendar, Month } from '@/components/mainCalendar'
 import { NavBar } from '@/components/navBar'
 import { SideBar } from '@/components/sideBar/'
 import { CalendarInterval } from '@/constants/enums'
 import { getCategories } from '@/prisma/queries'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { setAppData } from '@/redux/reducers/AppDataReducer'
+import { getIsMobile, setAppData, setIsMobile } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates, resetSelectedDates, setIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import { setDate, setInterval } from '@/redux/reducers/MainCalendarReducer'
 import { wrapper } from '@/redux/store'
@@ -13,7 +13,7 @@ import { getCookies } from 'cookies-next'
 import dayjs from 'dayjs'
 import { GetServerSideProps } from 'next'
 import { getServerSession, Session } from 'next-auth'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { authOptions } from './api/auth/[...nextauth]'
 import { setCookieMaxAge } from '@/utils/cookies'
 import {
@@ -31,10 +31,35 @@ interface CalendarProps {
   session: Session
 }
 
+const SMALL_SCREEN_PX = 640 // same number as tailwind's docs
+
 const Calendar = ({ session }: CalendarProps) => {
   const dispatch = useAppDispatch()
   const sidebarOpen = useAppSelector(getPreferences).sidebarOpen.value
   const isSelectingDates = useAppSelector((state) => getIsSelectingDates(state))
+  const isMobileView = useAppSelector(getIsMobile)
+
+  useEffect(() => {
+    const setMobile = () => {
+      if (window.innerWidth <= SMALL_SCREEN_PX) {
+        dispatch(setIsMobile(true))
+      } else {
+        dispatch(setIsMobile(false))
+      }
+    }
+
+    window.addEventListener('resize', setMobile)
+    return () => {
+      window.removeEventListener('resize', setMobile)
+    }
+  }, [dispatch])
+
+  useEffect(() => {
+    if (isMobileView) {
+      dispatch(setInterval(CalendarInterval.MONTH))
+      dispatch(setIsSidebarOpen(false))
+    }
+  }, [dispatch, isMobileView])
 
   // reset selected dates when sidebar is closed while in date selection mode
   useEffect(() => {
@@ -44,28 +69,54 @@ const Calendar = ({ session }: CalendarProps) => {
     }
   }, [dispatch, isSelectingDates, sidebarOpen])
 
-  return (
-    <main>
-      <Alert />
-      <div className='flex h-screen w-full flex-col bg-white text-slate-800'>
-        <div className='z-10'>
-          <NavBar session={session} />
-        </div>
-        <div className='border-box z-0 flex h-[90vh] w-full flex-row'>
-          <div
-            className={`${
-              sidebarOpen ? 'w-1/5 translate-x-0 border-r border-slate-200' : 'w-0 -translate-x-full'
-            } overflow-visible transition-all`}
-          >
-            {sidebarOpen && <SideBar session={session} />}
+  const content = useMemo(() => {
+    if (isMobileView) {
+      return (
+        <div className='h-full w-full'>
+          <div className='z-10 h-[10vh]'>
+            <NavBar session={session} />
           </div>
-          <div className={`${sidebarOpen ? 'w-4/5' : 'w-full'} flex flex-col transition-all`}>
-            <MainCalendar />
+          <div className='border-box z-0 h-[90vh] w-full'>
+            <div
+              className={`absolute z-10 h-[90vh] overflow-hidden bg-white transition-all
+                ${sidebarOpen ? 'w-[250px] translate-x-0 border-r border-slate-200' : 'w-0 -translate-x-full'} `}
+            >
+              {sidebarOpen && <SideBar session={session} />}
+            </div>
+            {sidebarOpen && <div className={`absolute z-[5] h-[90vh] w-full bg-slate-800 opacity-30`}></div>}
+            <div className={`h-full w-full`}>
+              <Month monthOffset={0} className={'h-full'} />
+            </div>
           </div>
         </div>
-      </div>
-    </main>
-  )
+      )
+    }
+
+    return (
+      <>
+        <Alert />
+        <div className='flex h-screen w-full flex-col bg-white text-slate-800'>
+          <div className='z-10'>
+            <NavBar session={session} />
+          </div>
+          <div className='border-box z-0 flex h-[90vh] w-full flex-row'>
+            <div
+              className={`${
+                sidebarOpen ? 'w-1/5 min-w-[200px] translate-x-0 border-r border-slate-200' : 'w-0 -translate-x-full'
+              } overflow-visible transition-all`}
+            >
+              {sidebarOpen && <SideBar session={session} />}
+            </div>
+            <div className={`flex flex-grow flex-col transition-all`}>
+              <MainCalendar />
+            </div>
+          </div>
+        </div>
+      </>
+    )
+  }, [isMobileView, session, sidebarOpen])
+
+  return <main className={'overflow-hidden'}>{content}</main>
 }
 
 // get data from database on server side
