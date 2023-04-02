@@ -74,7 +74,7 @@ export const MultiMonth = ({ getForPrinting = false }: { getForPrinting?: boolea
       const hoursInMonth = getHoursInMonth(dateInMonth)
 
       return (
-        <div key={index} className={`h-full break-inside-avoid`}>
+        <div key={index} className={`h-full break-inside-avoid`} id={'year-scroll-view'}>
           <h3 className='inline-flex flex-grow pl-1'>{dateInMonth.format('MMMM')}</h3>
           <h4 className='inline-flex pl-1 text-sm text-slate-400'>{hoursInMonth} hrs</h4>
           <Month className='h-[90%] flex-grow' monthOffset={offset} key={offset} getForPrinting={getForPrinting} />

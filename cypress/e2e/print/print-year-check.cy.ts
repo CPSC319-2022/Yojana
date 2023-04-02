@@ -1,34 +1,48 @@
-describe('open the account dropdown and print to pdf', () => {
+/*
+    These are the cypress tests to check if the Print to pdf - Year View shows the expected behaviour
+ */
+
+describe('print year view tests', () => {
   const openDropdownAndPrint = () => {
     cy.get('div#account-dropdown').click()
     cy.contains('Print Calendar').should('be.visible').click()
     cy.contains('Print Year View').should('be.visible').click()
-    // Wait for print dialog box to open
-    cy.on('window:alert', (str) => {
-      expect(str).to.equal('Print dialog box opened.')
+
+    // Stub window.print() method before opening the print dialog
+    cy.window().then((win) => {
+      cy.stub(win, 'print')
     })
+
+    cy.get('#year-print').should('exist', { force: true })
+  }
+
+  const checkYearDisplayed = () => {
+    openDropdownAndPrint()
+
+    cy.get('#year-display-print').should('exist', { force: true })
   }
 
   const checkAllCategoriesDisplayed = () => {
-    cy.get('#year-print').should('exist', { force: true })
+    openDropdownAndPrint()
+
     cy.get('#category-names-print').should('exist', { force: true })
   }
 
   const checkAllIconsDisplayed = () => {
-    cy.get('#year-print').should('exist', { force: true })
+    openDropdownAndPrint()
+
     cy.get('#icons-print').should('exist', { force: true })
   }
 
-  const checkIconsAppearInTheCalendar = () => {
-    cy.get('#year-print').should('exist', { force: true })
-    cy.get('#div-border').should('exist', { force: true })
-    cy.get('#div-pt').should('exist', { force: true })
+  const checkIconsAppearInCertainDates = () => {
+    openDropdownAndPrint()
 
-    const icon = cy.get(`#checkbox-1`).invoke('prop', 'icon')
-    cy.get('#year-view').debug().should('contain', icon)
+    // To be written
   }
 
   const checkWorkingHoursDisplayed = () => {
+    openDropdownAndPrint()
+
     cy.get('#year-view').should('contain', '160 hrs')
     cy.get('#year-view').should('contain', '200 hrs')
   }
@@ -38,8 +52,9 @@ describe('open the account dropdown and print to pdf', () => {
     cy.get('#master-calendar-accordion-item').should('be.visible', { force: true })
     cy.get('#checkbox-1').click()
 
+    openDropdownAndPrint()
+
     //Check that the filtered out category does not appear in the print view
-    cy.get('#year-print').should('exist', { force: true })
     cy.get(`#checkbox-1`).then(($checkbox) => {
       cy.get(`label[for=${$checkbox.attr('id')}]`)
         .invoke('text')
@@ -48,12 +63,8 @@ describe('open the account dropdown and print to pdf', () => {
           cy.get('#category-names-print').should('not.contain', catName)
         })
     })
-  }
 
-  const checkYearDisplayed = () => {
-    // Check that the calendar displays the year
-    cy.get('#year-print').should('exist', { force: true })
-    cy.get('#year-display-print').should('exist', { force: true })
+    cy.resetDb()
   }
 
   describe('admin', () => {
@@ -65,54 +76,40 @@ describe('open the account dropdown and print to pdf', () => {
     afterEach(() => {
       cy.resetDb()
     })
-    it('should check if calendar displays the year in the header', () => {
-      checkYearDisplayed()
-    })
-    // it('should check if calendar displays only all categories', () => {
-    //     checkAllCategoriesDisplayed()
-    // })
-    // it('should check if calendar displays all icons', () => {
-    //     checkAllIconsDisplayed()
-    // })
-    // it('should check if only filtered categories are displayed', () => {
-    //   checkOnlyFilteredCategoriesDisplayed()
-    // })
 
-    // it('should icons appear in all dates', () => {
-    //     checkIconsAppearInTheCalendar()
-    // })
+    // Test to open the print dialog box for year view and check if year print component exists
     it('should open print dialog box', () => {
       openDropdownAndPrint()
     })
-    // it('should display working hours', () => {
-    //   checkWorkingHoursDisplayed()
-    // })
-  })
 
-  describe('pleb', () => {
-    beforeEach(() => {
-      cy.login('pleb')
-      cy.visit('/')
+    // Test to see if the year is displayed in the header of the print view
+    it('should check if calendar displays the year in the header', () => {
+      checkYearDisplayed()
     })
 
-    afterEach(() => {
-      cy.resetDb()
+    // Test to see if all categories appear in the print view
+    it('should check if calendar displays all categories', () => {
+      checkAllCategoriesDisplayed()
     })
 
-    // it('should be able to open the print dialog box', () => {
-    //     openDropdownAndPrint()
-    // })
-    //
-    // it('should check if year appears in the calendar', () => {
-    //     checkYearDisplayed()
-    // })
-    //
-    // // it('should check if all months appear in the calendar', () => {
-    // //     checkAllMonthsDisplayed()
-    // // })
-    //
-    // it('should check if pdf contains only valid/filtered categories', () => {
-    //     checkValidCategoriesExist()
-    // })
+    // Test to see if all icons appear in the print view
+    it('should check if calendar displays all icons', () => {
+      checkAllIconsDisplayed()
+    })
+
+    // Test to see if categories appear on correct dates
+    it('icons should appear in all applicable dates', () => {
+      checkIconsAppearInCertainDates()
+    })
+
+    // Test to see if the Total Working Hours for months are displayed in the year print view
+    it('should display working hours', () => {
+      checkWorkingHoursDisplayed()
+    })
+
+    // Test to see if only the filtered categories appear in the print view
+    it('should check if only filtered categories are displayed', () => {
+      checkOnlyFilteredCategoriesDisplayed()
+    })
   })
 })

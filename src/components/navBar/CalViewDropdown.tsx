@@ -14,7 +14,7 @@ export const CalViewDropdown = () => {
   const activeCalView = useAppSelector(getInterval)
 
   return (
-    <Dropdown text={activeCalView} containerClassName='w-[12vw]'>
+    <Dropdown text={activeCalView} containerClassName='w-[12vw]' id={'cal-view-dropdown'}>
       {[
         CalendarInterval.MONTH,
         CalendarInterval.QUARTERLY,

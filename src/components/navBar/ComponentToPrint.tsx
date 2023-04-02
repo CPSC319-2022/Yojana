@@ -29,7 +29,7 @@ const ComponentToPrint = React.forwardRef<HTMLDivElement, ComponentToPrintProps>
   }
 
   return (
-    <span className='relative hidden' id={'year-print'}>
+    <span className='relative hidden' id='year-print'>
       <div ref={ref} className='h-auto w-auto overflow-visible border'>
         <div className='pt-4'>
           <div className={`grid ${gridSize} gap-1 px-4`}>

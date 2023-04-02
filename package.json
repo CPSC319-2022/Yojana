@@ -39,6 +39,7 @@
     "cookies-next": "^2.1.1",
     "cron-parser": "^4.8.1",
     "csv-parser": "^3.0.0",
+    "cypress-react-selector": "^3.0.0",
     "dayjs": "^1.11.7",
     "ical-generator": "^3.6.1",
     "lodash": "^4.17.21",
