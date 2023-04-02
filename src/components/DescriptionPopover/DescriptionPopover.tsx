@@ -136,8 +136,9 @@ export const DescriptionPopover = ({
                 className={
                   isMobileView
                     ? 'fixed bottom-0 left-0 z-40 w-screen'
-                    : `${isNested ? 'fixed' : 'absolute'} z-40 transform ${translateYClass} 
-                  ${type === 'icon' ? leftOrRight : translateXClass}`
+                    : `z-40 transform
+                       ${isNested ? 'fixed' : 'absolute'} ${translateYClass} 
+                       ${type === 'icon' ? leftOrRight : translateXClass}`
                 }
               >
                 <style jsx>{`
@@ -152,7 +153,7 @@ export const DescriptionPopover = ({
                 `}</style>
                 <div
                   className={`overflow-y-auto break-words rounded-lg rounded-md bg-white p-3 font-normal leading-7
-                    ${isMobileView ? 'h-[40vh] w-full' : 'max-w-60 h-fit max-h-60 w-60'}`}
+                    ${isMobileView ? 'h-[40vh] w-full' : 'max-w-60 h-fit max-h-60 w-60 text-left'}`}
                 >
                   <p className='text-center text-base text-slate-400'>{currentDay}</p>
                   <h1 className='pt-1 text-base'>{category?.name + ' #' + category?.id}</h1>
