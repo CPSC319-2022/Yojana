@@ -1,3 +1,6 @@
+/*
+ *  This test ensures that when the eye icon is clicked all the checkboxes will now be ticked
+ */
 describe('Select all category', () => {
   const checked = (number: number) => {
     cy.get(`div#category-item-${number}`).find('input[type="checkbox"]').should('have.prop', 'checked', true)
