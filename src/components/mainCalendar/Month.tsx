@@ -28,12 +28,31 @@ import { DescriptionPopover } from '../DescriptionPopover'
 
 dayjs.extend(weekOfYear)
 
+/**
+ * monthOffset: The offset of the month to display from the current month.
+ * className: Optional styling for Month.
+ * getForPrinting: Optional flag indicating if the rendered Month is for printing.
+ */
 interface MonthProps {
   monthOffset: number
   className?: string
   getForPrinting?: boolean
 }
 
+/**
+ * Month is responsible for rendering a month based on the provided MonthProps.
+ * It leverages the dayjs library and various hooks to calculate and display the month's contents.
+ * Key functionalities:
+ * Calculation of days and weeks within the month using dayjs.
+ * Resize handling and recalculation of icons per day.
+ * Rendering of category icons or banners based on user preferences.
+ * Printing support with getIconsForPrinting and getCategoryElemForPrinting functions.
+ * Popover functionality for showing additional category items on overflow.
+ * Date selection and styling for selecting individual dates or recurring dates.
+ *
+ * @param MonthProps
+ * @returns {JSX.Element} The rendered Month component.
+ */
 const CATEGORY_BANNER_HEIGHT_PX = 28
 // Width of 1 square icon (16px) including padding (4px left, 4px right). Also doubles as icon height.
 const CATEGORY_ICON_PX = 24
