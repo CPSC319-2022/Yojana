@@ -90,7 +90,7 @@ export const CategoriesMenu = ({ session }: Props) => {
   )
 
   return (
-    <div>
+    <div className='pt-4'>
       <Accordion disable={disable}>
         {renderCategoryType().map((isMaster, key) => renderAccordionItem(isMaster, key))}
       </Accordion>
