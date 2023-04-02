@@ -102,7 +102,7 @@ export const Modal = ({
               }
             }}
           >
-            {closeWhenClickOutside && <div className='fixed inset-0 bg-black/30' aria-hidden='true' />}
+            {closeWhenClickOutside && <div className='fixed inset-0 bg-slate-800/30' aria-hidden='true' />}
             <DraggableDialog draggable={draggable} bounds={bounds} handleId={handle} isMinimized={isMinimized}>
               <div className='pointer-events-auto'>
                 <Transition.Child
