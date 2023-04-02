@@ -7,6 +7,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, ReactNode, useRef } from 'react'
 import Draggable from 'react-draggable'
 import { getChildByType, removeChildrenByType } from 'react-nanny'
+import { getIsMobile } from '@/redux/reducers/AppDataReducer'
 
 interface ModalProps {
   buttonText: string
@@ -69,6 +70,7 @@ export const Modal = ({
   const dispatch = useAppDispatch()
   const minimized = getChildByType(children, Minimized)
   const body = removeChildrenByType(children, Minimized)
+  const isMobileView = useAppSelector(getIsMobile)
 
   return (
     <>
@@ -114,9 +116,10 @@ export const Modal = ({
                 >
                   {!isMinimized ? (
                     <Dialog.Panel
-                      className={`${directionClass} w-full min-w-max max-w-md transform ${
-                        scrollable ? 'overflow-y-auto' : showOverflow ? 'overflow-visible' : 'overflow-y-hidden'
-                      } rounded-md bg-white text-left align-middle shadow-modal transition-all`}
+                      className={`${directionClass} max-w-md transform 
+                        ${isMobileView ? 'w-full min-w-max' : ''}
+                        ${scrollable ? 'overflow-y-auto' : showOverflow ? 'overflow-visible' : 'overflow-y-hidden'} 
+                        rounded-md bg-white text-left align-middle shadow-modal transition-all`}
                       style={{ maxWidth: maxWidth, maxHeight: maxHeight, minWidth: minWidth }}
                       id={id}
                     >

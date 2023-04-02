@@ -158,7 +158,7 @@ export const DescriptionPopover = ({
               <Popover.Panel
                 className={
                   isMobileView
-                    ? 'fixed bottom-0 left-0 z-40 w-screen'
+                    ? 'fixed bottom-0 left-0 z-40 w-screen text-center'
                     : `z-40 transform
                        ${isNested ? 'fixed' : 'absolute'} ${translateYClass} 
                        ${type === 'icon' ? leftOrRight : translateXClass}`
