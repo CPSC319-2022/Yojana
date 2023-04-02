@@ -10,7 +10,18 @@ import dayjs, { Dayjs } from 'dayjs'
 import { useCallback, useMemo, useState } from 'react'
 import { DescriptionPopover } from '../DescriptionPopover'
 import { getLocalDateWithoutTime } from '@/utils/preprocessEntries'
-
+/**
+ * Year is responsible for rendering a full year view of calendar events.
+ * It leverages the dayjs library, various hooks, and state management from Redux to display calendar events in a grid format.
+ * Key functionalities:
+ * Different grid formats for printing and various calendar intervals.
+ * Retrieving and rendering calendar events for each day.
+ * Displaying tooltips and icons for events.
+ * Supporting date selection for multiple purposes.
+ *
+ * @param {boolean} [props.getForPrinting] - Optional flag indicating if the Year is for printing.
+ * @returns {JSX.Element}
+ */
 export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) => {
   const stateDate = useAppSelector(getDate)
   const categoryMap = useAppSelector(getCategoryMap)

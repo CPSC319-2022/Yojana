@@ -5,6 +5,17 @@ import { CategoryFullState } from '@/types/prisma'
 import { Popover, Transition } from '@headlessui/react'
 import { Dispatch, Fragment, SetStateAction, useCallback, useState } from 'react'
 
+/**
+ * type: Determines if the popover should be displayed as a 'block' or 'icon'.
+ * component: The actual 'block' or 'icon' that will be displayed.
+ * category: The CategoryFullState object containing the category information.
+ * className: Optional styling for the popover.
+ * monthOffset: The offset relative to month.
+ * dayOffset: The offset relative to day.
+ * currentDay: The current day number.
+ * isNested: Optional flag to indicate if the popover is nested within another popover.
+ * onClick: A function that takes a number and updates the state of the parent component.
+ */
 interface DescriptionPopover {
   type: 'block' | 'icon'
   component: JSX.Element
@@ -17,6 +28,18 @@ interface DescriptionPopover {
   onClick: Dispatch<SetStateAction<number>>
 }
 
+/**
+ * DescriptionPopover displays the component and render the popover on click with the category's information.
+ *  The component also takes care of handling when to close the popover when clicked outside.
+ *  The popover contains information such as category name, description, creator's name, and a mailto link for the creator's email.
+ *
+ * useAppSelector(getInterval) is used to get the current interval of the calendar view.
+ * useState(false) is used to initialize the state of closeWhenClickOutside.
+ * renderPopover is a useCallback hook that renders the popover with the proper category information and popover styling based on the current calendar view and interval.
+ *
+ * @param DescriptionPopover
+ * @returns JSX.Element
+ */
 export const DescriptionPopover = ({
   type,
   component,

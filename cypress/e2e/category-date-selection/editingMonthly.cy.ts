@@ -1,4 +1,12 @@
+/*
+  Use Cypress to verify the functionality of editing monthly recurring events in both personal and master calendars
+*/
 describe('edit monthly recurring tests', () => {
+  /*
+   * opening the "Create Category" modal,
+   * filling in the name,
+   * and selecting the "Monthly" recurring option for a new category.
+   */
   const openCreateModalAndSelectMonthly = () => {
     cy.get('button#create-category-btn').click()
     cy.get('div#create-category-modal-div').should('be.visible')
@@ -13,7 +21,12 @@ describe('edit monthly recurring tests', () => {
     cy.get('div#recurring-dates-tab-start-end').should('be.visible')
     cy.get('div#recurring-dates-tab-start-end').should('be.visible')
   }
-
+  /*
+   * opening the "Edit Category" modal,
+   * selecting the "Monthly on day 1" recurring option,
+   * and saving the changes.
+   * check the appropriate spans for the icons.
+   */
   const openEditModalAndSelectMONTHLYDAY1 = (forAdmin: boolean) => {
     // Save the category
     cy.get('button#create-category-submit-btn').trigger('click').click()
@@ -51,7 +64,11 @@ describe('edit monthly recurring tests', () => {
     // checks column number 5 (june) of 2023
     cy.checkIconsInDays('span.20-icon', 5, 1, 27, 12)
   }
-
+  /*
+   * beforeEach(): Logs in as admin and visits the root URL.
+   * afterEach(): Resets the database after each test.
+   * it(): Tests if the admin/user can edit a monthly recurring event and select "Monthly on day 1" for the master calendar.
+   */
   describe('admin', () => {
     beforeEach(() => {
       cy.login('admin')

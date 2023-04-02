@@ -1,11 +1,24 @@
+/*
+ * Helper function that:
+ * opening the "Create Category" modal,
+ * filling in the name.
+ */
 const openCreateModalAndCreateEmptyCat = () => {
   cy.get('button#create-category-btn').click()
   cy.get('div#create-category-modal-div').should('be.visible')
   cy.get('input[name="name"]').type('newCat')
   cy.get('div#create-category-modal-div').scrollTo('bottom')
 }
-
+/*
+  Use Cypress to verify the functionality of selecting a date to a category when creating a new category
+*/
 describe('manual selecting individual dates tests', () => {
+  /*
+   * selecting "Select Dates"
+   * selecting the first cell in 2023 Year view,
+   * and saving the changes.
+   * check the appropriate spans for the icons
+   */
   const selectJAN1AndCreate = (forAdmin: boolean) => {
     // check for button
     cy.get('button#select-individual-dates-btn').should('be.visible').click()
@@ -25,7 +38,12 @@ describe('manual selecting individual dates tests', () => {
     // check if the icon is added to Jan 1 2023 ONLY
     cy.checkIconsInDays('span.20-icon', 0, 1, 364, 12)
   }
-
+  /*
+   * selecting "Select Dates"
+   * selecting the first cell once then the 12th cell in 2023 Year view twice,
+   * and saving the changes.
+   * check the appropriate spans for the icons
+   */
   const doubleClick1Date = (forAdmin: boolean) => {
     // check for button
     cy.get('button#select-individual-dates-btn').should('be.visible').click()
@@ -47,7 +65,12 @@ describe('manual selecting individual dates tests', () => {
     // check if the icon is added to Jan 1 2023 ONLY
     cy.checkIconsInDays('span.20-icon', 0, 1, 364, 12)
   }
-
+  /*
+   * selecting "Select Dates"
+   * selecting cells corresponding to Feb 1, 5, 9 of 2023 in 2023 Year view,
+   * and saving the changes.
+   * check the appropriate spans for the icons
+   */
   const selectThreeDatesFEB = (forAdmin: boolean) => {
     // check for button
     cy.get('button#select-individual-dates-btn').should('be.visible').click()
@@ -68,7 +91,11 @@ describe('manual selecting individual dates tests', () => {
     // check if the icon is added to Feb (1, 5, 9) 2023 ONLY
     cy.checkIconsInDays('span.20-icon', 1, 1, 3, 12, 333, 97)
   }
-
+  /*
+   * beforeEach(): Logs in as admin and visits the root URL.
+   * afterEach(): Resets the database after each test.
+   * it(): Tests if the admin/user can select manual dates for a category during creation.
+   */
   describe('admin', () => {
     beforeEach(() => {
       cy.login('admin')
@@ -127,8 +154,18 @@ describe('manual selecting individual dates tests', () => {
     })
   })
 })
-
+/*
+  Use Cypress to verify the functionality of selecting a date to a category when editing a new category
+*/
 describe('manual editing individual dates tests', () => {
+  /*
+   * click on the category dropdown in the sidebar
+   * click on the edit button
+   * selecting "Select Dates"
+   * selecting the first cell in 2023 Year view,
+   * and saving the changes.
+   * check the appropriate spans for the icons
+   */
   const selectDuringEditToJAN1 = (forAdmin: boolean) => {
     // scroll down and save (no dates)
     cy.get('div#create-category-modal-div').scrollTo('bottom')
@@ -158,7 +195,14 @@ describe('manual editing individual dates tests', () => {
     // check if the icon is added to Jan 1 2023 ONLY
     cy.checkIconsInDays('span.20-icon', 0, 1, 364, 12)
   }
-
+  /*
+   * click on the category dropdown in the sidebar
+   * click on the edit button
+   * selecting "Select Dates"
+   * selecting cells corresponding to Feb 1, 5, 9 of 2023 in 2023 Year view,
+   * and saving the changes.
+   * check the appropriate spans for the icons
+   */
   const selectDuringEditThreeDatesFEB = (forAdmin: boolean) => {
     // scroll down and save (no dates)
     cy.get('div#create-category-modal-div').scrollTo('bottom')
@@ -190,7 +234,11 @@ describe('manual editing individual dates tests', () => {
     // check if the icon is added to Feb (1, 5, 9) 2023 ONLY
     cy.checkIconsInDays('span.20-icon', 1, 1, 3, 12, 333, 97)
   }
-
+  /*
+   * beforeEach(): Logs in as admin and visits the root URL.
+   * afterEach(): Resets the database after each test.
+   * it(): Tests if the admin/user can select manual dates for a category during editing.
+   */
   describe('admin', () => {
     beforeEach(() => {
       cy.login('admin')
