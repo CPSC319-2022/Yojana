@@ -6,6 +6,7 @@ import { getIsSelectingDates, getYearSelectedDates, toggleIndividualDate } from 
 import { getDate } from '@/redux/reducers/MainCalendarReducer'
 import { getPreferences } from '@/redux/reducers/PreferencesReducer'
 import { getDayStyling } from '@/utils/day'
+import { useGetHoursInMonth } from '@/utils/month'
 import dayjs, { Dayjs } from 'dayjs'
 import { useCallback, useMemo, useState } from 'react'
 import { DescriptionPopover } from '../DescriptionPopover'
@@ -21,6 +22,8 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
 
   const yearStartDate = dayjs(stateDate).startOf('year')
   const yearNum = yearStartDate.get('year')
+
+  const hoursInMonth = useGetHoursInMonth()
 
   const dispatch = useAppDispatch()
   const [popoverOpen, setPopoverOpen] = useState(-1)
@@ -139,13 +142,24 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
     return Array.from(Array(15).keys()).map((columnNum) => {
       const monthNum = columnNum - Math.ceil(columnNum / 5)
       const monthStartDate = dayjs(yearStartDate).add(monthNum, 'month')
+      const hours = hoursInMonth(monthStartDate)
       return (
-        <h3 className='sticky top-0 z-10 bg-slate-100 text-center text-slate-400' key={`col-${columnNum}-header`}>
-          {columnNum % 5 === 0 ? '\u00A0' : monthStartDate.format('MMM')}
-        </h3>
+        <span key={`col-${columnNum}-header`}>
+          <h3
+            className={`top-0 z-10 bg-slate-100 text-center text-xs text-slate-400 ${
+              preferences.showWorkingHours.value ? '' : 'hidden' && getForPrinting ? '' : 'hidden'
+            }`}
+            key={`col-${columnNum}-header`}
+          >
+            {columnNum % 5 === 0 ? '\u00A0' : `${hours} hrs`}
+          </h3>
+          <h3 className='sticky top-0 z-10 bg-slate-100 text-center text-slate-400' key={`col-${columnNum}-header`}>
+            {columnNum % 5 === 0 ? '\u00A0' : monthStartDate.format('MMM')}
+          </h3>
+        </span>
       )
     })
-  }, [yearStartDate])
+  }, [yearStartDate, hoursInMonth, getForPrinting, preferences.showWorkingHours.value])
 
   const days = useMemo(() => {
     return Array.from(Array(31).keys()).map((dateNum) => {

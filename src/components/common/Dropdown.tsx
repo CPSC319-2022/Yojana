@@ -5,7 +5,7 @@ import { getChildrenByType } from 'react-nanny'
 
 export interface DropdownProps {
   text?: string
-  id?: number
+  id?: string
   containerClassName?: string
   buttonClassName?: string
   overrideDefaultButtonStyle?: boolean

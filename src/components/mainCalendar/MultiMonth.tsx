@@ -98,6 +98,7 @@ export const MultiMonth = ({ getForPrinting = false }: { getForPrinting?: boolea
   return (
     <div
       className={`h-full w-full ${getForPrinting ? 'overflow-y-visible' : isYearScrollView ? 'overflow-y-scroll' : ''}`}
+      id={'year-scroll-view'}
     >
       <div
         className={`box-border grid gap-x-4 

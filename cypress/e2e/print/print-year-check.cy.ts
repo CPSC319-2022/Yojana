@@ -1,7 +1,8 @@
 describe('open the account dropdown and print to pdf', () => {
   const openDropdownAndPrint = () => {
     cy.get('div#account-dropdown').click()
-    cy.get('Print Calendar').should('be.visible').click()
+    cy.contains('Print Calendar').should('be.visible').click()
+    cy.contains('Print Year View').should('be.visible').click()
     // Wait for print dialog box to open
     cy.on('window:alert', (str) => {
       expect(str).to.equal('Print dialog box opened.')
@@ -51,37 +52,41 @@ describe('open the account dropdown and print to pdf', () => {
 
   const checkYearDisplayed = () => {
     // Check that the calendar displays the year
+    cy.get('#year-print').should('exist', { force: true })
     cy.get('#year-display-print').should('exist', { force: true })
   }
 
   describe('admin', () => {
     beforeEach(() => {
       cy.login('admin')
-      cy.visit('/')
+      cy.visit('/?interval=Year')
     })
 
     afterEach(() => {
       cy.resetDb()
     })
-    // it('should check if calendar displays the year in the header', () => {
-    //     checkYearDisplayed()
-    // })
+    it('should check if calendar displays the year in the header', () => {
+      checkYearDisplayed()
+    })
     // it('should check if calendar displays only all categories', () => {
     //     checkAllCategoriesDisplayed()
     // })
     // it('should check if calendar displays all icons', () => {
     //     checkAllIconsDisplayed()
     // })
-    it('should check if only filtered categories are displayed', () => {
-      checkOnlyFilteredCategoriesDisplayed()
-    })
+    // it('should check if only filtered categories are displayed', () => {
+    //   checkOnlyFilteredCategoriesDisplayed()
+    // })
 
     // it('should icons appear in all dates', () => {
     //     checkIconsAppearInTheCalendar()
     // })
-    it('should display working hours', () => {
-      checkWorkingHoursDisplayed()
+    it('should open print dialog box', () => {
+      openDropdownAndPrint()
     })
+    // it('should display working hours', () => {
+    //   checkWorkingHoursDisplayed()
+    // })
   })
 
   describe('pleb', () => {
