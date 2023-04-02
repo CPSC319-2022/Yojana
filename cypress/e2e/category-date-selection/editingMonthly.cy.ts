@@ -72,7 +72,7 @@ describe('edit monthly recurring tests', () => {
   describe('admin', () => {
     beforeEach(() => {
       cy.login('admin')
-      cy.visit('/')
+      cy.visit('/?interval=Year')
     })
 
     afterEach(() => {
@@ -89,7 +89,7 @@ describe('edit monthly recurring tests', () => {
   describe('pleb', () => {
     beforeEach(() => {
       cy.login('pleb')
-      cy.visit('/')
+      cy.visit('/?interval=Year')
     })
 
     afterEach(() => {
