@@ -2,6 +2,12 @@ import { getTextColor } from '@/utils/color'
 import React from 'react'
 import { Icon, IconName } from '@/components/common'
 
+/**
+ * color: The background color of the CategoryBlock component.
+ * label: The text label to be displayed in the CategoryBlock.
+ * icon: The name of the icon to be displayed in the CategoryBlock.
+ * className: Optional styling for the CategoryBlock.
+ */
 interface CategoryBlockProps {
   color: string
   label: string
@@ -9,6 +15,14 @@ interface CategoryBlockProps {
   className?: string
 }
 
+/**
+ * CategoryBlock displays a block component with an icon, label, and background color.
+ * The text color is determined based on the background color to ensure readability.
+ * The component utilizes the getTextColor utility function to set appropriate text color.
+ *
+ * @param CategoryBlockProps
+ * @returns {JSX.Element}
+ */
 export const CategoryBlock = ({ color, label, icon, className }: CategoryBlockProps) => {
   return (
     <>
