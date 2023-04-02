@@ -13,7 +13,7 @@ import { getCookies } from 'cookies-next'
 import dayjs from 'dayjs'
 import { GetServerSideProps } from 'next'
 import { getServerSession, Session } from 'next-auth'
-import { useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { authOptions } from './api/auth/[...nextauth]'
 import { setCookieMaxAge } from '@/utils/cookies'
 import {
@@ -39,20 +39,22 @@ const Calendar = ({ session }: CalendarProps) => {
   const isSelectingDates = useAppSelector((state) => getIsSelectingDates(state))
   const isMobileView = useAppSelector(getIsMobile)
 
-  useEffect(() => {
-    const setMobile = () => {
-      if (window.innerWidth <= SMALL_SCREEN_PX) {
-        dispatch(setIsMobile(true))
-      } else {
-        dispatch(setIsMobile(false))
-      }
+  const setMobile = useCallback(() => {
+    if (window.innerWidth <= SMALL_SCREEN_PX) {
+      dispatch(setIsMobile(true))
+    } else {
+      dispatch(setIsMobile(false))
     }
+  }, [dispatch])
+
+  useEffect(() => {
+    setMobile()
 
     window.addEventListener('resize', setMobile)
     return () => {
       window.removeEventListener('resize', setMobile)
     }
-  }, [dispatch])
+  }, [setMobile])
 
   useEffect(() => {
     if (isMobileView) {
@@ -83,7 +85,12 @@ const Calendar = ({ session }: CalendarProps) => {
             >
               {sidebarOpen && <SideBar session={session} />}
             </div>
-            {sidebarOpen && <div className={`absolute z-[5] h-[90vh] w-full bg-slate-800 opacity-30`}></div>}
+            {sidebarOpen && (
+              <div
+                className={`absolute z-[5] h-[90vh] w-full bg-slate-800 opacity-30`}
+                onClick={() => dispatch(setIsSidebarOpen(false))}
+              />
+            )}
             <div className={`h-full w-full`}>
               <Month monthOffset={0} className={'h-full'} />
             </div>
@@ -114,7 +121,7 @@ const Calendar = ({ session }: CalendarProps) => {
         </div>
       </>
     )
-  }, [isMobileView, session, sidebarOpen])
+  }, [dispatch, isMobileView, session, sidebarOpen])
 
   return <main className={'overflow-hidden'}>{content}</main>
 }

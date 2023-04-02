@@ -1,7 +1,7 @@
 import { Icon, IconName } from '@/components/common'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
+import { getCategoryMap, getIsMobile, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
 import {
   getIsSelectingDates,
   getPrevCurrNextMonthSelectedDates,
@@ -50,6 +50,7 @@ export const Month = (props: MonthProps) => {
   const isSelectingDates = useAppSelector(getIsSelectingDates)
   const preferences = useAppSelector(getPreferences)
   const activeCalView = useAppSelector(getInterval)
+  const isMobileView = useAppSelector(getIsMobile)
   const dispatch = useAppDispatch()
   const [useBanners, setUseBanners] = useState(isMonthView && preferences.monthCategoryAppearance.value === 'banners')
 
@@ -323,7 +324,13 @@ export const Month = (props: MonthProps) => {
             leaveTo='transform opacity-0 scale-95'
             beforeLeave={() => setOverflowVisible(-1)}
           >
-            <Popover.Panel className={`absolute z-50 transform ${translateXClass} ${translateYClass}`}>
+            <Popover.Panel
+              className={
+                isMobileView
+                  ? 'fixed bottom-0 left-0 z-40 w-screen'
+                  : `absolute z-50 transform ${translateXClass} ${translateYClass}`
+              }
+            >
               <style jsx>{`
                 div {
                   box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
@@ -331,7 +338,11 @@ export const Month = (props: MonthProps) => {
                   -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
                 }
               `}</style>
-              <div className='h-fit max-h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white'>
+              <div
+                className={`${
+                  isMobileView ? 'h-[40vh] w-full' : 'h-fit max-h-60 w-60'
+                } overflow-y-auto rounded-lg rounded-md bg-white`}
+              >
                 {getPopoverContent(day, offsetFromMonthStart)}
               </div>
             </Popover.Panel>
@@ -339,7 +350,16 @@ export const Month = (props: MonthProps) => {
         </Popover>
       )
     },
-    [appearBelow, getPopoverContent, isMonthView, isQuarterlyView, isYearScrollView, renderPopoverButton, useBanners]
+    [
+      appearBelow,
+      getPopoverContent,
+      isMobileView,
+      isMonthView,
+      isQuarterlyView,
+      isYearScrollView,
+      renderPopoverButton,
+      useBanners
+    ]
   )
 
   const renderDateNum = useCallback(
@@ -437,7 +457,7 @@ export const Month = (props: MonthProps) => {
                   ? 'flex inline-flex flex-wrap overflow-y-hidden'
                   : isQuarterlyView
                   ? 'inline-flex'
-                  : 'use-grid grid'
+                  : 'use-grid grid justify-items-center'
               }`}
             >
               {props.getForPrinting

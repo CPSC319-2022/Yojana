@@ -8,6 +8,7 @@ export interface DropdownProps {
   id?: number
   containerClassName?: string
   buttonClassName?: string
+  menuClassName?: string
   overrideDefaultButtonStyle?: boolean
   iconName?: IconName
   children?: React.ReactNode
@@ -17,6 +18,7 @@ export const Dropdown = ({
   text,
   containerClassName = '',
   buttonClassName,
+  menuClassName,
   overrideDefaultButtonStyle,
   iconName = 'CaretDownFill',
   children
@@ -24,7 +26,7 @@ export const Dropdown = ({
   const dropdownChildren = getChildrenByType(children, [Dropdown.Button, Dropdown.Accordion, Dropdown.Divider])
   return (
     <div className={containerClassName}>
-      <Menu as='div' className='relative inline-block text-left'>
+      <Menu as='div' className='relative inline-block w-full text-left'>
         {({ open, close }) => (
           <>
             <Menu.Button
@@ -46,10 +48,10 @@ export const Dropdown = ({
               leaveTo='transform opacity-0 scale-95'
             >
               <Menu.Items
-                className={`absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none 
-                `}
+                className={`absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none
+                  ${menuClassName}`}
               >
-                <div className='space-y-1 px-1 py-1'>{dropdownChildren}</div>
+                <div className={`${menuClassName} space-y-1 px-1 py-1`}>{dropdownChildren}</div>
               </Menu.Items>
             </Transition>
           </>

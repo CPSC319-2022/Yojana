@@ -83,25 +83,29 @@ export const NavBar = ({ session }: NavBarProps) => {
           </h1>
         )}
       </div>
-      <div className={`flex flex-row items-center ${isMobileView ? '' : 'lg:w-[25vw]'}`}>
+      <div className={`flex flex-row items-center ${isMobileView ? 'flex-grow justify-center' : 'lg:w-[25vw]'}`}>
         <Button text='Today' onClick={() => dispatch(jumpToToday())} className='mr-3 lg:mr-10' />
-        <Button iconName='CaretLeftFill' onClick={() => dispatch(decrementDate())} className='mr-3 py-3' />
-        <Button
-          iconName='CaretRightFill'
-          onClick={() => dispatch(incrementDate())}
-          className='mr-3 py-3'
-          id='move-right'
-        />
-        <h4 className='flex-none text-center text-lg'>{getIntervalDescription}</h4>
-        {interval === CalendarInterval.MONTH && (
-          <>
-            <h3 className='px-2 text-slate-400'>•</h3>
-            <h4 className='flex-none text-center text-lg text-slate-400'>{hoursInMonth} hrs</h4>
-          </>
-        )}
+        <span className={`flex flex-row ${isMobileView ? 'order-last ml-3' : ''}`}>
+          <Button iconName='CaretLeftFill' onClick={() => dispatch(decrementDate())} className='mr-3 py-3' />
+          <Button
+            iconName='CaretRightFill'
+            onClick={() => dispatch(incrementDate())}
+            className='mr-3 py-3'
+            id='move-right'
+          />
+        </span>
+        <span className={`flex flex-row`}>
+          <h4 className='flex-none text-center text-lg'>{getIntervalDescription}</h4>
+          {interval === CalendarInterval.MONTH && (
+            <>
+              <h3 className='px-2 text-slate-400'>•</h3>
+              <h4 className='flex-none text-center text-lg text-slate-400'>{hoursInMonth} hrs</h4>
+            </>
+          )}
+        </span>
       </div>
       {!isMobileView && <CalViewDropdown />}
-      <AccountDropdown session={session} />
+      {!isMobileView && <AccountDropdown session={session} />}
     </div>
   )
 }

@@ -13,7 +13,7 @@ import { useReactToPrint } from 'react-to-print'
  * This is a dropdown menu that appears when the user clicks on 'account' in the navbar.
  * It provides the user options to change the preferences, export the calendar, print the calendar, and log out
  */
-export const AccountDropdown = ({ session }: { session: Session }) => {
+export const AccountDropdown = ({ session, className }: { session: Session; className?: string }) => {
   const userName = session?.user.name || ''
   const userID = session?.user.id || ''
 
@@ -53,8 +53,13 @@ export const AccountDropdown = ({ session }: { session: Session }) => {
   }, [handlePrint, printTrigger, setPrintTrigger])
 
   return (
-    <div id='account-dropdown'>
-      <Dropdown text='Account' containerClassName={isMobileView ? '' : 'w-[12vw]'}>
+    <div id='account-dropdown' className={className}>
+      <Dropdown
+        text='Account'
+        containerClassName={isMobileView ? 'w-full' : 'w-[12vw]'}
+        buttonClassName={isMobileView ? 'w-full' : ''}
+        menuClassName={isMobileView ? 'relative' : ''}
+      >
         <Dropdown.Button label={userName} onClick={() => {}} clickable={false} />
         <Dropdown.Divider />
         <Dropdown.Button label='Preferences' onClick={() => setIsModalOpen(true)} />

@@ -4,6 +4,7 @@ import { getInterval } from '@/redux/reducers/MainCalendarReducer'
 import { CategoryFullState } from '@/types/prisma'
 import { Popover, Transition } from '@headlessui/react'
 import { Dispatch, Fragment, SetStateAction, useCallback, useState } from 'react'
+import { getIsMobile } from '@/redux/reducers/AppDataReducer'
 
 interface DescriptionPopover {
   type: 'block' | 'icon'
@@ -30,6 +31,7 @@ export const DescriptionPopover = ({
 }: DescriptionPopover) => {
   const currentInterval = useAppSelector(getInterval)
   const [closeWhenClickOutside, setCloseWhenClickOutside] = useState(false)
+  const isMobileView = useAppSelector(getIsMobile)
 
   const renderPopover = useCallback(
     (catComponent: JSX.Element, category: CategoryFullState) => {
@@ -105,7 +107,8 @@ export const DescriptionPopover = ({
         <div className={`${type === 'icon' ? 'inline-flex' : 'overflow-x-hidden'}`}>
           {!isNested && closeWhenClickOutside && (
             <div
-              className='fixed absolute inset-0 top-0 z-10 flex h-screen w-screen bg-transparent transition-colors duration-300 ease-in-out'
+              className={`fixed inset-0 top-[10vh] z-10 flex h-[90vh] w-screen transition-colors duration-300 ease-in-out 
+                ${isMobileView ? 'bg-slate-800 opacity-30' : 'bg-transparent opacity-0'}`}
               aria-hidden='true'
               onClick={doCloseWhenClickOutside}
             />
@@ -130,8 +133,12 @@ export const DescriptionPopover = ({
               leaveTo='transform opacity-0 scale-95'
             >
               <Popover.Panel
-                className={`${isNested ? 'fixed' : 'absolute'} z-40 transform ${translateYClass} 
-                  ${type === 'icon' ? leftOrRight : translateXClass}`}
+                className={
+                  isMobileView
+                    ? 'fixed bottom-0 left-0 z-40 w-screen'
+                    : `${isNested ? 'fixed' : 'absolute'} z-40 transform ${translateYClass} 
+                  ${type === 'icon' ? leftOrRight : translateXClass}`
+                }
               >
                 <style jsx>{`
                   div {
@@ -143,7 +150,10 @@ export const DescriptionPopover = ({
                     color: ${category?.color};
                   }
                 `}</style>
-                <div className='max-w-60 h-fit max-h-60 w-60 overflow-y-auto break-words rounded-lg rounded-md bg-white p-3 font-normal leading-7'>
+                <div
+                  className={`overflow-y-auto break-words rounded-lg rounded-md bg-white p-3 font-normal leading-7
+                    ${isMobileView ? 'h-[40vh] w-full' : 'max-w-60 h-fit max-h-60 w-60'}`}
+                >
                   <p className='text-center text-base text-slate-400'>{currentDay}</p>
                   <h1 className='pt-1 text-base'>{category?.name + ' #' + category?.id}</h1>
                   <p
@@ -166,7 +176,18 @@ export const DescriptionPopover = ({
         </div>
       )
     },
-    [type, isNested, closeWhenClickOutside, className, currentDay, onClick, currentInterval, monthOffset, dayOffset]
+    [
+      type,
+      isNested,
+      closeWhenClickOutside,
+      isMobileView,
+      className,
+      currentDay,
+      onClick,
+      currentInterval,
+      monthOffset,
+      dayOffset
+    ]
   )
 
   return renderPopover(component, category)
