@@ -1,3 +1,9 @@
+/*
+ * This is a Cypress test file that tests the functionality of exporting calendars. The file includes multiple test
+ * cases for different types of calendar exports such as the Master Calendar, Personal Calendar, and Filtered Categories.
+ * The tests are separated by user roles, admin and pleb, and are designed to test the functionality of the calendar
+ * export feature for each role.
+ */
 describe('Export Calendars', () => {
   const checkedCats: number[] = []
   const checked = (number: number) => {
