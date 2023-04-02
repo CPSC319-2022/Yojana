@@ -322,7 +322,7 @@ export const Month = (props: MonthProps) => {
       let translateYClass = below ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
       if (isYearScrollView)
         translateYClass =
-          day.month() <= 3 && offsetFromMonthStart <= 31 ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
+          day.month() <= 3 && offsetFromMonthStart < 31 ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
       const dayFormatted = day.format('YYYY-MM-DD')
       return (
         <>
