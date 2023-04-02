@@ -34,12 +34,6 @@ describe('print year (scroll) view tests', () => {
     cy.get('#icons-print').should('exist', { force: true })
   }
 
-  const checkIconsAppearInCertainDates = () => {
-    openDropdownAndPrint()
-
-    // To be written
-  }
-
   const checkWorkingHoursDisplayed = () => {
     openDropdownAndPrint()
 
@@ -94,11 +88,6 @@ describe('print year (scroll) view tests', () => {
     // Test to see if all icons appear in the print scroll view
     it('should check if calendar displays all icons', () => {
       checkAllIconsDisplayed()
-    })
-
-    // Test to see if categories appear on correct dates
-    it('icons should appear in all applicable dates', () => {
-      checkIconsAppearInCertainDates()
     })
 
     // Test to see if the Total Working Hours for months are displayed in the year print scroll view
