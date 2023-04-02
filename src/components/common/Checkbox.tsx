@@ -13,6 +13,18 @@ interface CheckboxProps {
   iconClassName?: string
 }
 
+/**
+ * * Checkbox component that allows users to select multiple options from a list.
+ * @param color - Color of checkbox item.
+ * @param id - ID of checkbox.
+ * @param checkboxClassName - Additional CSS classes to apply to the checkbox element.
+ * @param label - Label for checkbox.
+ * @param checked - States whether checkbox is checked or not.
+ * @param icon - Icon to display next to checkbox.
+ * @param onChange - Function to be called when the checkbox is checked/unchecked.
+ * @param iconClassName - Additional CSS classes to apply to the icon element.
+ * @constructor
+ */
 export const Checkbox = ({
   color,
   id,
@@ -29,6 +41,7 @@ export const Checkbox = ({
         input[type='checkbox'] {
           accent-color: ${color};
         }
+
         span {
           color: ${color};
         }

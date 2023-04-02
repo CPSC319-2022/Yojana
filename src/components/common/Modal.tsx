@@ -8,6 +8,12 @@ import { Fragment, ReactNode, useRef } from 'react'
 import Draggable from 'react-draggable'
 import { getChildByType, removeChildrenByType } from 'react-nanny'
 
+/*
+ * This file is a React component that renders a modal dialog box.
+ * It allows for customisation of various properties such as the content to be displayed, the title of the modal,
+ * its size and position, and the behaviour of the close button. It also allows for dragging of the modal window and
+ * customisation of the button that opens the modal.
+ */
 interface ModalProps {
   buttonText: string
   buttonIcon?: IconName
@@ -37,6 +43,34 @@ interface ModalProps {
   id?: string
 }
 
+/**
+ * * Component that renders a modal dialog box.
+ * @param children - Content to be displayed inside the modal.
+ * @param buttonText - The text to be displayed on the button that opens the modal.
+ * @param buttonIcon - The icon name to be displayed on the button that opens the modal.
+ * @param title - The title of the modal.
+ * @param isOpen - A boolean indicating whether the modal is currently open or not.
+ * @param setIsOpen - A function to set the state of the isOpen property.
+ * @param isMinimized - A boolean indicating whether the modal is currently minimized or not.
+ * @param maxWidth - The maximum width of the modal.
+ * @param maxHeight - The maximum height of the modal.
+ * @param minWidth - The minimum width of the modal.
+ * @param draggable - A boolean indicating whether the modal can be dragged or not.
+ * @param direction - The direction in which the modal should be aligned.
+ * @param closeBtn - A boolean indicating whether the close button should be displayed or not.
+ * @param closeWhenClickOutside - A boolean indicating whether the modal should be closed when clicked outside.
+ * @param handle - The id of the handle used to drag the modal.
+ * @param bounds - The id of the element used to set the bounds of the modal.
+ * @param buttonClassName - The CSS class to be applied to the button that opens the modal.
+ * @param buttonId - The ID to be applied to the button that opens the modal.
+ * @param showCloseBtn - A boolean indicating whether the close button should be displayed or not.
+ * @param overrideDefaultButtonStyle - A boolean indicating whether the default styles for the button that opens the modal should be overridden.
+ * @param closeParent -  A function to close the parent component when the modal is closed.
+ * @param bodyPadding - The padding applied to the body of the modal.
+ * @param scrollable - A boolean indicating whether the modal should be scrollable or not.
+ * @param showOverflow - A boolean indicating whether the modal should show overflow or not.
+ * @param id - The ID to be applied to the modal.
+ */
 export const Modal = ({
   children,
   buttonText,

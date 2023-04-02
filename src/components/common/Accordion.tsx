@@ -2,7 +2,19 @@ import { getChildByType, getChildrenByType } from 'react-nanny'
 import { Disclosure } from '@headlessui/react'
 import { Icon, IconName } from '@/components/common/Icon'
 import React from 'react'
+/*
+ * This is a TypeScript React component that creates an accordion UI element that can be used to hide or show content,
+ * with each item having a header and a body. It includes options for disabling the accordion and setting the default
+ * state of each item.
+ */
 
+/**
+ * * This component is used to create an accordion that can be used to hide or show content. It can contain one or more items.
+ * * Each item can have a header and a body. When the header is clicked, the body will be revealed or hidden.
+ * @param children: React.ReactNode - The content of the Accordion. Should contain one or more Accordion.Item components.
+ * @param disable: boolean - Optional. If true, disables the accordion from being clicked.
+ * @constructor
+ */
 export const Accordion = ({ children, disable }: { children: React.ReactNode; disable?: boolean }) => {
   const items = getChildrenByType(children, Accordion.Item)
   return (
