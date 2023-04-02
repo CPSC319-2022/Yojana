@@ -73,6 +73,7 @@ const Calendar = ({ session }: CalendarProps) => {
     if (isMobileView) {
       dispatch(setInterval(CalendarInterval.MONTH))
       dispatch(setIsSidebarOpen(false))
+      dispatch(setMonthCategoryAppearance('icons'))
     }
   }, [dispatch, isMobileView])
 
