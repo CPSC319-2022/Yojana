@@ -3,6 +3,11 @@ import React, { useCallback, useEffect, useMemo } from 'react'
 import { Icon, IconName, Modal } from '@/components/common'
 import { Tab } from '@headlessui/react'
 
+/*
+ *  The code defines an IconPicker component that renders a modal window for selecting icons based on a search query.
+ *  It provides the user with a wider selection of icons specific to their requirements
+ */
+
 interface IconPickerProps {
   buttonClassName?: string
   control: any

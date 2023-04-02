@@ -30,6 +30,13 @@ import { IconPicker } from './IconPicker'
 import { IconSearchModal } from './IconSearchModal'
 import { iconPickerIcons } from '@/constants/icons'
 
+/*
+ *  This component renders the create category modal, it will contain the selection for
+ *  name, description, color, icon and selecting dates. It also contains the error handling for each
+ *  section for example the name field must not be null, it calls all the other files in this folder
+ *  once submitted it will create the category
+ */
+
 const schema = z.object({
   name: z.string().trim().min(1, { message: 'Name cannot be empty' }).max(191),
   description: z.string().trim().max(191).optional(),

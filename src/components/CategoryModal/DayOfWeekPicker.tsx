@@ -1,6 +1,10 @@
 import React from 'react'
 import { useController } from 'react-hook-form'
 
+/*
+ *  This component is for selecting days of the week to be used in the recurring date section of the create category modal
+ */
+
 interface DayOfWeekPickerProps {
   control: any
   name: string
