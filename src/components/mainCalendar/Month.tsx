@@ -166,7 +166,7 @@ export const Month = (props: MonthProps) => {
       if (isSelectingDates) return []
 
       const entriesOnDay = getEntriesOnDay(day.date(), offsetFromMonthStart) || []
-      const key = day.format('YY-MM-DD')
+      const dayFormatted = day.format('YY-MM-DD')
 
       const categories = entriesOnDay?.map((entry) => {
         const category = categoryMap[entry.categoryId]
@@ -180,7 +180,7 @@ export const Month = (props: MonthProps) => {
                   color={category.color}
                   label={category.name}
                   icon={category.icon as IconName}
-                  key={`${key}-${entry.categoryId}`}
+                  key={`block-${dayFormatted}-${entry.categoryId}`}
                   className={settings?.className}
                 />
               }
@@ -189,7 +189,7 @@ export const Month = (props: MonthProps) => {
               monthOffset={isMonthView ? offsetFromMonthStart : startingMonthNum}
               currentDay={day.date()}
               isNested={settings?.isForPopover}
-              key={`description-${key}-${entry.categoryId}`}
+              key={`desc-block-${dayFormatted}-${entry.categoryId}`}
               onClick={setPopoverOpen}
             />
           )
@@ -197,14 +197,14 @@ export const Month = (props: MonthProps) => {
           return (
             <span
               className={`${isMonthView ? 'h-8 w-8' : 'h-6 w-6'} px-0.5 text-center font-bold`}
-              key={`${key}-${entry.id}`}
+              key={`icon-${dayFormatted}-${entry.id}`}
             >
               <DescriptionPopover
-                key={`description-${key}-${entry.categoryId}`}
+                key={`desc-icon-${dayFormatted}-${entry.categoryId}`}
                 type='icon'
                 component={
                   <Icon
-                    key={`icon-${key}-${entry.categoryId}`}
+                    key={`icon-${dayFormatted}-${entry.categoryId}`}
                     iconName={category.icon as IconName}
                     className='inline'
                     size={settings?.getLargeIcons && isMonthView ? 24 : 16}
@@ -475,7 +475,7 @@ export const Month = (props: MonthProps) => {
                   ? 'flex inline-flex flex-wrap overflow-y-hidden'
                   : isQuarterlyView
                   ? 'inline-flex'
-                  : 'use-grid grid justify-items-center'
+                  : `use-grid grid ${isMobileView ? 'justify-items-center' : ''}`
               }`}
             >
               {props.getForPrinting
@@ -500,6 +500,7 @@ export const Month = (props: MonthProps) => {
       renderDateNum,
       useBanners,
       colsPerDay,
+      isMobileView,
       getIconsForPrinting,
       getNonOverflowCategoryElems,
       dispatch
