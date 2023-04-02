@@ -8,7 +8,7 @@ import { Fragment, ReactNode, useRef } from 'react'
 import Draggable from 'react-draggable'
 import { getChildByType, removeChildrenByType } from 'react-nanny'
 
-/**
+/*
  * This file is a React component that renders a modal dialog box.
  * It allows for customisation of various properties such as the content to be displayed, the title of the modal,
  * its size and position, and the behaviour of the close button. It also allows for dragging of the modal window and
