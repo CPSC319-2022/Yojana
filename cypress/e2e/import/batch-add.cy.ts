@@ -51,7 +51,7 @@ describe('Batch Import Entries Tests', () => {
   describe('admin', () => {
     beforeEach(() => {
       cy.login('admin')
-      cy.visit('/')
+      cy.visit('/?interval=Year')
     })
 
     afterEach(() => {
