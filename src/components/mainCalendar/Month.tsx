@@ -105,7 +105,7 @@ export const Month = (props: MonthProps) => {
   useIsomorphicLayoutEffect(() => {
     recalculateItemsPerDay()
     // Add any deps that would require recalculating items per day here
-  }, [recalculateItemsPerDay, activeCalView, useBanners, monthStartDate.month()])
+  }, [recalculateItemsPerDay, activeCalView, useBanners, monthStartDate.month(), monthStartDate.year()])
 
   useEffect(() => {
     if (!categoryContainerRef.current) return
@@ -175,7 +175,10 @@ export const Month = (props: MonthProps) => {
           )
         } else {
           return (
-            <span className={`${isMonthView ? 'h-8 w-8' : 'h-6 w-6'} px-0.5 font-bold`} key={`${key}-${entry.id}`}>
+            <span
+              className={`${isMonthView ? 'h-8 w-8' : 'h-6 w-6'} px-0.5 text-center font-bold`}
+              key={`${key}-${entry.id}`}
+            >
               <style jsx>{`
                 * {
                   color: ${category.color};
@@ -209,12 +212,7 @@ export const Month = (props: MonthProps) => {
   )
 
   const getIconsForPrinting = useCallback(
-    (
-      day: Dayjs,
-      offsetFromMonthStart: number,
-      getBanners: boolean,
-      settings?: { getLargeIcons?: boolean; isForPopover?: boolean; className?: string }
-    ): JSX.Element[] => {
+    (day: Dayjs, offsetFromMonthStart: number): JSX.Element[] => {
       const entriesOnDay = getEntriesOnDay(day.date(), offsetFromMonthStart) || []
 
       const categories = entriesOnDay?.map((entry) => {
@@ -393,8 +391,7 @@ export const Month = (props: MonthProps) => {
 
   const getCategoryElemForPrinting = useCallback(
     (day: Dayjs, offsetFromMonthStart: number) => {
-      const allCategoryElems = getIconsForPrinting(day, offsetFromMonthStart, false)
-      return allCategoryElems
+      return getIconsForPrinting(day, offsetFromMonthStart)
     },
     [getIconsForPrinting]
   )
@@ -458,12 +455,14 @@ export const Month = (props: MonthProps) => {
       overflowVisible,
       popoverOpen,
       preferences.showWeekNumbers.value,
+      props.getForPrinting,
       isMonthView,
       isQuarterlyView,
       isSelectingDates,
       renderDateNum,
       useBanners,
       colsPerDay,
+      getCategoryElemForPrinting,
       getNonOverflowCategoryElems,
       dispatch
     ]
@@ -493,7 +492,7 @@ export const Month = (props: MonthProps) => {
         </div>
       )
     },
-    [numWeeks, preferences.showWeekNumbers.value, renderDay]
+    [numWeeks, preferences.showWeekNumbers.value, props.getForPrinting, renderDay]
   )
 
   const generateWeeks = useCallback(() => {
