@@ -1,3 +1,7 @@
+/*
+  Use Cypress to verify the functionality of batch adding entries to both personal and master calendars
+ */
+
 // Admin - add to master and personal
 // Pleb - add to personal
 import 'cypress-file-upload'

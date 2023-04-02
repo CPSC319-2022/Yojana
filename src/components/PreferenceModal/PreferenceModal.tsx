@@ -9,6 +9,18 @@ import {
 } from '@/redux/reducers/PreferencesReducer'
 import { setCookieMaxAge } from '@/utils/cookies'
 
+/**
+ * PreferenceModal is responsible for rendering the preferences modal.
+ * It leverages the various hooks and state management from Redux to display preferences.
+ * Key functionalities:
+ * Changing preferences.
+ * Saving preferences to cookies.
+ * Rendering preferences.
+ *
+ * @param {boolean} [isModalOpen] - Optional flag indicating if the PreferenceModal is open.
+ * @param {boolean} [setIsModalOpen] - Optional function to set the PreferenceModal open state.
+ * @returns {JSX.Element}
+ */
 export const PreferenceModal = ({
   isModalOpen,
   setIsModalOpen

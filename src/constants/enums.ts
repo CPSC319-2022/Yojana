@@ -1,3 +1,9 @@
+/**
+ * @description
+ * Enums for the different calendar intervals
+ * @export
+ * @enum {string}
+ */
 export enum CalendarInterval {
   YEAR = 'Year',
   YEAR_SCROLL = 'Year (Scroll)',
