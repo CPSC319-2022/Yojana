@@ -2,6 +2,15 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '@/prisma/prismadb'
 import { getToken } from 'next-auth/jwt'
 
+/**
+ * route: /api/cats/[id]
+ *
+ * GET: Get category by id
+ * DELETE: Delete category by id
+ *
+ * @param req
+ * @param res
+ */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const categoryId = Number(req.query.id)
   const { method } = req

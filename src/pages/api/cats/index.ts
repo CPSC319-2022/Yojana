@@ -5,6 +5,16 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { Entry } from '@prisma/client'
 import { getToken } from 'next-auth/jwt'
 
+/**
+ * route: /api/cats
+ *
+ * GET: Returns all categories (and their entries and their creator)
+ * PUT: Edits a category
+ * POST: Creates a new category
+ *
+ * @param req
+ * @param res
+ */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case 'GET':

@@ -1,3 +1,4 @@
+// Sanity check to make sure the test suite is working
 describe('Sanity Check', () => {
   describe('admin', () => {
     beforeEach(() => {
