@@ -2,6 +2,11 @@ import { getChildByType, getChildrenByType } from 'react-nanny'
 import { Disclosure } from '@headlessui/react'
 import { Icon, IconName } from '@/components/common/Icon'
 import React from 'react'
+/*
+ * This is a TypeScript React component that creates an accordion UI element that can be used to hide or show content,
+ * with each item having a header and a body. It includes options for disabling the accordion and setting the default
+ * state of each item.
+ */
 
 /**
  * * This component is used to create an accordion that can be used to hide or show content. It can contain one or more items.
