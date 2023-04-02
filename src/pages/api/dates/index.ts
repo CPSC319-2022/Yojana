@@ -2,6 +2,14 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '@/prisma/prismadb'
 import { getToken } from 'next-auth/jwt'
 
+/**
+ * route: /api/dates
+ *
+ * GET: get all dates
+ * POST: create many dates and return number of entries created
+ * @param req
+ * @param res
+ */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case 'GET': {

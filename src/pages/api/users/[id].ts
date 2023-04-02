@@ -2,6 +2,13 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '@/prisma/prismadb'
 import { getToken } from 'next-auth/jwt'
 
+/**
+ * route: /api/users/[id]
+ *
+ * GET: get a user by id
+ * @param req
+ * @param res
+ */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case 'GET':

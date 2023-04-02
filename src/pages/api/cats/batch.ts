@@ -5,6 +5,7 @@ import { getCategories, getOwnedCategories } from '@/prisma/queries'
 import z from 'zod'
 import { BatchResponse } from '@/types/prisma'
 
+// Schema for validating request body
 export const bodySchema = z
   .record(
     z.array(
@@ -25,6 +26,14 @@ export const bodySchema = z
     { message: 'CategoryID column should only contain integer CategoryIDs' }
   )
 
+/**
+ * route: /api/cats/batch
+ *
+ * POST: Adds entries to categories (used for importing data from CSV)
+ *
+ * @param req
+ * @param res
+ */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   // Only POST allowed
   if (req.method !== 'POST') {

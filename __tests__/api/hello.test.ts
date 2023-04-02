@@ -2,6 +2,7 @@ import '@testing-library/jest-dom'
 import hello from '@/pages/api/hello'
 import { createRequest, createResponse } from 'node-mocks-http'
 
+// unit tests for the /api/hello endpoint
 describe('/api/hello', () => {
   it('should return a 200 status code', async () => {
     // create a mock request and response
