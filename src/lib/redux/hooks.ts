@@ -1,3 +1,7 @@
+/**
+ * Redux-related hooks. For use throughout the app.
+ */
+
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import type { AppDispatch } from './store'
 import { AppState } from './store'
