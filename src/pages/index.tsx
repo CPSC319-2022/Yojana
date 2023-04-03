@@ -26,6 +26,8 @@ import {
   setYearShowGrid
 } from '@/redux/reducers/PreferencesReducer'
 import { preprocessEntries } from '@/utils/preprocessEntries'
+import { Device } from '@/components/Device'
+import { isMobile } from 'react-device-detect'
 
 /**
  * session: The user's session data.
@@ -53,11 +55,7 @@ const Calendar = ({ session }: CalendarProps) => {
   const isMobileView = useAppSelector(getIsMobile)
 
   const setMobile = useCallback(() => {
-    if (window.innerWidth <= SMALL_SCREEN_PX) {
-      dispatch(setIsMobile(true))
-    } else {
-      dispatch(setIsMobile(false))
-    }
+    if (typeof window !== 'undefined') dispatch(setIsMobile(isMobile || window.innerWidth < SMALL_SCREEN_PX))
   }, [dispatch])
 
   useEffect(() => {
@@ -77,42 +75,34 @@ const Calendar = ({ session }: CalendarProps) => {
     }
   }, [dispatch, isMobileView])
 
-  // reset selected dates when sidebar is closed while in date selection mode
-  useEffect(() => {
-    if (!sidebarOpen && isSelectingDates) {
-      dispatch(resetSelectedDates())
-      dispatch(setIsSelectingDates(false))
-    }
-  }, [dispatch, isSelectingDates, sidebarOpen])
-
-  const content = useMemo(() => {
-    if (isMobileView) {
-      return (
-        <div className='h-full w-full'>
-          <div className='z-10 h-[10vh]'>
-            <NavBar session={session} />
-          </div>
-          <div className='border-box z-0 h-[90vh] w-full'>
-            <div
-              className={`absolute z-10 h-[90vh] overflow-hidden bg-white transition-all
+  const mobileContent = useMemo(() => {
+    return (
+      <div className='h-full w-full'>
+        <div className='z-10 h-[10vh]'>
+          <NavBar session={session} />
+        </div>
+        <div className='border-box z-0 h-[90vh] w-full'>
+          <div
+            className={`absolute z-10 h-[90vh] overflow-hidden bg-white transition-all
                 ${sidebarOpen ? 'w-[80vw] translate-x-0 border-r border-slate-200' : 'w-0 -translate-x-full'} `}
-            >
-              {sidebarOpen && <SideBar session={session} />}
-            </div>
-            {sidebarOpen && (
-              <div
-                className={`absolute z-[5] h-[90vh] w-full bg-slate-800 opacity-30`}
-                onClick={() => dispatch(setIsSidebarOpen(false))}
-              />
-            )}
-            <div className={`h-full w-full`}>
-              <Month monthOffset={0} className={'h-full'} />
-            </div>
+          >
+            {sidebarOpen && <SideBar session={session} />}
+          </div>
+          {sidebarOpen && (
+            <div
+              className={`absolute z-[5] h-[90vh] w-full bg-slate-800 opacity-30`}
+              onClick={() => dispatch(setIsSidebarOpen(false))}
+            />
+          )}
+          <div className={`h-full w-full`}>
+            <Month monthOffset={0} className={'h-full'} />
           </div>
         </div>
-      )
-    }
+      </div>
+    )
+  }, [dispatch, session, sidebarOpen])
 
+  const desktopContent = useMemo(() => {
     return (
       <>
         <Alert />
@@ -123,7 +113,7 @@ const Calendar = ({ session }: CalendarProps) => {
           <div className='border-box z-0 flex h-[90vh] w-full flex-row'>
             <div
               className={`${
-                sidebarOpen ? 'w-1/5 min-w-[200px] translate-x-0 border-r border-slate-200' : 'w-0 -translate-x-full'
+                sidebarOpen ? 'inline-block w-1/5 translate-x-0 border-r border-slate-200' : 'w-0 -translate-x-full'
               } overflow-visible transition-all`}
             >
               {sidebarOpen && <SideBar session={session} />}
@@ -135,9 +125,26 @@ const Calendar = ({ session }: CalendarProps) => {
         </div>
       </>
     )
-  }, [dispatch, isMobileView, session, sidebarOpen])
+  }, [session, sidebarOpen])
 
-  return <main className={'overflow-hidden'}>{content}</main>
+  // reset selected dates when sidebar is closed while in date selection mode
+  useEffect(() => {
+    if (!sidebarOpen && isSelectingDates) {
+      dispatch(resetSelectedDates())
+      dispatch(setIsSelectingDates(false))
+    }
+  }, [dispatch, isSelectingDates, sidebarOpen])
+
+  return (
+    <main className={'overflow-hidden'}>
+      <Device>
+        {({ isMobile }) => {
+          if (isMobile || isMobileView) return mobileContent
+          return desktopContent
+        }}
+      </Device>
+    </main>
+  )
 }
 
 // get data from database on server side
