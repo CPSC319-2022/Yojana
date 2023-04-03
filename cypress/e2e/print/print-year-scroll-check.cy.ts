@@ -1,6 +1,6 @@
 /*
-    These are the cypress tests to check if the Print to pdf - Year Scroll View shows the expected behaviour.
- */
+  Use Cypress to verify the functionality of the pdf print functionality for year-scroll view
+*/
 
 describe('print year (scroll) view tests', () => {
   const openDropdownAndPrint = () => {
