@@ -53,7 +53,7 @@ export const AccountDropdown = ({ session }: { session: Session }) => {
 
   return (
     <div id='account-dropdown'>
-      <Dropdown text='Account' containerClassName='w-[12vw]'>
+      <Dropdown text='Account' containerClassName='w-[12vw]' ariaLabel='account-dropdown'>
         <Dropdown.Button label={userName} onClick={() => {}} clickable={false} />
         <Dropdown.Divider />
         <Dropdown.Button label='Preferences' onClick={() => setIsModalOpen(true)} />

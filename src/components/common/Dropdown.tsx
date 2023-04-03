@@ -11,6 +11,7 @@ export interface DropdownProps {
   overrideDefaultButtonStyle?: boolean
   iconName?: IconName
   children?: React.ReactNode
+  ariaLabel?: string
 }
 
 /**
@@ -30,7 +31,8 @@ export const Dropdown = ({
   buttonClassName,
   overrideDefaultButtonStyle,
   iconName = 'CaretDownFill',
-  children
+  children,
+  ariaLabel
 }: DropdownProps) => {
   const dropdownChildren = getChildrenByType(children, [Dropdown.Button, Dropdown.Accordion, Dropdown.Divider])
   return (
@@ -46,6 +48,7 @@ export const Dropdown = ({
               onClick={() => open && close()}
               className={buttonClassName}
               overrideDefaultStyle={overrideDefaultButtonStyle}
+              ariaLabel={ariaLabel}
             />
             <Transition
               as={Fragment}

@@ -80,9 +80,15 @@ export const NavBar = ({ session }: NavBarProps) => {
         </h1>
       </div>
       <div className='flex w-[25vw] flex-row items-center'>
-        <Button text='Today' onClick={() => dispatch(jumpToToday())} className='mr-10' />
-        <Button iconName='CaretLeftFill' onClick={() => dispatch(decrementDate())} className='mr-3 py-3' />
+        <Button text='Today' onClick={() => dispatch(jumpToToday())} className='mr-10' ariaLabel='set-to-today' />
         <Button
+          iconName='CaretLeftFill'
+          onClick={() => dispatch(decrementDate())}
+          className='mr-3 py-3'
+          ariaLabel='move-left'
+        />
+        <Button
+          ariaLabel='move-right'
           iconName='CaretRightFill'
           onClick={() => dispatch(incrementDate())}
           className='mr-3 py-3'

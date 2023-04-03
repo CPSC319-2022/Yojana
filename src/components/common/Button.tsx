@@ -5,6 +5,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   text?: string
   iconName?: IconName
   iconClassName?: string
+  ariaLabel?: string
   overrideDefaultStyle?: boolean
 }
 
@@ -23,7 +24,8 @@ export const Button = forwardRef(
       className = '',
       id = '',
       iconClassName = '',
-      overrideDefaultStyle = false
+      overrideDefaultStyle = false,
+      ariaLabel
     }: ButtonProps,
     ref: React.Ref<HTMLButtonElement>
   ) => {
@@ -39,6 +41,7 @@ export const Button = forwardRef(
         id={id}
         disabled={disabled}
         ref={ref}
+        aria-label={ariaLabel}
       >
         {text}
         {iconName && <Icon iconName={iconName} className={iconClassName} />}
