@@ -207,12 +207,13 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
+  const [afterClose, setAfterClose] = useState(false)
 
   useEffect(() => {
-    if (!isModalOpen) {
+    if (afterClose) {
       resetForm()
     }
-  }, [isModalOpen, resetForm])
+  }, [afterClose, resetForm])
 
   const onSubmit: SubmitHandler<Schema> = useCallback(
     async ({ name, color, icon, description, repeating, isMaster }) => {
@@ -266,6 +267,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         dispatch(method === 'POST' ? addCategory(dispatchPayload) : updateCategory(dispatchPayload))
 
         setIsModalOpen(false)
+        setAfterClose(true)
       } else {
         if (response.status !== 500) {
           const text = await response.text()
