@@ -96,11 +96,11 @@ export const DescriptionPopover = ({
           case CalendarInterval.QUARTERLY:
             translateXClass = dayOffset >= 3 ? '-translate-x-40' : ''
             translateYClass =
-              monthOffset === 0
+              monthOffset === 2
                 ? titleLength * 2 + descText.length >= 128
                   ? '-translate-y-40'
                   : '-translate-y-32'
-                : monthOffset === -1
+                : monthOffset === 1
                 ? '-translate-y-12'
                 : ''
             break
@@ -129,7 +129,10 @@ export const DescriptionPopover = ({
       }
       leftOrRight = translateXClass?.startsWith('-') ? 'right-5' : 'left-5'
       return (
-        <div className={`${type === 'icon' ? 'inline-flex' : 'overflow-x-hidden'}`}>
+        <div
+          className={`${type === 'icon' ? 'inline-flex' : 'overflow-x-hidden'}
+        ${closeWhenClickOutside && !isNested ? 'overflow-x-visible' : 'overflow-x-hidden'}`}
+        >
           {!isNested && closeWhenClickOutside && (
             <div
               className='fixed absolute inset-0 top-0 z-10 flex h-screen w-screen bg-transparent transition-colors duration-300 ease-in-out'

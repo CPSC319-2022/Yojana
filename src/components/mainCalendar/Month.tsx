@@ -303,7 +303,7 @@ export const Month = (props: MonthProps) => {
   const appearBelow = useCallback(
     (offsetFromMonthStart: number, month: number) => {
       if (isMonthView) return offsetFromMonthStart < 15
-      if (isQuarterlyView) return props.monthOffset === -2 || (props.monthOffset === -1 && offsetFromMonthStart < 15)
+      if (isQuarterlyView) return props.monthOffset === 0 || (props.monthOffset === 1 && offsetFromMonthStart < 15)
       if (isYearScrollView) return month % 2 == 0 || props.monthOffset < 5
       else return props.monthOffset < 2
     },
