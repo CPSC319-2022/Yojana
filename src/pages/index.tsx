@@ -23,7 +23,8 @@ import {
   setMonthCategoryAppearance,
   setShowWeekNumbers,
   setYearOverflow,
-  setYearShowGrid
+  setYearShowGrid,
+  setShowWorkingHours
 } from '@/redux/reducers/PreferencesReducer'
 import { preprocessEntries } from '@/utils/preprocessEntries'
 
@@ -96,7 +97,8 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     // get cookies
     const cookies = getCookies({ req, res })
 
-    const { yearShowGrid, yearOverflow, monthCategoryAppearance, sidebarOpen, showWeekNumbers } = defaultPreferences
+    const { yearShowGrid, yearOverflow, monthCategoryAppearance, sidebarOpen, showWeekNumbers, showWorkingHours } =
+      defaultPreferences
 
     // if sidebar cookie is undefined, set it to true
     const sidebarOpenInitial = cookies[sidebarOpen.cookieName]
@@ -142,6 +144,15 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     } else {
       // if the setShowWeekNumbers cookie is defined, set setShowWeekNumbers to true or false based on the value of the cookie
       store.dispatch(setShowWeekNumbers(setShowWeekNumbersCookie === 'true'))
+    }
+
+    // set cookie for setShowWorkingHours
+    const setShowWorkingHoursCookie = cookies[showWorkingHours.cookieName]
+    if (setShowWorkingHoursCookie === undefined) {
+      setCookieMaxAge(showWorkingHours.cookieName, showWorkingHours.value, { req, res })
+    } else {
+      // if the setShowWorkingHours cookie is defined, set setShowWorkingHours to true or false based on the value of the cookie
+      store.dispatch(setShowWorkingHours(setShowWorkingHoursCookie === 'true'))
     }
 
     // current session
