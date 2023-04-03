@@ -262,10 +262,14 @@ We use [Vercel](https://vercel.com/) to deploy our [Next.js app](https://vercel.
 Visit [this](https://yojana-main.vercel.app/) link to see the latest deployed version of the app.
 
 ## Usage Demos
+
+- Project setup: [video](https://drive.google.com/file/d/1gParF_CYP80n-eKjiEtFERgWVnXVuASc/view?usp=share_link)
 - General Overview: [video](https://drive.google.com/file/d/19xxg2aVFHEQvCCJ55ysKw4h1wcFn45W7/view?usp=share_link)
 - Calendar View Options: [video](https://drive.google.com/file/d/1EBDnQme-x6ti1S5KiUTCeT7KqngMfVhL/view?usp=sharing)
 - Creating Categories: [video](https://drive.google.com/file/d/1ZbBBZn0E5xE3TtohstzPNcmZFS3Oq3-f/view?usp=share_link)
-- Recurring Dates, Editing and Deleting Categories: [video](https://drive.google.com/file/d/1jQSFPxrQuT6ghL8MAeqdWQQka_EhxNve/view?usp=share_link)
+- Recurring Dates, Editing and Deleting
+  Categories: [video](https://drive.google.com/file/d/1jQSFPxrQuT6ghL8MAeqdWQQka_EhxNve/view?usp=share_link)
 - Importing entries via
   CSV: [video](https://drive.google.com/file/d/1OdTF02FHYin3s2i62Gu28yntX-TM73iI/view?usp=share_link)
 - Printing to PDF: [video](https://drive.google.com/file/d/1snCDa6DoCvUoz7KgkA9NhXUymkhN-mdl/view?usp=share_link)
+- Export to iCal: [video](https://drive.google.com/file/d/1RdQe4HUS1IOuXQxcjcQ4-yOdzTOt2ROC/view?usp=share_link)
