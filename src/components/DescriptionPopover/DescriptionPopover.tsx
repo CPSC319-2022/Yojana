@@ -116,7 +116,11 @@ export const DescriptionPopover = ({
         translateXClass = dayOffset >= 3 ? '-translate-x-40' : 'translate-x-6'
         translateYClass =
           monthOffset >= 15 ? (titleLength * 2 + descText.length >= 128 ? '-translate-y-40' : '-translate-y-32') : ''
-        translateXClass = isNested ? (dayOffset < 3 ? 'translate-x-60' : '-translate-x-60') : translateXClass
+        translateXClass = isNested
+          ? dayOffset < 3 || (monthOffset % 2 !== 0 && currentInterval === CalendarInterval.YEAR_SCROLL)
+            ? 'translate-x-60'
+            : '-translate-x-60'
+          : translateXClass
         translateYClass = isNested
           ? titleLength * 2 + descText.length >= 128
             ? '-translate-y-32'
