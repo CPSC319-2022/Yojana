@@ -4,6 +4,7 @@ import { prismaMock } from '@/prisma/singleton'
 import { createRequest, createResponse } from 'node-mocks-http'
 import * as jwt from 'next-auth/jwt'
 
+// unit tests for the /api/users endpoint
 describe('/api/users', () => {
   it('should return a 200 status code', async () => {
     // create a mock request and response

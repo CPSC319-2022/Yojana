@@ -11,6 +11,17 @@ interface Props {
   session: Session
 }
 
+/**
+ * CategoriesMenu is responsible for rendering the categories menu.
+ * It contains the following:
+ * Master Categories - Categories that are shared across all users.
+ * Personal Categories - Categories that are only visible to the user logged in.
+ * It consists of 2 sections for each category type.
+ * An accordian is used to hide and show the categories.
+ *
+ * @param session
+ * @returns {JSX.Element}
+ */
 export const CategoriesMenu = ({ session }: Props) => {
   const dispatch = useAppDispatch()
   const categories: CategoryState[] = useAppSelector(getCategories)

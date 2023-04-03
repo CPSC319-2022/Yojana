@@ -1,5 +1,12 @@
 import { useController } from 'react-hook-form'
 
+/*
+ *  This code provides UI for picking either to add the category to the master
+ *  or the personal calendar in the Create Category modal
+ *  It will update the value of the category isMaster on click
+ *  This will only be show if the user logged in is Admin
+ */
+
 interface CategoryTypePicker {
   control: any
   name: string

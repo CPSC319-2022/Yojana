@@ -11,6 +11,16 @@ interface Props {
   session: Session
 }
 
+/**
+ * SideBar is responsible for rendering the sidebar.
+ * It contains the following:
+ * 1. Categories Menu - Responsible for rendering the categories menu.
+ * 2. Create Category Button - Responsible for rendering the modal to create categories.
+ * 3. Import Entries Button - Responsible for rendering the modal to import csv file.
+ *
+ * @param session
+ * @returns {JSX.Element}
+ */
 export const SideBar = ({ session }: Props) => {
   const isMobileView = useAppSelector(getIsMobile)
 

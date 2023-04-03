@@ -23,7 +23,7 @@ import { useMemo } from 'react'
  * Rendering of Month components with the appropriate monthOffset.
  * Conditionally displaying the hours for each month.
  *
- * @param {boolean} [props.getForPrinting] - Optional flag indicating if the MultiMonth is for printing.
+ * @param {boolean} [getForPrinting] - Optional flag indicating if the MultiMonth is for printing.
  * @returns {JSX.Element}
  */
 export const MultiMonth = ({ getForPrinting = false }: { getForPrinting?: boolean }) => {
@@ -104,7 +104,7 @@ export const MultiMonth = ({ getForPrinting = false }: { getForPrinting?: boolea
       case CalendarInterval.YEAR_SCROLL:
         return 'grid-cols-1 grid-rows-12 h-[540vh] lg:grid-cols-2 lg:grid-rows-6 lg:h-[270vh]'
     }
-  }, [activeCalView])
+  }, [activeCalView, getForPrinting])
 
   return (
     <div

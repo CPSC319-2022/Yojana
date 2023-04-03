@@ -3,7 +3,16 @@
 import { Tab } from '@headlessui/react'
 import React from 'react'
 import { getChildrenByType } from 'react-nanny'
-
+/*
+ * This file exports a Tabs component that displays a group of tabs, each with a title and content pane, using the
+ * Headless UI library. It also exports the TabTitle and TabContent components to be used as children of the Tabs
+ * component.
+ */
+/**
+ * * A component that displays a group of tabs, each with a title and content pane.
+ * @param children - The child components to be rendered within the Tabs component.
+ * @param currentIndex - The index of the currently active tab.
+ */
 export const Tabs = ({ children, currentIndex }: { children: React.ReactNode; currentIndex: number }) => {
   const titles = getChildrenByType(children, [TabTitle])
   const contents = getChildrenByType(children, [TabContent])

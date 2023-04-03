@@ -38,12 +38,22 @@ const appDataSlice = createSlice({
   name: 'appData',
   initialState,
   reducers: {
+    /**
+     * Set the app's data (namely, the categories, its metadata, and their corresponding dates).
+     * @param state
+     * @param action - A list of categories, with their visibility, metadata, and dates.
+     */
     setAppData: (state, action: PayloadAction<AppData>) => {
       // update data
       state.data = action.payload
       // update EntryMap
       state.entryMap = _createEntryMap(action.payload)
     },
+    /**
+     * Add a new category to the list of categories maintained by the store.
+     * @param state
+     * @param action - a category with its metadata and dates (excluding its visibility).
+     */
     addCategory: (state, action: PayloadAction<CategoryFullState>) => {
       setCookieMaxAge(`yojana.show-category-${action.payload.id}`, action.payload.show)
       // update data
@@ -51,6 +61,11 @@ const appDataSlice = createSlice({
       // add entries to EntryMap
       _addEntriesToEntryMap(state.entryMap, action.payload.entries, action.payload.id)
     },
+    /**
+     * Update a preexisting category, and set its visibility to `show`.
+     * @param state
+     * @param action - the category to be updated.
+     */
     updateCategory: (state, action: PayloadAction<CategoryFullState>) => {
       const cat = state.data.find((cat) => cat.id === action.payload.id)
       // return if category doesn't exist
@@ -61,6 +76,11 @@ const appDataSlice = createSlice({
       // update EntryMap
       state.entryMap = _createEntryMap(state.data)
     },
+    /**
+     * Toggle a category's visibility.
+     * @param state
+     * @param action - the category's id.
+     */
     toggleCategory: (state, action: PayloadAction<number>) => {
       const cat = state.data.find((cat) => cat.id === action.payload)
       // return if category doesn't exist
@@ -68,6 +88,19 @@ const appDataSlice = createSlice({
       setCookieMaxAge(`yojana.show-category-${action.payload}`, !cat.show)
       cat.show = !cat.show
     },
+    /**
+     * For each master OR personal category (as specified by isMaster),
+     * set its visibility to the desired visibility.
+     *
+     * `isMaster` specifies the category group being toggled.
+     * - If this value is `true`, then all the master categories' visibilities are being toggled.
+     * - If this value is `false, all the personal categories' visibilities are being toggled.
+     *
+     * `show` specifies whether all the categories in this group should be shown or hidden.
+     *
+     * @param state
+     * @param action - an object with 2 fields: `isMaster` and `show`.
+     */
     setCategoriesShow: (state, action: PayloadAction<{ isMaster: boolean; show: boolean }>) => {
       state.data.forEach((cat) => {
         if (cat.isMaster === action.payload.isMaster) {
@@ -76,6 +109,11 @@ const appDataSlice = createSlice({
         }
       })
     },
+    /**
+     * Delete the category with the specified id.
+     * @param state
+     * @param action - the id of the category to be deleted.
+     */
     deleteCategory: (state, action: PayloadAction<number>) => {
       const index = state.data.findIndex((cat) => cat.id === action.payload)
       // return if category doesn't exist
@@ -136,6 +174,7 @@ const _addEntriesToEntryMap = (entryMap: EntryMap, entries: EntryWithoutCategory
   return entryMap
 }
 
+// See each function's individual JavaDoc for more information.
 export const {
   setAppData,
   addCategory,
@@ -146,11 +185,20 @@ export const {
   setIsMobile
 } = appDataSlice.actions
 
+/**
+ * Get a category, given its id number. Return null if not found.
+ * @param state
+ * @param id - the id of the category being queried.
+ */
 export const getCategory = (state: State, id: number) => {
   const index = state.appData.data.findIndex((cat) => cat.id === id)
   return index !== -1 ? state.appData.data[index] : null
 }
 
+/**
+ * Get all categories and their metadata (excluding dates).
+ * @param state
+ */
 export const getCategories = (state: State) =>
   state.appData.data.map((cat) => {
     return {
@@ -168,6 +216,12 @@ export const getCategories = (state: State) =>
     }
   })
 
+/**
+ * Get all categories, along with their dates.
+ * This is formatted as an object, where each category's id acts as its key.
+ * Returns an empty object if there are no categories.
+ * @param state
+ */
 export const getCategoryMap = (state: State) => {
   return state.appData.data.reduce((acc, cat) => {
     acc[cat.id] = cat
@@ -175,10 +229,21 @@ export const getCategoryMap = (state: State) => {
   }, {} as CategoryMap)
 }
 
+/**
+ * Given a date, for each category, get each individual instance which occurs in that date's month.
+ * @param state
+ * @param date - a date within the month we are interested in.
+ */
 export const getMonth = (state: State, date: Dayjs) => {
   return state.appData.entryMap[date.year()][date.month()]
 }
 
+/**
+ * Given a date, for each category, get each individual instance which occurs in that date's month,
+ * then do the same for the months before and after it.
+ * @param state
+ * @param date - a date within the 'current' month we are interested in.
+ */
 export const getPrevCurrNextMonth = (state: State, date: Dayjs) => {
   const prevMonth = date.subtract(1, 'month')
   const nextMonth = date.add(1, 'month')
@@ -189,12 +254,24 @@ export const getPrevCurrNextMonth = (state: State, date: Dayjs) => {
   }
 }
 
+/**
+ * Given a date, for each category, get each individual instance which occurs in that date's year.
+ * @param state
+ * @param date - a date within the year we are interested in.
+ */
 export const getYear = (state: State, date: Dayjs) => {
   return state.appData.entryMap[date.year()]
 }
 
+/**
+ * Return whether the user is viewing from a mobile device.
+ * @param state
+ */
 export const getIsMobile = (state: State) => {
   return state.appData.isMobile
 }
 
+/**
+ * Exports this slice to be used in the redux store.
+ */
 export const appDataReducer = appDataSlice.reducer

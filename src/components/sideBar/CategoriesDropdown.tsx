@@ -8,6 +8,18 @@ import { Dispatch, Fragment, useState } from 'react'
 import { DropdownProps } from '../common/Dropdown'
 import { CategoryInfoModal } from '@/components/CategoryInfoModal/CategoryInfoModal'
 
+/**
+ * CategoriesDropdown is responsible for rendering the dropdown menu for the categories.
+ * The dropdown menu contains the following options:
+ * 1. Edit Category - Opens the CategoryModal to edit the category.
+ * 2. Delete Category - Opens the DeleteCategoryModal to delete the category.
+ * 3. Category Info - Opens the CategoryInfoModal to show the category info.
+ *
+ * @param props.id
+ * @param props.setKeepFocus
+ * @param props.keepOpen
+ * @returns {JSX.Element}
+ */
 export const CategoriesDropdown = (props: {
   id: number
   setKeepFocus: Dispatch<React.SetStateAction<number>>

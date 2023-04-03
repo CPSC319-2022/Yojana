@@ -1,3 +1,7 @@
+/*
+ *  This test ensures that when a category is created it can be viewed from the sidebar and the checkbox is ticked
+ */
+
 describe('One category', () => {
   const checkPersonalCategory = () => {
     cy.get('div[id="category-item-20"]').should('not.exist')

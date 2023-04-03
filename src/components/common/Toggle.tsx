@@ -2,6 +2,7 @@ import { Switch } from '@headlessui/react'
 import { Icon, IconName } from '@/components/common'
 import { Tooltip } from '@/components/common/Tooltip'
 
+// This is a TypeScript module that exports a toggle component used to display a switch with text and an optional tooltip.
 interface ToggleProps {
   textToToggle: string[]
   name: string
@@ -14,6 +15,18 @@ interface ToggleProps {
   tooltipText?: string
 }
 
+/**
+ * * A toggle component that displays a switch with text and optional tooltip.
+ * @param textToToggle - An array containing the two possible text values to be toggled between.
+ * @param name - The name attribute of the input element.
+ * @param className - The class name(s) to be applied to the outer container div.
+ * @param preference - The current value of the toggle.
+ * @param onChange - The function to be called when the toggle is changed.
+ * @param disabled - A boolean indicating whether the toggle should be disabled or not.
+ * @param tooltipIcon - The name of the icon to be displayed for the tooltip.
+ * @param tooltipPosition - The position of the tooltip relative to the toggle.
+ * @param tooltipText - The text content to be displayed in the tooltip.
+ */
 export const Toggle = ({
   textToToggle,
   name,

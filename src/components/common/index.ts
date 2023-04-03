@@ -1,3 +1,6 @@
+/**
+ * This module exports a set of reusable components used in designing a User Interface.
+ */
 export { Alert } from './Alert'
 export { Button } from './Button'
 export { Checkbox } from './Checkbox'

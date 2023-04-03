@@ -6,6 +6,7 @@ import z from 'zod'
 import { getCategoriesById, getMasterCategories, getPersonalCategories } from '@/prisma/queries'
 import { getToken } from 'next-auth/jwt'
 
+// schema for query params
 const schema = z.object({
   master: z.union([z.literal('true'), z.literal('false')]).optional(),
   userID: z.string().optional(),
@@ -22,6 +23,15 @@ const schema = z.object({
     .optional()
 })
 
+/**
+ * route: /api/dates/export
+ *
+ * export dates as ical file
+ *
+ * GET: ical file
+ * @param req
+ * @param res
+ */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
     case 'GET':
@@ -66,6 +76,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
+// generate ical file from categories
 export const generateICal = (categories: CategoryFull[]) => {
   const calendar = ical({ name: 'Yojana Calendar' })
   if (categories) {

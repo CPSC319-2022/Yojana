@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+// This file defines a React component that displays a tooltip on hover of its child element.
 type Props = {
   text: string
   position?: 'top' | 'bottom' | 'left' | 'right'
@@ -7,7 +7,14 @@ type Props = {
   boundingClassName?: string
   popoverClassName?: string
 }
-
+/**
+ * * A component that displays a tooltip on hover of its child element.
+ * @param text - The text content to be displayed in the tooltip.
+ * @param position - The position of the tooltip relative to the child element.
+ * @param children - The child element that the tooltip will be displayed on.
+ * @param boundingClassName - The class name(s) to be applied to the outer container div.
+ * @param popoverClassName - The class name(s) to be applied to the tooltip element.
+ */
 export const Tooltip = ({ text, position = 'top', children, boundingClassName, popoverClassName }: Props) => {
   const [isTooltipVisible, setIsTooltipVisible] = useState(false)
 

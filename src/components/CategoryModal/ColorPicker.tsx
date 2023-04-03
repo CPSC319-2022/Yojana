@@ -6,6 +6,11 @@ import { CompactPicker } from 'react-color'
 import React from 'react'
 import { randomColor } from '@/utils/color'
 
+/*
+ *  This code provides UI for picking a color in the Create Category modal
+ *  It will update the value of the category color on click
+ */
+
 interface ColorPickerProps {
   control: any
   name: string
