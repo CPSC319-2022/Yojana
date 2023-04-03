@@ -104,7 +104,6 @@ const alertSlice = createSlice({
  */
 export const getAlert = (state: State) => state.alert
 
-// See each function's individual JavaDoc for more information.
 export const { setAlert, setShow } = alertSlice.actions
 
 /**

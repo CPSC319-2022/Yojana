@@ -119,7 +119,6 @@ const preferencesSlice = createSlice({
  */
 export const getPreferences = (state: State) => state.preferences
 
-// See each function's individual JavaDoc for more information.
 export const { setMonthCategoryAppearance, setYearShowGrid, setYearOverflow, setIsSidebarOpen, setShowWeekNumbers } =
   preferencesSlice.actions
 

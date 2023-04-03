@@ -160,7 +160,6 @@ const _addNewDates = (selectedDates: DateSelectionMap, dates: { date: string | D
   })
 }
 
-// See each function's individual JavaDoc for more information.
 export const {
   setIsSelectingDates,
   setRepeatingDates,

@@ -98,11 +98,11 @@ export const DescriptionPopover = ({
           case CalendarInterval.QUARTERLY:
             translateXClass = dayOffset >= 3 ? '-translate-x-40' : ''
             translateYClass =
-              monthOffset === 0
+              monthOffset === 2
                 ? titleLength * 2 + descText.length >= 128
                   ? '-translate-y-40'
                   : '-translate-y-32'
-                : monthOffset === -1
+                : monthOffset === 1
                 ? '-translate-y-12'
                 : ''
             break
@@ -118,7 +118,11 @@ export const DescriptionPopover = ({
         translateXClass = dayOffset >= 3 ? '-translate-x-40' : 'translate-x-6'
         translateYClass =
           monthOffset >= 15 ? (titleLength * 2 + descText.length >= 128 ? '-translate-y-40' : '-translate-y-32') : ''
-        translateXClass = isNested ? (dayOffset < 3 ? 'translate-x-60' : '-translate-x-60') : translateXClass
+        translateXClass = isNested
+          ? dayOffset < 3 || (monthOffset % 2 !== 0 && currentInterval === CalendarInterval.YEAR_SCROLL)
+            ? 'translate-x-60'
+            : '-translate-x-60'
+          : translateXClass
         translateYClass = isNested
           ? titleLength * 2 + descText.length >= 128
             ? '-translate-y-32'
@@ -127,7 +131,10 @@ export const DescriptionPopover = ({
       }
       leftOrRight = translateXClass?.startsWith('-') ? 'right-5' : 'left-5'
       return (
-        <div className={`${type === 'icon' ? 'inline-flex' : 'overflow-x-hidden'}`}>
+        <div
+          className={`${type === 'icon' ? 'inline-flex' : 'overflow-x-hidden'}
+        ${closeWhenClickOutside && !isNested ? 'overflow-x-visible' : 'overflow-x-hidden'}`}
+        >
           {!isNested && closeWhenClickOutside && (
             <div
               className={`fixed inset-0 top-[10vh] z-10 flex h-[90vh] w-screen transition-colors duration-300 ease-in-out 
@@ -166,17 +173,12 @@ export const DescriptionPopover = ({
                 }
               >
                 <style jsx>{`
-                  div {
-                    box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                    -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                  }
                   h1 {
                     color: ${category?.color};
                   }
                 `}</style>
                 <div
-                  className={`overflow-y-auto break-words rounded-lg rounded-md bg-white p-3 font-normal leading-7
+                  className={`box-shadow overflow-y-auto break-words rounded-lg rounded-md bg-white p-3 font-normal leading-7
                     ${isMobileView ? 'h-[40vh] w-full' : 'max-w-60 h-fit max-h-60 w-60 text-left'}`}
                 >
                   <p className='text-center text-base text-slate-400'>{currentDay}</p>

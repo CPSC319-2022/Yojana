@@ -76,7 +76,6 @@ const mainCalendarSlice = createSlice({
   }
 })
 
-// See each function's individual JavaDoc for more information.
 export const { setInterval, decrementDate, setDate, incrementDate, jumpToToday } = mainCalendarSlice.actions
 
 /**
