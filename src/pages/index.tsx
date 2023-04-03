@@ -95,7 +95,7 @@ const Calendar = ({ session }: CalendarProps) => {
           <div className='border-box z-0 h-[90vh] w-full'>
             <div
               className={`absolute z-10 h-[90vh] overflow-hidden bg-white transition-all
-                ${sidebarOpen ? 'w-[250px] translate-x-0 border-r border-slate-200' : 'w-0 -translate-x-full'} `}
+                ${sidebarOpen ? 'w-[80vw] translate-x-0 border-r border-slate-200' : 'w-0 -translate-x-full'} `}
             >
               {sidebarOpen && <SideBar session={session} />}
             </div>

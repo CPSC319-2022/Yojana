@@ -66,8 +66,13 @@ export const NavBar = ({ session }: NavBarProps) => {
     }
   }, [interval, targetDate, isMobileView])
 
+  const buttonStyleIfMobile = isMobileView ? '!px-3' : ''
+
   return (
-    <div className='box-border flex h-[10vh] w-full flex-row items-center justify-between border-b px-5'>
+    <div
+      className={`box-border flex h-[10vh] w-full flex-row items-center justify-between border-b 
+      ${isMobileView ? 'px-2' : 'px-5'}`}
+    >
       <div className='flex flex-row items-center'>
         <Button
           disabled={disable}
@@ -75,7 +80,7 @@ export const NavBar = ({ session }: NavBarProps) => {
           onClick={() => {
             dispatch(setIsSidebarOpen(!sidebarOpen))
           }}
-          className='mr-5 px-3 pt-0.5 pb-2 text-2xl'
+          className={`mr-5 px-3 pt-0.5 pb-2 text-2xl ${buttonStyleIfMobile}`}
         />
         {!isMobileView && (
           <h1 className='text-2xl font-medium' id='yojana-title'>
@@ -84,21 +89,29 @@ export const NavBar = ({ session }: NavBarProps) => {
         )}
       </div>
       <div className={`flex flex-row items-center ${isMobileView ? 'flex-grow justify-center' : 'lg:w-[25vw]'}`}>
-        <Button text='Today' onClick={() => dispatch(jumpToToday())} className='mr-3 lg:mr-10' />
+        <Button
+          text='Today'
+          onClick={() => dispatch(jumpToToday())}
+          className={`mr-3 lg:mr-10 ${buttonStyleIfMobile}`}
+        />
         <span className={`flex flex-row ${isMobileView ? 'order-last ml-3' : ''}`}>
-          <Button iconName='CaretLeftFill' onClick={() => dispatch(decrementDate())} className='mr-3 py-3' />
+          <Button
+            iconName='CaretLeftFill'
+            onClick={() => dispatch(decrementDate())}
+            className={`mr-3 py-3 ${buttonStyleIfMobile}`}
+          />
           <Button
             iconName='CaretRightFill'
             onClick={() => dispatch(incrementDate())}
-            className='mr-3 py-3'
+            className={`mr-3 py-3 ${buttonStyleIfMobile}`}
             id='move-right'
           />
         </span>
-        <span className={`flex flex-row`}>
+        <span className={`flex ${isMobileView ? 'w-full flex-grow flex-col' : 'flex-row'}`}>
           <h4 className='flex-none text-center text-lg'>{getIntervalDescription}</h4>
           {interval === CalendarInterval.MONTH && (
             <>
-              <h3 className='px-2 text-slate-400'>•</h3>
+              {!isMobileView && <h3 className='px-2 text-slate-400'>•</h3>}
               <h4 className='flex-none text-center text-lg text-slate-400'>{hoursInMonth} hrs</h4>
             </>
           )}
