@@ -14,7 +14,18 @@ import {
 import { intervalToNumMonths, useGetHoursInMonth } from '@/utils/month'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
-
+/**
+ * MultiMonth is responsible for rendering multiple Month(s) based on the selected calendar interval.
+ * It leverages the dayjs library, various hooks, and the Month component to display the months in a grid format.
+ * Key functionalities:
+ * Different grid formats for printing and various calendar intervals.
+ * Calculation of hours in each month using the useGetHoursInMonth custom hook.
+ * Rendering of Month components with the appropriate monthOffset.
+ * Conditionally displaying the hours for each month.
+ *
+ * @param {boolean} [props.getForPrinting] - Optional flag indicating if the MultiMonth is for printing.
+ * @returns {JSX.Element}
+ */
 export const MultiMonth = ({ getForPrinting = false }: { getForPrinting?: boolean }) => {
   const targetDate = useAppSelector(getDate)
   const activeCalView = useAppSelector(getInterval)

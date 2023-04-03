@@ -1,3 +1,6 @@
+/*
+ *  This test ensures that when a category is unselected it can be viewed from the sidebar and the checkbox is not ticked
+ */
 describe('View all category', () => {
   const checkPersonalCategory = () => {
     cy.get('div[id="category-item-20"]').should('not.exist')

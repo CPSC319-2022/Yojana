@@ -3,6 +3,10 @@ import { Transition } from '@headlessui/react'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getAlert, setShow } from '@/redux/reducers/AlertReducer'
 
+/**
+ * * Displays an alert with a message and a close button. There is also a timeout to close the alert after a certain
+ * amount of time.
+ */
 export const Alert = () => {
   const { message, textColor, backgroundColor, type, show, timeout } = useAppSelector(getAlert)
   const dispatch = useAppDispatch()
@@ -34,6 +38,7 @@ export const Alert = () => {
                 background-color: ${backgroundColor};
                 color: ${textColor};
               }
+
               .alert button {
                 color: ${textColor};
               }

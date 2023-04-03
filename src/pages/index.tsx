@@ -27,10 +27,22 @@ import {
 } from '@/redux/reducers/PreferencesReducer'
 import { preprocessEntries } from '@/utils/preprocessEntries'
 
+/**
+ * session: The user's session data.
+ */
 interface CalendarProps {
   session: Session
 }
-
+/**
+ * Calendar is a functional component that serves as the main layout for the calendar view. It is responsible for rendering the navigation bar, sidebar, main calendar view, and alert components. The component also handles the interaction between the sidebar and the date selector.
+ * Key functionalities:
+ * Dispatching actions to update the Redux store based on query parameters, cookies, and server data.
+ * Resetting the selected dates when the sidebar is closed during date selection mode.
+ * Rendering the Alert, NavBar, SideBar, and MainCalendar components.
+ *
+ * @param CalendarProps
+ * @returns {JSX.Element} The rendered Calendar component.
+ */
 const Calendar = ({ session }: CalendarProps) => {
   const dispatch = useAppDispatch()
   const sidebarOpen = useAppSelector(getPreferences).sidebarOpen.value

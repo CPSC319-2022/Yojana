@@ -9,6 +9,12 @@ interface LoginProps {
   callbackUrl: string
 }
 
+/**
+ * Login page for Azure AD
+ * @param providers - list of providers
+ * @param callbackUrl - url to redirect to after login
+ * @returns {JSX.Element}
+ */
 export const Login = ({ providers, callbackUrl }: LoginProps) => {
   return (
     <div className='flex h-screen items-center justify-center bg-neutral-900'>
@@ -33,6 +39,10 @@ export const Login = ({ providers, callbackUrl }: LoginProps) => {
 
 export default Login
 
+/**
+ * Get the providers and callbackUrl for the login page
+ * @param context - context object
+ */
 export const getServerSideProps = async (context: any) => {
   const callbackUrl = context.query.callbackUrl || DEFAULT_CALLBACK_URL
 

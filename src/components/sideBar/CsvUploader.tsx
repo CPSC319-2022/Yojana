@@ -14,6 +14,15 @@ interface EntryMap {
   [key: string]: string[]
 }
 
+/**
+ * CsvUploader is responsible for rendering the Import Modal.
+ * It displays the format of the CSV file that is expected.
+ * It also provides a template file to download.
+ * It also contains a dropzone for the user to upload the CSV file.
+ *
+ * @param onSuccess
+ * @returns {JSX.Element}
+ */
 export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchResponse) => void }) => {
   const [csvFileName, setCsvFileName] = useState('')
   const [csvEntries, setCsvEntries] = useState<CsvEntry[]>([])

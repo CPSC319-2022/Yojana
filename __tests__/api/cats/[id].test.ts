@@ -33,6 +33,7 @@ const mock_body = {
   endDate: null
 }
 
+// unit tests for the /api/cats/[id] endpoint
 describe('/api/cats/[id]', () => {
   describe('GET', () => {
     it('should return a 200 status code', async () => {

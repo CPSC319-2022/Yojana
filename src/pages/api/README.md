@@ -86,6 +86,9 @@ post:
     200:
       description: entries inserted successfully
       int: number of entries inserted
+    400:
+      description: invalid body
+      text: Bad Request
     401:
       description: user is not an admin
       text: Unauthorized
@@ -100,7 +103,7 @@ other:
 
 ```yaml
 delete:
-  path:
+  query:
     id: int
   responses:
     200:
@@ -137,6 +140,12 @@ get:
     200:
       description: generation of iCalendar file is successful
       ICalCalendar: string
+    400:
+      description: invalid query parameters
+      text: Bad Request
+    401:
+      description: user is not authorized to export dates for query parameters
+      text: Unauthorized
 other:
   responses:
     405:
@@ -198,12 +207,12 @@ put:
         isMaster: boolean
         creatorId: string
         entries: Entry[]
+    401:
+      description: user is not authorized to create a category
+      text: Unauthorized
     404:
       description: category does not exist
       text: category does not exist
-    409:
-      description: updating an existing category with a name that already exists
-      text: category name conflicting other category
 post:
   body:
     name: string
@@ -228,9 +237,9 @@ post:
         isMaster: boolean
         creatorId: string
         entries: Entry[]
-    409:
-      description: creating a new category with a non-unique name
-      text: category name must be unique
+    401:
+      description: user is not authorized to create a category
+      text: Unauthorized
 other:
   responses:
     405:
@@ -283,6 +292,11 @@ delete:
     409:
       description: internal error
       text: There was an error deleting the category
+other:
+  responses:
+    405:
+      description: invalid method
+      text: Method Not Allowed
 ```
 
 ## /api/cats/batch
@@ -332,4 +346,9 @@ post:
     500:
       description: internal error
       text: Internal Server Error
+other:
+  responses:
+    405:
+      description: invalid method
+      text: Method Not Allowed
 ```

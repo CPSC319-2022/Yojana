@@ -75,6 +75,7 @@ const mockValidCats = [
 
 const mockNoCats: Category[] = []
 
+// unit tests for the /api/cats/batch endpoint
 describe('/api/cats/batch', () => {
   describe('POST', () => {
     it('should return a 201 status code when all entries are added', async () => {

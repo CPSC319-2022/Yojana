@@ -5,6 +5,9 @@ import { createRequest } from 'node-mocks-http'
 // all fields besides id and isAdmin are optional
 type MockToken = Partial<JWT> & { id: string; isAdmin: boolean }
 
+/*
+ * mockToken creates a mock token and mocks the getToken function from next-auth/jwt
+ */
 export const mockToken = ({ id, isAdmin, name = 'John Doe', email = 'john.doe@yojana.com' }: MockToken) => {
   // mock getToken from next-auth/jwt
   jest.spyOn(jwt, 'getToken').mockResolvedValue({ id, name, email, isAdmin })
@@ -12,6 +15,7 @@ export const mockToken = ({ id, isAdmin, name = 'John Doe', email = 'john.doe@yo
   return { id, name, email, isAdmin }
 }
 
+// Tests for mockToken
 describe('mockToken', () => {
   it('should create a valid mock token', async () => {
     const token = mockToken({ id: '1', isAdmin: true })
