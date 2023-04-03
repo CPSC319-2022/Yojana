@@ -169,7 +169,6 @@ const _addEntriesToEntryMap = (entryMap: EntryMap, entries: EntryWithoutCategory
   return entryMap
 }
 
-// See each function's individual JavaDoc for more information.
 export const { setAppData, addCategory, updateCategory, toggleCategory, deleteCategory, setCategoriesShow } =
   appDataSlice.actions
 
