@@ -208,6 +208,12 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
 
+  useEffect(() => {
+    if (!isModalOpen) {
+      resetForm()
+    }
+  }, [isModalOpen, resetForm])
+
   const onSubmit: SubmitHandler<Schema> = useCallback(
     async ({ name, color, icon, description, repeating, isMaster }) => {
       if (!session) {
@@ -260,7 +266,6 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         dispatch(method === 'POST' ? addCategory(dispatchPayload) : updateCategory(dispatchPayload))
 
         setIsModalOpen(false)
-        resetForm()
       } else {
         if (response.status !== 500) {
           const text = await response.text()
@@ -271,17 +276,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       }
       callBack()
     },
-    [
-      callBack,
-      currentCron,
-      currentState?.entries,
-      currentState?.id,
-      dispatch,
-      method,
-      resetForm,
-      selectedDates,
-      session
-    ]
+    [callBack, currentCron, currentState?.entries, currentState?.id, dispatch, method, selectedDates, session]
   )
 
   const setIsMinimizedCallback = useCallback(
@@ -631,9 +626,6 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         isOpen={isModalOpen}
         setIsOpen={(open) => {
           setIsModalOpen(open)
-          if (!open) {
-            resetForm()
-          }
         }}
         draggable={true}
         closeWhenClickOutside={false}
