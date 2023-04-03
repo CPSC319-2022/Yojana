@@ -263,7 +263,7 @@ Visit [this](https://yojana-main.vercel.app/) link to see the latest deployed ve
 
 ## Usage Demos
 - General Overview: [video](https://drive.google.com/file/d/19xxg2aVFHEQvCCJ55ysKw4h1wcFn45W7/view?usp=share_link)
-- Calendar View Options: [video](https://drive.google.com/file/d/1QK6o3kwRkW9Rv60gj4ZbmK46S8FeaYVa/view?usp=sharing)
+- Calendar View Options: [video](https://drive.google.com/file/d/1EBDnQme-x6ti1S5KiUTCeT7KqngMfVhL/view?usp=sharing)
 - Creating Categories: [video](https://drive.google.com/file/d/1ZbBBZn0E5xE3TtohstzPNcmZFS3Oq3-f/view?usp=share_link)
 - Recurring Dates, Editing and Deleting Categories: [video](https://drive.google.com/file/d/1jQSFPxrQuT6ghL8MAeqdWQQka_EhxNve/view?usp=share_link)
 - Importing entries via
