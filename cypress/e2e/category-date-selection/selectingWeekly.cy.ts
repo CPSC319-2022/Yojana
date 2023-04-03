@@ -30,7 +30,7 @@ describe('select weekly recurring tests', () => {
   describe('admin', () => {
     beforeEach(() => {
       cy.login('admin')
-      cy.visit('/')
+      cy.visit('/?interval=Year+%28Vertical%29')
     })
 
     afterEach(() => {
@@ -80,7 +80,7 @@ describe('select weekly recurring tests', () => {
   describe('pleb', () => {
     beforeEach(() => {
       cy.login('pleb')
-      cy.visit('/')
+      cy.visit('/?interval=Year+%28Vertical%29')
     })
 
     afterEach(() => {

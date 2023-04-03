@@ -1,5 +1,16 @@
+/**
+ * Reusable helper functions related to dates in the app
+ */
+
 import * as parser from 'cron-parser'
 
+/**
+ * Given a cron string, generate the date objects associated with it.
+ *
+ * @param cron - the target cron string
+ * @param start - the first date with recurring event
+ * @param end - the last date (inclusive) that may have the recurring event.
+ */
 export const generateDatesFromCron = (
   cron: string | undefined,
   start: string,

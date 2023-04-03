@@ -96,11 +96,11 @@ export const DescriptionPopover = ({
           case CalendarInterval.QUARTERLY:
             translateXClass = dayOffset >= 3 ? '-translate-x-40' : ''
             translateYClass =
-              monthOffset === 0
+              monthOffset === 2
                 ? titleLength * 2 + descText.length >= 128
                   ? '-translate-y-40'
                   : '-translate-y-32'
-                : monthOffset === -1
+                : monthOffset === 1
                 ? '-translate-y-12'
                 : ''
             break
@@ -116,7 +116,11 @@ export const DescriptionPopover = ({
         translateXClass = dayOffset >= 3 ? '-translate-x-40' : 'translate-x-6'
         translateYClass =
           monthOffset >= 15 ? (titleLength * 2 + descText.length >= 128 ? '-translate-y-40' : '-translate-y-32') : ''
-        translateXClass = isNested ? (dayOffset < 3 ? 'translate-x-60' : '-translate-x-60') : translateXClass
+        translateXClass = isNested
+          ? dayOffset < 3 || (monthOffset % 2 !== 0 && currentInterval === CalendarInterval.YEAR_SCROLL)
+            ? 'translate-x-60'
+            : '-translate-x-60'
+          : translateXClass
         translateYClass = isNested
           ? titleLength * 2 + descText.length >= 128
             ? '-translate-y-32'
@@ -125,7 +129,10 @@ export const DescriptionPopover = ({
       }
       leftOrRight = translateXClass?.startsWith('-') ? 'right-5' : 'left-5'
       return (
-        <div className={`${type === 'icon' ? 'inline-flex' : 'overflow-x-hidden'}`}>
+        <div
+          className={`${type === 'icon' ? 'inline-flex' : 'overflow-x-hidden'}
+        ${closeWhenClickOutside && !isNested ? 'overflow-x-visible' : 'overflow-x-hidden'}`}
+        >
           {!isNested && closeWhenClickOutside && (
             <div
               className='fixed absolute inset-0 top-0 z-10 flex h-screen w-screen bg-transparent transition-colors duration-300 ease-in-out'
@@ -151,6 +158,7 @@ export const DescriptionPopover = ({
               leave='transition ease-in duration-75'
               leaveFrom='transform opacity-100 scale-100'
               leaveTo='transform opacity-0 scale-95'
+              afterLeave={doCloseWhenClickOutside}
             >
               <Popover.Panel
                 className={`${isNested ? 'fixed' : 'absolute'} z-40 transform ${translateYClass} 

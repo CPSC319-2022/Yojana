@@ -20,7 +20,7 @@ import { getLocalDateWithoutTime } from '@/utils/preprocessEntries'
  * Displaying tooltips and icons for events.
  * Supporting date selection for multiple purposes.
  *
- * @param {boolean} [props.getForPrinting] - Optional flag indicating if the Year is for printing.
+ * @param {boolean} [getForPrinting] - Optional flag indicating if the Year is for printing.
  * @returns {JSX.Element}
  */
 export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) => {
@@ -116,13 +116,13 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       return (
         <div
           id={`${yearNum}-${currentIndexForId++}`}
-          className={`tile px-0.5 
+          className={`tile px-0.5
             ${getDayStyling(day.day(), isSelectingDates, selected)} 
             ${!isSelectingDates && isToday && !getForPrinting ? 'ring-2 ring-inset ring-emerald-300' : ''}
             ${preferences.yearOverflow.value === 'wrap' || getForPrinting ? 'inline-flow break-all' : 'flex'}
             ${
               !(dateOffset + 1 === popoverOpen) && !(preferences.yearOverflow.value === 'wrap' || getForPrinting)
-                ? 'overflow-x-scroll'
+                ? 'overflow-x-scroll transition-colors invis-scrollbar hover:mac-scrollbar'
                 : ''
             }
             ${dateOffset + 1 === popoverOpen ? 'flex-wrap overflow-x-visible' : ''}

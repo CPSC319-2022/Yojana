@@ -9,6 +9,7 @@ import {
   setShowWorkingHours
 } from '@/redux/reducers/PreferencesReducer'
 import { setCookieMaxAge } from '@/utils/cookies'
+import { CalendarInterval } from '@/constants/enums'
 
 /**
  * PreferenceModal is responsible for rendering the preferences modal.
@@ -54,7 +55,7 @@ export const PreferenceModal = ({
       <div className='mt-2'>
         <Accordion>
           <Accordion.Item>
-            <Accordion.Header>Year View</Accordion.Header>
+            <Accordion.Header>{CalendarInterval.YEAR} View</Accordion.Header>
             <Accordion.Body>
               <div className='mt-2 flex flex-col space-y-2'>
                 <Toggle
@@ -94,7 +95,7 @@ export const PreferenceModal = ({
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item>
-            <Accordion.Header>Month View</Accordion.Header>
+            <Accordion.Header>{CalendarInterval.MONTH} View</Accordion.Header>
             <Accordion.Body>
               <div className='mt-2 flex flex-col space-y-2'>
                 <Toggle
@@ -129,7 +130,7 @@ export const PreferenceModal = ({
                     setCookieMaxAge(showWeekNumbers.cookieName, !showWeekNumbers.value)
                   }}
                   tooltipIcon='QuestionCircle'
-                  tooltipText='Show week numbers in the month, quarterly and 4-month views.'
+                  tooltipText='Show week numbers in the month, quarterly, 4-month, and year (classic) views.'
                 />
               </div>
             </Accordion.Body>
