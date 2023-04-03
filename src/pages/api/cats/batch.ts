@@ -11,10 +11,14 @@ export const bodySchema = z
     z.array(
       z.string().refine(
         (val) => {
-          const regex = /^((19|20)\d{2})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/
+          const regex = /^\s*((19|20)\d{2})[-](0[1-9]|1[0-2])[-](0[1-9]|[12]\d|3[01])\s*$/
           return regex.test(val)
         },
-        { message: 'Date column should contain only dates in the format YYYY-MM-DD' }
+        {
+          message:
+            "Date column should contain only dates in the format 'YYYY-MM-DD' " +
+            "make sure a valid date is entered and only use '-' for the separator."
+        }
       )
     )
   )
@@ -137,7 +141,7 @@ function getEntriesFromCategoryIDMappings(categoryIDs: number[], categories: any
   let entriesToAdd = []
   for (const categoryToAddTo of categoryIDs) {
     for (const newDate of categories[categoryToAddTo]) {
-      const dateParts = newDate.split('-')
+      const dateParts = newDate.trim().split('-')
       const entry = {
         date: new Date(Date.UTC(dateParts[0], dateParts[1] - 1, dateParts[2])).toISOString(),
         isRecurring: false,
