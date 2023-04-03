@@ -69,7 +69,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
           }
         })
       }
-      icons.push(<span key={`${monthNum}-${key}`}>&nbsp;</span>)
+      icons.push(<span key={`${monthNum}-${key}`}>&#8203;</span>)
       return icons
     },
     [categoryMap, entriesInYear, isSelectingDates]
@@ -88,7 +88,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
     (monthNum: number, dateOffset: number) => {
       const monthStartDate = dayjs(yearStartDate).add(monthNum, 'month')
       if (monthStartDate.daysInMonth() <= dateOffset) {
-        return <span key={`${yearNum}-${monthNum}-${dateOffset}`}>&nbsp;</span>
+        return <span key={`${yearNum}-${monthNum}-${dateOffset}`}>&#8203;</span>
       }
 
       const day = monthStartDate.add(dateOffset, 'days')
