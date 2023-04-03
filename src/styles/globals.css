@@ -1,3 +1,13 @@
+/**
+ * CSS for top-level components that are unreacheable by TailwindCSS,
+ * as well as imports Tailwind utilities.
+ *
+ * Any !important rules are also placed in this file.
+ *
+ * Note that Yojana uses Tailwind; thus, the majority of its styling lies in the classNames of
+ * each element's .tsx file.
+ */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -24,4 +34,11 @@ body {
 .compact-picker > div > span > div {
   width: 20px !important;
   height: 20px !important;
+}
+
+/* Box shadow */
+.box-shadow {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
 }

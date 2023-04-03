@@ -303,7 +303,7 @@ export const Month = (props: MonthProps) => {
   const appearBelow = useCallback(
     (offsetFromMonthStart: number, month: number) => {
       if (isMonthView) return offsetFromMonthStart < 15
-      if (isQuarterlyView) return props.monthOffset === -2 || (props.monthOffset === -1 && offsetFromMonthStart < 15)
+      if (isQuarterlyView) return props.monthOffset === 0 || (props.monthOffset === 1 && offsetFromMonthStart < 15)
       if (isYearScrollView) return month % 2 == 0 || props.monthOffset < 5
       else return props.monthOffset < 2
     },
@@ -343,14 +343,7 @@ export const Month = (props: MonthProps) => {
             beforeLeave={() => setOverflowVisible(-1)}
           >
             <Popover.Panel className={`absolute z-50 transform ${translateXClass} ${translateYClass}`}>
-              <style jsx>{`
-                div {
-                  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                  -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                }
-              `}</style>
-              <div className='h-fit max-h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white'>
+              <div className='box-shadow h-fit max-h-60 w-60 overflow-y-auto rounded-md bg-white'>
                 {getPopoverContent(day, offsetFromMonthStart)}
               </div>
             </Popover.Panel>

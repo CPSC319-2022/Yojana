@@ -8,7 +8,20 @@ import {
   setYearShowGrid
 } from '@/redux/reducers/PreferencesReducer'
 import { setCookieMaxAge } from '@/utils/cookies'
+import { CalendarInterval } from '@/constants/enums'
 
+/**
+ * PreferenceModal is responsible for rendering the preferences modal.
+ * It leverages the various hooks and state management from Redux to display preferences.
+ * Key functionalities:
+ * Changing preferences.
+ * Saving preferences to cookies.
+ * Rendering preferences.
+ *
+ * @param {boolean} [isModalOpen] - Optional flag indicating if the PreferenceModal is open.
+ * @param {boolean} [setIsModalOpen] - Optional function to set the PreferenceModal open state.
+ * @returns {JSX.Element}
+ */
 export const PreferenceModal = ({
   isModalOpen,
   setIsModalOpen
@@ -40,7 +53,7 @@ export const PreferenceModal = ({
       <div className='mt-2'>
         <Accordion>
           <Accordion.Item>
-            <Accordion.Header>Year View</Accordion.Header>
+            <Accordion.Header>{CalendarInterval.YEAR} View</Accordion.Header>
             <Accordion.Body>
               <div className='mt-2 flex flex-col space-y-2'>
                 <Toggle
@@ -69,7 +82,7 @@ export const PreferenceModal = ({
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item>
-            <Accordion.Header>Month View</Accordion.Header>
+            <Accordion.Header>{CalendarInterval.MONTH} View</Accordion.Header>
             <Accordion.Body>
               <div className='mt-2 flex flex-col space-y-2'>
                 <Toggle
@@ -104,7 +117,7 @@ export const PreferenceModal = ({
                     setCookieMaxAge(showWeekNumbers.cookieName, !showWeekNumbers.value)
                   }}
                   tooltipIcon='QuestionCircle'
-                  tooltipText='Show week numbers in the month, quarterly and 4-month views.'
+                  tooltipText='Show week numbers in the month, quarterly, 4-month, and year (classic) views.'
                 />
               </div>
             </Accordion.Body>

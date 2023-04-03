@@ -1,3 +1,7 @@
+/**
+ * A reducer for alerts displayed in the webapp.
+ */
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import tcolors from 'tailwindcss/colors'
 import { HYDRATE } from 'next-redux-wrapper'
@@ -30,6 +34,11 @@ const alertSlice = createSlice({
   name: 'alert',
   initialState,
   reducers: {
+    /**
+     * Set the alert that will be stored in the state.
+     * @param state
+     * @param action - configuration settings for the alert, including its message and colour.
+     */
     setAlert: (state, action: PayloadAction<Alert & { cookieName?: string; showOnce?: boolean }>) => {
       if (action.payload.cookieName) {
         const show = getCookie(`yojana.show-${action.payload.cookieName}-alert`)
@@ -69,6 +78,11 @@ const alertSlice = createSlice({
           break
       }
     },
+    /**
+     * Show or hide the state's alert.
+     * @param state
+     * @param action - `true` to show the alert, `false` to hide it.
+     */
     setShow: (state, action: PayloadAction<boolean>) => {
       state.show = action.payload
     }
@@ -83,6 +97,16 @@ const alertSlice = createSlice({
   }
 })
 
+/**
+ * Get the alert which was set into the state
+ *
+ * @param state
+ */
 export const getAlert = (state: State) => state.alert
+
 export const { setAlert, setShow } = alertSlice.actions
+
+/**
+ * Exports this slice to be used in the redux store.
+ */
 export const alertReducer = alertSlice.reducer

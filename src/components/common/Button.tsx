@@ -8,6 +8,10 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   overrideDefaultStyle?: boolean
 }
 
+/**
+ * * A customizable button component that can display text and an optional icon.
+ * * Overriding default styling is possible if needed.
+ */
 export const Button = forwardRef(
   (
     {

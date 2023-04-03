@@ -13,6 +13,17 @@ export interface DropdownProps {
   children?: React.ReactNode
 }
 
+/**
+ * * The Dropdown component is a reusable component that allows users to select an option from a list of options.
+ * * It renders a button that, when clicked, reveals a dropdown menu with the available options.
+ * @param text - The text to be displayed on the button.
+ * @param containerClassName - A CSS class name to be applied to the container div of the component.
+ * @param buttonClassName - A CSS class name to be applied to the button.
+ * @param overrideDefaultButtonStyle - A boolean that indicates whether to override the default button style or not.
+ * @param iconName - The name of the icon to be displayed next to the text on the button. The default icon is 'CaretDownFill'.
+ * @param children - The children of the component, which should be instances of the Dropdown.Button, Dropdown.Accordion, or Dropdown.Divider components.
+ * @constructor
+ */
 export const Dropdown = ({
   text,
   containerClassName = '',
@@ -81,6 +92,9 @@ const renderDropdownButton = ({ label, onClick, disabled = false, clickable = tr
   )
 }
 
+/**
+ * The Dropdown.Button component is a child component of the Dropdown component that renders a button inside the dropdown menu.
+ */
 const DropdownButton = ({ label, onClick, disabled = false, clickable = true }: DropdownButtonProps) => {
   return clickable ? (
     <Menu.Item>{renderDropdownButton({ label, onClick, disabled, clickable })}</Menu.Item>
@@ -90,6 +104,9 @@ const DropdownButton = ({ label, onClick, disabled = false, clickable = true }: 
 }
 Dropdown.Button = DropdownButton
 
+/**
+ * The Dropdown.Accordion component is a child component of the Dropdown component that renders an accordion inside the dropdown menu.
+ */
 const DropdownAccordion = ({ title, children }: { title: string; children: React.ReactNode }) => {
   const accordionItems = getChildrenByType(children, [DropdownButton, DropdownDivider])
   return (
@@ -110,6 +127,9 @@ const DropdownAccordion = ({ title, children }: { title: string; children: React
 }
 Dropdown.Accordion = DropdownAccordion
 
+/**
+ * The Dropdown.Divider component is a child component of the Dropdown component that renders a divider inside the dropdown menu.
+ */
 const DropdownDivider = () => {
   return <hr className='m-2 border-slate-200' />
 }

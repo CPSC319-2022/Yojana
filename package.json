@@ -27,8 +27,8 @@
     "prisma:format": "prisma format",
     "prisma:seed": "prisma db seed",
     "prepare": "husky install",
-    "docker:up": "docker-compose up -d && delay 10",
-    "docker:down": "docker-compose down"
+    "docker:up": "docker-compose --env-file .env.test up -d && delay 10",
+    "docker:down": "docker-compose --env-file .env.test down"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.13",
