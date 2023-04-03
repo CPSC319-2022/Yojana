@@ -1,3 +1,13 @@
+/**
+ * CSS for top-level components that are unreacheable by TailwindCSS,
+ * as well as imports Tailwind utilities.
+ *
+ * Any !important rules are also placed in this file.
+ *
+ * Note that Yojana uses Tailwind; thus, the majority of its styling lies in the classNames of
+ * each element's .tsx file.
+ */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
