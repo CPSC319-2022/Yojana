@@ -165,16 +165,11 @@ export const DescriptionPopover = ({
                   ${type === 'icon' ? leftOrRight : translateXClass}`}
               >
                 <style jsx>{`
-                  div {
-                    box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                    -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                  }
                   h1 {
                     color: ${category?.color};
                   }
                 `}</style>
-                <div className='max-w-60 h-fit max-h-60 w-60 overflow-y-auto break-words rounded-lg rounded-md bg-white p-3 font-normal leading-7'>
+                <div className='box-shadow max-w-60 h-fit max-h-60 w-60 overflow-y-auto break-words rounded-md bg-white p-3 font-normal leading-7'>
                   <p className='text-center text-base text-slate-400'>{currentDay}</p>
                   <h1 className='pt-1 text-base'>{category?.name + ' #' + category?.id}</h1>
                   <p
