@@ -203,6 +203,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     setSelectedDaysOfTheWeek([])
     setSelectedMonthRecurrenceCron(null)
     dispatch(resetSelectedDates())
+    setAfterClose(false)
   }, [dispatch, reset])
 
   const [isModalOpen, setIsModalOpen] = useState(false)
