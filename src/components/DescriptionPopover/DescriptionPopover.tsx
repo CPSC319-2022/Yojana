@@ -151,6 +151,7 @@ export const DescriptionPopover = ({
               leave='transition ease-in duration-75'
               leaveFrom='transform opacity-100 scale-100'
               leaveTo='transform opacity-0 scale-95'
+              afterLeave={doCloseWhenClickOutside}
             >
               <Popover.Panel
                 className={`${isNested ? 'fixed' : 'absolute'} z-40 transform ${translateYClass} 
