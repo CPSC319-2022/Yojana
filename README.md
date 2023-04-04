@@ -285,7 +285,7 @@ Note that the following changes were made after these videos were recorded:
 - Calendar View Options: [video](https://drive.google.com/file/d/1EBDnQme-x6ti1S5KiUTCeT7KqngMfVhL/view?usp=sharing)
 - Creating and Adding Entries to Categories: [video](https://drive.google.com/file/d/1ZbBBZn0E5xE3TtohstzPNcmZFS3Oq3-f/view?usp=share_link)
 - Recurring Dates, Editing and Deleting
-  Categories: [video](https://drive.google.com/file/d/1jQSFPxrQuT6ghL8MAeqdWQQka_EhxNve/view?usp=share_link)
+  Categories: [video](https://drive.google.com/file/d/1jQSFPxrQuT6ghL8MAeqdWQQka_EhxNve/view?usp=share_link), [Youtube Link](https://youtu.be/Y6fYzKDk4GE)
 - Importing entries via
   CSV: [video](https://drive.google.com/file/d/1OdTF02FHYin3s2i62Gu28yntX-TM73iI/view?usp=share_link)
 - Printing to PDF: [video](https://drive.google.com/file/d/1snCDa6DoCvUoz7KgkA9NhXUymkhN-mdl/view?usp=share_link)
