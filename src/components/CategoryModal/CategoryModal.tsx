@@ -20,7 +20,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Category, Entry } from '@prisma/client'
 import dayjs from 'dayjs'
 import { useSession } from 'next-auth/react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { ColorPicker } from './ColorPicker'
@@ -207,11 +207,13 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
+  const prevIsModalOpenRef = useRef(isModalOpen)
 
   useEffect(() => {
-    if (!isModalOpen) {
+    if (prevIsModalOpenRef.current && !isModalOpen) {
       resetForm()
     }
+    prevIsModalOpenRef.current = isModalOpen
   }, [isModalOpen, resetForm])
 
   const onSubmit: SubmitHandler<Schema> = useCallback(
