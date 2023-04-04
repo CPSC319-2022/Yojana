@@ -213,6 +213,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   useEffect(() => {
     if (prevIsModalOpenRef.current && !isModalOpen) {
       resetForm()
+      setErrorMsg('')
     }
     prevIsModalOpenRef.current = isModalOpen
   }, [isModalOpen, resetForm])
