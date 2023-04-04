@@ -4,6 +4,7 @@ import dates from '@/pages/api/dates/[id]'
 import { prismaMock } from '@/prisma/singleton'
 import * as jwt from 'next-auth/jwt'
 
+// unit tests for the /api/dates/[id] endpoint
 describe('/api/dates/[id]', () => {
   describe('DELETE', () => {
     it('should return a 200 status code when a date is deleted', async () => {

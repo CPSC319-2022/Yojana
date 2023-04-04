@@ -41,6 +41,7 @@ const testSuccessfulExport = (res: any) => {
   expect(res._getData()).toMatch(/BEGIN:VCALENDAR/)
 }
 
+// unit tests for the /api/dates/export endpoint
 describe('/api/dates/export', () => {
   describe('GET', () => {
     it('GET should return a 200 status code for master calendar', async () => {
@@ -227,6 +228,7 @@ describe('/api/dates/export', () => {
   })
 })
 
+// test the generateICal function
 describe('test generateICal function', () => {
   it('should generate a calendar with events for each category entry', () => {
     const expectedCalendar = ical({ name: 'Yojana Calendar' })

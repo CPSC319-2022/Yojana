@@ -4,6 +4,10 @@ import { useController } from 'react-hook-form'
 import { useAppSelector } from '@/redux/hooks'
 import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 
+/*
+ *  This component is for selecting days of the month to be used in the recurring date section of the create category modal
+ */
+
 interface DayOfMonthPickerProps {
   control: any
   name: string

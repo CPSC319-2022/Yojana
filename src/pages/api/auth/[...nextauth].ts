@@ -5,6 +5,11 @@ import { Client, ClientOptions } from '@microsoft/microsoft-graph-client'
 import * as MicrosoftGraph from '@microsoft/microsoft-graph-types'
 import prisma from '@/prisma/prismadb'
 
+/**
+ * NextAuth configuration
+ *
+ * @see https://next-auth.js.org/configuration/options
+ */
 export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/auth/login'
@@ -19,6 +24,7 @@ export const authOptions: NextAuthOptions = {
           authProvider: new MicrosoftAuthProvider(account.access_token)
         }
         const client = Client.initWithMiddleware(clientOptions)
+        // Get user and user groups
         try {
           const promises: [
             Promise<MicrosoftGraph.User>,
@@ -31,6 +37,7 @@ export const authOptions: NextAuthOptions = {
           token.id = user.id
           token.email = token.email || user.mail || user.userPrincipalName || user.id
           token.name = token.name || user.displayName || user.mail || user.userPrincipalName || user.id
+          // check if user is in admin group
           const adminGroup = userGroups.value.find((group) => group.id === process.env.AZURE_AD_ADMIN_GROUP_ID)
           token.isAdmin = !!adminGroup
         } catch (error) {
@@ -43,11 +50,13 @@ export const authOptions: NextAuthOptions = {
       if (!token.id) {
         return session
       }
+      // Add properties to session object
       session.user.id = session.user.id || token.id
       session.user.isAdmin = session.user.isAdmin || token.isAdmin
       session.user.email = session.user.email || token.email
       session.user.name = session.user.name || token.name
       try {
+        // Update user in database
         await prisma.user.upsert({
           where: {
             id: session.user.id
@@ -65,12 +74,13 @@ export const authOptions: NextAuthOptions = {
           }
         })
       } catch (error) {
-        console.error(error)
+        // console.error(error)
       }
       return session
     }
   },
   providers: [
+    // Azure AD provider
     AzureADProvider({
       clientId: process.env.AZURE_AD_CLIENT_ID,
       clientSecret: process.env.AZURE_AD_CLIENT_SECRET,

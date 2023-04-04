@@ -5,6 +5,17 @@ import { CategoryFullState } from '@/types/prisma'
 import { Popover, Transition } from '@headlessui/react'
 import { Dispatch, Fragment, SetStateAction, useCallback, useState } from 'react'
 
+/**
+ * type: Determines if the popover should be displayed as a 'block' or 'icon'.
+ * component: The actual 'block' or 'icon' that will be displayed.
+ * category: The CategoryFullState object containing the category information.
+ * className: Optional styling for the popover.
+ * monthOffset: The offset relative to month.
+ * dayOffset: The offset relative to day.
+ * currentDay: The current day number.
+ * isNested: Optional flag to indicate if the popover is nested within another popover.
+ * onClick: A function that takes a number and updates the state of the parent component.
+ */
 interface DescriptionPopover {
   type: 'block' | 'icon'
   component: JSX.Element
@@ -17,6 +28,18 @@ interface DescriptionPopover {
   onClick: Dispatch<SetStateAction<number>>
 }
 
+/**
+ * DescriptionPopover displays the component and render the popover on click with the category's information.
+ *  The component also takes care of handling when to close the popover when clicked outside.
+ *  The popover contains information such as category name, description, creator's name, and a mailto link for the creator's email.
+ *
+ * useAppSelector(getInterval) is used to get the current interval of the calendar view.
+ * useState(false) is used to initialize the state of closeWhenClickOutside.
+ * renderPopover is a useCallback hook that renders the popover with the proper category information and popover styling based on the current calendar view and interval.
+ *
+ * @param DescriptionPopover
+ * @returns JSX.Element
+ */
 export const DescriptionPopover = ({
   type,
   component,
@@ -73,11 +96,11 @@ export const DescriptionPopover = ({
           case CalendarInterval.QUARTERLY:
             translateXClass = dayOffset >= 3 ? '-translate-x-40' : ''
             translateYClass =
-              monthOffset === 0
+              monthOffset === 2
                 ? titleLength * 2 + descText.length >= 128
                   ? '-translate-y-40'
                   : '-translate-y-32'
-                : monthOffset === -1
+                : monthOffset === 1
                 ? '-translate-y-12'
                 : ''
             break
@@ -93,7 +116,11 @@ export const DescriptionPopover = ({
         translateXClass = dayOffset >= 3 ? '-translate-x-40' : 'translate-x-6'
         translateYClass =
           monthOffset >= 15 ? (titleLength * 2 + descText.length >= 128 ? '-translate-y-40' : '-translate-y-32') : ''
-        translateXClass = isNested ? (dayOffset < 3 ? 'translate-x-60' : '-translate-x-60') : translateXClass
+        translateXClass = isNested
+          ? dayOffset < 3 || (monthOffset % 2 !== 0 && currentInterval === CalendarInterval.YEAR_SCROLL)
+            ? 'translate-x-60'
+            : '-translate-x-60'
+          : translateXClass
         translateYClass = isNested
           ? titleLength * 2 + descText.length >= 128
             ? '-translate-y-32'
@@ -102,7 +129,10 @@ export const DescriptionPopover = ({
       }
       leftOrRight = translateXClass?.startsWith('-') ? 'right-5' : 'left-5'
       return (
-        <div className={`${type === 'icon' ? 'inline-flex' : 'overflow-x-hidden'}`}>
+        <div
+          className={`${type === 'icon' ? 'inline-flex' : 'overflow-x-hidden'}
+        ${closeWhenClickOutside && !isNested ? 'overflow-x-visible' : 'overflow-x-hidden'}`}
+        >
           {!isNested && closeWhenClickOutside && (
             <div
               className='fixed absolute inset-0 top-0 z-10 flex h-screen w-screen bg-transparent transition-colors duration-300 ease-in-out'
@@ -128,22 +158,18 @@ export const DescriptionPopover = ({
               leave='transition ease-in duration-75'
               leaveFrom='transform opacity-100 scale-100'
               leaveTo='transform opacity-0 scale-95'
+              afterLeave={doCloseWhenClickOutside}
             >
               <Popover.Panel
                 className={`${isNested ? 'fixed' : 'absolute'} z-40 transform ${translateYClass} 
                   ${type === 'icon' ? leftOrRight : translateXClass}`}
               >
                 <style jsx>{`
-                  div {
-                    box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                    -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                  }
                   h1 {
                     color: ${category?.color};
                   }
                 `}</style>
-                <div className='max-w-60 h-fit max-h-60 w-60 overflow-y-auto break-words rounded-lg rounded-md bg-white p-3 font-normal leading-7'>
+                <div className='box-shadow max-w-60 h-fit max-h-60 w-60 overflow-y-auto break-words rounded-md bg-white p-3 font-normal leading-7'>
                   <p className='text-center text-base text-slate-400'>{currentDay}</p>
                   <h1 className='pt-1 text-base'>{category?.name + ' #' + category?.id}</h1>
                   <p

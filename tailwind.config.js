@@ -67,6 +67,32 @@ module.exports = {
         /* Hide scrollbar for Chrome, Safari and Opera */
         '.no-scrollbar::-webkit-scrollbar': {
           display: 'none'
+        },
+        '.mac-scrollbar::-webkit-scrollbar': {
+          width: '4px',
+          height: '4px'
+        },
+        '.mac-scrollbar::-webkit-scrollbar-thumb': {
+          'border-radius': '2px',
+          'background-color': 'rgba(51,65,85,0.5)'
+        },
+        '.mac-scrollbar::-webkit-scrollbar-track': {
+          background: 'transparent',
+          position: 'absolute',
+          'z-index': 10
+        },
+        '.invis-scrollbar::-webkit-scrollbar': {
+          width: '4px',
+          height: '4px'
+        },
+        '.invis-scrollbar::-webkit-scrollbar-thumb': {
+          'border-radius': '2px',
+          'background-color': 'rgba(51,65,85,0)'
+        },
+        '.invis-scrollbar::-webkit-scrollbar-track': {
+          background: 'transparent',
+          position: 'absolute',
+          'z-index': 10
         }
       }
 

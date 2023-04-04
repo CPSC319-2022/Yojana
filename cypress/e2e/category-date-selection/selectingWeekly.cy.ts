@@ -1,4 +1,12 @@
+/*
+  Use Cypress to verify the functionality of selecting weekly recurring events in both personal and master calendars
+*/
 describe('select weekly recurring tests', () => {
+  /*
+   * opening the "Create Category" modal,
+   * filling in the name,
+   * and selecting the "Weekly" recurring option for a new category.
+   */
   const openCreateModalAndSelectWeekly = () => {
     cy.get('button#create-category-btn').click()
     cy.get('div#create-category-modal-div').should('be.visible')
@@ -13,11 +21,16 @@ describe('select weekly recurring tests', () => {
     cy.get('div#recurring-dates-tab-start-end').should('be.visible')
     cy.get('div#recurring-dates-tab-start-end').should('be.visible')
   }
-
+  /*
+   * beforeEach(): Logs in as admin and visits the root URL.
+   * afterEach(): Resets the database after each test.
+   * it(): Tests if the admin/user can select weekly recurring for a category, by selecting some weekly recurring dates,
+   *      entering desired start and end dates, and then checking if the appropriate spans for the icons are present.
+   */
   describe('admin', () => {
     beforeEach(() => {
       cy.login('admin')
-      cy.visit('/')
+      cy.visit('/?interval=Year+%28Vertical%29')
     })
 
     afterEach(() => {
@@ -67,7 +80,7 @@ describe('select weekly recurring tests', () => {
   describe('pleb', () => {
     beforeEach(() => {
       cy.login('pleb')
-      cy.visit('/')
+      cy.visit('/?interval=Year+%28Vertical%29')
     })
 
     afterEach(() => {

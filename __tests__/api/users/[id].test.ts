@@ -4,6 +4,7 @@ import users from '@/pages/api/users/[id]'
 import { prismaMock } from '@/prisma/singleton'
 import * as jwt from 'next-auth/jwt'
 
+// unit tests for the /api/users/:id endpoint
 describe('/api/users/[id]', () => {
   describe('GET', () => {
     it('should return a 200 status code and the user data for a valid user id', async () => {

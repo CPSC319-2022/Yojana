@@ -3,6 +3,11 @@ import React, { useEffect } from 'react'
 import { Icon, IconName } from '@/components/common'
 import { iconPickerIcons } from '@/constants/icons'
 
+/*
+ *  This code provides UI for picking an icon in the Create Category modal
+ *  It will update the value of the category icon on click
+ */
+
 interface IconPickerProps {
   control: any
   name: string

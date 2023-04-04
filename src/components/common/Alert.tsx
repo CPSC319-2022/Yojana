@@ -3,6 +3,10 @@ import { Transition } from '@headlessui/react'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
 import { getAlert, setShow } from '@/redux/reducers/AlertReducer'
 
+/**
+ * * Displays an alert with a message and a close button. There is also a timeout to close the alert after a certain
+ * amount of time.
+ */
 export const Alert = () => {
   const { message, textColor, backgroundColor, type, show, timeout } = useAppSelector(getAlert)
   const dispatch = useAppDispatch()
@@ -34,15 +38,21 @@ export const Alert = () => {
                 background-color: ${backgroundColor};
                 color: ${textColor};
               }
+
               .alert button {
                 color: ${textColor};
               }
             `}
           </style>
-          <div className={`alert flex items-center justify-center rounded-md py-3 px-4`} role='alert'>
-            {type === 'error' && <strong className='px-3 font-bold'>Error:</strong>}{' '}
-            <span className='block px-3 sm:inline'>{message}</span>
-            <button type='button' className={`float-right font-bold`} onClick={() => dispatch(setShow(false))}>
+          <div className='box-shadow alert flex items-center justify-between rounded-md py-3 px-4' role='alert'>
+            <div></div>
+            <div>
+              <span className='block sm:inline'>
+                {type === 'error' && <strong className='px-1 font-bold'>Error:</strong>}
+                {message}
+              </span>
+            </div>
+            <button type='button' className='font-bold' onClick={() => dispatch(setShow(false))}>
               &times;
             </button>
           </div>

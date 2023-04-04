@@ -1,6 +1,11 @@
 import { IconName } from '@/components/common'
 
-// List of icons to display in the icon picker
+/**
+ * List of icons to display in the icon picker
+ * These can be modified to set the default icons that are shown in the 'create category' modal
+ * Reference Twitter Bootstrap Icons for the list of available icons and their names:
+ * https://icons.getbootstrap.com/
+ */
 export const iconPickerIcons: IconName[] = [
   'ChatFill',
   'PencilFill',

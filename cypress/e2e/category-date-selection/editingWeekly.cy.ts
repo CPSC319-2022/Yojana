@@ -1,4 +1,12 @@
+/*
+  Use Cypress to verify the functionality of editing weekly recurring events in both personal and master calendars
+*/
 describe('edit weekly recurring tests', () => {
+  /*
+   * opening the "Create Category" modal,
+   * filling in the name,
+   * and selecting the "Weekly" recurring option for a new category.
+   */
   const openCreateModalAndSelectWeekly = () => {
     cy.get('button#create-category-btn').click()
     cy.get('div#create-category-modal-div').should('be.visible')
@@ -13,7 +21,13 @@ describe('edit weekly recurring tests', () => {
     cy.get('div#recurring-dates-tab-start-end').should('be.visible')
     cy.get('div#recurring-dates-tab-start-end').should('be.visible')
   }
-
+  /*
+   * opening the "Edit Category" modal,
+   * selecting the "WED" recurring option,
+   * entering the desired start and end dates (2023-10-10 to 2023-10-31),
+   * and saving the changes.
+   * check the appropriate spans for the icons.
+   */
   const openEditModalAndSelectWEDOCT = (forAdmin: boolean) => {
     // Save the category
     cy.get('button#create-category-submit-btn').trigger('click').click()
@@ -48,11 +62,15 @@ describe('edit weekly recurring tests', () => {
     // checks October 2023 column
     cy.checkIconsInDays('span.20-icon', 129, 1, 6, 12)
   }
-
+  /*
+   * beforeEach(): Logs in as admin and visits the root URL.
+   * afterEach(): Resets the database after each test.
+   * it(): Tests if the admin/user can edit a weekly recurring event and select "WED" on desired dates.
+   */
   describe('admin', () => {
     beforeEach(() => {
       cy.login('admin')
-      cy.visit('/')
+      cy.visit('/?interval=Year+%28Vertical%29')
     })
 
     afterEach(() => {
@@ -69,7 +87,7 @@ describe('edit weekly recurring tests', () => {
   describe('pleb', () => {
     beforeEach(() => {
       cy.login('pleb')
-      cy.visit('/')
+      cy.visit('/?interval=Year+%28Vertical%29')
     })
 
     afterEach(() => {

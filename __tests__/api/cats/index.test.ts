@@ -5,6 +5,7 @@ import { createRequest, createResponse } from 'node-mocks-http'
 import { generateISODates } from '@/tests/utils/dates'
 import { mockToken } from '@/tests/utils/token'
 
+// unit tests /api/cats endpoint
 describe('/api/cats', () => {
   describe('GET', () => {
     it('should return a 200 status code', async () => {

@@ -1,3 +1,8 @@
+/*
+ *  This component tests the side bar, it ensures that when the hide button is pressed
+ *  the accordion collapses and when check again the accordion is expanded
+ */
+
 describe('Accordian Drop Down category', () => {
   const checkExist = (number: number) => {
     cy.get(`div#category-item-${number}`).should('exist')

@@ -5,6 +5,7 @@ import * as jwt from 'next-auth/jwt'
 import dates from '@/pages/api/dates'
 import { Entry } from '@prisma/client'
 
+// unit tests for the /api/dates endpoint
 describe('/api/dates', () => {
   describe('GET', () => {
     it('GET should return a 200 status code', async () => {

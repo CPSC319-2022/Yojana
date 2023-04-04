@@ -28,12 +28,31 @@ import { DescriptionPopover } from '../DescriptionPopover'
 
 dayjs.extend(weekOfYear)
 
+/**
+ * monthOffset: The offset of the month to display from the current month.
+ * className: Optional styling for Month.
+ * getForPrinting: Optional flag indicating if the rendered Month is for printing.
+ */
 interface MonthProps {
   monthOffset: number
   className?: string
   getForPrinting?: boolean
 }
 
+/**
+ * Month is responsible for rendering a month based on the provided MonthProps.
+ * It leverages the dayjs library and various hooks to calculate and display the month's contents.
+ * Key functionalities:
+ * Calculation of days and weeks within the month using dayjs.
+ * Resize handling and recalculation of icons per day.
+ * Rendering of category icons or banners based on user preferences.
+ * Printing support with getIconsForPrinting and getCategoryElemForPrinting functions.
+ * Popover functionality for showing additional category items on overflow.
+ * Date selection and styling for selecting individual dates or recurring dates.
+ *
+ * @param MonthProps
+ * @returns {JSX.Element} The rendered Month component.
+ */
 const CATEGORY_BANNER_HEIGHT_PX = 28
 // Width of 1 square icon (16px) including padding (4px left, 4px right). Also doubles as icon height.
 const CATEGORY_ICON_PX = 24
@@ -105,7 +124,7 @@ export const Month = (props: MonthProps) => {
   useIsomorphicLayoutEffect(() => {
     recalculateItemsPerDay()
     // Add any deps that would require recalculating items per day here
-  }, [recalculateItemsPerDay, activeCalView, useBanners, monthStartDate.month()])
+  }, [recalculateItemsPerDay, activeCalView, useBanners, monthStartDate.month(), monthStartDate.year()])
 
   useEffect(() => {
     if (!categoryContainerRef.current) return
@@ -175,7 +194,10 @@ export const Month = (props: MonthProps) => {
           )
         } else {
           return (
-            <span className={`${isMonthView ? 'h-8 w-8' : 'h-6 w-6'} px-0.5 font-bold`} key={`${key}-${entry.id}`}>
+            <span
+              className={`${isMonthView ? 'h-8 w-8' : 'h-6 w-6'} px-0.5 text-center font-bold`}
+              key={`${key}-${entry.id}`}
+            >
               <style jsx>{`
                 * {
                   color: ${category.color};
@@ -209,12 +231,7 @@ export const Month = (props: MonthProps) => {
   )
 
   const getIconsForPrinting = useCallback(
-    (
-      day: Dayjs,
-      offsetFromMonthStart: number,
-      getBanners: boolean,
-      settings?: { getLargeIcons?: boolean; isForPopover?: boolean; className?: string }
-    ): JSX.Element[] => {
+    (day: Dayjs, offsetFromMonthStart: number): JSX.Element[] => {
       const entriesOnDay = getEntriesOnDay(day.date(), offsetFromMonthStart) || []
 
       const categories = entriesOnDay?.map((entry) => {
@@ -286,7 +303,7 @@ export const Month = (props: MonthProps) => {
   const appearBelow = useCallback(
     (offsetFromMonthStart: number, month: number) => {
       if (isMonthView) return offsetFromMonthStart < 15
-      if (isQuarterlyView) return props.monthOffset === -2 || (props.monthOffset === -1 && offsetFromMonthStart < 15)
+      if (isQuarterlyView) return props.monthOffset === 0 || (props.monthOffset === 1 && offsetFromMonthStart < 15)
       if (isYearScrollView) return month % 2 == 0 || props.monthOffset < 5
       else return props.monthOffset < 2
     },
@@ -326,14 +343,7 @@ export const Month = (props: MonthProps) => {
             beforeLeave={() => setOverflowVisible(-1)}
           >
             <Popover.Panel className={`absolute z-50 transform ${translateXClass} ${translateYClass}`}>
-              <style jsx>{`
-                div {
-                  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                  -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-                }
-              `}</style>
-              <div className='h-fit max-h-60 w-60 overflow-y-auto rounded-lg rounded-md bg-white'>
+              <div className='box-shadow h-fit max-h-60 w-60 overflow-y-auto rounded-md bg-white'>
                 {getPopoverContent(day, offsetFromMonthStart)}
               </div>
             </Popover.Panel>
@@ -393,8 +403,7 @@ export const Month = (props: MonthProps) => {
 
   const getCategoryElemForPrinting = useCallback(
     (day: Dayjs, offsetFromMonthStart: number) => {
-      const allCategoryElems = getIconsForPrinting(day, offsetFromMonthStart, false)
-      return allCategoryElems
+      return getIconsForPrinting(day, offsetFromMonthStart)
     },
     [getIconsForPrinting]
   )
@@ -458,12 +467,14 @@ export const Month = (props: MonthProps) => {
       overflowVisible,
       popoverOpen,
       preferences.showWeekNumbers.value,
+      props.getForPrinting,
       isMonthView,
       isQuarterlyView,
       isSelectingDates,
       renderDateNum,
       useBanners,
       colsPerDay,
+      getCategoryElemForPrinting,
       getNonOverflowCategoryElems,
       dispatch
     ]
@@ -493,7 +504,7 @@ export const Month = (props: MonthProps) => {
         </div>
       )
     },
-    [numWeeks, preferences.showWeekNumbers.value, renderDay]
+    [numWeeks, preferences.showWeekNumbers.value, props.getForPrinting, renderDay]
   )
 
   const generateWeeks = useCallback(() => {

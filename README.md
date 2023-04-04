@@ -45,13 +45,42 @@ To connect to a remote Azure MySQL database use:
 mysql -h <azure fullyQualifiedDomainName> -u <azure administratorLogin> -p # enter your password
 ```
 
-See [this](https://www.prisma.io/dataguide/mysql) for more information on interacting with MySQL using MySQL Shell.
+See [this](https://www.prisma.io/dataguide/mysql) for more information on interacting with MySQL using MySQL SheÒll.
 
 ### Environment Variables
 
-You will need to create a `.env` and a `.env.test` file in the root directory of the project with your environment variables.
+You have to set environment variables for `development`, `testing`, `preview` and `production` environments.
+
+`development`, `preview` and `production` environment variables will be set on Vercel (our hosting platform):
+
+<img width="271" src="https://user-images.githubusercontent.com/39626451/229333416-eab17012-fa7a-480b-8ddb-e5b3fb3953c1.png">
+
+**Notes for vercel environment variables:**
+
+- `NEXTAUTH_URL` is the URL of the app. for us, it is `https://yojana-main.vercel.app/`.
+- `DB_URL` is the URL of the remote database. for us, it
+  is `mysql://<azure administratorLogin>:<azure admin password>@<azure fullyQualifiedDomainName>/yojanadb?sslaccept=strict`
+
+`development` and `testing` environments will be set in the `.env` and `.env.test` files.
+
+You will need to create a `.env` and a `.env.test` file in the root directory of the project with your environment
+variables.
 
 You can use the `.env.example` and `.env.test.example` files present in the root directory as templates.
+
+To run e2e tests in CI, you will need to store your `development` and `testing` environment variables as secrets in
+GitHub. Just copy the contents of the `.env` and `.env.test` files and paste them like this:
+
+<img width="774" alt="Screenshot 2023-04-01 at 10 30 47 PM" src="https://user-images.githubusercontent.com/39626451/229333480-3e54fff8-ba78-4ce2-a803-9d73e6748c7e.png">
+
+**Notes for CI environment variables:**
+
+- `NEXTAUTH_URL` is `http://localhost:3000/`
+- `DB_URL` is set using `.env.test`
+
+Learn more
+about [environment variables](https://nextjs.org/docs/basic-features/environment-variables#environment-variable-load-order)
+in Next.js.
 
 ### Setting up Database using Prisma
 
@@ -168,7 +197,8 @@ You can run the tests in headless mode (no browser window) by running the follow
 yarn test:e2e:headless
 ```
 
-We use Docker to run a MySQL container for our E2E tests. The container is automatically started when you run the E2E tests.
+We use Docker to run a MySQL container for our E2E tests. The container is automatically started when you run the E2E
+tests.
 
 To manually start the container and delete the container when you are done, you can use the following commands:
 
@@ -233,4 +263,13 @@ Visit [this](https://yojana-main.vercel.app/) link to see the latest deployed ve
 
 ## Usage Demos
 
-- Importing entries via CSV: [video](https://drive.google.com/file/d/1OdTF02FHYin3s2i62Gu28yntX-TM73iI/view?usp=share_link)
+- Project setup: [video](https://drive.google.com/file/d/1gParF_CYP80n-eKjiEtFERgWVnXVuASc/view?usp=share_link)
+- General Overview: [video](https://drive.google.com/file/d/19xxg2aVFHEQvCCJ55ysKw4h1wcFn45W7/view?usp=share_link)
+- Calendar View Options: [video](https://drive.google.com/file/d/1EBDnQme-x6ti1S5KiUTCeT7KqngMfVhL/view?usp=sharing)
+- Creating Categories: [video](https://drive.google.com/file/d/1ZbBBZn0E5xE3TtohstzPNcmZFS3Oq3-f/view?usp=share_link)
+- Recurring Dates, Editing and Deleting
+  Categories: [video](https://drive.google.com/file/d/1jQSFPxrQuT6ghL8MAeqdWQQka_EhxNve/view?usp=share_link)
+- Importing entries via
+  CSV: [video](https://drive.google.com/file/d/1OdTF02FHYin3s2i62Gu28yntX-TM73iI/view?usp=share_link)
+- Printing to PDF: [video](https://drive.google.com/file/d/1snCDa6DoCvUoz7KgkA9NhXUymkhN-mdl/view?usp=share_link)
+- Export to iCal: [video](https://drive.google.com/file/d/1RdQe4HUS1IOuXQxcjcQ4-yOdzTOt2ROC/view?usp=share_link)
