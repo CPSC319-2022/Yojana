@@ -6,6 +6,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   iconName?: IconName
   iconClassName?: string
   overrideDefaultStyle?: boolean
+  useLargeIcon?: boolean
 }
 
 /**
@@ -23,7 +24,8 @@ export const Button = forwardRef(
       className = '',
       id = '',
       iconClassName = '',
-      overrideDefaultStyle = false
+      overrideDefaultStyle = false,
+      useLargeIcon
     }: ButtonProps,
     ref: React.Ref<HTMLButtonElement>
   ) => {
@@ -41,7 +43,7 @@ export const Button = forwardRef(
         ref={ref}
       >
         {text}
-        {iconName && <Icon iconName={iconName} className={iconClassName} />}
+        {iconName && <Icon iconName={iconName} className={iconClassName} size={useLargeIcon ? 20 : undefined} />}
       </button>
     )
   }

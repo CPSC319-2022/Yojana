@@ -1,7 +1,7 @@
 import { Icon, IconName } from '@/components/common'
 import { CategoryBlock } from '@/components/mainCalendar/CategoryBlock'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { getCategoryMap, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
+import { getCategoryMap, getIsMobile, getPrevCurrNextMonth } from '@/redux/reducers/AppDataReducer'
 import {
   getIsSelectingDates,
   getPrevCurrNextMonthSelectedDates,
@@ -69,6 +69,7 @@ export const Month = (props: MonthProps) => {
   const isSelectingDates = useAppSelector(getIsSelectingDates)
   const preferences = useAppSelector(getPreferences)
   const activeCalView = useAppSelector(getInterval)
+  const isMobileView = useAppSelector(getIsMobile)
   const dispatch = useAppDispatch()
   const [useBanners, setUseBanners] = useState(isMonthView && preferences.monthCategoryAppearance.value === 'banners')
 
@@ -86,14 +87,14 @@ export const Month = (props: MonthProps) => {
   const [nonOverflowElemCount, setNonOverflowElemCount] = useState(1)
   const categoryContainerRef = useRef<HTMLDivElement>(null)
   const [colsPerDay, setColsPerDay] = useState(1)
-  const [overflowVisible, setOverflowVisible] = useState(-1)
+  const [overflowVisible, setOverflowVisible] = useState<string | null>(null)
   const [popoverOpen, setPopoverOpen] = useState(-1)
 
   const today = getLocalDateWithoutTime(new Date())
 
   useEffect(() => {
-    setUseBanners(isMonthView && preferences.monthCategoryAppearance.value === 'banners')
-  }, [isMonthView, preferences.monthCategoryAppearance.value])
+    setUseBanners(!isMobileView && isMonthView && preferences.monthCategoryAppearance.value === 'banners')
+  }, [isMobileView, isMonthView, preferences.monthCategoryAppearance.value])
 
   // Determines what days and weeks are in the month.
   useEffect(() => {
@@ -108,7 +109,7 @@ export const Month = (props: MonthProps) => {
   }, [props.monthOffset, referenceDate])
 
   const recalculateItemsPerDay = useCallback(() => {
-    if (typeof window !== 'undefined' && overflowVisible === -1 && categoryContainerRef.current !== null) {
+    if (typeof window !== 'undefined' && overflowVisible === null && categoryContainerRef.current !== null) {
       const { offsetHeight, offsetWidth } = categoryContainerRef.current
       if (useBanners) setNonOverflowElemCount(Math.floor(offsetHeight / CATEGORY_BANNER_HEIGHT_PX))
       else {
@@ -165,7 +166,7 @@ export const Month = (props: MonthProps) => {
       if (isSelectingDates) return []
 
       const entriesOnDay = getEntriesOnDay(day.date(), offsetFromMonthStart) || []
-      const key = day.format('YY-MM-DD')
+      const dayFormatted = day.format('YY-MM-DD')
 
       const categories = entriesOnDay?.map((entry) => {
         const category = categoryMap[entry.categoryId]
@@ -179,7 +180,7 @@ export const Month = (props: MonthProps) => {
                   color={category.color}
                   label={category.name}
                   icon={category.icon as IconName}
-                  key={`${key}-${entry.categoryId}`}
+                  key={`block-${dayFormatted}-${entry.categoryId}`}
                   className={settings?.className}
                 />
               }
@@ -188,7 +189,7 @@ export const Month = (props: MonthProps) => {
               monthOffset={isMonthView ? offsetFromMonthStart : startingMonthNum}
               currentDay={day.date()}
               isNested={settings?.isForPopover}
-              key={`description-${key}-${entry.categoryId}`}
+              key={`desc-block-${dayFormatted}-${entry.categoryId}`}
               onClick={setPopoverOpen}
             />
           )
@@ -196,20 +197,18 @@ export const Month = (props: MonthProps) => {
           return (
             <span
               className={`${isMonthView ? 'h-8 w-8' : 'h-6 w-6'} px-0.5 text-center font-bold`}
-              key={`${key}-${entry.id}`}
+              key={`icon-${dayFormatted}-${entry.id}`}
             >
-              <style jsx>{`
-                * {
-                  color: ${category.color};
-                }
-              `}</style>
               <DescriptionPopover
+                key={`desc-icon-${dayFormatted}-${entry.categoryId}`}
                 type='icon'
                 component={
                   <Icon
+                    key={`icon-${dayFormatted}-${entry.categoryId}`}
                     iconName={category.icon as IconName}
                     className='inline'
                     size={settings?.getLargeIcons && isMonthView ? 24 : 16}
+                    color={category.color}
                   />
                 }
                 category={category}
@@ -238,14 +237,10 @@ export const Month = (props: MonthProps) => {
         const category = categoryMap[entry.categoryId]
         if (!category.show) return null
 
+        const dayFormatted = day.format('YYYY-MM-DD')
         return (
-          <span className={`h-6 w-6 px-0.5 font-bold`} key={`print-${entry.id}`}>
-            <style jsx>{`
-              * {
-                color: ${category.color};
-              }
-            `}</style>
-            <Icon iconName={category.icon as IconName} className='inline' size={12} />
+          <span className={`h-6 w-6 px-0.5 font-bold`} key={`print-${dayFormatted}-${entry.id}`}>
+            <Icon iconName={category.icon as IconName} className='inline' size={12} color={category.color} />
           </span>
         )
       })
@@ -279,7 +274,7 @@ export const Month = (props: MonthProps) => {
         const hiddenElemCount = allDayBlocksLength - nonOverflowElemCount + 1
         return (
           <Popover.Button
-            onClick={() => setOverflowVisible(day.date())}
+            onClick={() => setOverflowVisible(day.format('YYYY-MM-DD'))}
             className={'border-box flex w-full rounded-md px-1 hover:bg-slate-100 focus:outline-none'}
           >
             {hiddenElemCount + ' more'}
@@ -291,7 +286,7 @@ export const Month = (props: MonthProps) => {
           className={
             'border-box mx-0.5 mt-1 mb-0.5 h-5 w-5 items-center justify-center rounded-2xl bg-emerald-100 pl-0.5 hover:bg-emerald-200 focus:outline-none'
           }
-          onClick={() => setOverflowVisible(day.date())}
+          onClick={() => setOverflowVisible(day.format('YYYY-MM-DD'))}
         >
           <Icon iconName={'PlusLg'} />
         </Popover.Button>
@@ -327,31 +322,60 @@ export const Month = (props: MonthProps) => {
       let translateYClass = below ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
       if (isYearScrollView)
         translateYClass =
-          day.month() <= 3 && offsetFromMonthStart <= 31 ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
-
+          day.month() <= 3 && offsetFromMonthStart < 31 ? '' : '-translate-y-64 flex h-60 flex-col justify-end'
+      const dayFormatted = day.format('YYYY-MM-DD')
       return (
-        <Popover className={`${useBanners ? 'mx-1 mt-1' : 'h-6 w-6'} relative`} key={day.format('YY-MM-DD')}>
-          {renderPopoverButton(allDayBlocksLength, day)}
-          <Transition
-            as={Fragment}
-            enter='transition ease-out duration-100'
-            enterFrom='transform opacity-0 scale-95'
-            enterTo='transform opacity-100 scale-100'
-            leave='transition ease-in duration-75'
-            leaveFrom='transform opacity-100 scale-100'
-            leaveTo='transform opacity-0 scale-95'
-            beforeLeave={() => setOverflowVisible(-1)}
-          >
-            <Popover.Panel className={`absolute z-50 transform ${translateXClass} ${translateYClass}`}>
-              <div className='box-shadow h-fit max-h-60 w-60 overflow-y-auto rounded-md bg-white'>
-                {getPopoverContent(day, offsetFromMonthStart)}
-              </div>
-            </Popover.Panel>
-          </Transition>
-        </Popover>
+        <>
+          {isMobileView && overflowVisible === dayFormatted && (
+            <div
+              className={`fixed inset-0 top-[10vh] z-10 flex h-[90vh] w-screen bg-slate-800 opacity-30 transition-colors 
+                duration-300 ease-in-out`}
+              aria-hidden='true'
+            />
+          )}
+          <Popover className={`${useBanners ? 'mx-1 mt-1' : 'h-6 w-6'} relative`} key={day.format('YY-MM-DD')}>
+            {renderPopoverButton(allDayBlocksLength, day)}
+            <Transition
+              as={Fragment}
+              enter='transition ease-out duration-100'
+              enterFrom='transform opacity-0 scale-95'
+              enterTo='transform opacity-100 scale-100'
+              leave='transition ease-in duration-75'
+              leaveFrom='transform opacity-100 scale-100'
+              leaveTo='transform opacity-0 scale-95'
+              beforeLeave={() => setOverflowVisible(null)}
+            >
+              <Popover.Panel
+                className={
+                  isMobileView
+                    ? 'fixed bottom-0 left-0 z-40 w-screen'
+                    : `absolute z-50 transform ${translateXClass} ${translateYClass}`
+                }
+              >
+                <div
+                  className={`${
+                    isMobileView ? 'h-[40vh] w-full' : 'h-fit max-h-60 w-60'
+                  } box-shadow overflow-y-auto rounded-lg rounded-md bg-white`}
+                >
+                  {getPopoverContent(day, offsetFromMonthStart)}
+                </div>
+              </Popover.Panel>
+            </Transition>
+          </Popover>
+        </>
       )
     },
-    [appearBelow, getPopoverContent, isMonthView, isQuarterlyView, isYearScrollView, renderPopoverButton, useBanners]
+    [
+      appearBelow,
+      getPopoverContent,
+      isMobileView,
+      isMonthView,
+      isQuarterlyView,
+      isYearScrollView,
+      overflowVisible,
+      renderPopoverButton,
+      useBanners
+    ]
   )
 
   const renderDateNum = useCallback(
@@ -401,13 +425,6 @@ export const Month = (props: MonthProps) => {
     [getBannersOrIcons, useBanners, nonOverflowElemCount, renderPopover]
   )
 
-  const getCategoryElemForPrinting = useCallback(
-    (day: Dayjs, offsetFromMonthStart: number) => {
-      return getIconsForPrinting(day, offsetFromMonthStart)
-    },
-    [getIconsForPrinting]
-  )
-
   const renderDay = useCallback(
     (firstDateOfWeek: number, dayNum: number) => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
@@ -415,16 +432,17 @@ export const Month = (props: MonthProps) => {
 
       const selected = getSelectedSettings(day.date(), offsetFromMonthStart)
       const isCurrentMonth = offsetFromMonthStart >= 0 && offsetFromMonthStart < daysInMonth
+      const dayFormatted = day.format('YYYY-MM-DD')
 
       return (
         <div
-          key={day.format('YY-MM-DD')}
+          key={dayFormatted}
           className={`tile flex px-0.5
-          ${overflowVisible === day.date() || popoverOpen === day.date() ? '' : 'overflow-hidden'}
+          ${overflowVisible === day.format('YYYY-MM-DD') || popoverOpen === day.date() ? '' : 'overflow-hidden'}
           ${preferences.showWeekNumbers.value ? 'col-span-3' : ''}
             ${props.getForPrinting ? 'flex-row' : isMonthView ? 'flex-col' : 'flex-row'}
             ${props.getForPrinting ? '' : isQuarterlyView ? 'items-center' : ''}
-            ${getDayStyling(day.day(), isSelectingDates, selected)}  
+            ${getDayStyling(day.day(), isSelectingDates, selected)}
             `}
           onClick={() => {
             if (!selected || !selected?.isRecurring) {
@@ -434,9 +452,10 @@ export const Month = (props: MonthProps) => {
         >
           {renderDateNum(day, isCurrentMonth)}
           <div
-            className={`flex-grow 
-            ${overflowVisible === day.date() || popoverOpen === day.date() ? '' : 'overflow-hidden'}`}
+            className={`flex-grow
+            ${overflowVisible === dayFormatted || popoverOpen === day.date() ? '' : 'overflow-hidden'}`}
             ref={offsetFromMonthStart === 0 ? categoryContainerRef : undefined}
+            key={`grid-${dayFormatted}`}
           >
             <style jsx>{`
               .use-grid {
@@ -449,11 +468,11 @@ export const Month = (props: MonthProps) => {
                   ? 'flex inline-flex flex-wrap overflow-y-hidden'
                   : isQuarterlyView
                   ? 'inline-flex'
-                  : 'use-grid grid'
+                  : `use-grid grid ${isMobileView ? 'justify-items-center' : ''}`
               }`}
             >
               {props.getForPrinting
-                ? getCategoryElemForPrinting(day, offsetFromMonthStart)
+                ? getIconsForPrinting(day, offsetFromMonthStart)
                 : getNonOverflowCategoryElems(day, offsetFromMonthStart)}
             </div>
           </div>
@@ -474,7 +493,8 @@ export const Month = (props: MonthProps) => {
       renderDateNum,
       useBanners,
       colsPerDay,
-      getCategoryElemForPrinting,
+      isMobileView,
+      getIconsForPrinting,
       getNonOverflowCategoryElems,
       dispatch
     ]
@@ -486,6 +506,7 @@ export const Month = (props: MonthProps) => {
       const generatedDays = Array.from(Array(7).keys()).map((dayNum) => {
         return renderDay(firstDateOfWeek, dayNum)
       })
+      // const generatedDays = <div key={`week-${weekNumber}`}>hi</div>
       return (
         <div
           className={
@@ -495,7 +516,7 @@ export const Month = (props: MonthProps) => {
             ' ' +
             (props.getForPrinting ? 'overflow-y-hidden' : '')
           }
-          key={firstDateOfWeek}
+          key={weekNumber}
         >
           {generatedDays}
           {preferences.showWeekNumbers.value && (
