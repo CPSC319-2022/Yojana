@@ -7,7 +7,7 @@ import { getIsMobile } from '@/redux/reducers/AppDataReducer'
 
 export interface DropdownProps {
   text?: string
-  id?: number
+  id?: string
   containerClassName?: string
   buttonClassName?: string
   menuClassName?: string

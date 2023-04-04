@@ -22,7 +22,12 @@ export const CalViewDropdown = () => {
         CalendarInterval.YEAR_SCROLL,
         CalendarInterval.YEAR
       ].map((interval) => (
-        <Dropdown.Button key={interval} label={interval} onClick={() => dispatch(setInterval(interval))} />
+        <Dropdown.Button
+          key={interval}
+          label={interval}
+          onClick={() => dispatch(setInterval(interval))}
+          id={'cal-view-dropdown'}
+        />
       ))}
     </Dropdown>
   )
