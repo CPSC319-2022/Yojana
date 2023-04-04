@@ -272,6 +272,9 @@ Note that the following changes were made after these videos were recorded:
 ### Videos
 
 - Project setup: [video](https://drive.google.com/file/d/1gParF_CYP80n-eKjiEtFERgWVnXVuASc/view?usp=share_link)
+
+  External References (check back on these on the timestamps mentioned):
+  - Creating a local MySQL instance ([2:30](https://drive.google.com/file/d/1gParF_CYP80n-eKjiEtFERgWVnXVuASc/view?t=2m30s)): [MySQL 8](https://dev.mysql.com/doc/refman/8.0/en/installing.html), [MySQL Shell](https://dev.mysql.com/doc/mysql-shell/8.0/en/mysql-shell-install.html)
   - [Create an Azure Database for MySQL](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/quickstart-create-server-portal)
   - [Azure AD with Next-Auth](https://next-auth.js.org/providers/azure-ad)
 - General Overview: [video](https://drive.google.com/file/d/19xxg2aVFHEQvCCJ55ysKw4h1wcFn45W7/view?usp=share_link)
