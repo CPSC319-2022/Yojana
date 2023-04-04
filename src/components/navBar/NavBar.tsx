@@ -91,17 +91,20 @@ export const NavBar = ({ session }: NavBarProps) => {
       <div className={`flex flex-row items-center ${isMobileView ? 'flex-grow justify-center' : 'lg:w-[25vw]'}`}>
         <Button
           text='Today'
+           ariaLabel='set-to-today'
           onClick={() => dispatch(jumpToToday())}
           className={`mr-3 lg:mr-10 ${buttonStyleIfMobile}`}
         />
         <span className={`flex flex-row ${isMobileView ? 'order-last ml-3' : ''}`}>
           <Button
             iconName='CaretLeftFill'
+            ariaLabel='move-left'
             onClick={() => dispatch(decrementDate())}
             className={`mr-3 py-3 ${buttonStyleIfMobile}`}
           />
           <Button
             iconName='CaretRightFill'
+            ariaLabel='move-right'
             onClick={() => dispatch(incrementDate())}
             className={`mr-3 py-3 ${buttonStyleIfMobile}`}
             id='move-right'

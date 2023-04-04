@@ -208,6 +208,7 @@ export const Month = (props: MonthProps) => {
                     iconName={category.icon as IconName}
                     className='inline'
                     size={settings?.getLargeIcons && isMonthView ? 24 : 16}
+                    aria-label={category.icon}
                     color={category.color}
                   />
                 }

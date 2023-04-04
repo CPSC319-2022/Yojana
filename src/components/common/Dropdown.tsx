@@ -14,6 +14,7 @@ export interface DropdownProps {
   overrideDefaultButtonStyle?: boolean
   iconName?: IconName
   children?: React.ReactNode
+  ariaLabel?: string
 }
 
 /**
@@ -35,7 +36,8 @@ export const Dropdown = ({
   menuClassName,
   overrideDefaultButtonStyle,
   iconName = 'CaretDownFill',
-  children
+  children,
+  ariaLabel
 }: DropdownProps) => {
   const dropdownChildren = getChildrenByType(children, [Dropdown.Button, Dropdown.Accordion, Dropdown.Divider])
   const isMobileView = useAppSelector(getIsMobile)
@@ -53,6 +55,7 @@ export const Dropdown = ({
               onClick={() => open && close()}
               className={buttonClassName}
               overrideDefaultStyle={overrideDefaultButtonStyle}
+              ariaLabel={ariaLabel}
               useLargeIcon
             />
             <Transition

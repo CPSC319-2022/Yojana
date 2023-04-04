@@ -56,6 +56,7 @@ export const AccountDropdown = ({ session, className }: { session: Session; clas
     <div id='account-dropdown' className={className}>
       <Dropdown
         text='Account'
+        ariaLabel='account-dropdown'
         containerClassName={isMobileView ? 'w-full' : 'w-[12vw]'}
         buttonClassName={isMobileView ? 'w-full flex-row justify-between' : ''}
         menuClassName={isMobileView ? 'relative w-full shadow-none border-0' : ''}

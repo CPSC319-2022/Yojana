@@ -86,6 +86,7 @@ const HoverDropdown = ({
             onClick={handleButtonClick}
             className={buttonClassName}
             id={`category-dropdown-${id}`}
+            ariaLabel={`category-dropdown-${id}`}
             overrideDefaultStyle={overrideDefaultButtonStyle}
           />
           <Transition
