@@ -7,6 +7,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   iconClassName?: string
   ariaLabel?: string
   overrideDefaultStyle?: boolean
+  useLargeIcon?: boolean
 }
 
 /**
@@ -26,6 +27,7 @@ export const Button = forwardRef(
       iconClassName = '',
       overrideDefaultStyle = false,
       ariaLabel
+      useLargeIcon
     }: ButtonProps,
     ref: React.Ref<HTMLButtonElement>
   ) => {
@@ -44,7 +46,7 @@ export const Button = forwardRef(
         aria-label={ariaLabel}
       >
         {text}
-        {iconName && <Icon iconName={iconName} className={iconClassName} />}
+        {iconName && <Icon iconName={iconName} className={iconClassName} size={useLargeIcon ? 20 : undefined} />}
       </button>
     )
   }

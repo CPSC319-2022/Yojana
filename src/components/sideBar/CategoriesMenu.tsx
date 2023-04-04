@@ -1,6 +1,6 @@
 import { Accordion, Checkbox, IconName } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
-import { getCategories, setCategoriesShow, toggleCategory } from '@/redux/reducers/AppDataReducer'
+import { getCategories, getIsMobile, setCategoriesShow, toggleCategory } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import { CategoryState } from '@/types/prisma'
 import { Session } from 'next-auth'
@@ -27,6 +27,7 @@ export const CategoriesMenu = ({ session }: Props) => {
   const categories: CategoryState[] = useAppSelector(getCategories)
   const [keepFocus, setKeepFocus] = useState(-1)
   const disable = useAppSelector(getIsSelectingDates)
+  const isMobileView = useAppSelector(getIsMobile)
 
   const renderCategories = useCallback(
     (isMaster: boolean) => {
@@ -51,14 +52,14 @@ export const CategoriesMenu = ({ session }: Props) => {
                 onChange={() => dispatch(toggleCategory(calEvent.id))}
                 iconClassName={`relative mb-1`}
               />
-              {isMaster && !session.user.isAdmin ? null : (
+              {isMobileView || (isMaster && !session.user.isAdmin) ? null : (
                 <CategoriesDropdown id={calEvent.id} setKeepFocus={setKeepFocus} keepOpen={keepFocus === calEvent.id} />
               )}
             </div>
           )
         })
     },
-    [categories, disable, dispatch, keepFocus, session.user.isAdmin]
+    [categories, disable, dispatch, isMobileView, keepFocus, session.user.isAdmin]
   )
 
   const renderCategoryType = useCallback(() => {
@@ -100,7 +101,7 @@ export const CategoriesMenu = ({ session }: Props) => {
   )
 
   return (
-    <div className='pt-4'>
+    <div className='pt-2'>
       <Accordion disable={disable}>
         {renderCategoryType().map((isMaster, key) => renderAccordionItem(isMaster, key))}
       </Accordion>

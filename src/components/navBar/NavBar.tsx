@@ -10,6 +10,7 @@ import { Session } from 'next-auth'
 import { getPreferences, setIsSidebarOpen } from '@/redux/reducers/PreferencesReducer'
 import { getIsSelectingDates } from '@/redux/reducers/DateSelectorReducer'
 import { useGetHoursInMonth } from '@/utils/month'
+import { getIsMobile } from '@/redux/reducers/AppDataReducer'
 
 /*
  * This component renders the top bar of the app. It contains the hamburger menu button,
@@ -29,6 +30,7 @@ export const NavBar = ({ session }: NavBarProps) => {
   const disable = useAppSelector(getIsSelectingDates)
   const getHoursInMonth = useGetHoursInMonth()
   const hoursInMonth = getHoursInMonth(targetDate)
+  const isMobileView = useAppSelector(getIsMobile)
 
   useEffect(() => {
     // mounted ensures that the router push does not happen on the first render
@@ -60,12 +62,17 @@ export const NavBar = ({ session }: NavBarProps) => {
       case CalendarInterval.QUARTERLY:
         return `Q${Math.floor(targetDate.month() / 3) + 1} ${targetDate.format('YYYY')}`
       default:
-        return targetDate.format('MMMM YYYY')
+        return targetDate.format(isMobileView ? 'MMM YYYY' : 'MMMM YYYY')
     }
-  }, [interval, targetDate])
+  }, [interval, targetDate, isMobileView])
+
+  const buttonStyleIfMobile = isMobileView ? '!px-3' : ''
 
   return (
-    <div className='box-border flex h-[10vh] w-full flex-row items-center justify-between border-b px-5'>
+    <div
+      className={`box-border flex h-[10vh] w-full flex-row items-center justify-between border-b 
+      ${isMobileView ? 'px-2' : 'px-5'}`}
+    >
       <div className='flex flex-row items-center'>
         <Button
           disabled={disable}
@@ -73,37 +80,48 @@ export const NavBar = ({ session }: NavBarProps) => {
           onClick={() => {
             dispatch(setIsSidebarOpen(!sidebarOpen))
           }}
-          className='mr-5 px-3 pt-0.5 pb-2 text-2xl'
+          className={`mr-5 px-3 pt-0.5 pb-2 text-2xl ${buttonStyleIfMobile}`}
         />
-        <h1 className='text-2xl font-medium' id='yojana-title'>
-          Yojana
-        </h1>
-      </div>
-      <div className='flex w-[25vw] flex-row items-center'>
-        <Button text='Today' onClick={() => dispatch(jumpToToday())} className='mr-10' ariaLabel='set-to-today' />
-        <Button
-          iconName='CaretLeftFill'
-          onClick={() => dispatch(decrementDate())}
-          className='mr-3 py-3'
-          ariaLabel='move-left'
-        />
-        <Button
-          ariaLabel='move-right'
-          iconName='CaretRightFill'
-          onClick={() => dispatch(incrementDate())}
-          className='mr-3 py-3'
-          id='move-right'
-        />
-        <h4 className='flex-none text-center text-lg'>{getIntervalDescription}</h4>
-        {interval === CalendarInterval.MONTH && (
-          <>
-            <h3 className='px-2 text-slate-400'>•</h3>
-            <h4 className='flex-none text-center text-lg text-slate-400'>{hoursInMonth} hrs</h4>
-          </>
+        {!isMobileView && (
+          <h1 className='text-2xl font-medium' id='yojana-title'>
+            Yojana
+          </h1>
         )}
       </div>
-      <CalViewDropdown />
-      <AccountDropdown session={session} />
+      <div className={`flex flex-row items-center ${isMobileView ? 'flex-grow justify-center' : 'lg:w-[25vw]'}`}>
+        <Button
+          text='Today'
+           ariaLabel='set-to-today'
+          onClick={() => dispatch(jumpToToday())}
+          className={`mr-3 lg:mr-10 ${buttonStyleIfMobile}`}
+        />
+        <span className={`flex flex-row ${isMobileView ? 'order-last ml-3' : ''}`}>
+          <Button
+            iconName='CaretLeftFill'
+            ariaLabel='move-left'
+            onClick={() => dispatch(decrementDate())}
+            className={`mr-3 py-3 ${buttonStyleIfMobile}`}
+          />
+          <Button
+            iconName='CaretRightFill'
+            ariaLabel='move-right'
+            onClick={() => dispatch(incrementDate())}
+            className={`mr-3 py-3 ${buttonStyleIfMobile}`}
+            id='move-right'
+          />
+        </span>
+        <span className={`flex ${isMobileView ? 'w-full flex-grow flex-col' : 'flex-row'}`}>
+          <h4 className='flex-none text-center text-lg'>{getIntervalDescription}</h4>
+          {interval === CalendarInterval.MONTH && (
+            <>
+              {!isMobileView && <h3 className='px-2 text-slate-400'>•</h3>}
+              <h4 className='flex-none text-center text-lg text-slate-400'>{hoursInMonth} hrs</h4>
+            </>
+          )}
+        </span>
+      </div>
+      {!isMobileView && <CalViewDropdown />}
+      {!isMobileView && <AccountDropdown session={session} />}
     </div>
   )
 }

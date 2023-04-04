@@ -9,6 +9,7 @@ import {
 } from '@/redux/reducers/PreferencesReducer'
 import { setCookieMaxAge } from '@/utils/cookies'
 import { CalendarInterval } from '@/constants/enums'
+import { getIsMobile } from '@/redux/reducers/AppDataReducer'
 
 /**
  * PreferenceModal is responsible for rendering the preferences modal.
@@ -31,6 +32,7 @@ export const PreferenceModal = ({
 }) => {
   const dispatch = useAppDispatch()
   const { yearShowGrid, yearOverflow, monthCategoryAppearance, showWeekNumbers } = useAppSelector(getPreferences)
+  const isMobileView = useAppSelector(getIsMobile)
 
   return (
     <Modal
@@ -39,7 +41,7 @@ export const PreferenceModal = ({
       isOpen={isModalOpen}
       setIsOpen={setIsModalOpen}
       minWidth={'25vw'}
-      draggable={true}
+      draggable={!isMobileView}
       closeWhenClickOutside={false}
       handle={'preferences-modal-handle'}
       bounds={'preferences-modal-wrapper'}
@@ -52,58 +54,62 @@ export const PreferenceModal = ({
     >
       <div className='mt-2'>
         <Accordion>
-          <Accordion.Item>
-            <Accordion.Header>{CalendarInterval.YEAR} View</Accordion.Header>
-            <Accordion.Body>
-              <div className='mt-2 flex flex-col space-y-2'>
-                <Toggle
-                  textToToggle={['Wrap Icons', 'Scroll Icons']}
-                  name={yearOverflow.cookieName}
-                  preference={yearOverflow.value === 'wrap'}
-                  onChange={() => {
-                    dispatch(setYearOverflow(yearOverflow.value === 'wrap' ? 'scroll' : 'wrap'))
-                    setCookieMaxAge(yearOverflow.cookieName, yearOverflow.value === 'wrap' ? 'scroll' : 'wrap')
-                  }}
-                  tooltipIcon='QuestionCircle'
-                  tooltipText='Wrap icons to the next line or scroll icons horizontally if there is not enough space to display them all on one day.'
-                />
-                <Toggle
-                  textToToggle={['Show Grid', 'Hide Grid']}
-                  name={yearShowGrid.cookieName}
-                  preference={yearShowGrid.value}
-                  onChange={() => {
-                    dispatch(setYearShowGrid(!yearShowGrid.value))
-                    setCookieMaxAge(yearShowGrid.cookieName, !yearShowGrid.value)
-                  }}
-                  tooltipIcon='QuestionCircle'
-                  tooltipText='Show or hide the grid lines for days.'
-                />
-              </div>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item>
-            <Accordion.Header>{CalendarInterval.MONTH} View</Accordion.Header>
-            <Accordion.Body>
-              <div className='mt-2 flex flex-col space-y-2'>
-                <Toggle
-                  textToToggle={['Icons', 'Banners']}
-                  name={monthCategoryAppearance.cookieName}
-                  preference={monthCategoryAppearance.value === 'icons'}
-                  onChange={() => {
-                    dispatch(
-                      setMonthCategoryAppearance(monthCategoryAppearance.value === 'icons' ? 'banners' : 'icons')
-                    )
-                    setCookieMaxAge(
-                      monthCategoryAppearance.cookieName,
-                      monthCategoryAppearance.value === 'icons' ? 'banners' : 'icons'
-                    )
-                  }}
-                  tooltipIcon='QuestionCircle'
-                  tooltipText='Show categories as icons or banners.'
-                />
-              </div>
-            </Accordion.Body>
-          </Accordion.Item>
+          {!isMobileView && (
+            <Accordion.Item>
+              <Accordion.Header>{CalendarInterval.YEAR} View</Accordion.Header>
+              <Accordion.Body>
+                <div className='mt-2 flex flex-col space-y-2'>
+                  <Toggle
+                    textToToggle={['Wrap Icons', 'Scroll Icons']}
+                    name={yearOverflow.cookieName}
+                    preference={yearOverflow.value === 'wrap'}
+                    onChange={() => {
+                      dispatch(setYearOverflow(yearOverflow.value === 'wrap' ? 'scroll' : 'wrap'))
+                      setCookieMaxAge(yearOverflow.cookieName, yearOverflow.value === 'wrap' ? 'scroll' : 'wrap')
+                    }}
+                    tooltipIcon='QuestionCircle'
+                    tooltipText='Wrap icons to the next line or scroll icons horizontally if there is not enough space to display them all on one day.'
+                  />
+                  <Toggle
+                    textToToggle={['Show Grid', 'Hide Grid']}
+                    name={yearShowGrid.cookieName}
+                    preference={yearShowGrid.value}
+                    onChange={() => {
+                      dispatch(setYearShowGrid(!yearShowGrid.value))
+                      setCookieMaxAge(yearShowGrid.cookieName, !yearShowGrid.value)
+                    }}
+                    tooltipIcon='QuestionCircle'
+                    tooltipText='Show or hide the grid lines for days.'
+                  />
+                </div>
+              </Accordion.Body>
+            </Accordion.Item>
+          )}
+          {!isMobileView && (
+            <Accordion.Item>
+              <Accordion.Header>{CalendarInterval.MONTH} View</Accordion.Header>
+              <Accordion.Body>
+                <div className='mt-2 flex flex-col space-y-2'>
+                  <Toggle
+                    textToToggle={['Icons', 'Banners']}
+                    name={monthCategoryAppearance.cookieName}
+                    preference={monthCategoryAppearance.value === 'icons'}
+                    onChange={() => {
+                      dispatch(
+                        setMonthCategoryAppearance(monthCategoryAppearance.value === 'icons' ? 'banners' : 'icons')
+                      )
+                      setCookieMaxAge(
+                        monthCategoryAppearance.cookieName,
+                        monthCategoryAppearance.value === 'icons' ? 'banners' : 'icons'
+                      )
+                    }}
+                    tooltipIcon='QuestionCircle'
+                    tooltipText='Show categories as icons or banners.'
+                  />
+                </div>
+              </Accordion.Body>
+            </Accordion.Item>
+          )}
           <Accordion.Item>
             <Accordion.Header>Other</Accordion.Header>
             <Accordion.Body>

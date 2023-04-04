@@ -20,7 +20,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Category, Entry } from '@prisma/client'
 import dayjs from 'dayjs'
 import { useSession } from 'next-auth/react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { ColorPicker } from './ColorPicker'
@@ -207,6 +207,14 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
+  const prevIsModalOpenRef = useRef(isModalOpen)
+
+  useEffect(() => {
+    if (prevIsModalOpenRef.current && !isModalOpen) {
+      resetForm()
+    }
+    prevIsModalOpenRef.current = isModalOpen
+  }, [isModalOpen, resetForm])
 
   const onSubmit: SubmitHandler<Schema> = useCallback(
     async ({ name, color, icon, description, repeating, isMaster }) => {
@@ -260,7 +268,6 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         dispatch(method === 'POST' ? addCategory(dispatchPayload) : updateCategory(dispatchPayload))
 
         setIsModalOpen(false)
-        resetForm()
       } else {
         if (response.status !== 500) {
           const text = await response.text()
@@ -271,17 +278,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
       }
       callBack()
     },
-    [
-      callBack,
-      currentCron,
-      currentState?.entries,
-      currentState?.id,
-      dispatch,
-      method,
-      resetForm,
-      selectedDates,
-      session
-    ]
+    [callBack, currentCron, currentState?.entries, currentState?.id, dispatch, method, selectedDates, session]
   )
 
   const setIsMinimizedCallback = useCallback(
@@ -631,9 +628,6 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         isOpen={isModalOpen}
         setIsOpen={(open) => {
           setIsModalOpen(open)
-          if (!open) {
-            resetForm()
-          }
         }}
         draggable={true}
         closeWhenClickOutside={false}

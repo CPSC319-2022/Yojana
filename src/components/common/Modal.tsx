@@ -7,6 +7,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, ReactNode, useRef } from 'react'
 import Draggable from 'react-draggable'
 import { getChildByType, removeChildrenByType } from 'react-nanny'
+import { getIsMobile } from '@/redux/reducers/AppDataReducer'
 
 /*
  * This file is a React component that renders a modal dialog box.
@@ -103,6 +104,7 @@ export const Modal = ({
   const dispatch = useAppDispatch()
   const minimized = getChildByType(children, Minimized)
   const body = removeChildrenByType(children, Minimized)
+  const isMobileView = useAppSelector(getIsMobile)
 
   return (
     <>
@@ -134,7 +136,7 @@ export const Modal = ({
               }
             }}
           >
-            {closeWhenClickOutside && <div className='fixed inset-0 bg-black/30' aria-hidden='true' />}
+            {closeWhenClickOutside && <div className='fixed inset-0 bg-slate-800/30' aria-hidden='true' />}
             <DraggableDialog draggable={draggable} bounds={bounds} handleId={handle} isMinimized={isMinimized}>
               <div className='pointer-events-auto'>
                 <Transition.Child
@@ -148,9 +150,10 @@ export const Modal = ({
                 >
                   {!isMinimized ? (
                     <Dialog.Panel
-                      className={`${directionClass} w-full max-w-md transform ${
-                        scrollable ? 'overflow-y-auto' : showOverflow ? 'overflow-visible' : 'overflow-y-hidden'
-                      } rounded-md bg-white text-left align-middle shadow-modal transition-all`}
+                      className={`${directionClass} max-w-md transform 
+                        ${isMobileView ? 'w-64 min-w-max' : ''}
+                        ${scrollable ? 'overflow-y-auto' : showOverflow ? 'overflow-visible' : 'overflow-y-hidden'} 
+                        rounded-md bg-white text-left align-middle shadow-modal transition-all`}
                       style={{ maxWidth: maxWidth, maxHeight: maxHeight, minWidth: minWidth }}
                       id={id}
                     >

@@ -2,7 +2,7 @@ import { Dropdown } from '@/components/common'
 import ComponentToPrint from '@/components/navBar/ComponentToPrint'
 import { PreferenceModal } from '@/components/PreferenceModal'
 import { useAppSelector } from '@/redux/hooks'
-import { getCategories } from '@/redux/reducers/AppDataReducer'
+import { getCategories, getIsMobile } from '@/redux/reducers/AppDataReducer'
 import { CategoryState } from '@/types/prisma'
 import { Session } from 'next-auth'
 import { signOut } from 'next-auth/react'
@@ -13,11 +13,12 @@ import { useReactToPrint } from 'react-to-print'
  * This is a dropdown menu that appears when the user clicks on 'account' in the navbar.
  * It provides the user options to change the preferences, export the calendar, print the calendar, and log out
  */
-export const AccountDropdown = ({ session }: { session: Session }) => {
+export const AccountDropdown = ({ session, className }: { session: Session; className?: string }) => {
   const userName = session?.user.name || ''
   const userID = session?.user.id || ''
 
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const isMobileView = useAppSelector(getIsMobile)
 
   const categories: CategoryState[] = useAppSelector(getCategories)
   const categoriesWithShowTrue = categories
@@ -28,12 +29,6 @@ export const AccountDropdown = ({ session }: { session: Session }) => {
   const printComponentRef = useRef(null)
   const [selectedView, setSelectedView] = useState('Year')
   const [printTrigger, setPrintTrigger] = useState(false)
-
-  useEffect(() => {
-    if (printTrigger) {
-      handlePrint()
-    }
-  }, [printTrigger, setPrintTrigger])
 
   const handlePrint = useReactToPrint({
     content: () => printComponentRef.current,
@@ -51,9 +46,22 @@ export const AccountDropdown = ({ session }: { session: Session }) => {
     `
   })
 
+  useEffect(() => {
+    if (printTrigger) {
+      handlePrint()
+    }
+  }, [handlePrint, printTrigger, setPrintTrigger])
+
   return (
-    <div id='account-dropdown'>
-      <Dropdown text='Account' containerClassName='w-[12vw]' ariaLabel='account-dropdown'>
+    <div id='account-dropdown' className={className}>
+      <Dropdown
+        text='Account'
+        ariaLabel='account-dropdown'
+        containerClassName={isMobileView ? 'w-full' : 'w-[12vw]'}
+        buttonClassName={isMobileView ? 'w-full flex-row justify-between' : ''}
+        menuClassName={isMobileView ? 'relative w-full shadow-none border-0' : ''}
+        iconName={isMobileView ? 'ChevronUp' : 'CaretDownFill'}
+      >
         <Dropdown.Button label={userName} onClick={() => {}} clickable={false} />
         <Dropdown.Divider />
         <Dropdown.Button label='Preferences' onClick={() => setIsModalOpen(true)} />

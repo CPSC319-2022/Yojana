@@ -24,12 +24,14 @@ interface State {
   appData: {
     data: AppData
     entryMap: EntryMap
+    isMobile: boolean
   }
 }
 
 const initialState = {
   data: [] as AppData,
-  entryMap: {} as EntryMap
+  entryMap: {} as EntryMap,
+  isMobile: false
 }
 
 const appDataSlice = createSlice({
@@ -120,6 +122,9 @@ const appDataSlice = createSlice({
       state.data.splice(index, 1)
       // update EntryMap
       state.entryMap = _createEntryMap(state.data)
+    },
+    setIsMobile: (state, action: PayloadAction<boolean>) => {
+      state.isMobile = action.payload
     }
   },
   extraReducers: {
@@ -169,8 +174,16 @@ const _addEntriesToEntryMap = (entryMap: EntryMap, entries: EntryWithoutCategory
   return entryMap
 }
 
-export const { setAppData, addCategory, updateCategory, toggleCategory, deleteCategory, setCategoriesShow } =
-  appDataSlice.actions
+// See each function's individual JavaDoc for more information.
+export const {
+  setAppData,
+  addCategory,
+  updateCategory,
+  toggleCategory,
+  deleteCategory,
+  setCategoriesShow,
+  setIsMobile
+} = appDataSlice.actions
 
 /**
  * Get a category, given its id number. Return null if not found.
@@ -248,6 +261,14 @@ export const getPrevCurrNextMonth = (state: State, date: Dayjs) => {
  */
 export const getYear = (state: State, date: Dayjs) => {
   return state.appData.entryMap[date.year()]
+}
+
+/**
+ * Return whether the user is viewing from a mobile device.
+ * @param state
+ */
+export const getIsMobile = (state: State) => {
+  return state.appData.isMobile
 }
 
 /**
