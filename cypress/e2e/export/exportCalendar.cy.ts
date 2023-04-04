@@ -5,6 +5,11 @@
  * export feature for each role.
  */
 describe('Export Calendars', () => {
+  // don't run these tests in headless mode due to https://github.com/cypress-io/cypress/issues/24775
+  if (!Cypress.config('isInteractive')) {
+    return
+  }
+
   const checkedCats: number[] = []
   const checked = (number: number) => {
     cy.get(`div#category-item-${number}`).find('input[type="checkbox"]').should('have.prop', 'checked', true)
