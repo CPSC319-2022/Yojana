@@ -7,7 +7,7 @@ import { getIsMobile } from '@/redux/reducers/AppDataReducer'
 
 export interface DropdownProps {
   text?: string
-  id?: string
+  id?: number
   containerClassName?: string
   buttonClassName?: string
   menuClassName?: string
@@ -82,6 +82,7 @@ export const Dropdown = ({
 interface DropdownButtonProps {
   label: string
   onClick: () => void
+  id: string
   disabled?: boolean
   clickable?: boolean
 }
@@ -104,11 +105,11 @@ const renderDropdownButton = ({ label, onClick, disabled = false, clickable = tr
 /**
  * The Dropdown.Button component is a child component of the Dropdown component that renders a button inside the dropdown menu.
  */
-const DropdownButton = ({ label, onClick, disabled = false, clickable = true }: DropdownButtonProps) => {
+const DropdownButton = ({ label, onClick, id, disabled = false, clickable = true }: DropdownButtonProps) => {
   return clickable ? (
-    <Menu.Item>{renderDropdownButton({ label, onClick, disabled, clickable })}</Menu.Item>
+    <Menu.Item>{renderDropdownButton({ label, onClick, id, disabled, clickable })}</Menu.Item>
   ) : (
-    renderDropdownButton({ label, onClick, disabled, clickable })
+    renderDropdownButton({ label, onClick, id, disabled, clickable })
   )
 }
 Dropdown.Button = DropdownButton
@@ -116,7 +117,7 @@ Dropdown.Button = DropdownButton
 /**
  * The Dropdown.Accordion component is a child component of the Dropdown component that renders an accordion inside the dropdown menu.
  */
-const DropdownAccordion = ({ title, children }: { title: string; children: React.ReactNode }) => {
+const DropdownAccordion = ({ title, id, children }: { title: string; id: string; children: React.ReactNode }) => {
   const accordionItems = getChildrenByType(children, [DropdownButton, DropdownDivider])
   return (
     <div className='w-full'>
@@ -124,7 +125,7 @@ const DropdownAccordion = ({ title, children }: { title: string; children: React
         {({ open }) => (
           <>
             <Disclosure.Button className='group mb-1 flex w-full items-center justify-between space-y-1 rounded-md px-4 py-2 hover:bg-slate-100'>
-              <span>{title}</span>
+              <span id={id}>{title}</span>
               <Icon iconName='ChevronUp' className={`${open ? 'rotate-180 transform' : ''} h-5 w-5`} />
             </Disclosure.Button>
             <Disclosure.Panel className='space-y-1 text-sm'>{accordionItems}</Disclosure.Panel>
