@@ -79,6 +79,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
   const [selectedMonthRecurrenceCron, setSelectedMonthRecurrenceCron] = useState<MonthRecurrenceType | null>(null)
   const [currentTabIndex, setCurrentTabIndex] = useState(0)
   const [cronStateAtStart, setCronStateAtStart] = useState<CronState>({} as CronState)
+  const [errorMsg, setErrorMsg] = useState('')
 
   const getInitialMonthlyCronState = useCallback((cron: string | null | undefined): MonthRecurrenceType | null => {
     if (cron === null || cron === undefined) return null
@@ -439,13 +440,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     )
   }, [isMinimized, register, watchEndDate, watchStartDate])
 
-  const recurringPanel = useCallback(() => {
-    const startDate = dayjs(getValues('repeating.startDate'))
-    const endDate = dayjs(getValues('repeating.endDate'))
-    const errorMsg =
-      startDate.isValid() && endDate.isValid() && !endDate.isAfter(startDate)
-        ? 'End date must be after start date.'
-        : ''
+  const recurringPanel = useMemo(() => {
     return (
       <>
         <div className='pb-5'>
@@ -460,7 +455,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         {errorMsg && <p className='my-1 text-sm text-red-500'>{errorMsg}</p>}
       </>
     )
-  }, [currentTabIndex, getValues, monthlyRecurringField, startAndEndDatesRecurringField, weeklyRecurringField])
+  }, [errorMsg, currentTabIndex, monthlyRecurringField, startAndEndDatesRecurringField, weeklyRecurringField])
 
   const recurringDatesFields = useMemo(() => {
     return (
@@ -484,7 +479,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
                 leaveTo='transform scale-95 opacity-0'
               >
                 <Disclosure.Panel id='recurring-dates-panel' className='pt-4 pb-2'>
-                  {recurringPanel()}
+                  {recurringPanel}
                 </Disclosure.Panel>
               </Transition>
             </>
@@ -506,21 +501,38 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             const startDate = getValues('repeating.startDate')
             const endDate = getValues('repeating.endDate')
             const cron = getValues('repeating.cron')
-            setCronStateAtStart({ startDate, endDate, cron })
-            dispatch(setRepeatingDates(generateDatesFromCron(cron, startDate, endDate)))
-            setIsMinimized(true)
-            dispatch(setIsSelectingDates(true))
-            dispatch(
-              setAlert({
-                message: 'Select the dates you want to add to this category by clicking on them.',
-                type: 'info',
-                show: true,
-                showOnce: true,
-                cookieName: 'select-dates-alert',
-                timeout: 10000
-              })
-            )
-            setDirtyDates(true)
+
+            const startDateDayjs = dayjs(startDate)
+            const endDateDayjs = dayjs(endDate)
+            let errorMsg = ''
+            if (!startDateDayjs.isValid()) {
+              errorMsg = 'Start date is invalid. Please select a valid start date first.'
+            } else if (!endDateDayjs.isValid()) {
+              errorMsg = 'End date is invalid. Please select a valid end date first.'
+            } else if (!endDateDayjs.isAfter(startDateDayjs)) {
+              errorMsg = 'End date must be after start date.'
+            }
+
+            if (errorMsg) {
+              setErrorMsg(errorMsg)
+            } else {
+              setErrorMsg('')
+              setCronStateAtStart({ startDate, endDate, cron })
+              dispatch(setRepeatingDates(generateDatesFromCron(cron, startDate, endDate)))
+              setIsMinimized(true)
+              dispatch(setIsSelectingDates(true))
+              dispatch(
+                setAlert({
+                  message: 'Select the dates you want to add to this category by clicking on them.',
+                  type: 'info',
+                  show: true,
+                  showOnce: true,
+                  cookieName: 'select-dates-alert',
+                  timeout: 10000
+                })
+              )
+              setDirtyDates(true)
+            }
           }}
         />
         <Button
@@ -541,7 +553,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     )
   }, [dirtyDates, dispatch, getValues, handleSubmit, isDirty, isSubmitting, method, onSubmit])
 
-  const saveCancelWhenMinimized = useCallback(() => {
+  const saveCancelWhenMinimized = useMemo(() => {
     return (
       <Modal.Minimized className={'w-[17vw] rounded-md border-2 border-slate-200 bg-white p-2'}>
         {method !== 'POST' && (
@@ -551,7 +563,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             <p className='font-semibold'>{watchName}</p>
           </span>
         )}
-        {recurringPanel()}
+        {recurringPanel}
         <span className='flex w-full'>
           <button
             id='cancel-btn-during-selecting'
@@ -616,7 +628,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
 
   const modalContent = useMemo(() => {
     if (!isModalOpen) return <></>
-    else if (isMinimized) return saveCancelWhenMinimized()
+    else if (isMinimized) return saveCancelWhenMinimized
     return renderForm
   }, [isMinimized, isModalOpen, renderForm, saveCancelWhenMinimized])
 
