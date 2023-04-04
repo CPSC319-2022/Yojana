@@ -1,6 +1,8 @@
-/*
+/**
     These are the cypress tests to check if the Print to pdf - Year View shows the expected behaviour
- */
+
+    Note: User needs to click 'Cancel' when Print dialog box appears to prevent tests from stalling.
+ **/
 
 describe('print year view tests', () => {
   const openDropdownAndPrint = () => {
