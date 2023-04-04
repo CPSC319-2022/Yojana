@@ -1,10 +1,10 @@
 /**
-    These are the cypress tests to check if the Print to pdf - Year View shows the expected behaviour
+    These are the cypress tests to check if the Print to pdf - Year Vertical View shows the expected behaviour
 
     Note: User needs to click 'Cancel' when Print dialog box appears to prevent tests from stalling.
  **/
 
-describe('print year view tests', () => {
+describe('print year vertical view tests', () => {
   // don't run these tests in headless mode due to https://github.com/cypress-io/cypress/issues/24775
   if (!Cypress.config('isInteractive')) {
     return
@@ -12,7 +12,7 @@ describe('print year view tests', () => {
   const openDropdownAndPrint = () => {
     cy.get('div#account-dropdown').click()
     cy.contains('Print Calendar').should('be.visible').click()
-    cy.contains('Print Year View').should('be.visible').click()
+    cy.contains('Print Year Vertical View').should('be.visible').click()
 
     // Stub window.print() method before opening the print dialog
     cy.window().then((win) => {

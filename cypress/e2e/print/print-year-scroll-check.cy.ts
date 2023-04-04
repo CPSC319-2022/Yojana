@@ -1,10 +1,10 @@
 /**
-    These are the cypress tests to check if the Print to pdf - Year Scroll View shows the expected behaviour.
+    These are the cypress tests to check if the Print to pdf - Year Classic View shows the expected behaviour.
 
     Note: User needs to click 'Cancel' when Print dialog box appears to prevent tests from stalling.
  **/
 
-describe('print year (scroll) view tests', () => {
+describe('print year (classic) view tests', () => {
   // don't run these tests in headless mode due to https://github.com/cypress-io/cypress/issues/24775
   if (!Cypress.config('isInteractive')) {
     return
@@ -12,7 +12,7 @@ describe('print year (scroll) view tests', () => {
   const openDropdownAndPrint = () => {
     cy.get('div#account-dropdown').click()
     cy.contains('Print Calendar').should('be.visible').click()
-    cy.contains('Print Year Scroll View').should('be.visible').click()
+    cy.contains('Print Year Classic View').should('be.visible').click()
 
     // Stub window.print() method before opening the print dialog
     cy.window().then((win) => {
@@ -81,27 +81,27 @@ describe('print year (scroll) view tests', () => {
       openDropdownAndPrint()
     })
 
-    // Test to see if the year is displayed in the header of the print scroll view
+    // Test to see if the year is displayed in the header of the print vertical view
     it('should check if calendar displays the year in the header', () => {
       checkYearDisplayed()
     })
 
-    // Test to see if all categories appear in the print scroll view
+    // Test to see if all categories appear in the print vertical view
     it('should check if calendar displays all categories', () => {
       checkAllCategoriesDisplayed()
     })
 
-    // Test to see if all icons appear in the print scroll view
+    // Test to see if all icons appear in the print vertical view
     it('should check if calendar displays all icons', () => {
       checkAllIconsDisplayed()
     })
 
-    // Test to see if the Total Working Hours for months are displayed in the year print scroll view
+    // Test to see if the Total Working Hours for months are displayed in the year print vertical view
     it('should display working hours', () => {
       checkWorkingHoursDisplayed()
     })
 
-    // Test to see if only the filtered categories appear in the print scroll view
+    // Test to see if only the filtered categories appear in the print vertical view
     it('should check if only filtered categories are displayed', () => {
       checkOnlyFilteredCategoriesDisplayed()
     })

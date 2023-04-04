@@ -90,7 +90,7 @@ export const AccountDropdown = ({ session, className }: { session: Session; clas
         </Dropdown.Accordion>
         <Dropdown.Accordion title='Print Calendar' id={'print-button-dropdown'}>
           <Dropdown.Button
-            label='Print Year View'
+            label='Print Year Vertical View'
             onClick={() => {
               setPrintTrigger(true)
               setSelectedView('Year')
@@ -98,7 +98,7 @@ export const AccountDropdown = ({ session, className }: { session: Session; clas
             id={'print-year-calendar-dropdown'}
           />
           <Dropdown.Button
-            label='Print Year Scroll View'
+            label='Print Year Classic View'
             onClick={() => {
               setPrintTrigger(true)
               setSelectedView('YearScroll')
