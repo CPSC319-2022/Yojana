@@ -267,6 +267,7 @@ Note that the following changes were made after these videos were recorded:
 
 - `Year (Scroll)` has been renamed into `Year (Classic)`
 - `Year` has been renamed into `Year (Vertical)`
+- A mobile view has been added.
 
 ### Videos
 
