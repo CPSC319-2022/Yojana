@@ -39,7 +39,7 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchRespons
       reader.onload = () => {
         const stream = csv()
         stream.on('data', (data) => {
-          setCsvEntries((prev) => [...prev, data])
+          setCsvEntries((prev) => [...prev, trimObjectKeys(data)])
         })
 
         stream.write(reader.result)
@@ -138,4 +138,14 @@ export const CsvUploader = ({ onSuccess }: { onSuccess: (response?: BatchRespons
       )}
     </div>
   )
+}
+
+const trimObjectKeys = (obj: object) => {
+  const trimmedObject: any = {}
+
+  for (const [key, value] of Object.entries(obj)) {
+    trimmedObject[key.trim()] = value
+  }
+
+  return trimmedObject
 }

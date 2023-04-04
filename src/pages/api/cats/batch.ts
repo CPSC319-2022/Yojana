@@ -5,23 +5,32 @@ import { getCategories, getOwnedCategories } from '@/prisma/queries'
 import z from 'zod'
 import { BatchResponse } from '@/types/prisma'
 
+interface BatchRequestBody {
+  [key: string]: string[]
+}
+
 // Schema for validating request body
 export const bodySchema = z
   .record(
     z.array(
       z.string().refine(
         (val) => {
-          const regex = /^((19|20)\d{2})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/
+          const regex = /^\s*((19|20)\d{2})[-](0[1-9]|1[0-2])[-](0[1-9]|[12]\d|3[01])\s*$/
           return regex.test(val)
         },
-        { message: 'Date column should contain only dates in the format YYYY-MM-DD' }
+        {
+          message:
+            "Date column should contain only dates in the format 'YYYY-MM-DD' " +
+            "make sure a valid date is entered and only use '-' for the separator."
+        }
       )
     )
   )
   .refine(
     (key) => {
       const keys = Object.keys(key)
-      return keys.every((key) => parseInt(key) === parseFloat(key) && Number.isInteger(parseFloat(key)))
+      const regex = /^\s*\d+\s*$/ // Check if string is only digits
+      return keys.every((key) => regex.test(key))
     },
     { message: 'CategoryID column should only contain integer CategoryIDs' }
   )
@@ -68,7 +77,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(401).json(response)
   }
   const userID = token.id
-  const categories = req.body
+  const categories = combineArrays(req.body)
   const categoryIDs = Object.keys(categories).map(Number)
 
   // Check if user has permission to edit all categories in request
@@ -137,7 +146,7 @@ function getEntriesFromCategoryIDMappings(categoryIDs: number[], categories: any
   let entriesToAdd = []
   for (const categoryToAddTo of categoryIDs) {
     for (const newDate of categories[categoryToAddTo]) {
-      const dateParts = newDate.split('-')
+      const dateParts = newDate.trim().split('-')
       const entry = {
         date: new Date(Date.UTC(dateParts[0], dateParts[1] - 1, dateParts[2])).toISOString(),
         isRecurring: false,
@@ -147,6 +156,22 @@ function getEntriesFromCategoryIDMappings(categoryIDs: number[], categories: any
     }
   }
   return entriesToAdd
+}
+
+function combineArrays(obj: BatchRequestBody) {
+  const result: BatchRequestBody = {}
+
+  for (const key in obj) {
+    const trimmedKey = key.trim()
+
+    if (!result.hasOwnProperty(trimmedKey)) {
+      result[trimmedKey] = []
+    }
+
+    result[trimmedKey] = result[trimmedKey].concat(obj[key])
+  }
+
+  return result
 }
 
 export default handler
