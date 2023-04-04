@@ -269,7 +269,7 @@ Note that the following changes were made after these videos were recorded:
 - `Year` has been renamed into `Year (Vertical)`
 - A mobile view has been added.
 
-### Videos
+### Video Demos
 
 - Project setup: [video](https://drive.google.com/file/d/1gParF_CYP80n-eKjiEtFERgWVnXVuASc/view?usp=share_link)
 
