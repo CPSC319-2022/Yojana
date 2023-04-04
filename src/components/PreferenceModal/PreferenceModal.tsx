@@ -34,7 +34,6 @@ export const PreferenceModal = ({
   const dispatch = useAppDispatch()
   const { yearShowGrid, yearOverflow, monthCategoryAppearance, showWeekNumbers, showWorkingHours } =
     useAppSelector(getPreferences)
-  const { yearShowGrid, yearOverflow, monthCategoryAppearance, showWeekNumbers } = useAppSelector(getPreferences)
   const isMobileView = useAppSelector(getIsMobile)
 
   return (
