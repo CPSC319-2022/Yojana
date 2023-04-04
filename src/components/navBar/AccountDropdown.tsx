@@ -57,8 +57,9 @@ export const AccountDropdown = ({ session, className }: { session: Session; clas
       <Dropdown
         text='Account'
         containerClassName={isMobileView ? 'w-full' : 'w-[12vw]'}
-        buttonClassName={isMobileView ? 'w-full' : ''}
-        menuClassName={isMobileView ? 'relative' : ''}
+        buttonClassName={isMobileView ? 'w-full flex-row justify-between' : ''}
+        menuClassName={isMobileView ? 'relative w-full shadow-none border-0' : ''}
+        iconName={isMobileView ? 'ChevronUp' : 'CaretDownFill'}
       >
         <Dropdown.Button label={userName} onClick={() => {}} clickable={false} />
         <Dropdown.Divider />

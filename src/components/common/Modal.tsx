@@ -151,7 +151,7 @@ export const Modal = ({
                   {!isMinimized ? (
                     <Dialog.Panel
                       className={`${directionClass} max-w-md transform 
-                        ${isMobileView ? 'w-full min-w-max' : ''}
+                        ${isMobileView ? 'w-64 min-w-max' : ''}
                         ${scrollable ? 'overflow-y-auto' : showOverflow ? 'overflow-visible' : 'overflow-y-hidden'} 
                         rounded-md bg-white text-left align-middle shadow-modal transition-all`}
                       style={{ maxWidth: maxWidth, maxHeight: maxHeight, minWidth: minWidth }}

@@ -29,7 +29,7 @@ export const SideBar = ({ session }: Props) => {
       {isMobileView ? (
         <AccountDropdown session={session} className={'w-full'} />
       ) : (
-        <div className='flex flex-row px-4'>
+        <div className='flex flex-row px-4 pb-2'>
           <CategoryModal method='POST' id={-1} callBack={() => {}} />
           <CsvModal />
         </div>

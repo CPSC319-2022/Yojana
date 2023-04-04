@@ -93,8 +93,8 @@ export const Month = (props: MonthProps) => {
   const today = getLocalDateWithoutTime(new Date())
 
   useEffect(() => {
-    setUseBanners(isMonthView && preferences.monthCategoryAppearance.value === 'banners')
-  }, [isMonthView, preferences.monthCategoryAppearance.value])
+    setUseBanners(!isMobileView && isMonthView && preferences.monthCategoryAppearance.value === 'banners')
+  }, [isMobileView, isMonthView, preferences.monthCategoryAppearance.value])
 
   // Determines what days and weeks are in the month.
   useEffect(() => {

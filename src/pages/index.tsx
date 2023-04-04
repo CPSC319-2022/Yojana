@@ -71,7 +71,6 @@ const Calendar = ({ session }: CalendarProps) => {
     if (isMobileView) {
       dispatch(setInterval(CalendarInterval.MONTH))
       dispatch(setIsSidebarOpen(false))
-      dispatch(setMonthCategoryAppearance('icons'))
     }
   }, [dispatch, isMobileView])
 
@@ -114,13 +113,13 @@ const Calendar = ({ session }: CalendarProps) => {
             <div
               className={`${
                 sidebarOpen
-                  ? 'inline-block w-1/5 min-w-[200px] translate-x-0 border-r border-slate-200'
+                  ? 'inline-block w-1/5 translate-x-0 overflow-x-hidden border-r border-slate-200'
                   : 'w-0 -translate-x-full'
               } overflow-visible transition-all`}
             >
               {sidebarOpen && <SideBar session={session} />}
             </div>
-            <div className={`flex flex-grow flex-col transition-all`}>
+            <div className={`${sidebarOpen ? 'w-4/5' : 'w-full'} flex flex-grow flex-col transition-all`}>
               <MainCalendar />
             </div>
           </div>

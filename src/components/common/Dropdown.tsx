@@ -2,6 +2,8 @@ import { Button, Icon, IconName } from '@/components/common'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import React, { Fragment } from 'react'
 import { getChildrenByType } from 'react-nanny'
+import { useAppSelector } from '@/redux/hooks'
+import { getIsMobile } from '@/redux/reducers/AppDataReducer'
 
 export interface DropdownProps {
   text?: string
@@ -20,6 +22,7 @@ export interface DropdownProps {
  * @param text - The text to be displayed on the button.
  * @param containerClassName - A CSS class name to be applied to the container div of the component.
  * @param buttonClassName - A CSS class name to be applied to the button.
+ * @param menuClassName - className for the dropdown menu
  * @param overrideDefaultButtonStyle - A boolean that indicates whether to override the default button style or not.
  * @param iconName - The name of the icon to be displayed next to the text on the button. The default icon is 'CaretDownFill'.
  * @param children - The children of the component, which should be instances of the Dropdown.Button, Dropdown.Accordion, or Dropdown.Divider components.
@@ -35,6 +38,8 @@ export const Dropdown = ({
   children
 }: DropdownProps) => {
   const dropdownChildren = getChildrenByType(children, [Dropdown.Button, Dropdown.Accordion, Dropdown.Divider])
+  const isMobileView = useAppSelector(getIsMobile)
+
   return (
     <div className={containerClassName}>
       <Menu as='div' className='relative inline-block w-full text-left'>
@@ -48,6 +53,7 @@ export const Dropdown = ({
               onClick={() => open && close()}
               className={buttonClassName}
               overrideDefaultStyle={overrideDefaultButtonStyle}
+              useLargeIcon
             />
             <Transition
               as={Fragment}
@@ -59,8 +65,9 @@ export const Dropdown = ({
               leaveTo='transform opacity-0 scale-95'
             >
               <Menu.Items
-                className={`absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none
-                  ${menuClassName}`}
+                className={`absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg focus:outline-none
+                  ${menuClassName}
+                  ${isMobileView ? '' : 'ring-1 ring-black ring-opacity-5 '}`}
               >
                 <div className={`${menuClassName} space-y-1 px-1 py-1`}>{dropdownChildren}</div>
               </Menu.Items>
