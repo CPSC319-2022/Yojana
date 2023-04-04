@@ -51,8 +51,10 @@ const schema = z.object({
     })
     .refine(
       (object) => {
+        const endDate = dayjs(object.endDate)
+        const startDate = dayjs(object.startDate)
         if (object.cron) {
-          return dayjs(object.endDate).isAfter(object.startDate)
+          return !startDate.isValid() && !endDate.isValid() && dayjs(endDate).isAfter(startDate)
         }
         return true
       },
@@ -489,6 +491,23 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     )
   }, [recurringPanel])
 
+  const datesHaveError = useCallback(() => {
+    const startDateDayjs = dayjs(watchStartDate)
+    const endDateDayjs = dayjs(watchEndDate)
+    if (!startDateDayjs.isValid()) {
+      setErrorMsg('Start date is invalid. Please select a valid start date first.')
+      return true
+    } else if (!endDateDayjs.isValid()) {
+      setErrorMsg('End date is invalid. Please select a valid end date first.')
+      return true
+    } else if (!endDateDayjs.isAfter(startDateDayjs)) {
+      setErrorMsg('End date must be after start date.')
+      return true
+    }
+    setErrorMsg('')
+    return false
+  }, [watchEndDate, watchStartDate])
+
   const buttonsAtBottom = useCallback(() => {
     return (
       <div className='flex justify-end'>
@@ -498,25 +517,10 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           text={'Select Dates'}
           className='mr-3 items-center'
           onClick={() => {
-            const startDate = getValues('repeating.startDate')
-            const endDate = getValues('repeating.endDate')
-            const cron = getValues('repeating.cron')
-
-            const startDateDayjs = dayjs(startDate)
-            const endDateDayjs = dayjs(endDate)
-            let errorMsg = ''
-            if (!startDateDayjs.isValid()) {
-              errorMsg = 'Start date is invalid. Please select a valid start date first.'
-            } else if (!endDateDayjs.isValid()) {
-              errorMsg = 'End date is invalid. Please select a valid end date first.'
-            } else if (!endDateDayjs.isAfter(startDateDayjs)) {
-              errorMsg = 'End date must be after start date.'
-            }
-
-            if (errorMsg) {
-              setErrorMsg(errorMsg)
-            } else {
-              setErrorMsg('')
+            if (!datesHaveError()) {
+              const startDate = getValues('repeating.startDate')
+              const endDate = getValues('repeating.endDate')
+              const cron = getValues('repeating.cron')
               setCronStateAtStart({ startDate, endDate, cron })
               dispatch(setRepeatingDates(generateDatesFromCron(cron, startDate, endDate)))
               setIsMinimized(true)
@@ -544,14 +548,16 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
             const startDate = getValues('repeating.startDate')
             const endDate = getValues('repeating.endDate')
             const cron = getValues('repeating.cron')
-            dispatch(setRepeatingDates(generateDatesFromCron(cron, startDate, endDate)))
-            handleSubmit(onSubmit)
+            if (!datesHaveError()) {
+              dispatch(setRepeatingDates(generateDatesFromCron(cron, startDate, endDate)))
+              handleSubmit(onSubmit)
+            }
           }}
           id='create-category-submit-btn'
         />
       </div>
     )
-  }, [dirtyDates, dispatch, getValues, handleSubmit, isDirty, isSubmitting, method, onSubmit])
+  }, [datesHaveError, dirtyDates, dispatch, getValues, handleSubmit, isDirty, isSubmitting, method, onSubmit])
 
   const saveCancelWhenMinimized = useMemo(() => {
     return (
@@ -582,7 +588,11 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
           <Button
             id='save-btn-during-selecting'
             text='Save'
-            onClick={() => setIsMinimizedCallback(false)}
+            onClick={() => {
+              if (!datesHaveError()) {
+                setIsMinimizedCallback(false)
+              }
+            }}
             className='w-full animate-pulse'
           />
         </span>
@@ -592,6 +602,7 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     cronStateAtStart.cron,
     cronStateAtStart.endDate,
     cronStateAtStart.startDate,
+    datesHaveError,
     dispatch,
     method,
     recurringPanel,
