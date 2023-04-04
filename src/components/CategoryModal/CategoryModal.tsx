@@ -20,7 +20,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Category, Entry } from '@prisma/client'
 import dayjs from 'dayjs'
 import { useSession } from 'next-auth/react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState, useRef } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { ColorPicker } from './ColorPicker'
@@ -203,18 +203,18 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
     setSelectedDaysOfTheWeek([])
     setSelectedMonthRecurrenceCron(null)
     dispatch(resetSelectedDates())
-    setAfterClose(false)
   }, [dispatch, reset])
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
-  const [afterClose, setAfterClose] = useState(false)
+  const prevIsModalOpenRef = useRef(isModalOpen)
 
   useEffect(() => {
-    if (afterClose) {
+    if (prevIsModalOpenRef.current && !isModalOpen) {
       resetForm()
     }
-  }, [afterClose, resetForm])
+    prevIsModalOpenRef.current = isModalOpen
+  }, [isModalOpen, resetForm])
 
   const onSubmit: SubmitHandler<Schema> = useCallback(
     async ({ name, color, icon, description, repeating, isMaster }) => {
@@ -268,7 +268,6 @@ export const CategoryModal = ({ method, id, callBack }: { method: string; id: nu
         dispatch(method === 'POST' ? addCategory(dispatchPayload) : updateCategory(dispatchPayload))
 
         setIsModalOpen(false)
-        setAfterClose(true)
       } else {
         if (response.status !== 500) {
           const text = await response.text()
