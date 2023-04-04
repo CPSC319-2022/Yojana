@@ -5,6 +5,10 @@ import { getCategories, getOwnedCategories } from '@/prisma/queries'
 import z from 'zod'
 import { BatchResponse } from '@/types/prisma'
 
+interface BatchRequestBody {
+  [key: string]: string[]
+}
+
 // Schema for validating request body
 export const bodySchema = z
   .record(
@@ -25,7 +29,8 @@ export const bodySchema = z
   .refine(
     (key) => {
       const keys = Object.keys(key)
-      return keys.every((key) => parseInt(key) === parseFloat(key) && Number.isInteger(parseFloat(key)))
+      const regex = /^\s*\d+\s*$/ // Check if string is only digits
+      return keys.every((key) => regex.test(key))
     },
     { message: 'CategoryID column should only contain integer CategoryIDs' }
   )
@@ -72,7 +77,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(401).json(response)
   }
   const userID = token.id
-  const categories = req.body
+  const categories = combineArrays(req.body)
   const categoryIDs = Object.keys(categories).map(Number)
 
   // Check if user has permission to edit all categories in request
@@ -151,6 +156,22 @@ function getEntriesFromCategoryIDMappings(categoryIDs: number[], categories: any
     }
   }
   return entriesToAdd
+}
+
+function combineArrays(obj: BatchRequestBody) {
+  const result: BatchRequestBody = {}
+
+  for (const key in obj) {
+    const trimmedKey = key.trim()
+
+    if (!result.hasOwnProperty(trimmedKey)) {
+      result[trimmedKey] = []
+    }
+
+    result[trimmedKey] = result[trimmedKey].concat(obj[key])
+  }
+
+  return result
 }
 
 export default handler
