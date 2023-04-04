@@ -62,7 +62,7 @@ const AccordionItem = ({
             className={`flex w-full justify-between rounded-lg bg-emerald-100 px-4 py-2 text-left ${sizeClass} font-medium text-emerald-900 hover:bg-emerald-200 focus:outline-none`}
           >
             {header}
-            <span className='flex'>
+            <span className='flex self-center'>
               {secondIcon && (
                 <Icon
                   iconName={secondIcon}
