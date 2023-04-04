@@ -87,7 +87,7 @@ export const AccountDropdown = ({ session, className }: { session: Session; clas
             id={'filtered-categories-dropdown'}
           />
         </Dropdown.Accordion>
-        <Dropdown.Accordion title='Print Calendar' id='print-button-dropdown'>
+        <Dropdown.Accordion title='Print Calendar' id={'print-button-dropdown'}>
           <Dropdown.Button
             label='Print Year View'
             onClick={() => {
