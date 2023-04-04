@@ -53,6 +53,7 @@ export const PreferenceModal = ({
       bodyPadding='px-4 pb-4 pt-3'
       scrollable={false}
       showOverflow={true}
+      isForPreference={true}
     >
       <div className='mt-2'>
         <Accordion>

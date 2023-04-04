@@ -2,12 +2,12 @@
 
 import { Button, IconName } from '@/components/common'
 import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { getIsMobile } from '@/redux/reducers/AppDataReducer'
 import { getIsSelectingDates, resetSelectedDates } from '@/redux/reducers/DateSelectorReducer'
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, ReactNode, useRef } from 'react'
+import { Fragment, ReactNode, useEffect, useRef } from 'react'
 import Draggable from 'react-draggable'
 import { getChildByType, removeChildrenByType } from 'react-nanny'
-import { getIsMobile } from '@/redux/reducers/AppDataReducer'
 
 /*
  * This file is a React component that renders a modal dialog box.
@@ -42,6 +42,7 @@ interface ModalProps {
   scrollable?: boolean
   showOverflow?: boolean
   id?: string
+  isForPreference?: boolean
 }
 
 /**
@@ -97,7 +98,8 @@ export const Modal = ({
   bodyPadding = 'px-6 pb-6 pt-3',
   scrollable = true,
   showOverflow = false,
-  id
+  id,
+  isForPreference
 }: ModalProps) => {
   const directionClass = direction ? `absolute ${direction}-0 my-10` : ''
   const disable = useAppSelector(getIsSelectingDates)
@@ -126,9 +128,8 @@ export const Modal = ({
           <Dialog
             as='div'
             id={typeof bounds === 'string' ? bounds : undefined}
-            className={`pointer-events-none absolute top-0 z-10 flex h-screen w-screen p-5 ${
-              isMinimized ? 'items-end justify-start' : 'items-center justify-center'
-            }`}
+            className={`pointer-events-none absolute top-0 z-10 flex h-screen w-screen p-5 
+            ${isMinimized ? 'items-end justify-start' : 'items-center justify-center'}`}
             onClose={() => {
               if (closeWhenClickOutside) {
                 setIsOpen(false)
@@ -147,6 +148,9 @@ export const Modal = ({
                   leave='ease-in duration-200'
                   leaveFrom='opacity-100 scale-100'
                   leaveTo='opacity-0 scale-95'
+                  beforeEnter={() => {
+                    isForPreference && document.getElementById('__next')?.removeAttribute('inert')
+                  }}
                 >
                   {!isMinimized ? (
                     <Dialog.Panel
