@@ -62,27 +62,30 @@ export const AccountDropdown = ({ session, className }: { session: Session; clas
         menuClassName={isMobileView ? 'relative w-full shadow-none border-0' : ''}
         iconName={isMobileView ? 'ChevronUp' : 'CaretDownFill'}
       >
-        <Dropdown.Button label={userName} onClick={() => {}} clickable={false} />
+        <Dropdown.Button label={userName} onClick={() => {}} id={'username-dropdown'} clickable={false} />
         <Dropdown.Divider />
-        <Dropdown.Button label='Preferences' onClick={() => setIsModalOpen(true)} />
-        <Dropdown.Accordion title='Export Calendar'>
+        <Dropdown.Button label='Preferences' onClick={() => setIsModalOpen(true)} id={'preferences-dropdown'} />
+        <Dropdown.Accordion title='Export Calendar' id={'export-calendar-button'}>
           <Dropdown.Button
             label='Master Calendar'
             onClick={() => {
               window.open(`/api/dates/export?master=true`, '_blank')
             }}
+            id={'master-calendar-dropdown'}
           />
           <Dropdown.Button
             label='Personal Calendar'
             onClick={() => {
               window.open(`/api/dates/export?master=false&userID=${userID}`, '_blank')
             }}
+            id={'personal-calendar-dropdown'}
           />
           <Dropdown.Button
             label='Filtered Categories'
             onClick={() => {
               window.open(`/api/dates/export?categories=${categoriesWithShowTrue}`, '_blank')
             }}
+            id={'filtered-categories-dropdown'}
           />
         </Dropdown.Accordion>
         <Dropdown.Accordion title='Print Calendar' id={'print-button-dropdown'}>
@@ -92,6 +95,7 @@ export const AccountDropdown = ({ session, className }: { session: Session; clas
               setPrintTrigger(true)
               setSelectedView('Year')
             }}
+            id={'print-year-calendar-dropdown'}
           />
           <Dropdown.Button
             label='Print Year Scroll View'
@@ -99,9 +103,10 @@ export const AccountDropdown = ({ session, className }: { session: Session; clas
               setPrintTrigger(true)
               setSelectedView('YearScroll')
             }}
+            id={'print-year-scroll-calendar-dropdown'}
           />
         </Dropdown.Accordion>
-        <Dropdown.Button label='Logout' onClick={() => signOut()} />
+        <Dropdown.Button label='Logout' onClick={() => signOut()} id={'logout-dropdown'} />
       </Dropdown>
       {printTrigger && <ComponentToPrint printType={selectedView} ref={printComponentRef} />}
       <PreferenceModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />

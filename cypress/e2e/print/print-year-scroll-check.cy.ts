@@ -5,6 +5,10 @@
  **/
 
 describe('print year (scroll) view tests', () => {
+  // don't run these tests in headless mode due to https://github.com/cypress-io/cypress/issues/24775
+  if (!Cypress.config('isInteractive')) {
+    return
+  }
   const openDropdownAndPrint = () => {
     cy.get('div#account-dropdown').click()
     cy.contains('Print Calendar').should('be.visible').click()

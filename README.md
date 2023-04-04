@@ -263,7 +263,17 @@ Visit [this](https://yojana-main.vercel.app/) link to see the latest deployed ve
 
 ## Usage Demos
 
+Note that the following changes were made after these videos were recorded:
+
+- `Year (Scroll)` has been renamed into `Year (Classic)`
+- `Year` has been renamed into `Year (Vertical)`
+- A mobile view has been added.
+
+### Videos
+
 - Project setup: [video](https://drive.google.com/file/d/1gParF_CYP80n-eKjiEtFERgWVnXVuASc/view?usp=share_link)
+  - [Create an Azure Database for MySQL](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/quickstart-create-server-portal)
+  - [Azure AD with Next-Auth](https://next-auth.js.org/providers/azure-ad)
 - General Overview: [video](https://drive.google.com/file/d/19xxg2aVFHEQvCCJ55ysKw4h1wcFn45W7/view?usp=share_link)
 - Calendar View Options: [video](https://drive.google.com/file/d/1EBDnQme-x6ti1S5KiUTCeT7KqngMfVhL/view?usp=sharing)
 - Creating Categories: [video](https://drive.google.com/file/d/1ZbBBZn0E5xE3TtohstzPNcmZFS3Oq3-f/view?usp=share_link)
