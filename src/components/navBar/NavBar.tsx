@@ -80,7 +80,7 @@ export const NavBar = ({ session }: NavBarProps) => {
           onClick={() => {
             dispatch(setIsSidebarOpen(!sidebarOpen))
           }}
-          className={`mr-5 px-3 pt-0.5 pb-2 text-2xl ${buttonStyleIfMobile}`}
+          className={`mr-5 px-3 pt-0.5 pb-[0.375rem] text-2xl ${buttonStyleIfMobile}`}
         />
         {!isMobileView && (
           <h1 className='text-2xl font-medium' id='yojana-title'>
@@ -91,7 +91,7 @@ export const NavBar = ({ session }: NavBarProps) => {
       <div className={`flex flex-row items-center ${isMobileView ? 'flex-grow justify-center' : 'lg:w-[25vw]'}`}>
         <Button
           text='Today'
-           ariaLabel='set-to-today'
+          ariaLabel='set-to-today'
           onClick={() => dispatch(jumpToToday())}
           className={`mr-3 lg:mr-10 ${buttonStyleIfMobile}`}
         />
