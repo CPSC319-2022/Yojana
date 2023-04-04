@@ -271,7 +271,7 @@ Note that the following changes were made after these videos were recorded:
 
 ### Video Demos
 
-- Project setup: [video](https://drive.google.com/file/d/1gParF_CYP80n-eKjiEtFERgWVnXVuASc/view?usp=share_link)
+- Project setup: [Video](https://drive.google.com/file/d/1gParF_CYP80n-eKjiEtFERgWVnXVuASc/view?usp=share_link), [YouTube Mirror](https://youtu.be/rwRnOHEnb4c)
 
   External References (check back on these on the timestamps mentioned):
 
@@ -281,12 +281,12 @@ Note that the following changes were made after these videos were recorded:
   - Docker Installation ([25:35](https://drive.google.com/file/d/1gParF_CYP80n-eKjiEtFERgWVnXVuASc/view?t=25m35s)): [Docker Desktop](https://docs.docker.com/desktop/)
   - [Azure AD with Next-Auth](https://next-auth.js.org/providers/azure-ad)
 
-- General Website Overview: [video](https://drive.google.com/file/d/19xxg2aVFHEQvCCJ55ysKw4h1wcFn45W7/view?usp=share_link)
-- Calendar View Options: [video](https://drive.google.com/file/d/1EBDnQme-x6ti1S5KiUTCeT7KqngMfVhL/view?usp=sharing)
-- Creating and Adding Entries to Categories: [video](https://drive.google.com/file/d/1ZbBBZn0E5xE3TtohstzPNcmZFS3Oq3-f/view?usp=share_link)
+- General Website Overview: [video](https://drive.google.com/file/d/19xxg2aVFHEQvCCJ55ysKw4h1wcFn45W7/view?usp=share_link), [YouTube Mirror](https://youtu.be/PpShNhipWqs)
+- Calendar View Options: [video](https://drive.google.com/file/d/1EBDnQme-x6ti1S5KiUTCeT7KqngMfVhL/view?usp=sharing), [YouTube Mirror](https://youtu.be/Bet5QA7FdgY)
+- Creating and Adding Entries to Categories: [video](https://drive.google.com/file/d/1ZbBBZn0E5xE3TtohstzPNcmZFS3Oq3-f/view?usp=share_link), [YouTube Mirror](https://youtu.be/JReJ0Gu1BgE)
 - Recurring Dates, Editing and Deleting
-  Categories: [video](https://drive.google.com/file/d/1jQSFPxrQuT6ghL8MAeqdWQQka_EhxNve/view?usp=share_link)
+  Categories: [video](https://drive.google.com/file/d/1jQSFPxrQuT6ghL8MAeqdWQQka_EhxNve/view?usp=share_link), [YouTube Mirror](https://youtu.be/827DxUF_y_4)
 - Importing entries via
-  CSV: [video](https://drive.google.com/file/d/1OdTF02FHYin3s2i62Gu28yntX-TM73iI/view?usp=share_link)
-- Printing to PDF: [video](https://drive.google.com/file/d/1snCDa6DoCvUoz7KgkA9NhXUymkhN-mdl/view?usp=share_link)
-- Export to iCal: [video](https://drive.google.com/file/d/1RdQe4HUS1IOuXQxcjcQ4-yOdzTOt2ROC/view?usp=share_link)
+  CSV: [video](https://drive.google.com/file/d/1OdTF02FHYin3s2i62Gu28yntX-TM73iI/view?usp=share_link), [YouTube Mirror](https://youtu.be/1adOd-wfGjk)
+- Printing to PDF: [video](https://drive.google.com/file/d/1snCDa6DoCvUoz7KgkA9NhXUymkhN-mdl/view?usp=share_link), [YouTube Mirror](https://youtu.be/Uy5stgG6rk4)
+- Export to iCal: [video](https://drive.google.com/file/d/1RdQe4HUS1IOuXQxcjcQ4-yOdzTOt2ROC/view?usp=share_link), [YouTube Mirror](https://youtu.be/0aQzFbTAcAw)
