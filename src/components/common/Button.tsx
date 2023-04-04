@@ -26,7 +26,7 @@ export const Button = forwardRef(
       id = '',
       iconClassName = '',
       overrideDefaultStyle = false,
-      ariaLabel
+      ariaLabel,
       useLargeIcon
     }: ButtonProps,
     ref: React.Ref<HTMLButtonElement>
