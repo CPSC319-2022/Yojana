@@ -276,10 +276,9 @@ Note that the following changes were made after these videos were recorded:
   External References (check back on these on the timestamps mentioned):
 
   - Creating a local MySQL instance ([2:30](https://drive.google.com/file/d/1gParF_CYP80n-eKjiEtFERgWVnXVuASc/view?t=2m30s)): [MySQL 8](https://dev.mysql.com/doc/refman/8.0/en/installing.html), [MySQL Shell](https://dev.mysql.com/doc/mysql-shell/8.0/en/mysql-shell-install.html)
-  - Setting up Azure AD ([6:18](https://drive.google.com/file/d/1gParF_CYP80n-eKjiEtFERgWVnXVuASc/view?t=6m18s)): [Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-whatis)
+  - Setting up Azure AD ([6:18](https://drive.google.com/file/d/1gParF_CYP80n-eKjiEtFERgWVnXVuASc/view?t=6m18s)): [Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-whatis), [Azure AD with Next-Auth](https://next-auth.js.org/providers/azure-ad)
   - Create an Azure Database for MySQL ([16:50](https://drive.google.com/file/d/1gParF_CYP80n-eKjiEtFERgWVnXVuASc/view?t=16m50s)): [Azure MySQL](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/quickstart-create-server-portal)
   - Docker Installation ([25:35](https://drive.google.com/file/d/1gParF_CYP80n-eKjiEtFERgWVnXVuASc/view?t=25m35s)): [Docker Desktop](https://docs.docker.com/desktop/)
-  - [Azure AD with Next-Auth](https://next-auth.js.org/providers/azure-ad)
 
 - General Website Overview: [video](https://drive.google.com/file/d/19xxg2aVFHEQvCCJ55ysKw4h1wcFn45W7/view?usp=share_link), [YouTube Mirror](https://youtu.be/PpShNhipWqs)
 - Calendar View Options: [video](https://drive.google.com/file/d/1EBDnQme-x6ti1S5KiUTCeT7KqngMfVhL/view?usp=sharing), [YouTube Mirror](https://youtu.be/Bet5QA7FdgY)
