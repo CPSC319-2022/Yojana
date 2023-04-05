@@ -11,6 +11,7 @@ import dayjs, { Dayjs } from 'dayjs'
 import { useCallback, useMemo, useState } from 'react'
 import { DescriptionPopover } from '../DescriptionPopover'
 import { getLocalDateWithoutTime } from '@/utils/preprocessEntries'
+
 /**
  * Year is responsible for rendering a full year view of calendar events.
  * It leverages the dayjs library, various hooks, and state management from Redux to display calendar events in a grid format.
@@ -157,7 +158,10 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
       const monthStartDate = dayjs(yearStartDate).add(monthNum, 'month')
       const hours = hoursInMonth(monthStartDate)
       return (
-        <span key={`col-${columnNum}-header`}>
+        <span
+          key={`col-${columnNum}-header`}
+          className={`${!preferences.yearShowGrid.value && !getForPrinting ? 'border-none' : ''}`}
+        >
           <h3
             className={`top-0 z-10 bg-slate-100 text-center text-xs text-slate-400 ${
               preferences.showWorkingHours.value ? '' : 'hidden' && getForPrinting ? '' : 'hidden'
@@ -172,7 +176,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
         </span>
       )
     })
-  }, [yearStartDate, hoursInMonth, getForPrinting, preferences.showWorkingHours.value])
+  }, [yearStartDate, hoursInMonth, preferences.yearShowGrid.value, preferences.showWorkingHours.value, getForPrinting])
 
   const days = useMemo(() => {
     return Array.from(Array(31).keys()).map((dateNum) => {
