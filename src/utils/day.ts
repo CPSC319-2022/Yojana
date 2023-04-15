@@ -27,7 +27,9 @@ export const getDayStyling = (
 ) => {
   let styleString: string[] = []
   if (isSelectingDates) {
-    if (selected?.isRecurring || isPastDay) {
+    if (isPastDay) {
+      styleString.push('bg-stripes bg-stripes-c1-slate-100 bg-stripes-c2-white')
+    } else if (selected?.isRecurring) {
       styleString.push('bg-stripes bg-stripes-c1-emerald-100 bg-stripes-c2-white')
     } else {
       styleString.push(selected?.isSelected ? 'bg-[#d9fae9]' : 'bg-white')
