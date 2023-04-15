@@ -132,7 +132,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
             ${dateOffset + 1 === popoverOpen ? 'flex-wrap overflow-x-visible' : ''}
             `}
           key={`${yearNum}-${monthNum}-${dateOffset}`}
-          onClick={() => onDayClicked(day, !selected || !selected?.isRecurring)}
+          onClick={() => onDayClicked(day, (!selected || !selected?.isRecurring) && !isPastDay)}
         >
           {dayContent}
         </div>
