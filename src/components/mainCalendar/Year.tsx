@@ -99,6 +99,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
 
       const day = monthStartDate.add(dateOffset, 'days')
       const isToday = day.isSame(today, 'day')
+      const isPastDay = day.isBefore(today, 'day')
       const selected = yearSelected?.[monthNum]?.[day.date()]
 
       const dayContent = isSelectingDates ? (
@@ -120,7 +121,7 @@ export const Year = ({ getForPrinting = false }: { getForPrinting?: boolean }) =
         <div
           id={`${yearNum}-${currentIndexForId++}`}
           className={`tile px-0.5
-            ${getDayStyling(day.day(), isSelectingDates, selected)} 
+            ${getDayStyling(day.day(), isSelectingDates, isPastDay, selected)} 
             ${!isSelectingDates && isToday && !getForPrinting ? 'ring-2 ring-inset ring-emerald-300' : ''}
             ${preferences.yearOverflow.value === 'wrap' || getForPrinting ? 'inline-flow break-all' : 'flex'}
             ${

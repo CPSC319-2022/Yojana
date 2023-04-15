@@ -16,12 +16,18 @@ import { SelectedSettings } from '@/redux/reducers/DateSelectorReducer'
  *
  * @param dayOfWeek - the weekday (0-6, 0 is Sunday and 6 is Saturday)
  * @param isSelectingDates - whether the user is editing selected dates (as opposed to viewing them)
+ * @param isPastDay - whether the date is in the past
  * @param selected - the associated date object. Indicates whether the date is selected and/or recurring.
  */
-export const getDayStyling = (dayOfWeek: number, isSelectingDates: boolean, selected?: SelectedSettings) => {
+export const getDayStyling = (
+  dayOfWeek: number,
+  isSelectingDates: boolean,
+  isPastDay: boolean,
+  selected?: SelectedSettings
+) => {
   let styleString: string[] = []
   if (isSelectingDates) {
-    if (selected?.isRecurring) {
+    if (selected?.isRecurring || isPastDay) {
       styleString.push('bg-stripes bg-stripes-c1-emerald-100 bg-stripes-c2-white')
     } else {
       styleString.push(selected?.isSelected ? 'bg-[#d9fae9]' : 'bg-white')
