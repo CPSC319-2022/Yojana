@@ -15,7 +15,7 @@ checks:
   - repeat
 
   - starts with startingDate (expects to start with the new icon), and optionally stops at lastDate
-  - iterates using the offset (eg. 0 then 0+offset then 0+2*offset ...)
+  - iterates using the offset (e.g. 0 then 0+offset then 0+2*offset ...)
   - checks only till the first 28 days of each month (works in 2023 right now, not sure about others)
 */
 Cypress.Commands.add(
@@ -27,14 +27,15 @@ Cypress.Commands.add(
     daysToBeSkipped: number,
     offset: number,
     lastDate: number = 335,
-    targetLastDate: number = 335
+    targetLastDate: number = 335,
+    targetYear: number = 2023
   ) => {
     const daysToSkip = daysToBeSkipped > 0 ? daysToBeSkipped : 7 - consecutiveDays
 
     function checkDay(day: number, skipDaysLeft: number, consDaysLeft: number) {
       if (day > lastDate || day === targetLastDate) return
 
-      const currentSelectedDateId = `2023-${day}`
+      const currentSelectedDateId = `${targetYear}-${day}`
       const currentDivId = `div#${currentSelectedDateId}`
 
       cy.get(currentDivId).within(() => {
@@ -74,7 +75,8 @@ declare global {
         daysToBeSkipped: number,
         offset: number,
         lastDate?: number,
-        targetLastDate?: number
+        targetLastDate?: number,
+        targetYear?: number
       ) => void
 
       login(type: 'admin' | 'pleb'): Chainable<Element>

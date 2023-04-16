@@ -1,4 +1,11 @@
 /*
+ * Get the numerical value of 1 year from now, so that all its dates are selectable in the test.
+ * Note that further references to "2023" in the comments refer to oneYrFromNow.
+ */
+const now = new Date()
+const oneYrFromNow = now.getFullYear() + 1
+
+/*
  * Helper function that:
  * opening the "Create Category" modal,
  * filling in the name.
@@ -24,8 +31,8 @@ describe('manual selecting individual dates tests', () => {
     cy.get('button#select-individual-dates-btn').should('be.visible').click()
 
     // click on Jan 1 2023 and save
-    cy.get('span#2023-0-during-selecting').should('exist')
-    cy.get('div#2023-0').should('exist').click({ force: true })
+    cy.get(`span#${oneYrFromNow}-0-during-selecting`).should('exist')
+    cy.get(`div#${oneYrFromNow}-0`).should('exist').click({ force: true })
     cy.get('button#save-btn-during-selecting').as('btn').click()
 
     // select Master Calendar if admin
@@ -36,7 +43,7 @@ describe('manual selecting individual dates tests', () => {
     cy.get('button#create-category-submit-btn').trigger('click').click()
 
     // check if the icon is added to Jan 1 2023 ONLY
-    cy.checkIconsInDays('span.20-icon', 0, 1, 364, 12)
+    cy.checkIconsInDays('span.20-icon', 0, 1, 364, 12, 335, 335, oneYrFromNow)
   }
   /*
    * selecting "Select Dates"
@@ -49,10 +56,10 @@ describe('manual selecting individual dates tests', () => {
     cy.get('button#select-individual-dates-btn').should('be.visible').click()
 
     // click on Jan 2 2023 twice and save
-    cy.get('span#2023-0-during-selecting').should('exist')
-    cy.get('div#2023-0').should('exist').click({ force: true })
-    cy.get('div#2023-12').should('exist').click({ force: true })
-    cy.get('div#2023-12').should('exist').click({ force: true })
+    cy.get(`span#${oneYrFromNow}-0-during-selecting`).should('exist')
+    cy.get(`div#${oneYrFromNow}-0`).should('exist').click({ force: true })
+    cy.get(`div#${oneYrFromNow}-12`).should('exist').click({ force: true })
+    cy.get(`div#${oneYrFromNow}-12`).should('exist').click({ force: true })
     cy.get('button#save-btn-during-selecting').as('btn').click()
 
     // select Master Calendar if admin
@@ -63,7 +70,7 @@ describe('manual selecting individual dates tests', () => {
     cy.get('button#create-category-submit-btn').trigger('click').click()
 
     // check if the icon is added to Jan 1 2023 ONLY
-    cy.checkIconsInDays('span.20-icon', 0, 1, 364, 12)
+    cy.checkIconsInDays('span.20-icon', 0, 1, 364, 12, 335, 335, oneYrFromNow)
   }
   /*
    * selecting "Select Dates"
@@ -76,9 +83,9 @@ describe('manual selecting individual dates tests', () => {
     cy.get('button#select-individual-dates-btn').should('be.visible').click()
 
     // click on Feb (1, 5, 9) 2023 and save
-    cy.get('div#2023-1').should('exist').click({ force: true })
-    cy.get('div#2023-49').should('exist').click({ force: true })
-    cy.get('div#2023-97').should('exist').click({ force: true })
+    cy.get(`div#${oneYrFromNow}-1`).should('exist').click({ force: true })
+    cy.get(`div#${oneYrFromNow}-49`).should('exist').click({ force: true })
+    cy.get(`div#${oneYrFromNow}-97`).should('exist').click({ force: true })
     cy.get('button#save-btn-during-selecting').as('btn').click()
 
     // select Master Calendar if admin
@@ -89,7 +96,7 @@ describe('manual selecting individual dates tests', () => {
     cy.get('button#create-category-submit-btn').trigger('click').click()
 
     // check if the icon is added to Feb (1, 5, 9) 2023 ONLY
-    cy.checkIconsInDays('span.20-icon', 1, 1, 3, 12, 333, 97)
+    cy.checkIconsInDays('span.20-icon', 1, 1, 3, 12, 333, 97, oneYrFromNow)
   }
   /*
    * beforeEach(): Logs in as admin and visits the root URL.
@@ -99,7 +106,7 @@ describe('manual selecting individual dates tests', () => {
   describe('admin', () => {
     beforeEach(() => {
       cy.login('admin')
-      cy.visit('/?interval=Year+%28Vertical%29')
+      cy.visit(`/?interval=Year+%28Vertical%29&date=${oneYrFromNow}-01-02`)
     })
 
     afterEach(() => {
@@ -128,7 +135,7 @@ describe('manual selecting individual dates tests', () => {
   describe('pleb', () => {
     beforeEach(() => {
       cy.login('pleb')
-      cy.visit('/?interval=Year+%28Vertical%29')
+      cy.visit(`/?interval=Year+%28Vertical%29&date=${oneYrFromNow}-01-02`)
     })
 
     afterEach(() => {
@@ -185,15 +192,15 @@ describe('manual editing individual dates tests', () => {
     cy.get('button#select-individual-dates-btn').should('be.visible').click()
 
     // click on Jan 1 2023 and save
-    cy.get('span#2023-0-during-selecting').should('exist')
-    cy.get('div#2023-0').should('exist').click({ force: true })
+    cy.get(`span#${oneYrFromNow}-0-during-selecting`).should('exist')
+    cy.get(`div#${oneYrFromNow}-0`).should('exist').click({ force: true })
     cy.get('button#save-btn-during-selecting').as('btn').click()
 
     // scroll down and save (with 1 date selected)
     cy.get('div#edit-category-modal-div').scrollTo('bottom')
     cy.get('button#create-category-submit-btn').trigger('click').click()
     // check if the icon is added to Jan 1 2023 ONLY
-    cy.checkIconsInDays('span.20-icon', 0, 1, 364, 12)
+    cy.checkIconsInDays('span.20-icon', 0, 1, 364, 12, 335, 335, oneYrFromNow)
   }
   /*
    * click on the category dropdown in the sidebar
@@ -222,9 +229,9 @@ describe('manual editing individual dates tests', () => {
     cy.get('button#select-individual-dates-btn').should('be.visible').click()
 
     // click on Feb (1, 5, 9) 2023 and save
-    cy.get('div#2023-1').should('exist').click({ force: true })
-    cy.get('div#2023-49').should('exist').click({ force: true })
-    cy.get('div#2023-97').should('exist').click({ force: true })
+    cy.get(`div#${oneYrFromNow}-1`).should('exist').click({ force: true })
+    cy.get(`div#${oneYrFromNow}-49`).should('exist').click({ force: true })
+    cy.get(`div#${oneYrFromNow}-97`).should('exist').click({ force: true })
     cy.get('button#save-btn-during-selecting').as('btn').click()
 
     // scroll down and save
@@ -232,7 +239,7 @@ describe('manual editing individual dates tests', () => {
     cy.get('button#create-category-submit-btn').trigger('click').click()
 
     // check if the icon is added to Feb (1, 5, 9) 2023 ONLY
-    cy.checkIconsInDays('span.20-icon', 1, 1, 3, 12, 333, 97)
+    cy.checkIconsInDays('span.20-icon', 1, 1, 3, 12, 333, 97, oneYrFromNow)
   }
   /*
    * beforeEach(): Logs in as admin and visits the root URL.
@@ -242,7 +249,7 @@ describe('manual editing individual dates tests', () => {
   describe('admin', () => {
     beforeEach(() => {
       cy.login('admin')
-      cy.visit('/?interval=Year+%28Vertical%29')
+      cy.visit(`/?interval=Year+%28Vertical%29&date=${oneYrFromNow}-01-02`)
     })
 
     afterEach(() => {
@@ -265,7 +272,7 @@ describe('manual editing individual dates tests', () => {
   describe('pleb', () => {
     beforeEach(() => {
       cy.login('pleb')
-      cy.visit('/?interval=Year+%28Vertical%29')
+      cy.visit(`/?interval=Year+%28Vertical%29&date=${oneYrFromNow}-01-02`)
     })
 
     afterEach(() => {

@@ -430,6 +430,7 @@ export const Month = (props: MonthProps) => {
     (firstDateOfWeek: number, dayNum: number) => {
       const offsetFromMonthStart = firstDateOfWeek + dayNum
       const day = monthStartDate.add(offsetFromMonthStart, 'days')
+      const isPastDay = day.isBefore(today, 'day')
 
       const selected = getSelectedSettings(day.date(), offsetFromMonthStart)
       const isCurrentMonth = offsetFromMonthStart >= 0 && offsetFromMonthStart < daysInMonth
@@ -443,10 +444,10 @@ export const Month = (props: MonthProps) => {
           ${preferences.showWeekNumbers.value ? 'col-span-3' : ''}
             ${props.getForPrinting ? 'flex-row' : isMonthView ? 'flex-col' : 'flex-row'}
             ${props.getForPrinting ? '' : isQuarterlyView ? 'items-center' : ''}
-            ${getDayStyling(day.day(), isSelectingDates, selected)}
+            ${getDayStyling(day.day(), isSelectingDates, isPastDay, selected)}
             `}
           onClick={() => {
-            if (!selected || !selected?.isRecurring) {
+            if ((!selected || !selected?.isRecurring) && !isPastDay) {
               dispatch(toggleIndividualDate(day))
             }
           }}
@@ -497,7 +498,8 @@ export const Month = (props: MonthProps) => {
       isMobileView,
       getIconsForPrinting,
       getNonOverflowCategoryElems,
-      dispatch
+      dispatch,
+      today
     ]
   )
 

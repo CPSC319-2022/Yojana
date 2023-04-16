@@ -1,5 +1,7 @@
 /*
   Use Cypress to verify the functionality of editing monthly recurring events in both personal and master calendars
+  to run the tests, run the following command in the terminal:
+   npx cypress run --spec cypress/e2e/category-date-selection/editingMonthly.cy.ts
 */
 describe('edit monthly recurring tests', () => {
   /*
