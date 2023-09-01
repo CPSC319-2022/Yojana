@@ -2,6 +2,11 @@
 
 Yojana is a calendar app made using Next.js.
 
+## Video Preview
+Take a look at the [Yojana Youtube Playlist](https://www.youtube.com/watch?v=PpShNhipWqs&list=PLJO5P7YU8VML-3cruMLCQKA-YYjDsOOwD&index=3) to see the application in action:
+
+[![Yojana Website Snapshot](https://img.youtube.com/vi/PpShNhipWqs/0.jpg)](https://www.youtube.com/watch?v=PpShNhipWqs)
+
 ## Getting Started
 
 ### Prerequisites
