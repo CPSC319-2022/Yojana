@@ -87,7 +87,7 @@
     "jest-mock-extended": "^3.0.3",
     "lint-staged": "^13.2.0",
     "node-mocks-http": "^1.12.2",
-    "postcss": "^8.4.21",
+    "postcss": "^8.4.31",
     "prettier": "^2.8.6",
     "prettier-plugin-tailwindcss": "^0.2.5",
     "prisma": "^4.11.0",
