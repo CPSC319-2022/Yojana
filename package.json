@@ -42,7 +42,7 @@
     "dayjs": "^1.11.7",
     "ical-generator": "^3.6.1",
     "lodash": "^4.17.21",
-    "next": "^13.2.4",
+    "next": "^13.5.0",
     "next-auth": "^4.20.1",
     "next-redux-wrapper": "^8.1.0",
     "react": "^18.2.0",
